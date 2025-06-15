@@ -1,5 +1,17 @@
 /* Кастомные стили для OKD Finance документации */
 
+/* Корпоративные цвета OKD Finance */
+:root {
+    --okd-primary: #1e40af;
+    --okd-secondary: #3b82f6;
+    --okd-accent: #10b981;
+    --okd-warning: #f59e0b;
+    --okd-danger: #ef4444;
+    --okd-dark: #1f2937;
+    --okd-light: #f8fafc;
+    --okd-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #10b981 100%);
+}
+
 /* Обеспечиваем отображение навигации на главной странице */
 .VPHome .VPNav,
 .Layout .VPNav {
@@ -9,41 +21,222 @@
     left: 0 !important;
     right: 0 !important;
     z-index: 1000 !important;
+    backdrop-filter: blur(12px) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.dark .VPNav {
+    background: rgba(17, 24, 39, 0.95) !important;
+    border-bottom-color: #374151 !important;
 }
 
 /* Добавляем отступ сверху для hero секции */
 .VPHome .VPHero {
-    padding-top: 80px !important;
+    padding-top: 100px !important;
 }
 
-/* Улучшаем внешний вид навигации */
-.VPNav {
-    backdrop-filter: blur(8px) !important;
-    background-color: rgba(255, 255, 255, 0.9) !important;
-    border-bottom: 1px solid var(--vp-c-divider) !important;
-}
-
-.dark .VPNav {
-    background-color: rgba(31, 31, 31, 0.9) !important;
-}
-
-/* Стили для улучшения главной страницы */
+/* Стили для hero секции */
 .VPHome .VPHero .name {
-    background: linear-gradient(120deg, #667eea 30%, #764ba2 100%);
+    background: var(--okd-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.VPHome .VPHero .text {
+    color: var(--okd-secondary);
+    font-weight: 600;
+}
+
+.VPHome .VPHero .tagline {
+    color: #6b7280;
+    font-size: 1.125rem;
+    line-height: 1.75;
+}
+
+/* Улучшенные кнопки действий */
+.VPHome .VPHero .action .VPButton.brand {
+    background: var(--okd-gradient) !important;
+    border: none !important;
+    font-weight: 600 !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 14px rgba(30, 64, 175, 0.25) !important;
+}
+
+.VPHome .VPHero .action .VPButton.brand:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(30, 64, 175, 0.35) !important;
+}
+
+.VPHome .VPHero .action .VPButton.alt {
+    border: 2px solid var(--okd-secondary) !important;
+    color: var(--okd-secondary) !important;
+    font-weight: 600 !important;
+    padding: 10px 22px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+}
+
+.VPHome .VPHero .action .VPButton.alt:hover {
+    background: var(--okd-secondary) !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Улучшенные карточки функций */
+.VPHome .VPFeature {
+    border: 1px solid #e5e7eb !important;
+    border-radius: 16px !important;
+    padding: 32px !important;
+    transition: all 0.3s ease !important;
+    background: white !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.VPHome .VPFeature::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--okd-gradient);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.VPHome .VPFeature:hover {
+    border-color: var(--okd-secondary) !important;
+    box-shadow: 0 10px 40px rgba(30, 64, 175, 0.1) !important;
+    transform: translateY(-4px) !important;
+}
+
+.VPHome .VPFeature:hover::before {
+    transform: scaleX(1);
+}
+
+.VPHome .VPFeature .title {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: var(--okd-dark) !important;
+    margin-bottom: 12px !important;
+}
+
+.VPHome .VPFeature .details {
+    color: #6b7280 !important;
+    line-height: 1.6 !important;
+    font-size: 1rem !important;
+}
+
+/* Dark mode для карточек */
+.dark .VPHome .VPFeature {
+    background: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+.dark .VPHome .VPFeature .title {
+    color: #f9fafb !important;
+}
+
+.dark .VPHome .VPFeature .details {
+    color: #d1d5db !important;
+}
+
+/* Улучшенная типографика */
+.VPDoc h1,
+.VPDoc h2,
+.VPDoc h3,
+.VPDoc h4,
+.VPDoc h5,
+.VPDoc h6 {
+    font-weight: 700 !important;
+    letter-spacing: -0.025em !important;
+}
+
+.VPDoc h1 {
+    color: var(--okd-dark) !important;
+    background: var(--okd-gradient);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.VPHome .VPFeature {
-    border: 1px solid var(--vp-c-border);
-    border-radius: 12px;
-    padding: 24px;
-    transition: all 0.3s ease;
+/* Улучшенные code blocks */
+.VPDoc pre {
+    border-radius: 12px !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
 }
 
-.VPHome .VPFeature:hover {
-    border-color: var(--vp-c-brand-1);
-    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.1);
-    transform: translateY(-2px);
+.dark .VPDoc pre {
+    border-color: #374151 !important;
+}
+
+/* Стили для навигации в sidebar */
+.VPSidebar .VPSidebarItem .text {
+    font-weight: 500 !important;
+}
+
+.VPSidebar .VPSidebarItem.is-active .text {
+    color: var(--okd-primary) !important;
+    font-weight: 600 !important;
+}
+
+/* Улучшенные badges */
+.VPBadge {
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+    font-size: 0.75rem !important;
+    padding: 4px 8px !important;
+}
+
+.VPBadge.tip {
+    background: #dcfce7 !important;
+    color: #166534 !important;
+}
+
+.VPBadge.warning {
+    background: #fef3c7 !important;
+    color: #92400e !important;
+}
+
+.VPBadge.danger {
+    background: #fee2e2 !important;
+    color: #991b1b !important;
+}
+
+/* Адаптивные улучшения */
+@media (max-width: 768px) {
+    .VPHome .VPHero {
+        padding-top: 80px !important;
+    }
+
+    .VPHome .VPFeature {
+        padding: 24px !important;
+    }
+}
+
+/* Анимация для загрузки страницы */
+.VPHome .VPHero,
+.VPHome .VPFeature {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

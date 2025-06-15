@@ -164,19 +164,110 @@ export default withMermaid(defineConfig({
     },
 
     themeConfig: {
+        logo: {
+            light: '/logo.svg',
+            dark: '/logo-dark.svg'
+        },
+        siteTitle: 'OK! Digital',
+
         socialLinks: [
             { icon: 'github', link: 'https://github.com/OKD-Finance/Backend' }
         ],
+
         footer: {
             message: 'Released under the MIT License.',
             copyright: 'Copyright © 2025 OKD Finance'
+        },
+
+        editLink: {
+            pattern: 'https://github.com/timofvy/OKD-Finance-docs/edit/main/docs/:path',
+            text: 'Edit this page on GitHub'
+        },
+
+        lastUpdated: {
+            text: 'Updated at',
+            formatOptions: {
+                dateStyle: 'short',
+                timeStyle: 'medium'
+            }
+        },
+
+        search: {
+            provider: 'local'
+        },
+
+        sidebar: {
+            '/en/guide/': [
+                {
+                    text: 'Getting Started',
+                    items: [
+                        { text: 'Introduction', link: '/en/guide/introduction' },
+                        { text: 'Quick Start', link: '/en/guide/quick-start' },
+                        { text: 'Demo API', link: '/en/guide/demo-api' },
+                        { text: 'Architecture', link: '/en/guide/architecture' },
+                        { text: 'Deployment', link: '/en/guide/deployment' }
+                    ]
+                },
+                {
+                    text: 'Core Concepts',
+                    items: [
+                        { text: 'Authentication', link: '/en/guide/authentication' },
+                        { text: 'Trading System', link: '/en/guide/trading' },
+                        { text: 'Order Management', link: '/en/guide/orders' },
+                        { text: 'Wallet System', link: '/en/guide/wallets' }
+                    ]
+                }
+            ],
+            '/en/api/': [
+                {
+                    text: 'API Reference',
+                    items: [
+                        { text: 'Overview', link: '/en/api/overview' },
+                        { text: 'Authentication', link: '/en/api/authentication' },
+                        { text: 'Users & Accounts', link: '/en/api/users' },
+                        { text: 'Wallets', link: '/en/api/wallets' },
+                        { text: 'KYC', link: '/en/api/kyc' },
+                        { text: 'Webhooks', link: '/en/api/webhooks' }
+                    ]
+                }
+            ],
+            '/en/trading/': [
+                {
+                    text: 'Trading API',
+                    items: [
+                        { text: 'Overview', link: '/en/trading/overview' },
+                        { text: 'Market Data', link: '/en/trading/market-data' },
+                        { text: 'Order Management', link: '/en/trading/orders' },
+                        { text: 'Portfolio', link: '/en/trading/portfolio' }
+                    ]
+                }
+            ],
+            '/en/bybit/': [
+                {
+                    text: 'Bybit Integration',
+                    items: [
+                        { text: 'Overview', link: '/en/bybit/overview' },
+                        { text: 'Configuration', link: '/en/bybit/configuration' },
+                        { text: 'Order Routing', link: '/en/bybit/order-routing' },
+                        { text: 'Market Data Sync', link: '/en/bybit/market-data' }
+                    ]
+                }
+            ],
+            '/en/examples/': [
+                {
+                    text: 'Code Examples',
+                    items: [
+                        { text: 'Basic Usage', link: '/en/examples/basic-usage' },
+                        { text: 'Trading Flow', link: '/en/examples/trading-flow' },
+                        { text: 'Webhook Handling', link: '/en/examples/webhooks' },
+                        { text: 'Bybit Integration', link: '/en/examples/bybit-integration' }
+                    ]
+                }
+            ]
         }
     },
 
-    // Настройки сборки
-    build: {
-        outDir: '../dist'
-    },
+
 
     // Настройки для лучшего SEO
     sitemap: {
@@ -189,7 +280,7 @@ export default withMermaid(defineConfig({
     // Настройки производительности
     vite: {
         build: {
-            
+
             chunkSizeWarningLimit: 1000
         }
     }
