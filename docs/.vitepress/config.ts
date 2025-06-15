@@ -18,7 +18,19 @@ export default withMermaid(defineConfig({
         ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/okd-finance-docs/favicon-32x32.png' }],
         ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/okd-finance-docs/favicon-16x16.png' }],
         ['meta', { name: 'theme-color', content: '#667eea' }],
-        ['meta', { name: 'msapplication-TileColor', content: '#667eea' }]
+        ['meta', { name: 'msapplication-TileColor', content: '#667eea' }],
+        ['style', {}, `
+            :root {
+                --okd-primary: #1e40af;
+                --okd-secondary: #3b82f6;
+                --okd-accent: #10b981;
+                --okd-warning: #f59e0b;
+                --okd-danger: #ef4444;
+                --okd-dark: #1f2937;
+                --okd-light: #f8fafc;
+                --okd-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #10b981 100%);
+            }
+        `]
     ],
 
     // Настройка локализации с английским как основным языком
@@ -267,8 +279,6 @@ export default withMermaid(defineConfig({
         }
     },
 
-
-
     // Настройки для лучшего SEO
     sitemap: {
         hostname: 'https://timofvy.github.io'
@@ -280,8 +290,12 @@ export default withMermaid(defineConfig({
     // Настройки производительности
     vite: {
         build: {
-
             chunkSizeWarningLimit: 1000
         }
+    },
+
+    // Настройки markdown
+    markdown: {
+        theme: 'github-light'
     }
 })) 
