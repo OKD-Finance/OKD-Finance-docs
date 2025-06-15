@@ -189,7 +189,7 @@ export default withMermaid(defineConfig({
     // Настройки производительности
     vite: {
         build: {
-            minify: 'terser',
+            
             chunkSizeWarningLimit: 1000
         }
     }
