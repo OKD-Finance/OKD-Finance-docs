@@ -1,7 +1,6 @@
 import { defineConfig } from 'vitepress'
-import { withMermaid } from 'vitepress-plugin-mermaid'
 
-export default withMermaid(defineConfig({
+export default defineConfig({
     title: 'OKD Finance Exchange',
     description: 'Complete API documentation for OKD Finance cryptocurrency exchange platform',
 
@@ -15,17 +14,7 @@ export default withMermaid(defineConfig({
     cleanUrls: true,
     metaChunk: true,
 
-    // Настройки сборки для GitHub Pages
-    vite: {
-        build: {
-            chunkSizeWarningLimit: 1600,
-            rollupOptions: {
-                output: {
-                    manualChunks: undefined
-                }
-            }
-        }
-    },
+
 
     // Favicon и иконки
     head: [
@@ -306,4 +295,4 @@ export default withMermaid(defineConfig({
     markdown: {
         theme: 'github-light'
     }
-})) 
+})
