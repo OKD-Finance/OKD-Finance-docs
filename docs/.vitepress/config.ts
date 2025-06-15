@@ -11,6 +11,22 @@ export default withMermaid(defineConfig({
     // Отключаем проверку мертвых ссылок для деплоя
     ignoreDeadLinks: true,
 
+    // Настройки для стабильной сборки
+    cleanUrls: true,
+    metaChunk: true,
+
+    // Настройки сборки для GitHub Pages
+    vite: {
+        build: {
+            chunkSizeWarningLimit: 1600,
+            rollupOptions: {
+                output: {
+                    manualChunks: undefined
+                }
+            }
+        }
+    },
+
     // Favicon и иконки
     head: [
         ['link', { rel: 'icon', type: 'image/x-icon', href: '/okd-finance-docs/favicon.ico' }],
@@ -284,15 +300,7 @@ export default withMermaid(defineConfig({
         hostname: 'https://timofvy.github.io'
     },
 
-    // Настройки для GitHub Pages
-    cleanUrls: true,
 
-    // Настройки производительности
-    vite: {
-        build: {
-            chunkSizeWarningLimit: 1000
-        }
-    },
 
     // Настройки markdown
     markdown: {
