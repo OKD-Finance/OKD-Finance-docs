@@ -169,3 +169,5 @@ cp -r docs/.vitepress/dist/* /var/www/html/
 ---
 
 **OKD Finance** - Торгуйте криптовалютами с уверенностью 🚀 
+
+<!-- Trigger deployment: 2025-01-26 --> 
