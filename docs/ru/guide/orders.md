@@ -15,7 +15,7 @@ const marketOrder = await okdFinance.createOrder({
   type: 'market',
   quantity: 0.001
 });
-```
+``` -->
 
 **Особенности:**
 - Мгновенное исполнение
@@ -35,7 +35,7 @@ const limitOrder = await okdFinance.createOrder({
   price: 45000,
   timeInForce: 'GTC'
 });
-```
+``` -->
 
 **Параметры времени действия:**
 - **GTC** (Good Till Canceled) - до отмены
@@ -55,7 +55,7 @@ const stopLoss = await okdFinance.createOrder({
   quantity: 0.001,
   stopPrice: 44000
 });
-```
+``` -->
 
 #### Take Profit
 Автоматическое закрытие позиции при прибыли.
@@ -68,7 +68,7 @@ const takeProfit = await okdFinance.createOrder({
   quantity: 0.001,
   stopPrice: 46000
 });
-```
+``` -->
 
 ### OCO ордера (One-Cancels-Other)
 
@@ -83,7 +83,7 @@ const ocoOrder = await okdFinance.createOCOOrder({
   stopPrice: 44000, // stop loss
   stopLimitPrice: 43900
 });
-```
+``` -->
 
 ## Расширенные типы ордеров
 
@@ -98,7 +98,7 @@ const trailingStop = await okdFinance.createOrder({
   quantity: 0.001,
   callbackRate: 1.0 // 1% от пиковой цены
 });
-```
+``` -->
 
 ### Iceberg Orders
 Скрывает реальный размер ордера, показывая только часть.
@@ -112,7 +112,7 @@ const icebergOrder = await okdFinance.createOrder({
   price: 45000,
   icebergQty: 0.1 // показывать только 0.1 BTC
 });
-```
+``` -->
 
 ## Управление ордерами
 
@@ -124,7 +124,7 @@ const openOrders = await okdFinance.getOpenOrders({
 });
 
 console.log(openOrders);
-```
+``` -->
 
 ### Отмена ордера
 
@@ -139,7 +139,7 @@ const cancelResult = await okdFinance.cancelOrder({
 const cancelAllResult = await okdFinance.cancelAllOrders({
   symbol: 'BTCUSDT'
 });
-```
+``` -->
 
 ### Изменение ордера
 
@@ -149,7 +149,7 @@ const modifyResult = await okdFinance.modifyOrder({
   quantity: 0.002, // новое количество
   price: 45500 // новая цена
 });
-```
+``` -->
 
 ## История ордеров
 
@@ -163,7 +163,7 @@ const orderHistory = await okdFinance.getOrderHistory({
   startTime: Date.now() - 86400000, // последние 24 часа
   endTime: Date.now()
 });
-```
+``` -->
 
 ### Детали исполнения
 
@@ -173,7 +173,7 @@ const tradeHistory = await okdFinance.getMyTrades({
   orderId: '12345',
   limit: 50
 });
-```
+``` -->
 
 ## Условные ордера
 
@@ -187,7 +187,7 @@ const scheduledOrder = await okdFinance.createScheduledOrder({
   quantity: 0.001,
   executeAt: Date.now() + 3600000 // через час
 });
-```
+``` -->
 
 ### Ордера по цене другого актива
 
@@ -203,7 +203,7 @@ const conditionalOrder = await okdFinance.createConditionalOrder({
     price: 50000
   }
 });
-```
+``` -->
 
 ## Алгоритмические ордера
 
@@ -217,7 +217,7 @@ const twapOrder = await okdFinance.createTWAPOrder({
   duration: 3600, // секунд
   intervals: 12 // разделить на 12 частей
 });
-```
+``` -->
 
 ### VWAP (Volume Weighted Average Price)
 
@@ -228,7 +228,7 @@ const vwapOrder = await okdFinance.createVWAPOrder({
   totalQuantity: 1.0,
   maxParticipationRate: 0.1 // не более 10% от объема рынка
 });
-```
+``` -->
 
 ## Массовые операции
 
@@ -251,7 +251,7 @@ const batchOrders = await okdFinance.createBatchOrders([
     price: 3000
   }
 ]);
-```
+``` -->
 
 ### Отмена множественных ордеров
 
@@ -260,7 +260,7 @@ const cancelBatch = await okdFinance.cancelBatchOrders([
   { symbol: 'BTCUSDT', orderId: '12345' },
   { symbol: 'ETHUSDT', orderId: '67890' }
 ]);
-```
+``` -->
 
 ## Мониторинг и уведомления
 
@@ -273,7 +273,7 @@ orderStream.on('orderUpdate', (data) => {
   console.log('Order update:', data);
   // data содержит: orderId, symbol, status, executedQty, etc.
 });
-```
+``` -->
 
 ### Webhook уведомления
 
@@ -282,7 +282,7 @@ const webhook = await okdFinance.setOrderWebhook({
   url: 'https://your-server.com/order-webhook',
   events: ['order.filled', 'order.canceled', 'order.rejected']
 });
-```
+``` -->
 
 ## Анализ исполнения
 
@@ -297,7 +297,7 @@ const orderStats = await okdFinance.getOrderStatistics({
 console.log('Fill rate:', orderStats.fillRate);
 console.log('Average fill time:', orderStats.avgFillTime);
 console.log('Slippage:', orderStats.avgSlippage);
-```
+``` -->
 
 ### Отчет по исполнению
 
@@ -308,7 +308,7 @@ const executionReport = await okdFinance.getExecutionReport({
 
 console.log('Execution details:', executionReport);
 // Включает: время исполнения, цены, комиссии, проскальзывание
-```
+``` -->
 
 ## Лимиты и ограничения
 

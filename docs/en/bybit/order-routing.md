@@ -37,7 +37,7 @@ class RoutingConfig:
     chunk_size: Optional[float] = None
     participation_rate: float = 0.1  # 10%
     min_fill_size: Optional[float] = None
-```
+``` -->
 
 ## Smart Order Routing
 
@@ -143,7 +143,7 @@ class SmartOrderRouter:
         
         # Default to TWAP for balanced execution
         return RoutingStrategy.TWAP
-```
+``` -->
 
 ## TWAP (Time-Weighted Average Price) Routing
 
@@ -207,7 +207,7 @@ class TWAPRouter:
                 continue
         
         return executed_orders
-```
+``` -->
 
 ## VWAP (Volume-Weighted Average Price) Routing
 
@@ -324,7 +324,7 @@ class VWAPRouter:
             })
         
         return schedule
-```
+``` -->
 
 ## Iceberg Order Routing
 
@@ -418,7 +418,7 @@ class IcebergRouter:
             pass
         
         return 0.0
-```
+``` -->
 
 ## Sniper Routing (Liquidity Detection)
 
@@ -558,7 +558,7 @@ class SniperRouter:
             'available_quantity': float(max_bid_level[1]),
             'spread': spread
         }
-```
+``` -->
 
 ## Performance Monitoring
 
@@ -628,7 +628,7 @@ class RoutingPerformanceMonitor:
             'average_execution_time': avg_execution_time,
             'strategy_performance': strategy_performance
         }
-```
+``` -->
 
 ## Usage Examples
 
@@ -673,6 +673,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-```
+``` -->
 
 This comprehensive order routing system provides sophisticated execution algorithms optimized for different market conditions and order characteristics, ensuring optimal execution quality while minimizing market impact.

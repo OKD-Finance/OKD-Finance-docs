@@ -36,7 +36,7 @@ curl -X GET "https://develop.okd.finance/api/auth/check/firebase" \
   -H "Fingerprint: your-device-id" \
   -H "X-RECAPTCHA: your-recaptcha-token" \
   -H "X-PLATFORM-ID: your-platform-id"
-```
+``` -->
 
 ### API Services
 

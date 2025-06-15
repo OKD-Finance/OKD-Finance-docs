@@ -4,23 +4,27 @@
 
 ## Схема аутентификации
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant Gateway
-    participant Firebase
-    participant Services
-    
-    Client->>Firebase: Login (email/password)
-    Firebase-->>Client: Firebase Token
-    Client->>Gateway: Request + Firebase Token
-    Gateway->>Firebase: Verify Token
-    Firebase-->>Gateway: User Info
-    Gateway->>Gateway: Generate JWT
-    Gateway-->>Client: JWT Token
-    Client->>Services: API Calls + JWT
-    Services->>Gateway: Verify JWT
-    Gateway-->>Services: User Context
+```plantuml
+@startuml
+!theme aws-orange
+
+participant "Client" as Client
+participant "Gateway" as Gateway  
+participant "Firebase" as Firebase
+participant "Services" as Services
+
+Client -> Firebase: Login (email/password)
+Firebase --> Client: Firebase Token
+Client -> Gateway: Request + Firebase Token
+Gateway -> Firebase: Verify Token
+Firebase --> Gateway: User Info
+Gateway -> Gateway: Generate JWT
+Gateway --> Client: JWT Token
+Client -> Services: API Calls + JWT
+Services -> Gateway: Verify JWT
+Gateway --> Services: User Context
+
+@enduml
 ```
 
 ## Firebase Authentication
@@ -45,7 +49,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-```
+``` -->
 
 ### Регистрация пользователя
 ```javascript
@@ -72,7 +76,7 @@ async function registerUser(email, password) {
     console.error('Registration failed:', error);
   }
 }
-```
+``` -->
 
 ### Авторизация
 ```javascript
@@ -98,7 +102,7 @@ async function loginUser(email, password) {
     console.error('Login failed:', error);
   }
 }
-```
+``` -->
 
 ## JWT Токены
 
@@ -117,7 +121,7 @@ async function loginUser(email, password) {
     "roles": ["trader", "verified"]
   }
 }
-```
+``` -->
 
 ### Использование JWT
 ```javascript
@@ -130,7 +134,7 @@ const response = await fetch('/api/wallets', {
     'Content-Type': 'application/json'
   }
 });
-```
+``` -->
 
 ### Обновление токенов
 ```javascript
@@ -151,7 +155,7 @@ async function refreshToken() {
     return jwtToken;
   }
 }
-```
+``` -->
 
 ## Роли и разрешения
 
@@ -177,7 +181,7 @@ function hasPermission(requiredRole) {
 if (hasPermission('trader')) {
   // Показать торговый интерфейс
 }
-```
+``` -->
 
 ## Безопасность
 
@@ -217,7 +221,7 @@ async function logout() {
     console.error('Logout failed:', error);
   }
 }
-```
+``` -->
 
 ## Обработка ошибок
 

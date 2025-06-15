@@ -15,25 +15,37 @@ OKD Finance предоставляет полную интеграцию с Bybi
 
 ### Архитектура интеграции
 
-```mermaid
-graph TB
-    A[OKD Finance Client] --> B[OKD Gateway API]
-    B --> C[Order Router]
-    C --> D[Internal Matching Engine]
-    C --> E[Bybit Integration Layer]
-    E --> F[Bybit API]
-    
-    D --> G[OKD Liquidity Pool]
-    F --> H[Bybit Liquidity Pool]
-    
-    I[Market Data Aggregator] --> J[OKD Market Data]
-    I --> K[Bybit Market Data]
-    
-    style A fill:#e1f5fe
-    style B fill:#f3e5f5
-    style C fill:#fff3e0
-    style E fill:#e8f5e8
-    style F fill:#e8f5e8
+```plantuml
+@startuml
+!theme aws-orange
+
+component "OKD Finance Client" as A #e1f5fe
+component "OKD Gateway API" as B #f3e5f5
+component "Order Router" as C #fff3e0
+component "Internal Matching Engine" as D
+component "Bybit Integration Layer" as E #e8f5e8
+component "Bybit API" as F #e8f5e8
+
+database "OKD Liquidity Pool" as G
+database "Bybit Liquidity Pool" as H
+
+component "Market Data Aggregator" as I
+component "OKD Market Data" as J
+component "Bybit Market Data" as K
+
+A --> B
+B --> C
+C --> D
+C --> E
+E --> F
+
+D --> G
+F --> H
+
+I --> J
+I --> K
+
+@enduml
 ```
 
 ## Поддерживаемые функции
@@ -86,7 +98,7 @@ Content-Type: application/json
   "enable_futures": true,
   "enable_options": false
 }
-```
+``` -->
 
 ### Разрешения API ключа
 
@@ -116,7 +128,7 @@ Content-Type: application/json
     "size_threshold": 10000
   }
 }
-```
+``` -->
 
 ## Маршрутизация ордеров
 
@@ -148,7 +160,7 @@ Content-Type: application/json
     "max_bybit_percentage": 80
   }
 }
-```
+``` -->
 
 #### VWAP (Volume Weighted Average Price)
 ```http
@@ -166,7 +178,7 @@ Content-Type: application/json
     "prefer_internal": true
   }
 }
-```
+``` -->
 
 ## Синхронизация данных
 
@@ -177,7 +189,7 @@ Content-Type: application/json
 ```http
 GET /api/wallet/balance/consolidated
 Authorization: Bearer YOUR_ACCESS_TOKEN
-```
+``` -->
 
 Ответ:
 ```json
@@ -200,14 +212,14 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
     }
   }
 }
-```
+``` -->
 
 ### Синхронизация позиций
 
 ```http
 GET /api/trading/positions/consolidated
 Authorization: Bearer YOUR_ACCESS_TOKEN
-```
+``` -->
 
 ### Синхронизация ордеров
 
@@ -216,7 +228,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 ```http
 GET /api/trading/orders?include_bybit=true
 Authorization: Bearer YOUR_ACCESS_TOKEN
-```
+``` -->
 
 ## Управление рисками
 
@@ -236,14 +248,14 @@ Content-Type: application/json
   "max_open_orders": 50,
   "stop_loss_required": true
 }
-```
+``` -->
 
 ### Мониторинг позиций
 
 ```http
 GET /api/risk/exposure/bybit
 Authorization: Bearer YOUR_ACCESS_TOKEN
-```
+``` -->
 
 ### Автоматическое закрытие позиций
 
@@ -274,7 +286,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
   "quantity": 1.0,
   "analysis_period": "1h"
 }
-```
+``` -->
 
 Ответ:
 ```json
@@ -297,7 +309,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
     "bybit": 0.2
   }
 }
-```
+``` -->
 
 ## Мониторинг и аналитика
 
@@ -306,7 +318,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 ```http
 GET /api/bybit/integration/status
 Authorization: Bearer YOUR_ACCESS_TOKEN
-```
+``` -->
 
 ### Метрики производительности
 
@@ -323,7 +335,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
     "cost_savings"
   ]
 }
-```
+``` -->
 
 ### Отчеты
 
@@ -336,7 +348,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
   "to": "2024-01-31T23:59:59Z",
   "format": "pdf"
 }
-```
+``` -->
 
 ## Устранение неполадок
 
@@ -354,7 +366,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 ```http
 POST /api/wallet/sync/bybit
 Authorization: Bearer YOUR_ACCESS_TOKEN
-```
+``` -->
 
 #### Проблема: Высокая латентность
 **Решение:**
@@ -373,7 +385,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
   "from": "2024-01-15T00:00:00Z",
   "to": "2024-01-15T23:59:59Z"
 }
-```
+``` -->
 
 ## Лучшие практики
 

@@ -55,7 +55,7 @@ console.log(balance);
     "ETH": "2.0"
   }
 }
-```
+``` -->
 
 ### Transfer Between Wallets
 
@@ -66,7 +66,7 @@ const transfer = await okdFinance.transferBetweenWallets({
   fromWallet: 'spot',
   toWallet: 'futures'
 });
-```
+``` -->
 
 ### Transaction History
 
@@ -77,7 +77,7 @@ const history = await okdFinance.getWalletHistory({
   limit: 50,
   startTime: Date.now() - 86400000 // last 24 hours
 });
-```
+``` -->
 
 ## Deposits
 
@@ -93,7 +93,7 @@ console.log(depositAddress);
   "tag": null,
   "network": "BTC"
 }
-```
+``` -->
 
 ### Supported Networks
 
@@ -123,7 +123,7 @@ const withdrawal = await okdFinance.createWithdrawal({
   network: 'BTC',
   tag: null // for assets requiring memo/tag
 });
-```
+``` -->
 
 ### Withdrawal Fees
 
@@ -150,7 +150,7 @@ const enable2FA = await okdFinance.enable2FA({
   type: 'withdrawal',
   secret: 'your-2fa-secret'
 });
-```
+``` -->
 
 ### Address Whitelist
 ```javascript
@@ -160,7 +160,7 @@ const addToWhitelist = await okdFinance.addWithdrawalAddress({
   address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
   label: 'My Hardware Wallet'
 });
-```
+``` -->
 
 ### Notifications
 - Email notifications for all operations
@@ -177,7 +177,7 @@ const webhook = await okdFinance.setWebhook({
   url: 'https://your-server.com/webhook',
   events: ['deposit.confirmed', 'withdrawal.completed']
 });
-```
+``` -->
 
 ### Automatic Transfers
 
@@ -190,7 +190,7 @@ const autoTransfer = await okdFinance.setAutoTransfer({
   threshold: 1000, // transfer when balance > 1000 USDT
   amount: 500 // transfer 500 USDT
 });
-```
+``` -->
 
 ## Staking and Yield
 
@@ -203,7 +203,7 @@ const flexibleStaking = await okdFinance.stake({
   type: 'flexible',
   apy: 5.2 // current yield
 });
-```
+``` -->
 
 ### Fixed Staking
 
@@ -215,7 +215,7 @@ const fixedStaking = await okdFinance.stake({
   duration: 30, // days
   apy: 8.5
 });
-```
+``` -->
 
 ### Yield by Asset
 
@@ -248,7 +248,7 @@ console.log(portfolio);
     }
   ]
 }
-```
+``` -->
 
 ### Reports
 
@@ -258,4 +258,4 @@ const report = await okdFinance.generateWalletReport({
   format: 'pdf',
   includeTransactions: true
 });
-```
+``` -->

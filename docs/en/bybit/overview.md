@@ -33,7 +33,7 @@ OKD Finance provides seamless integration with Bybit Exchange for enhanced tradi
 # 2. Create new API key
 # 3. Set permissions: Read, Trade
 # 4. Whitelist OKD Finance IP addresses
-```
+``` -->
 
 ### 3. Connect to OKD Finance
 ```bash
@@ -44,24 +44,28 @@ curl -X POST "https://api.okd.finance/bybit/connect" \
     "apiSecret": "your_bybit_secret",
     "environment": "mainnet"
   }'
-```
+``` -->
 
 ## Trading Flow
 
-```mermaid
-sequenceDiagram
-    participant Client
-    participant OKD API
-    participant Bybit
-    
-    Client->>OKD API: Place Order
-    OKD API->>OKD API: Validate & Process
-    OKD API->>Bybit: Route Order
-    Bybit-->>OKD API: Order Confirmation
-    OKD API-->>Client: Order Status
-    
-    Bybit->>OKD API: Order Updates
-    OKD API->>Client: Real-time Updates
+```plantuml
+@startuml
+!theme aws-orange
+
+participant "Client" as Client
+participant "OKD API" as OKD_API
+participant "Bybit" as Bybit
+
+Client -> OKD_API: Place Order
+OKD_API -> OKD_API: Validate & Process
+OKD_API -> Bybit: Route Order
+Bybit --> OKD_API: Order Confirmation
+OKD_API --> Client: Order Status
+
+Bybit -> OKD_API: Order Updates
+OKD_API -> Client: Real-time Updates
+
+@enduml
 ```
 
 ## Supported Features
@@ -112,7 +116,7 @@ sequenceDiagram
     }
   }
 }
-```
+``` -->
 
 ## Monitoring and Analytics
 
@@ -143,7 +147,7 @@ curl -X GET "https://api.okd.finance/bybit/status" \
 # Test API connectivity  
 curl -X POST "https://api.okd.finance/bybit/test" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
+``` -->
 
 ## Support
 

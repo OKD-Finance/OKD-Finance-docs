@@ -40,14 +40,14 @@ mkdir okd-finance-example
 cd okd-finance-example
 npm init -y
 npm install axios dotenv
-```
+``` -->
 
 #### Python
 ```bash
 mkdir okd-finance-example
 cd okd-finance-example
 pip install requests python-dotenv
-```
+``` -->
 
 ### Настройка переменных окружения
 
@@ -64,7 +64,7 @@ FIREBASE_UID=your-firebase-uid
 DEVICE_FINGERPRINT=your-unique-device-id
 RECAPTCHA_TOKEN=your-recaptcha-token
 PLATFORM_ID=web
-```
+``` -->
 
 ## Шаг 3: Первый запрос
 
@@ -110,7 +110,7 @@ async function authenticate() {
 authenticate().then(tokens => {
   console.log('Токены получены, можно начинать работу с API!');
 });
-```
+``` -->
 
 #### Python
 ```python
@@ -155,7 +155,7 @@ def authenticate():
 if __name__ == "__main__":
     tokens = authenticate()
     print('Токены получены, можно начинать работу с API!')
-```
+``` -->
 
 ## Шаг 4: Базовые операции
 
@@ -184,7 +184,7 @@ async function getBalance(accessToken) {
     throw error;
   }
 }
-```
+``` -->
 
 ### Получение рыночных данных
 
@@ -210,7 +210,7 @@ async function getMarketData() {
     throw error;
   }
 }
-```
+``` -->
 
 ### Создание тестового ордера
 
@@ -247,7 +247,7 @@ async function createTestOrder(accessToken) {
     throw error;
   }
 }
-```
+``` -->
 
 ## Шаг 5: Полный пример
 
@@ -350,7 +350,7 @@ class OKDQuickStart {
 // Запуск приложения
 const app = new OKDQuickStart();
 app.run();
-```
+``` -->
 
 ## Шаг 6: Следующие шаги
 
@@ -366,7 +366,7 @@ app.run();
 1. **Смените URL на продакшн:**
    ```env
    OKD_API_BASE_URL=https://api.okd.finance/api
-   ```
+   ``` -->
 
 2. **Получите реальные API ключи:**
    - Войдите в панель управления

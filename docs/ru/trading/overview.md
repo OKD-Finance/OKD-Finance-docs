@@ -13,59 +13,63 @@
 
 ### Архитектура торговой системы
 
-```mermaid
-graph TB
-    subgraph "Client Applications"
-        WEB[Web Trading Terminal]
-        MOBILE[Mobile App]
-        API_CLIENT[API Client]
-    end
-    
-    subgraph "OKD Finance Trading Layer"
-        TRADING_API[Trading API]
-        ORDER_MGMT[Order Management]
-        RISK_MGMT[Risk Management]
-        PORTFOLIO[Portfolio Service]
-    end
-    
-    subgraph "Market Data"
-        PRICE_FEED[Price Feed]
-        ORDERBOOK[Order Book]
-        TRADES[Trade History]
-    end
-    
-    subgraph "External Exchange"
-        BYBIT[Bybit Exchange]
-        BYBIT_WS[Bybit WebSocket]
-    end
-    
-    WEB --> TRADING_API
-    MOBILE --> TRADING_API
-    API_CLIENT --> TRADING_API
-    
-    TRADING_API --> ORDER_MGMT
-    TRADING_API --> RISK_MGMT
-    TRADING_API --> PORTFOLIO
-    
-    ORDER_MGMT --> BYBIT
-    PRICE_FEED --> BYBIT_WS
-    ORDERBOOK --> BYBIT_WS
-    TRADES --> BYBIT_WS
+```plantuml
+@startuml
+!theme aws-orange
+
+package "Client Applications" {
+    [Web Trading Terminal] as WEB
+    [Mobile App] as MOBILE
+    [API Client] as API_CLIENT
+}
+
+package "OKD Finance Trading Layer" {
+    [Trading API] as TRADING_API
+    [Order Management] as ORDER_MGMT
+    [Risk Management] as RISK_MGMT
+    [Portfolio Service] as PORTFOLIO
+}
+
+package "Market Data" {
+    [Price Feed] as PRICE_FEED
+    [Order Book] as ORDERBOOK
+    [Trade History] as TRADES
+}
+
+package "External Exchange" {
+    [Bybit Exchange] as BYBIT
+    [Bybit WebSocket] as BYBIT_WS
+}
+
+WEB --> TRADING_API
+MOBILE --> TRADING_API
+API_CLIENT --> TRADING_API
+
+TRADING_API --> ORDER_MGMT
+TRADING_API --> RISK_MGMT
+TRADING_API --> PORTFOLIO
+
+ORDER_MGMT --> BYBIT
+PRICE_FEED --> BYBIT_WS
+ORDERBOOK --> BYBIT_WS
+TRADES --> BYBIT_WS
+
+@enduml
 ```
 
 ## Торговые пары
 
 ### Spot торговля
-```
+``` -->
 BTC/USDT, ETH/USDT, BNB/USDT, ADA/USDT, DOT/USDT,
 SOL/USDT, MATIC/USDT, DOGE/USDT, SHIB/USDT, AVAX/USDT
-```
+``` -->
 
 ### Futures торговля
-```
+``` -->
 BTCUSDT Perpetual, ETHUSDT Perpetual, ADAUSDT Perpetual,
 SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
-```
+``` -->
 
 ## Типы ордеров
 
@@ -77,7 +81,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
   "orderType": "Market",
   "qty": "0.001"
 }
-```
+``` -->
 
 ### Limit Orders
 ```json
@@ -88,7 +92,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
   "qty": "0.001",
   "price": "45000"
 }
-```
+``` -->
 
 ### Stop Loss Orders
 ```json
@@ -99,7 +103,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
   "qty": "0.001",
   "stopPrice": "44000"
 }
-```
+``` -->
 
 ### Take Profit Orders
 ```json
@@ -110,7 +114,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
   "qty": "0.001",
   "stopPrice": "46000"
 }
-```
+``` -->
 
 ## Управление рисками
 
@@ -152,7 +156,7 @@ ws.onmessage = (event) => {
       break;
   }
 };
-```
+``` -->
 
 ### Типы подписок
 - **Prices** - обновления цен
@@ -209,7 +213,7 @@ ws.onmessage = (event) => {
   "permissions": ["read", "trade"],
   "environment": "mainnet"
 }
-```
+``` -->
 
 ## Быстрый старт
 
@@ -218,7 +222,7 @@ ws.onmessage = (event) => {
 curl -X POST "https://api.okd.finance/trading/enable" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
-```
+``` -->
 
 ### 2. Настройка Bybit API
 ```bash
@@ -229,7 +233,7 @@ curl -X POST "https://api.okd.finance/trading/bybit/setup" \
     "apiKey": "your_bybit_api_key",
     "apiSecret": "your_bybit_secret"
   }'
-```
+``` -->
 
 ### 3. Первый ордер
 ```bash
@@ -242,7 +246,7 @@ curl -X POST "https://api.okd.finance/trading/orders" \
     "orderType": "Market",
     "qty": "0.001"
   }'
-```
+``` -->
 
 ## Поддержка
 

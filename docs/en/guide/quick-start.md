@@ -25,7 +25,7 @@ For full trading access, complete identity verification:
 # Get your deposit address
 curl -X GET "https://api.okd.finance/wallets/deposit-address/USDT" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
+``` -->
 
 ### Bank Transfer
 Available in supported regions with full KYC verification.
@@ -47,7 +47,7 @@ const order = await fetch('https://api.okd.finance/trading/orders', {
     qty: '0.001'
   })
 });
-```
+``` -->
 
 ## Step 5: API Integration
 
@@ -61,7 +61,7 @@ const order = await fetch('https://api.okd.finance/trading/orders', {
 ```bash
 curl -X GET "https://api.okd.finance/auth/me" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
+``` -->
 
 ## Next Steps
 

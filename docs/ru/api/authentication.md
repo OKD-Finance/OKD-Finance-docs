@@ -13,10 +13,10 @@
 Регистрация нового пользователя
 
 #### Headers
-```
+``` -->
 Authorization: Bearer <firebase_token>
 Content-Type: application/json
-```
+``` -->
 
 #### Request Body
 ```json
@@ -26,7 +26,7 @@ Content-Type: application/json
   "lastName": "Doe",
   "phone": "+1234567890"
 }
-```
+``` -->
 
 #### Response
 ```json
@@ -45,16 +45,16 @@ Content-Type: application/json
     "refreshToken": "rt_abcdef123456"
   }
 }
-```
+``` -->
 
 ### POST /api/auth/login
 Авторизация пользователя
 
 #### Headers
-```
+``` -->
 Authorization: Bearer <firebase_token>
 Content-Type: application/json
-```
+``` -->
 
 #### Response
 ```json
@@ -74,16 +74,16 @@ Content-Type: application/json
     "refreshToken": "rt_abcdef123456"
   }
 }
-```
+``` -->
 
 ### POST /api/auth/refresh
 Обновление JWT токена
 
 #### Headers
-```
+``` -->
 Authorization: Bearer <firebase_token>
 Content-Type: application/json
-```
+``` -->
 
 #### Response
 ```json
@@ -94,16 +94,16 @@ Content-Type: application/json
     "expiresIn": 3600
   }
 }
-```
+``` -->
 
 ### POST /api/auth/logout
 Выход из системы
 
 #### Headers
-```
+``` -->
 Authorization: Bearer <jwt_token>
 Content-Type: application/json
-```
+``` -->
 
 #### Response
 ```json
@@ -111,15 +111,15 @@ Content-Type: application/json
   "success": true,
   "message": "Successfully logged out"
 }
-```
+``` -->
 
 ### GET /api/auth/me
 Получение информации о текущем пользователе
 
 #### Headers
-```
+``` -->
 Authorization: Bearer <jwt_token>
-```
+``` -->
 
 #### Response
 ```json
@@ -148,16 +148,16 @@ Authorization: Bearer <jwt_token>
     }
   }
 }
-```
+``` -->
 
 ### PUT /api/auth/profile
 Обновление профиля пользователя
 
 #### Headers
-```
+``` -->
 Authorization: Bearer <jwt_token>
 Content-Type: application/json
-```
+``` -->
 
 #### Request Body
 ```json
@@ -174,7 +174,7 @@ Content-Type: application/json
     }
   }
 }
-```
+``` -->
 
 #### Response
 ```json
@@ -199,7 +199,7 @@ Content-Type: application/json
     }
   }
 }
-```
+``` -->
 
 ## Коды ошибок
 
@@ -215,7 +215,7 @@ Content-Type: application/json
     }
   }
 }
-```
+``` -->
 
 ### 401 Unauthorized
 ```json
@@ -226,7 +226,7 @@ Content-Type: application/json
     "message": "Invalid or expired token"
   }
 }
-```
+``` -->
 
 ### 403 Forbidden
 ```json
@@ -237,7 +237,7 @@ Content-Type: application/json
     "message": "Insufficient permissions"
   }
 }
-```
+``` -->
 
 ### 409 Conflict
 ```json
@@ -248,7 +248,7 @@ Content-Type: application/json
     "message": "User with this email already exists"
   }
 }
-```
+``` -->
 
 ### 429 Too Many Requests
 ```json
@@ -260,7 +260,7 @@ Content-Type: application/json
     "retryAfter": 60
   }
 }
-```
+``` -->
 
 ## Rate Limiting
 
@@ -303,7 +303,7 @@ const loginUser = async (firebaseToken) => {
   const result = await response.json();
   return result;
 };
-```
+``` -->
 
 ### Python (requests)
 ```python

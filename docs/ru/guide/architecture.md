@@ -4,53 +4,57 @@ OKD Finance построен на современной микросервис�
 
 ## Компоненты системы
 
-```mermaid
-graph TB
-    subgraph "Frontend Layer"
-        WEB[Web Dashboard]
-        MOBILE[Mobile App]
-        API_DOCS[API Documentation]
-    end
-    
-    subgraph "API Gateway"
-        GATEWAY[Gateway Service]
-        AUTH[Authentication]
-        RATE_LIMIT[Rate Limiting]
-    end
-    
-    subgraph "Core Services"
-        USER[User Service]
-        WALLET[Wallet Service]
-        KYC[KYC Service]
-        TRADING[Trading Service]
-    end
-    
-    subgraph "External Integrations"
-        BYBIT[Bybit Exchange]
-        FIREBASE[Firebase Auth]
-        WEBHOOKS[Webhook Service]
-    end
-    
-    subgraph "Data Layer"
-        POSTGRES[(PostgreSQL)]
-        REDIS[(Redis Cache)]
-        STORAGE[(File Storage)]
-    end
-    
-    WEB --> GATEWAY
-    MOBILE --> GATEWAY
-    GATEWAY --> AUTH
-    GATEWAY --> USER
-    GATEWAY --> WALLET
-    GATEWAY --> KYC
-    GATEWAY --> TRADING
-    
-    TRADING --> BYBIT
-    AUTH --> FIREBASE
-    USER --> POSTGRES
-    WALLET --> POSTGRES
-    KYC --> POSTGRES
-    TRADING --> REDIS
+```plantuml
+@startuml
+!theme aws-orange
+
+package "Frontend Layer" {
+    [Web Dashboard] as WEB
+    [Mobile App] as MOBILE  
+    [API Documentation] as API_DOCS
+}
+
+package "API Gateway" {
+    [Gateway Service] as GATEWAY
+    [Authentication] as AUTH
+    [Rate Limiting] as RATE_LIMIT
+}
+
+package "Core Services" {
+    [User Service] as USER
+    [Wallet Service] as WALLET
+    [KYC Service] as KYC
+    [Trading Service] as TRADING
+}
+
+package "External Integrations" {
+    [Bybit Exchange] as BYBIT
+    [Firebase Auth] as FIREBASE
+    [Webhook Service] as WEBHOOKS
+}
+
+package "Data Layer" {
+    database "PostgreSQL" as POSTGRES
+    database "Redis Cache" as REDIS
+    database "File Storage" as STORAGE
+}
+
+WEB --> GATEWAY
+MOBILE --> GATEWAY
+GATEWAY --> AUTH
+GATEWAY --> USER
+GATEWAY --> WALLET
+GATEWAY --> KYC
+GATEWAY --> TRADING
+
+TRADING --> BYBIT
+AUTH --> FIREBASE
+USER --> POSTGRES
+WALLET --> POSTGRES
+KYC --> POSTGRES
+TRADING --> REDIS
+
+@enduml
 ```
 
 ## Архитектурные принципы

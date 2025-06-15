@@ -36,7 +36,7 @@ const bybitConfig = {
   testnet: false, // true для тестовой сети
   permissions: ['read', 'trade']
 };
-```
+``` -->
 
 ## Настройка в OKD Finance
 
@@ -60,7 +60,7 @@ const bybitConnection = await client.connectBybitAccount({
 });
 
 console.log('Bybit аккаунт подключен:', bybitConnection.connectionId);
-```
+``` -->
 
 ### Проверка подключения
 
@@ -81,7 +81,7 @@ async function verifyBybitConnection() {
     return false;
   }
 }
-```
+``` -->
 
 ## Конфигурация торговых параметров
 
@@ -108,7 +108,7 @@ const tradingConfig = {
 };
 
 await client.updateBybitTradingConfig(tradingConfig);
-```
+``` -->
 
 ### Настройка символов
 
@@ -141,7 +141,7 @@ const symbolConfig = {
 };
 
 await client.updateBybitSymbolConfig(symbolConfig);
-```
+``` -->
 
 ## Настройка WebSocket соединений
 
@@ -183,7 +183,7 @@ wsConnection.on('trade', (data) => {
 wsConnection.on('position', (data) => {
   console.log('Position update:', data);
 });
-```
+``` -->
 
 ## Синхронизация данных
 
@@ -213,7 +213,7 @@ client.on('bybit.sync.success', (data) => {
 client.on('bybit.sync.error', (error) => {
   console.error('Ошибка синхронизации:', error);
 });
-```
+``` -->
 
 ### Ручная синхронизация
 
@@ -229,7 +229,7 @@ await client.syncBybitOrders();
 
 // Полная синхронизация
 await client.fullBybitSync();
-```
+``` -->
 
 ## Настройка уведомлений
 
@@ -262,7 +262,7 @@ const notificationConfig = {
 };
 
 await client.updateBybitNotifications(notificationConfig);
-```
+``` -->
 
 ## Мониторинг и логирование
 
@@ -298,7 +298,7 @@ const loggingConfig = {
 };
 
 await client.configureBybitLogging(loggingConfig);
-```
+``` -->
 
 ### Мониторинг производительности
 
@@ -322,7 +322,7 @@ console.log('API статистика:', apiStats);
 // Мониторинг WebSocket соединения
 const wsStats = await client.getBybitWebSocketStats();
 console.log('WebSocket статистика:', wsStats);
-```
+``` -->
 
 ## Обработка ошибок
 
@@ -350,7 +350,7 @@ const errorHandlingConfig = {
 };
 
 await client.configureBybitErrorHandling(errorHandlingConfig);
-```
+``` -->
 
 ### Обработчики ошибок
 
@@ -375,7 +375,7 @@ client.on('bybit.error', (error) => {
       console.log('Неизвестная ошибка:', error.message);
   }
 });
-```
+``` -->
 
 ## Тестирование конфигурации
 
@@ -424,7 +424,7 @@ async function runTests() {
     console.error('Ошибка в тестах:', error);
   }
 }
-```
+``` -->
 
 ## Миграция с других бирж
 
@@ -442,7 +442,7 @@ const bybitConfig = await client.convertToBybitConfig(binanceConfig);
 
 // Применение конфигурации
 await client.applyBybitConfig(bybitConfig);
-```
+``` -->
 
 ## Резервное копирование
 
@@ -459,6 +459,6 @@ fs.writeFileSync('bybit-config-backup.json', JSON.stringify(configBackup, null, 
 // Восстановление из резервной копии
 const backupData = JSON.parse(fs.readFileSync('bybit-config-backup.json'));
 await client.restoreBybitConfig(backupData);
-```
+``` -->
 
 Эта конфигурация обеспечивает полную интеграцию с Bybit и позволяет эффективно управлять торговыми операциями через единый интерфейс OKD Finance.

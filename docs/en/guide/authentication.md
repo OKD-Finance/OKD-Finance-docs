@@ -60,7 +60,7 @@ const config = {
 
 // Initialize OKD Finance with credentials
 const okdFinance = new OKDFinance(config);
-```
+``` -->
 
 ### Environment Variables
 
@@ -80,7 +80,7 @@ OKX_PASSPHRASE=your_okx_passphrase
 
 # Optional: for testnet environments
 TESTNET_MODE=false
-```
+``` -->
 
 ## Authentication Methods
 
@@ -125,7 +125,7 @@ class AuthenticationManager {
     };
   }
 }
-```
+``` -->
 
 ### JWT Token Authentication
 
@@ -171,7 +171,7 @@ class JWTAuthManager {
     };
   }
 }
-```
+``` -->
 
 ## Security Best Practices
 
@@ -234,7 +234,7 @@ class SecureKeyManager {
     };
   }
 }
-```
+``` -->
 
 ### Rate Limiting and Request Management
 
@@ -284,7 +284,7 @@ class RateLimitManager {
     }
   }
 }
-```
+``` -->
 
 ### IP Whitelisting
 
@@ -354,7 +354,7 @@ class IPWhitelistManager {
     });
   }
 }
-```
+``` -->
 
 ## Multi-Exchange Authentication
 
@@ -435,7 +435,7 @@ class UnifiedAuthManager {
     }
   }
 }
-```
+``` -->
 
 ### Exchange-Specific Authentication
 
@@ -508,7 +508,7 @@ class OKXAuth extends AuthenticationManager {
     };
   }
 }
-```
+``` -->
 
 ## Error Handling and Recovery
 
@@ -602,7 +602,7 @@ class AuthErrorHandler {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
-```
+``` -->
 
 ## Testing Authentication
 
@@ -732,4 +732,4 @@ class AuthTestSuite {
 const authManager = new UnifiedAuthManager();
 const testSuite = new AuthTestSuite(authManager);
 testSuite.runAllTests();
-```
+``` -->

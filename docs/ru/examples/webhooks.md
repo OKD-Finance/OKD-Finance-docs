@@ -60,7 +60,7 @@ app.post('/webhook', verifyWebhookSignature, (req, res) => {
 app.listen(3000, () => {
   console.log('Webhook сервер запущен на порту 3000');
 });
-```
+``` -->
 
 ### Регистрация webhook в OKD Finance
 
@@ -93,7 +93,7 @@ async function setupWebhook() {
     console.error('Ошибка создания webhook:', error);
   }
 }
-```
+``` -->
 
 ## Обработка событий
 
@@ -134,7 +134,7 @@ function handleWebhookEvent(event, data) {
       console.log(`Неизвестное событие: ${event}`);
   }
 }
-```
+``` -->
 
 ### Обработка исполнения ордеров
 
@@ -208,7 +208,7 @@ async function updateTradingStats(trade) {
     await database.stats.update({ symbol: trade.symbol }, stats);
   }
 }
-```
+``` -->
 
 ### Обработка изменений баланса
 
@@ -270,7 +270,7 @@ async function checkAutoTriggers(asset, balance) {
     }
   }
 }
-```
+``` -->
 
 ### Обработка депозитов
 
@@ -326,7 +326,7 @@ async function handlePostDepositActions(asset, amount) {
     await autoStake(asset, amount, stakingSettings);
   }
 }
-```
+``` -->
 
 ## Уведомления и алерты
 
@@ -395,7 +395,7 @@ function getEmailTemplate(type, data) {
     html: `<p>${JSON.stringify(data)}</p>`
   };
 }
-```
+``` -->
 
 ### Telegram уведомления
 
@@ -432,7 +432,7 @@ function formatTelegramMessage(type, message, data) {
   
   return `${emoji[type] || '📢'} *${message}*\n\n\`\`\`json\n${JSON.stringify(data, null, 2)}\n\`\`\``;
 }
-```
+``` -->
 
 ### Discord уведомления
 
@@ -478,7 +478,7 @@ function createDiscordEmbed(type, message, data) {
     timestamp: new Date().toISOString()
   };
 }
-```
+``` -->
 
 ## Обработка ошибок и повторные попытки
 
@@ -572,7 +572,7 @@ const processor = new WebhookProcessor();
 setInterval(() => {
   processor.processRetryQueue();
 }, 30000);
-```
+``` -->
 
 ## Мониторинг и логирование
 
@@ -612,7 +612,7 @@ function logWebhookEvent(event, data, status = 'success', error = null) {
     logger.info('Webhook processed successfully', logData);
   }
 }
-```
+``` -->
 
 ### Метрики и мониторинг
 
@@ -671,7 +671,7 @@ const metrics = new WebhookMetrics();
 app.get('/webhook/metrics', (req, res) => {
   res.json(metrics.getMetrics());
 });
-```
+``` -->
 
 ## Тестирование Webhooks
 
@@ -683,7 +683,7 @@ npm install -g ngrok
 
 # Запуск туннеля
 ngrok http 3000
-```
+``` -->
 
 ```javascript
 // Тестовый webhook endpoint
@@ -734,7 +734,7 @@ function generateSignature(data) {
     .update(payload)
     .digest('hex');
 }
-```
+``` -->
 
 ### Автоматические тесты
 
@@ -776,6 +776,6 @@ describe('Webhook Tests', () => {
     expect(response.status).toBe(401);
   });
 });
-```
+``` -->
 
 Эти примеры показывают полную реализацию системы webhooks для OKD Finance, включая обработку событий, уведомления, обработку ошибок и мониторинг.

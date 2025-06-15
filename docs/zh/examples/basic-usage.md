@@ -14,7 +14,7 @@ OKD Finance 提供统一的 API 接口，支持多个交易所的交易功能。
 npm install okd-finance-sdk
 # 或者
 yarn add okd-finance-sdk
-```
+``` -->
 
 ### 初始化客户端
 
@@ -26,7 +26,7 @@ const client = new OKDClient({
     apiSecret: 'your-api-secret',
     sandbox: true // 测试环境
 });
-```
+``` -->
 
 ## 基础 API 调用
 
@@ -45,7 +45,7 @@ async function getAccountInfo() {
 
 // 调用示例
 getAccountInfo();
-```
+``` -->
 
 **响应示例:**
 ```json
@@ -70,7 +70,7 @@ getAccountInfo();
         "timestamp": 1703123456789
     }
 }
-```
+``` -->
 
 ### 获取市场数据
 
@@ -97,7 +97,7 @@ async function getMarketData(symbol) {
 
 // 调用示例
 getMarketData('BTCUSDT');
-```
+``` -->
 
 ### 下单交易
 
@@ -147,7 +147,7 @@ const limitSellOrder = {
 
 // 调用示例
 placeOrder(marketBuyOrder);
-```
+``` -->
 
 ## WebSocket 实时数据
 
@@ -247,7 +247,7 @@ class MarketDataStream {
 const stream = new MarketDataStream('your-api-key', 'your-api-secret');
 stream.connect();
 stream.subscribe(['ticker.BTCUSDT', 'orderbook.ETHUSDT', 'orders']);
-```
+``` -->
 
 ## 错误处理
 
@@ -296,7 +296,7 @@ async function safeApiCall(apiFunction) {
         throw error;
     }
 }
-```
+``` -->
 
 ### 重试机制
 
@@ -316,7 +316,7 @@ async function withRetry(fn, maxRetries = 3, delay = 1000) {
 
 // 使用示例
 const result = await withRetry(() => client.market.getTicker('BTCUSDT'));
-```
+``` -->
 
 ## 完整交易示例
 
@@ -437,7 +437,7 @@ bot.start();
 
 // 停止机器人
 // setTimeout(() => bot.stop(), 60000); // 1分钟后停止
-```
+``` -->
 
 ## 最佳实践
 
@@ -449,7 +449,7 @@ const client = new OKDClient({
     apiSecret: process.env.OKD_API_SECRET,
     sandbox: process.env.NODE_ENV !== 'production'
 });
-```
+``` -->
 
 ### 2. 请求频率控制
 ```javascript
@@ -479,7 +479,7 @@ const rateLimiter = new RateLimiter(100, 60000); // 每分钟100次请求
 // 在 API 调用前使用
 await rateLimiter.waitIfNeeded();
 const result = await client.market.getTicker('BTCUSDT');
-```
+``` -->
 
 ### 3. 数据验证
 ```javascript
@@ -501,7 +501,7 @@ function validateOrderData(order) {
     
     return true;
 }
-```
+``` -->
 
 ### 4. 日志记录
 ```javascript
@@ -518,7 +518,7 @@ const logger = winston.createLogger({
 
 // 在交易操作中使用
 logger.info('下单', { symbol: 'BTCUSDT', side: 'buy', quantity: '0.001' });
-```
+``` -->
 
 ## 常见问题
 

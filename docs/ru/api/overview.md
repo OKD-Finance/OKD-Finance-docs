@@ -7,14 +7,14 @@ OKD Finance предоставляет мощный RESTful API для инте�
 ### Базовые URL
 
 **Продакшн:**
-```
+``` -->
 https://api.okd.finance/api
-```
+``` -->
 
 **Демо/Разработка:**
-```
+``` -->
 https://develop.okd.finance/api
-```
+``` -->
 
 ::: tip Демо-окружение
 Используйте демо-окружение для тестирования и разработки. Демо API содержит тестовые данные и интегрирован с Bybit testnet.
@@ -44,14 +44,14 @@ Content-Type: application/json
 Fingerprint: your-device-unique-id
 X-RECAPTCHA: your-recaptcha-token
 X-PLATFORM-ID: your-platform-id
-```
+``` -->
 
 ```json
 {
   "token": "firebase-token",
   "uid": "firebase-uid"
 }
-```
+``` -->
 
 #### JWT Tokens
 После успешной аутентификации получите JWT токены:
@@ -61,7 +61,7 @@ X-PLATFORM-ID: your-platform-id
   "acc_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
-```
+``` -->
 
 ### Заголовки аутентификации
 Все защищенные запросы должны включать:
@@ -70,7 +70,7 @@ X-PLATFORM-ID: your-platform-id
 Authorization: Bearer YOUR_ACCESS_TOKEN
 Content-Type: application/json
 Fingerprint: your-device-unique-id
-```
+``` -->
 
 ## Основные службы
 
@@ -83,7 +83,7 @@ POST   /api/trading/order          # Создать ордер
 GET    /api/trading/orders         # Список ордеров
 GET    /api/wallet/balance         # Баланс кошелька
 POST   /api/wallet/withdraw        # Создать вывод
-```
+``` -->
 
 ### Admin API
 Административные функции:
@@ -92,7 +92,7 @@ POST   /api/wallet/withdraw        # Создать вывод
 GET    /admin/users                # Управление пользователями
 POST   /admin/system/maintenance   # Системное обслуживание
 GET    /admin/trading/stats        # Торговая статистика
-```
+``` -->
 
 ### External Gateway
 API для внешних интеграций:
@@ -101,7 +101,7 @@ API для внешних интеграций:
 POST   /extapi/webhook/bybit       # Webhook от Bybit
 GET    /extapi/market/data         # Рыночные данные
 POST   /extapi/trading/sync        # Синхронизация торговли
-```
+``` -->
 
 ## Ограничения скорости
 
@@ -116,7 +116,7 @@ POST   /extapi/trading/sync        # Синхронизация торговли
 X-RateLimit-Limit: 1000
 X-RateLimit-Remaining: 999
 X-RateLimit-Reset: 1640995200
-```
+``` -->
 
 ### Превышение лимитов
 При превышении лимитов API возвращает статус `429 Too Many Requests`:
@@ -130,7 +130,7 @@ X-RateLimit-Reset: 1640995200
     "reset_at": "2024-01-15T12:00:00Z"
   }
 }
-```
+``` -->
 
 ## Структура ответов
 
@@ -143,7 +143,7 @@ X-RateLimit-Reset: 1640995200
   },
   "timestamp": "2024-01-15T10:30:00Z"
 }
-```
+``` -->
 
 ### Ошибки
 ```json
@@ -155,7 +155,7 @@ X-RateLimit-Reset: 1640995200
     "reason": "Неверный формат email"
   }
 }
-```
+``` -->
 
 ## HTTP статус коды
 
@@ -180,7 +180,7 @@ POST   /auth/signin                # Вход в систему
 POST   /auth/signup                # Регистрация
 POST   /auth/refresh               # Обновление токена
 POST   /auth/logout                # Выход из системы
-```
+``` -->
 
 ### Профиль пользователя
 ```http
@@ -189,7 +189,7 @@ PUT    /user/profile               # Обновить профиль
 POST   /user/avatar                # Загрузить аватар
 GET    /user/settings              # Настройки
 PUT    /user/settings              # Обновить настройки
-```
+``` -->
 
 ### KYC (Верификация)
 ```http
@@ -197,7 +197,7 @@ POST   /kyc/start                  # Начать верификацию
 POST   /kyc/document               # Загрузить документ
 GET    /kyc/status                 # Статус верификации
 POST   /kyc/selfie                 # Загрузить селфи
-```
+``` -->
 
 ### Кошельки и активы
 ```http
@@ -206,7 +206,7 @@ POST   /wallet/deposit             # Создать депозит
 POST   /wallet/withdraw            # Создать вывод
 GET    /wallet/transactions        # История транзакций
 GET    /wallet/addresses           # Адреса для депозитов
-```
+``` -->
 
 ### Торговля
 ```http
@@ -215,7 +215,7 @@ GET    /trading/orders             # Список ордеров
 DELETE /trading/order/{id}         # Отменить ордер
 GET    /trading/trades             # История сделок
 GET    /trading/positions          # Открытые позиции
-```
+``` -->
 
 ### Рыночные данные
 ```http
@@ -224,14 +224,14 @@ GET    /market/orderbook           # Стакан заявок
 GET    /market/trades              # Последние сделки
 GET    /market/candles             # Свечи
 GET    /market/symbols             # Торговые пары
-```
+``` -->
 
 ## Пагинация
 
 ### Параметры запроса
 ```http
 GET /trading/orders?page=1&limit=50&sort=created_at&order=desc
-```
+``` -->
 
 ### Параметры
 - `page`: Номер страницы (по умолчанию: 1)
@@ -253,14 +253,14 @@ GET /trading/orders?page=1&limit=50&sort=created_at&order=desc
     "pages": 8
   }
 }
-```
+``` -->
 
 ## Фильтрация
 
 ### Параметры фильтрации
 ```http
 GET /trading/orders?status=active&symbol=BTC/USDT&from=2024-01-01&to=2024-01-31
-```
+``` -->
 
 ### Доступные фильтры
 - `status`: Статус ордера
@@ -282,7 +282,7 @@ Content-Type: application/json
   "events": ["order.filled", "order.cancelled", "deposit.confirmed"],
   "secret": "your-webhook-secret"
 }
-```
+``` -->
 
 ### Типы событий
 - `order.created` - Ордер создан
@@ -305,18 +305,18 @@ Content-Type: application/json
   "bybit_order_id": "bybit-order-id",
   "status": "filled"
 }
-```
+``` -->
 
 ### Получение рыночных данных
 ```http
 GET /bybit/market/ticker?symbol=BTCUSDT
-```
+``` -->
 
 ### Управление позициями
 ```http
 GET /bybit/position/list
 POST /bybit/position/close
-```
+``` -->
 
 ## Коды ошибок
 

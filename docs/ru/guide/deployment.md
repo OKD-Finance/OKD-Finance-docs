@@ -30,7 +30,7 @@ vim .env
 
 # Запустить с Docker Compose
 docker-compose up -d
-```
+``` -->
 
 ### Конфигурация окружения
 ```bash
@@ -40,7 +40,7 @@ REDIS_URL=redis://redis:6379
 BYBIT_API_KEY=your_bybit_key
 FIREBASE_PROJECT_ID=your_firebase_project
 JWT_SECRET=your_jwt_secret
-```
+``` -->
 
 ## Kubernetes развертывание
 
@@ -51,7 +51,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: okd-finance
-```
+``` -->
 
 ### ConfigMap и Secrets
 ```yaml
@@ -77,7 +77,7 @@ stringData:
   DATABASE_PASSWORD: "secure_password"
   BYBIT_API_KEY: "your_api_key"
   JWT_SECRET: "your_jwt_secret"
-```
+``` -->
 
 ### Сервисы
 ```yaml
@@ -94,7 +94,7 @@ spec:
     - port: 80
       targetPort: 3000
   type: LoadBalancer
-```
+``` -->
 
 ## Мониторинг
 
@@ -108,7 +108,7 @@ scrape_configs:
   - job_name: 'okd-finance'
     static_configs:
       - targets: ['gateway:3000', 'user:3001', 'wallet:3002']
-```
+``` -->
 
 ### Grafana дашборды
 - API Metrics
@@ -122,7 +122,7 @@ scrape_configs:
 ```bash
 # Let's Encrypt с certbot
 certbot --nginx -d api.okd.finance
-```
+``` -->
 
 ### Firewall правила
 ```bash
@@ -132,7 +132,7 @@ ufw allow 80/tcp
 ufw allow 443/tcp
 ufw deny incoming
 ufw allow outgoing
-```
+``` -->
 
 ### Backup стратегия
 ```bash
@@ -140,7 +140,7 @@ ufw allow outgoing
 # backup.sh
 pg_dump $DATABASE_URL > backup_$(date +%Y%m%d).sql
 aws s3 cp backup_$(date +%Y%m%d).sql s3://okd-backups/
-```
+``` -->
 
 ## Масштабирование
 
@@ -175,7 +175,7 @@ jobs:
           docker build -t okd-finance .
           docker push registry/okd-finance:latest
           kubectl rollout restart deployment/gateway
-```
+``` -->
 
 ## Troubleshooting
 
@@ -186,7 +186,7 @@ docker-compose logs -f gateway
 
 # Kubernetes logs  
 kubectl logs -f deployment/gateway -n okd-finance
-```
+``` -->
 
 ### Health checks
-```
+``` -->

@@ -16,7 +16,7 @@ const marketOrder = await okdFinance.createOrder('bybit', {
   side: 'buy',
   amount: 0.1
 });
-```
+``` -->
 
 ### Limit Orders (Лимитные ордера)
 Исполняются только при достижении указанной цены:
@@ -29,7 +29,7 @@ const limitOrder = await okdFinance.createOrder('binance', {
   amount: 1.0,
   price: 3500
 });
-```
+``` -->
 
 ### Stop Orders (Стоп-ордера)
 Активируются при достижении стоп-цены:
@@ -43,7 +43,7 @@ const stopOrder = await okdFinance.createOrder('okx', {
   stopPrice: 44000,
   price: 43900 // лимитная цена после активации
 });
-```
+``` -->
 
 ### Stop-Limit Orders
 Комбинация стоп и лимитного ордера:
@@ -57,7 +57,7 @@ const stopLimitOrder = await okdFinance.createOrder('bybit', {
   stopPrice: 0.52,
   price: 0.525
 });
-```
+``` -->
 
 ## Расширенные типы ордеров
 
@@ -73,7 +73,7 @@ const ocoOrder = await okdFinance.createOCOOrder('binance', {
   stopPrice: 44000, // стоп-цена
   stopLimitPrice: 43900 // лимитная цена стоп-ордера
 });
-```
+``` -->
 
 ### Iceberg Orders
 Скрытие большого объема путем показа только части:
@@ -87,7 +87,7 @@ const icebergOrder = await okdFinance.createOrder('bybit', {
   price: 3400,
   icebergQty: 1.0 // показывать только 1 ETH
 });
-```
+``` -->
 
 ### Trailing Stop Orders
 Стоп-ордер, следующий за ценой на заданном расстоянии:
@@ -100,7 +100,7 @@ const trailingStop = await okdFinance.createOrder('okx', {
   amount: 0.2,
   callbackRate: 0.02 // 2% от максимальной цены
 });
-```
+``` -->
 
 ## Параметры времени исполнения
 
@@ -116,7 +116,7 @@ const gtcOrder = await okdFinance.createOrder('binance', {
   price: 44000,
   timeInForce: 'GTC'
 });
-```
+``` -->
 
 ### Immediate or Cancel (IOC)
 Исполнить немедленно или отменить:
@@ -130,7 +130,7 @@ const iocOrder = await okdFinance.createOrder('bybit', {
   price: 3500,
   timeInForce: 'IOC'
 });
-```
+``` -->
 
 ### Fill or Kill (FOK)
 Исполнить полностью или отменить:
@@ -144,7 +144,7 @@ const fokOrder = await okdFinance.createOrder('okx', {
   price: 0.50,
   timeInForce: 'FOK'
 });
-```
+``` -->
 
 ## Управление ордерами
 
@@ -163,7 +163,7 @@ const orderHistory = await okdFinance.getOrderHistory('okx', {
   limit: 100,
   from: Date.now() - 86400000 // последние 24 часа
 });
-```
+``` -->
 
 ### Отмена ордеров
 
@@ -176,7 +176,7 @@ await okdFinance.cancelAllOrders('bybit', 'BTCUSDT');
 
 // Отмена всех ордеров на бирже
 await okdFinance.cancelAllOrders('okx');
-```
+``` -->
 
 ### Изменение ордеров
 
@@ -189,7 +189,7 @@ const modifiedOrder = await okdFinance.modifyOrder('binance', 'order_id_123', {
 
 // Изменение только цены
 await okdFinance.modifyOrderPrice('bybit', 'order_id_456', 3600);
-```
+``` -->
 
 ## Условные ордера
 
@@ -203,7 +203,7 @@ const scheduledOrder = await okdFinance.createScheduledOrder('binance', {
   amount: 0.1,
   executeAt: Date.now() + 3600000 // через час
 });
-```
+``` -->
 
 ### Ордера по индикаторам
 
@@ -220,7 +220,7 @@ const indicatorOrder = await okdFinance.createConditionalOrder('bybit', {
     value: 30
   }
 });
-```
+``` -->
 
 ### Ордера по событиям
 
@@ -237,7 +237,7 @@ const eventOrder = await okdFinance.createEventOrder('okx', {
     sentiment: 'negative'
   }
 });
-```
+``` -->
 
 ## Алгоритмические ордера
 
@@ -252,7 +252,7 @@ const dcaOrder = await okdFinance.createDCAOrder('binance', {
   duration: 30, // 30 дней
   priceDeviation: 0.05 // 5% отклонение от средней цены
 });
-```
+``` -->
 
 ### Grid Trading
 
@@ -265,7 +265,7 @@ const gridOrder = await okdFinance.createGridOrder('bybit', {
   investment: 5000,
   mode: 'arithmetic' // arithmetic или geometric
 });
-```
+``` -->
 
 ### Smart Order Routing
 
@@ -278,7 +278,7 @@ const smartOrder = await okdFinance.createSmartOrder('multi', {
   exchanges: ['binance', 'bybit', 'okx'],
   strategy: 'best_price' // best_price, liquidity, speed
 });
-```
+``` -->
 
 ## Мониторинг и уведомления
 
@@ -299,7 +299,7 @@ ws.on('orderUpdate', (data) => {
   //   fee: 0.045
   // }
 });
-```
+``` -->
 
 ### Уведомления
 
@@ -316,7 +316,7 @@ await okdFinance.setNotifications({
     telegram: true
   }
 });
-```
+``` -->
 
 ## Анализ исполнения
 
@@ -336,7 +336,7 @@ console.log(metrics);
 //   slippage: 0.03,
 //   fees: 15.67
 // }
-```
+``` -->
 
 ### Сравнительный анализ
 
@@ -348,7 +348,7 @@ const comparison = await okdFinance.compareExchanges({
   exchanges: ['binance', 'bybit', 'okx'],
   metrics: ['price', 'fees', 'speed', 'slippage']
 });
-```
+``` -->
 
 ## Управление рисками
 
@@ -369,7 +369,7 @@ const orderWithSL = await okdFinance.createOrder('bybit', {
     value: 0.10 // 10% тейк-профит
   }
 });
-```
+``` -->
 
 ### Лимиты позиций
 
@@ -381,7 +381,7 @@ await okdFinance.setPositionLimits('binance', {
   maxOrderSize: 2.0,
   symbols: ['BTCUSDT', 'ETHUSDT']
 });
-```
+``` -->
 
 ## Бэктестинг стратегий
 
@@ -410,4 +410,4 @@ console.log(backtest.results);
 //   sharpeRatio: 1.2,
 //   winRate: 0.67
 // }
-```
+``` -->

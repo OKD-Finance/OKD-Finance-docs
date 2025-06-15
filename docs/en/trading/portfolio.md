@@ -26,7 +26,7 @@ await portfolio.addAccount('bybit', {
   apiKey: 'your_bybit_key',
   apiSecret: 'your_bybit_secret'
 });
-```
+``` -->
 
 ### Portfolio Composition
 
@@ -61,7 +61,7 @@ console.log(composition);
 //   ],
 //   lastUpdated: 1640995200000
 // }
-```
+``` -->
 
 ## Real-time Monitoring
 
@@ -151,7 +151,7 @@ class PortfolioDashboard {
     return Math.min(100, totalRisk * 1000);
   }
 }
-```
+``` -->
 
 ### Performance Tracking
 
@@ -279,7 +279,7 @@ class PerformanceTracker {
     return parseInt(number) * units[unit];
   }
 }
-```
+``` -->
 
 ## Asset Allocation
 
@@ -396,7 +396,7 @@ class AssetAllocator {
     return 'Other';
   }
 }
-```
+``` -->
 
 ### Automated Rebalancing
 
@@ -587,7 +587,7 @@ class AutoRebalancer {
     console.log('Rebalance notification:', message);
   }
 }
-```
+``` -->
 
 ## Risk Management
 
@@ -791,7 +791,7 @@ class PortfolioRiskManager {
     return recommendations;
   }
 }
-```
+``` -->
 
 ## Reporting and Analytics
 
@@ -895,4 +895,4 @@ class PortfolioReporter {
     return csvContent;
   }
 }
-```
+``` -->

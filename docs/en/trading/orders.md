@@ -19,7 +19,7 @@ Execute immediately at the best available price.
     "quantity": "0.001",
     "exchange": "bybit"
 }
-```
+``` -->
 
 ### Limit Orders
 Execute only at specified price or better.
@@ -34,7 +34,7 @@ Execute only at specified price or better.
     "exchange": "bybit",
     "timeInForce": "GTC"
 }
-```
+``` -->
 
 ### Stop Orders
 Trigger when price reaches specified level.
@@ -48,7 +48,7 @@ Trigger when price reaches specified level.
     "stopPrice": "42000.00",
     "exchange": "bybit"
 }
-```
+``` -->
 
 ### Stop-Limit Orders
 Combine stop and limit order features.
@@ -64,14 +64,14 @@ Combine stop and limit order features.
     "exchange": "bybit",
     "timeInForce": "GTC"
 }
-```
+``` -->
 
 ## Order Placement
 
 ### Place New Order
 ```http
 POST /api/v1/trading/orders
-```
+``` -->
 
 **Request Body:**
 ```json
@@ -85,7 +85,7 @@ POST /api/v1/trading/orders
     "timeInForce": "GTC",
     "clientOrderId": "my-order-123"
 }
-```
+``` -->
 
 **Response:**
 ```json
@@ -107,12 +107,12 @@ POST /api/v1/trading/orders
         "cummulativeQuoteQty": "0.00"
     }
 }
-```
+``` -->
 
 ### Batch Order Placement
 ```http
 POST /api/v1/trading/orders/batch
-```
+``` -->
 
 **Request Body:**
 ```json
@@ -137,14 +137,14 @@ POST /api/v1/trading/orders/batch
     ],
     "exchange": "bybit"
 }
-```
+``` -->
 
 ## Order Management
 
 ### Get Order Status
 ```http
 GET /api/v1/trading/orders/{orderId}
-```
+``` -->
 
 **Response:**
 ```json
@@ -176,22 +176,22 @@ GET /api/v1/trading/orders/{orderId}
         ]
     }
 }
-```
+``` -->
 
 ### Get Open Orders
 ```http
 GET /api/v1/trading/orders/open?symbol=BTCUSDT&exchange=bybit
-```
+``` -->
 
 ### Get Order History
 ```http
 GET /api/v1/trading/orders/history?symbol=BTCUSDT&exchange=bybit&limit=100
-```
+``` -->
 
 ### Cancel Order
 ```http
 DELETE /api/v1/trading/orders/{orderId}
-```
+``` -->
 
 **Response:**
 ```json
@@ -205,17 +205,17 @@ DELETE /api/v1/trading/orders/{orderId}
         "timestamp": 1703123456789
     }
 }
-```
+``` -->
 
 ### Cancel All Orders
 ```http
 DELETE /api/v1/trading/orders/all?symbol=BTCUSDT&exchange=bybit
-```
+``` -->
 
 ### Modify Order
 ```http
 PUT /api/v1/trading/orders/{orderId}
-```
+``` -->
 
 **Request Body:**
 ```json
@@ -223,7 +223,7 @@ PUT /api/v1/trading/orders/{orderId}
     "quantity": "0.002",
     "price": "43500.00"
 }
-```
+``` -->
 
 ## Order Status Types
 
@@ -261,7 +261,7 @@ Break large orders into smaller chunks to hide order size.
     "icebergQty": "0.1",
     "exchange": "bybit"
 }
-```
+``` -->
 
 ### Bracket Orders
 Combine entry, profit target, and stop loss in one order.
@@ -277,7 +277,7 @@ Combine entry, profit target, and stop loss in one order.
     "stopLossPrice": "41000.00",
     "exchange": "bybit"
 }
-```
+``` -->
 
 ### Trailing Stop Orders
 Automatically adjust stop price as market moves favorably.
@@ -291,7 +291,7 @@ Automatically adjust stop price as market moves favorably.
     "callbackRate": "0.02",
     "exchange": "bybit"
 }
-```
+``` -->
 
 ## Order Validation
 
@@ -319,7 +319,7 @@ if (validation.valid) {
 } else {
     console.error('Order validation failed:', validation.errors);
 }
-```
+``` -->
 
 ## Error Handling
 
@@ -349,7 +349,7 @@ if (validation.valid) {
         }
     }
 }
-```
+``` -->
 
 ## WebSocket Order Updates
 
@@ -373,7 +373,7 @@ ws.onmessage = function(event) {
         console.log('Order update:', data.order);
     }
 };
-```
+``` -->
 
 ### Order Update Events
 ```json
@@ -388,7 +388,7 @@ ws.onmessage = function(event) {
         "avgPrice": "43000.00"
     }
 }
-```
+``` -->
 
 ## Best Practices
 
@@ -475,7 +475,7 @@ const order = await orderManager.placeOrder({
 });
 
 console.log('Order placed:', order.orderId);
-```
+``` -->
 
 ## Rate Limits
 

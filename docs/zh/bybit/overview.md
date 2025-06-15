@@ -50,7 +50,7 @@ const client = new OKDClient({
         }
     }
 });
-```
+``` -->
 
 ### 2. 获取账户信息
 
@@ -64,7 +64,7 @@ async function getBybitAccount() {
         console.error('获取账户信息失败:', error);
     }
 }
-```
+``` -->
 
 ### 3. 下单交易
 
@@ -88,7 +88,7 @@ async function placeBybitOrder() {
         console.error('下单失败:', error);
     }
 }
-```
+``` -->
 
 ## 账户管理
 
@@ -114,7 +114,7 @@ async function getBalances() {
         console.error('获取余额失败:', error);
     }
 }
-```
+``` -->
 
 ### 资金划转
 
@@ -134,7 +134,7 @@ async function transferFunds() {
         console.error('资金划转失败:', error);
     }
 }
-```
+``` -->
 
 ## 现货交易
 
@@ -182,7 +182,7 @@ const buyOrder = await spotTrading.placeSpotOrder({
     quantity: '0.001',
     price: '43000.00'
 });
-```
+``` -->
 
 ## 衍生品交易
 
@@ -246,7 +246,7 @@ const longOrder = await derivativeTrading.placePerpetualOrder({
     type: 'market',
     quantity: '0.01'
 });
-```
+``` -->
 
 ## 市场数据
 
@@ -343,7 +343,7 @@ class BybitMarketData {
 // 使用示例
 const marketData = new BybitMarketData(client);
 marketData.connectWebSocket();
-```
+``` -->
 
 ## 风险管理
 
@@ -419,7 +419,7 @@ class BybitRiskManager {
         });
     }
 }
-```
+``` -->
 
 ## 高级功能
 
@@ -456,7 +456,7 @@ async function batchOrderOperations() {
         console.error('批量下单失败:', error);
     }
 }
-```
+``` -->
 
 ### 条件订单
 
@@ -482,7 +482,7 @@ async function placeConditionalOrder() {
         console.error('条件订单失败:', error);
     }
 }
-```
+``` -->
 
 ## 错误处理
 
@@ -511,7 +511,7 @@ class BybitErrorHandler {
         }
     }
 }
-```
+``` -->
 
 ## 性能优化
 
@@ -544,7 +544,7 @@ class BybitConnectionManager {
         this.connections.clear();
     }
 }
-```
+``` -->
 
 ## 监控和日志
 
@@ -604,7 +604,7 @@ class BybitMonitor {
         console.log('交易指标:', this.metrics);
     }
 }
-```
+``` -->
 
 ## 最佳实践
 

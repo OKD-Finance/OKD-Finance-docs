@@ -25,7 +25,7 @@ console.log(ticker);
 
 // Получение всех тикеров
 const allTickers = await okdFinance.getAllTickers('bybit');
-```
+``` -->
 
 ### Стакан заявок
 Информация о текущих заявках на покупку и продажу:
@@ -42,7 +42,7 @@ console.log(orderbook);
 
 // Ограниченный стакан (топ 20 уровней)
 const limitedOrderbook = await okdFinance.getOrderBook('bybit', 'BTCUSDT', 20);
-```
+``` -->
 
 ### Исторические свечи
 Данные OHLCV для технического анализа:
@@ -57,7 +57,7 @@ const candles = await okdFinance.getCandles('bybit', 'BTCUSDT', '1h', {
 console.log(candles[0]);
 // [timestamp, open, high, low, close, volume]
 // [1640995200000, 44500, 45200, 44300, 45000, 123.45]
-```
+``` -->
 
 Поддерживаемые интервалы:
 - `1m`, `3m`, `5m`, `15m`, `30m` - минутные
@@ -78,7 +78,7 @@ console.log(trades[0]);
 //   amount: 0.1,
 //   side: 'buy'
 // }
-```
+``` -->
 
 ## WebSocket потоки
 
@@ -98,7 +98,7 @@ ws.subscribe('trades', ['BTCUSDT']);
 
 // Подписка на свечи
 ws.subscribe('candles', ['BTCUSDT'], '1m');
-```
+``` -->
 
 ### Обработка данных
 
@@ -122,7 +122,7 @@ ws.on('candles', (data) => {
   console.log('Новая свеча:', data);
   // Обновление графиков
 });
-```
+``` -->
 
 ## Технические индикаторы
 
@@ -141,7 +141,7 @@ const macd = await okdFinance.getMACD('bybit', 'BTCUSDT', '1h');
 
 // Bollinger Bands
 const bb = await okdFinance.getBollingerBands('bybit', 'BTCUSDT', '1h', 20);
-```
+``` -->
 
 ### Пользовательские индикаторы
 
@@ -156,7 +156,7 @@ const customIndicator = okdFinance.createIndicator({
 });
 
 const result = await customIndicator.calculate('bybit', 'BTCUSDT', '1h', 10);
-```
+``` -->
 
 ## Анализ рынка
 
@@ -166,7 +166,7 @@ const result = await customIndicator.calculate('bybit', 'BTCUSDT', '1h', 10);
 // Расчет волатильности
 const volatility = await okdFinance.getVolatility('bybit', 'BTCUSDT', '1h', 24);
 console.log(`Волатильность за 24 часа: ${volatility}%`);
-```
+``` -->
 
 ### Корреляция
 
@@ -175,7 +175,7 @@ console.log(`Волатильность за 24 часа: ${volatility}%`);
 const correlation = await okdFinance.getCorrelation('bybit', 
   ['BTCUSDT', 'ETHUSDT'], '1h', 168); // за неделю
 console.log(`Корреляция BTC/ETH: ${correlation}`);
-```
+``` -->
 
 ### Объемный анализ
 
@@ -183,7 +183,7 @@ console.log(`Корреляция BTC/ETH: ${correlation}`);
 // Анализ объемов
 const volumeProfile = await okdFinance.getVolumeProfile('bybit', 'BTCUSDT', '1h', 24);
 console.log('Профиль объемов:', volumeProfile);
-```
+``` -->
 
 ## Оптимизация производительности
 
@@ -196,7 +196,7 @@ okdFinance.enableCache({
   orderbook: 500, // кэш на 0.5 секунды
   candles: 60000 // кэш на 1 минуту
 });
-```
+``` -->
 
 ### Батчевые запросы
 
@@ -207,7 +207,7 @@ const multiData = await okdFinance.getMultipleData('bybit', {
   types: ['ticker', 'orderbook'],
   params: { orderbookLimit: 10 }
 });
-```
+``` -->
 
 ### Сжатие данных
 
@@ -220,7 +220,7 @@ ws.subscribe('orderbook', ['BTCUSDT'], {
   levels: 10, // только топ 10 уровней
   updateSpeed: '100ms' // обновления каждые 100мс
 });
-```
+``` -->
 
 ## Мониторинг качества данных
 
@@ -233,7 +233,7 @@ ws.on('latency', (data) => {
     console.warn('Высокая задержка данных');
   }
 });
-```
+``` -->
 
 ### Обнаружение пропусков
 
@@ -243,7 +243,7 @@ ws.on('gap', (data) => {
   // Запрос недостающих данных
   ws.requestMissedData(data.stream, data.from, data.to);
 });
-```
+``` -->
 
 ## Примеры использования
 
@@ -275,7 +275,7 @@ class TradingBot {
     }
   }
 }
-```
+``` -->
 
 ### Арбитражный сканер
 
@@ -303,4 +303,4 @@ class ArbitrageScanner {
     }
   }
 }
-```
+``` -->

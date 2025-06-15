@@ -3,9 +3,9 @@
 OKD Finance 为所有平台功能提供全面的 REST API。
 
 ## 基础 URL
-```
+``` -->
 https://api.okd.finance
-```
+``` -->
 
 ## 身份验证
 
@@ -14,7 +14,7 @@ https://api.okd.finance
 ```bash
 curl -X GET "https://api.okd.finance/endpoint" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
+``` -->
 
 ## API 类别
 
@@ -58,7 +58,7 @@ curl -X GET "https://api.okd.finance/endpoint" \
   },
   "error": null
 }
-```
+``` -->
 
 ## 错误处理
 
@@ -71,7 +71,7 @@ curl -X GET "https://api.okd.finance/endpoint" \
     "message": "错误描述"
   }
 }
-```
+``` -->
 
 ## WebSocket API
 
@@ -84,7 +84,7 @@ ws.send(JSON.stringify({
   channel: 'prices',
   symbol: 'BTCUSDT'
 }));
-```
+``` -->
 
 ## SDK 和库
 

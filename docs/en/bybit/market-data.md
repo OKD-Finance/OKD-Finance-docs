@@ -39,7 +39,7 @@ ws.onopen = function() {
         }
     }));
 };
-```
+``` -->
 
 ### Subscription Channels
 
@@ -53,7 +53,7 @@ ws.onopen = function() {
         "channels": ["ticker.BTCUSDT"]
     }
 }
-```
+``` -->
 
 #### Order Book
 ```javascript
@@ -65,7 +65,7 @@ ws.onopen = function() {
         "channels": ["orderbook.BTCUSDT"]
     }
 }
-```
+``` -->
 
 #### Trade Stream
 ```javascript
@@ -77,14 +77,14 @@ ws.onopen = function() {
         "channels": ["trades.BTCUSDT"]
     }
 }
-```
+``` -->
 
 ## REST API Endpoints
 
 ### Get Market Summary
 ```http
 GET /api/v1/bybit/market/summary?symbol=BTCUSDT
-```
+``` -->
 
 **Response:**
 ```json
@@ -103,12 +103,12 @@ GET /api/v1/bybit/market/summary?symbol=BTCUSDT
         "timestamp": 1703123456789
     }
 }
-```
+``` -->
 
 ### Get Order Book
 ```http
 GET /api/v1/bybit/market/orderbook?symbol=BTCUSDT&limit=100
-```
+``` -->
 
 **Response:**
 ```json
@@ -127,12 +127,12 @@ GET /api/v1/bybit/market/orderbook?symbol=BTCUSDT&limit=100
         "timestamp": 1703123456789
     }
 }
-```
+``` -->
 
 ### Get Recent Trades
 ```http
 GET /api/v1/bybit/market/trades?symbol=BTCUSDT&limit=50
-```
+``` -->
 
 ## Data Normalization
 
@@ -188,7 +188,7 @@ function connectWithRetry() {
         }
     };
 }
-```
+``` -->
 
 ## Performance Optimization
 
@@ -211,7 +211,7 @@ function connectWithRetry() {
 ### Health Checks
 ```http
 GET /api/v1/bybit/health
-```
+``` -->
 
 ### Latency Monitoring
 - Track API response times
@@ -322,7 +322,7 @@ class BybitMarketDataClient {
 const client = new BybitMarketDataClient('your-api-key', 'your-api-secret');
 client.connect();
 client.subscribe(['ticker.BTCUSDT', 'orderbook.ETHUSDT', 'trades.ADAUSDT']);
-```
+``` -->
 
 ## Troubleshooting
 

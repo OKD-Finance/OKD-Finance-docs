@@ -3,9 +3,9 @@
 API endpoints for user authentication and authorization.
 
 ## Base URL
-```
+``` -->
 https://api.okd.finance
-```
+``` -->
 
 ## Endpoints
 

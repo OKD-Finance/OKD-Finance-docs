@@ -15,7 +15,7 @@ okdFinance.setApiKeys({
   apiKey: 'your-api-key',
   secretKey: 'your-secret-key'
 });
-```
+``` -->
 
 ## Профиль пользователя
 
@@ -23,12 +23,12 @@ okdFinance.setApiKeys({
 
 ```http
 GET /api/v1/user/profile
-```
+``` -->
 
 ```javascript
 const profile = await okdFinance.getUserProfile();
 console.log(profile);
-```
+``` -->
 
 **Ответ:**
 ```json
@@ -48,13 +48,13 @@ console.log(profile);
   "verificationLevel": "basic",
   "twoFactorEnabled": true
 }
-```
+``` -->
 
 ### Обновление профиля
 
 ```http
 PUT /api/v1/user/profile
-```
+``` -->
 
 ```javascript
 const updatedProfile = await okdFinance.updateUserProfile({
@@ -64,7 +64,7 @@ const updatedProfile = await okdFinance.updateUserProfile({
   language: "ru",
   timezone: "Europe/Moscow"
 });
-```
+``` -->
 
 **Параметры:**
 | Поле | Тип | Описание |
@@ -81,27 +81,27 @@ const updatedProfile = await okdFinance.updateUserProfile({
 
 ```http
 POST /api/v1/user/change-password
-```
+``` -->
 
 ```javascript
 const result = await okdFinance.changePassword({
   currentPassword: "old-password",
   newPassword: "new-secure-password"
 });
-```
+``` -->
 
 ### Изменение email
 
 ```http
 POST /api/v1/user/change-email
-```
+``` -->
 
 ```javascript
 const result = await okdFinance.changeEmail({
   newEmail: "newemail@example.com",
   password: "current-password"
 });
-```
+``` -->
 
 ## Двухфакторная аутентификация (2FA)
 
@@ -109,7 +109,7 @@ const result = await okdFinance.changeEmail({
 
 ```http
 POST /api/v1/user/2fa/enable
-```
+``` -->
 
 ```javascript
 // Получение QR кода для настройки
@@ -119,32 +119,32 @@ const qrCode = await okdFinance.generate2FAQRCode();
 const result = await okdFinance.enable2FA({
   token: "123456" // код из приложения аутентификатора
 });
-```
+``` -->
 
 ### Отключение 2FA
 
 ```http
 POST /api/v1/user/2fa/disable
-```
+``` -->
 
 ```javascript
 const result = await okdFinance.disable2FA({
   token: "123456",
   password: "current-password"
 });
-```
+``` -->
 
 ### Проверка 2FA токена
 
 ```http
 POST /api/v1/user/2fa/verify
-```
+``` -->
 
 ```javascript
 const isValid = await okdFinance.verify2FAToken({
   token: "123456"
 });
-```
+``` -->
 
 ## Верификация пользователя
 
@@ -152,12 +152,12 @@ const isValid = await okdFinance.verify2FAToken({
 
 ```http
 GET /api/v1/user/verification/status
-```
+``` -->
 
 ```javascript
 const verificationStatus = await okdFinance.getVerificationStatus();
 console.log(verificationStatus);
-```
+``` -->
 
 **Ответ:**
 ```json
@@ -180,13 +180,13 @@ console.log(verificationStatus);
     "monthlyWithdrawal": "1000 BTC"
   }
 }
-```
+``` -->
 
 ### Загрузка документов
 
 ```http
 POST /api/v1/user/verification/documents
-```
+``` -->
 
 ```javascript
 const uploadResult = await okdFinance.uploadVerificationDocument({
@@ -194,7 +194,7 @@ const uploadResult = await okdFinance.uploadVerificationDocument({
   file: documentFile,
   documentType: "passport" // "passport", "id_card", "driver_license"
 });
-```
+``` -->
 
 ## Настройки безопасности
 
@@ -202,11 +202,11 @@ const uploadResult = await okdFinance.uploadVerificationDocument({
 
 ```http
 GET /api/v1/user/security/settings
-```
+``` -->
 
 ```javascript
 const securitySettings = await okdFinance.getSecuritySettings();
-```
+``` -->
 
 **Ответ:**
 ```json
@@ -223,13 +223,13 @@ const securitySettings = await okdFinance.getSecuritySettings();
     "ipRestricted": true
   }
 }
-```
+``` -->
 
 ### Обновление настроек безопасности
 
 ```http
 PUT /api/v1/user/security/settings
-```
+``` -->
 
 ```javascript
 const result = await okdFinance.updateSecuritySettings({
@@ -238,7 +238,7 @@ const result = await okdFinance.updateSecuritySettings({
   loginNotifications: true,
   withdrawalNotifications: true
 });
-```
+``` -->
 
 ## IP Whitelist
 
@@ -246,34 +246,34 @@ const result = await okdFinance.updateSecuritySettings({
 
 ```http
 GET /api/v1/user/security/ip-whitelist
-```
+``` -->
 
 ```javascript
 const ipList = await okdFinance.getIPWhitelist();
-```
+``` -->
 
 ### Добавление IP адреса
 
 ```http
 POST /api/v1/user/security/ip-whitelist
-```
+``` -->
 
 ```javascript
 const result = await okdFinance.addIPToWhitelist({
   ipAddress: "192.168.1.100",
   label: "Home Office"
 });
-```
+``` -->
 
 ### Удаление IP адреса
 
 ```http
 DELETE /api/v1/user/security/ip-whitelist/{ip}
-```
+``` -->
 
 ```javascript
 const result = await okdFinance.removeIPFromWhitelist("192.168.1.100");
-```
+``` -->
 
 ## API ключи
 
@@ -281,11 +281,11 @@ const result = await okdFinance.removeIPFromWhitelist("192.168.1.100");
 
 ```http
 GET /api/v1/user/api-keys
-```
+``` -->
 
 ```javascript
 const apiKeys = await okdFinance.getAPIKeys();
-```
+``` -->
 
 **Ответ:**
 ```json
@@ -300,13 +300,13 @@ const apiKeys = await okdFinance.getAPIKeys();
     "status": "active"
   }
 ]
-```
+``` -->
 
 ### Создание API ключа
 
 ```http
 POST /api/v1/user/api-keys
-```
+``` -->
 
 ```javascript
 const newApiKey = await okdFinance.createAPIKey({
@@ -315,17 +315,17 @@ const newApiKey = await okdFinance.createAPIKey({
   ipRestrictions: ["192.168.1.1", "10.0.0.1"],
   withdrawalEnabled: false
 });
-```
+``` -->
 
 ### Удаление API ключа
 
 ```http
 DELETE /api/v1/user/api-keys/{keyId}
-```
+``` -->
 
 ```javascript
 const result = await okdFinance.deleteAPIKey("key_123");
-```
+``` -->
 
 ## История активности
 
@@ -333,27 +333,27 @@ const result = await okdFinance.deleteAPIKey("key_123");
 
 ```http
 GET /api/v1/user/activity/logins
-```
+``` -->
 
 ```javascript
 const loginHistory = await okdFinance.getLoginHistory({
   limit: 50,
   startTime: Date.now() - 86400000 * 30 // последние 30 дней
 });
-```
+``` -->
 
 ### Получение истории API активности
 
 ```http
 GET /api/v1/user/activity/api
-```
+``` -->
 
 ```javascript
 const apiActivity = await okdFinance.getAPIActivity({
   keyId: "key_123",
   limit: 100
 });
-```
+``` -->
 
 ## Уведомления
 
@@ -361,17 +361,17 @@ const apiActivity = await okdFinance.getAPIActivity({
 
 ```http
 GET /api/v1/user/notifications/settings
-```
+``` -->
 
 ```javascript
 const notificationSettings = await okdFinance.getNotificationSettings();
-```
+``` -->
 
 ### Обновление настроек уведомлений
 
 ```http
 PUT /api/v1/user/notifications/settings
-```
+``` -->
 
 ```javascript
 const result = await okdFinance.updateNotificationSettings({
@@ -390,20 +390,20 @@ const result = await okdFinance.updateNotificationSettings({
     orderFills: true
   }
 });
-```
+``` -->
 
 ### Получение истории уведомлений
 
 ```http
 GET /api/v1/user/notifications/history
-```
+``` -->
 
 ```javascript
 const notifications = await okdFinance.getNotificationHistory({
   type: "email", // "email", "sms", "push"
   limit: 50
 });
-```
+``` -->
 
 ## Предпочтения пользователя
 
@@ -411,11 +411,11 @@ const notifications = await okdFinance.getNotificationHistory({
 
 ```http
 GET /api/v1/user/preferences/trading
-```
+``` -->
 
 ```javascript
 const tradingPrefs = await okdFinance.getTradingPreferences();
-```
+``` -->
 
 **Ответ:**
 ```json
@@ -428,13 +428,13 @@ const tradingPrefs = await okdFinance.getTradingPreferences();
   "autoTakeProfit": false,
   "defaultTakeProfitPercent": 10.0
 }
-```
+``` -->
 
 ### Обновление торговых настроек
 
 ```http
 PUT /api/v1/user/preferences/trading
-```
+``` -->
 
 ```javascript
 const result = await okdFinance.updateTradingPreferences({
@@ -443,7 +443,7 @@ const result = await okdFinance.updateTradingPreferences({
   autoStopLoss: true,
   defaultStopLossPercent: 3.0
 });
-```
+``` -->
 
 ## Ошибки API
 
@@ -473,4 +473,4 @@ try {
     console.log('Ошибка:', error.message);
   }
 }
-```
+``` -->

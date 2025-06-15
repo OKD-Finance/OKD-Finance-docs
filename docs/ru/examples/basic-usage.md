@@ -9,12 +9,12 @@
 #### JavaScript/Node.js
 ```bash
 npm install axios dotenv
-```
+``` -->
 
 #### Python
 ```bash
 pip install requests python-dotenv
-```
+``` -->
 
 ### Настройка окружения
 
@@ -26,7 +26,7 @@ FIREBASE_UID=your-firebase-uid
 DEVICE_FINGERPRINT=your-device-id
 RECAPTCHA_TOKEN=your-recaptcha-token
 PLATFORM_ID=your-platform-id
-```
+``` -->
 
 ## Аутентификация
 
@@ -75,7 +75,7 @@ class OKDClient {
     };
   }
 }
-```
+``` -->
 
 ### Python
 ```python
@@ -121,7 +121,7 @@ class OKDClient:
             'Content-Type': 'application/json',
             'Fingerprint': os.getenv('DEVICE_FINGERPRINT')
         }
-```
+``` -->
 
 ## Торговые операции
 
@@ -150,7 +150,7 @@ async function createOrder(symbol, side, type, quantity, price = null) {
 
 // Пример использования
 const order = await createOrder('BTCUSDT', 'buy', 'limit', 0.001, 45000);
-```
+``` -->
 
 #### Python
 ```python
@@ -171,7 +171,7 @@ def create_order(client, symbol, side, order_type, quantity, price=None):
     response.raise_for_status()
     
     return response.json()
-```
+``` -->
 
 ## Управление кошельками
 
@@ -186,7 +186,7 @@ async function getWalletBalance() {
   
   return response.data;
 }
-```
+``` -->
 
 ### Создание депозитного адреса
 
@@ -202,7 +202,7 @@ async function createDepositAddress(currency, network) {
   
   return response.data;
 }
-```
+``` -->
 
 ## Интеграция с Bybit
 
@@ -217,7 +217,7 @@ async function getConsolidatedBalance() {
   
   return response.data;
 }
-```
+``` -->
 
 ## Рыночные данные
 
@@ -232,7 +232,7 @@ async function getTicker(symbol) {
   
   return response.data;
 }
-```
+``` -->
 
 ## Обработка ошибок
 
@@ -256,7 +256,7 @@ function handleAPIError(error) {
   
   throw error;
 }
-```
+``` -->
 
 ## Полный пример
 
@@ -287,7 +287,7 @@ async function main() {
 }
 
 main();
-```
+``` -->
 
 ::: tip Совет
 Всегда тестируйте код на демо-окружении перед использованием в продакшн.
