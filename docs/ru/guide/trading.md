@@ -30,7 +30,7 @@ const order = await okdFinance.createOrder({
   price: 45000,
   timeInForce: 'GTC'
 });
-``` -->
+```
 
 ### Параметры ордера
 
@@ -50,7 +50,7 @@ const order = await okdFinance.createOrder({
 ```javascript
 const positions = await okdFinance.getPositions();
 console.log(positions);
-``` -->
+```
 
 ### Закрытие позиции
 
@@ -59,7 +59,7 @@ const result = await okdFinance.closePosition({
   symbol: 'BTCUSDT',
   quantity: 0.001
 });
-``` -->
+```
 
 ## Риск-менеджмент
 
@@ -71,7 +71,7 @@ const stopLoss = await okdFinance.setStopLoss({
   stopPrice: 44000,
   quantity: 0.001
 });
-``` -->
+```
 
 ### Установка Take Profit
 
@@ -81,7 +81,7 @@ const takeProfit = await okdFinance.setTakeProfit({
   targetPrice: 46000,
   quantity: 0.001
 });
-``` -->
+```
 
 ## Торговые стратегии
 
@@ -96,7 +96,7 @@ const dcaStrategy = {
 };
 
 await okdFinance.createDCAStrategy(dcaStrategy);
-``` -->
+```
 
 ### Grid Trading
 
@@ -110,7 +110,7 @@ const gridStrategy = {
 };
 
 await okdFinance.createGridStrategy(gridStrategy);
-``` -->
+```
 
 ## Комиссии
 
@@ -142,7 +142,7 @@ const history = await okdFinance.getTradeHistory({
   limit: 100,
   startTime: Date.now() - 86400000 // последние 24 часа
 });
-``` -->
+```
 
 ### Статистика торговли
 
@@ -154,4 +154,4 @@ const stats = await okdFinance.getTradingStats({
 console.log('PnL:', stats.totalPnL);
 console.log('Win Rate:', stats.winRate);
 console.log('Total Trades:', stats.totalTrades);
-``` -->
+```

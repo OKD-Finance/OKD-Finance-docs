@@ -8,12 +8,12 @@
 
 ```http
 GET /api/v1/wallet/balances
-``` -->
+```
 
 ```javascript
 const balances = await okdFinance.getWalletBalances();
 console.log(balances);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -51,18 +51,18 @@ console.log(balances);
     }
   }
 }
-``` -->
+```
 
 ### Получение баланса конкретного актива
 
 ```http
 GET /api/v1/wallet/balance/{asset}
-``` -->
+```
 
 ```javascript
 const btcBalance = await okdFinance.getAssetBalance('BTC');
 console.log(btcBalance);
-``` -->
+```
 
 **Параметры:**
 | Параметр | Тип | Описание |
@@ -76,7 +76,7 @@ console.log(btcBalance);
 
 ```http
 POST /api/v1/wallet/transfer
-``` -->
+```
 
 ```javascript
 const transfer = await okdFinance.transferBetweenWallets({
@@ -85,7 +85,7 @@ const transfer = await okdFinance.transferBetweenWallets({
   fromWallet: 'spot',
   toWallet: 'futures'
 });
-``` -->
+```
 
 **Параметры запроса:**
 ```json
@@ -96,7 +96,7 @@ const transfer = await okdFinance.transferBetweenWallets({
   "toWallet": "futures",
   "clientTransferId": "transfer_123" // опционально
 }
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -111,13 +111,13 @@ const transfer = await okdFinance.transferBetweenWallets({
   "timestamp": "2024-12-20T10:30:00Z",
   "fee": "0.0"
 }
-``` -->
+```
 
 ### Получение истории переводов
 
 ```http
 GET /api/v1/wallet/transfers
-``` -->
+```
 
 ```javascript
 const transfers = await okdFinance.getTransferHistory({
@@ -125,7 +125,7 @@ const transfers = await okdFinance.getTransferHistory({
   startTime: Date.now() - 86400000, // последние 24 часа
   limit: 50
 });
-``` -->
+```
 
 **Параметры запроса:**
 | Параметр | Тип | Описание |
@@ -143,14 +143,14 @@ const transfers = await okdFinance.getTransferHistory({
 
 ```http
 GET /api/v1/wallet/deposit/address
-``` -->
+```
 
 ```javascript
 const depositAddress = await okdFinance.getDepositAddress({
   asset: 'BTC',
   network: 'BTC' // опционально
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -162,13 +162,13 @@ const depositAddress = await okdFinance.getDepositAddress({
   "addressType": "bech32",
   "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
 }
-``` -->
+```
 
 ### История депозитов
 
 ```http
 GET /api/v1/wallet/deposits
-``` -->
+```
 
 ```javascript
 const deposits = await okdFinance.getDepositHistory({
@@ -176,7 +176,7 @@ const deposits = await okdFinance.getDepositHistory({
   status: 'completed',
   limit: 50
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -196,7 +196,7 @@ const deposits = await okdFinance.getDepositHistory({
     "completedAt": "2024-12-20T10:15:00Z"
   }
 ]
-``` -->
+```
 
 ### Статусы депозитов
 
@@ -213,7 +213,7 @@ const deposits = await okdFinance.getDepositHistory({
 
 ```http
 POST /api/v1/wallet/withdraw
-``` -->
+```
 
 ```javascript
 const withdrawal = await okdFinance.createWithdrawal({
@@ -224,7 +224,7 @@ const withdrawal = await okdFinance.createWithdrawal({
   tag: null, // для активов, требующих memo/tag
   clientWithdrawId: 'withdraw_123' // опционально
 });
-``` -->
+```
 
 **Параметры запроса:**
 ```json
@@ -237,7 +237,7 @@ const withdrawal = await okdFinance.createWithdrawal({
   "clientWithdrawId": "withdraw_123",
   "walletType": "spot"
 }
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -252,13 +252,13 @@ const withdrawal = await okdFinance.createWithdrawal({
   "status": "pending",
   "createdAt": "2024-12-20T10:30:00Z"
 }
-``` -->
+```
 
 ### История выводов
 
 ```http
 GET /api/v1/wallet/withdrawals
-``` -->
+```
 
 ```javascript
 const withdrawals = await okdFinance.getWithdrawalHistory({
@@ -266,17 +266,17 @@ const withdrawals = await okdFinance.getWithdrawalHistory({
   status: 'completed',
   limit: 50
 });
-``` -->
+```
 
 ### Отмена вывода
 
 ```http
 DELETE /api/v1/wallet/withdraw/{withdrawId}
-``` -->
+```
 
 ```javascript
 const result = await okdFinance.cancelWithdrawal('wd_12345');
-``` -->
+```
 
 **Примечание:** Отменить можно только выводы в статусе `pending`.
 
@@ -286,12 +286,12 @@ const result = await okdFinance.cancelWithdrawal('wd_12345');
 
 ```http
 GET /api/v1/wallet/withdraw/fees
-``` -->
+```
 
 ```javascript
 const fees = await okdFinance.getWithdrawalFees();
 console.log(fees);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -311,13 +311,13 @@ console.log(fees);
     "Tron": "1.0"
   }
 }
-``` -->
+```
 
 ### Расчет комиссии для конкретного вывода
 
 ```http
 GET /api/v1/wallet/withdraw/fee
-``` -->
+```
 
 ```javascript
 const fee = await okdFinance.calculateWithdrawalFee({
@@ -325,7 +325,7 @@ const fee = await okdFinance.calculateWithdrawalFee({
   amount: '0.1',
   network: 'BTC'
 });
-``` -->
+```
 
 ## Лимиты
 
@@ -333,12 +333,12 @@ const fee = await okdFinance.calculateWithdrawalFee({
 
 ```http
 GET /api/v1/wallet/limits
-``` -->
+```
 
 ```javascript
 const limits = await okdFinance.getWalletLimits();
 console.log(limits);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -370,18 +370,18 @@ console.log(limits);
     }
   }
 }
-``` -->
+```
 
 ### Текущее использование лимитов
 
 ```http
 GET /api/v1/wallet/limits/usage
-``` -->
+```
 
 ```javascript
 const usage = await okdFinance.getLimitUsage();
 console.log(usage);
-``` -->
+```
 
 ## Стейкинг и доходность
 
@@ -389,12 +389,12 @@ console.log(usage);
 
 ```http
 GET /api/v1/wallet/staking/products
-``` -->
+```
 
 ```javascript
 const stakingProducts = await okdFinance.getStakingProducts();
 console.log(stakingProducts);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -420,39 +420,39 @@ console.log(stakingProducts);
     "status": "active"
   }
 ]
-``` -->
+```
 
 ### Создание стейкинга
 
 ```http
 POST /api/v1/wallet/staking/stake
-``` -->
+```
 
 ```javascript
 const staking = await okdFinance.createStaking({
   productId: 'BTC_FLEXIBLE',
   amount: '0.1'
 });
-``` -->
+```
 
 ### Погашение стейкинга
 
 ```http
 POST /api/v1/wallet/staking/redeem
-``` -->
+```
 
 ```javascript
 const redemption = await okdFinance.redeemStaking({
   stakingId: 'stake_12345',
   amount: '0.05' // частичное погашение
 });
-``` -->
+```
 
 ### История стейкинга
 
 ```http
 GET /api/v1/wallet/staking/history
-``` -->
+```
 
 ```javascript
 const stakingHistory = await okdFinance.getStakingHistory({
@@ -460,7 +460,7 @@ const stakingHistory = await okdFinance.getStakingHistory({
   type: 'flexible',
   limit: 50
 });
-``` -->
+```
 
 ## Автоматические операции
 
@@ -468,7 +468,7 @@ const stakingHistory = await okdFinance.getStakingHistory({
 
 ```http
 POST /api/v1/wallet/auto-transfer
-``` -->
+```
 
 ```javascript
 const autoTransfer = await okdFinance.setAutoTransfer({
@@ -479,27 +479,27 @@ const autoTransfer = await okdFinance.setAutoTransfer({
   amount: '500.0', // перевести 500 USDT
   enabled: true
 });
-``` -->
+```
 
 ### Получение настроек автоматических переводов
 
 ```http
 GET /api/v1/wallet/auto-transfer
-``` -->
+```
 
 ```javascript
 const autoTransfers = await okdFinance.getAutoTransfers();
-``` -->
+```
 
 ### Отключение автоматического перевода
 
 ```http
 DELETE /api/v1/wallet/auto-transfer/{transferId}
-``` -->
+```
 
 ```javascript
 const result = await okdFinance.disableAutoTransfer('auto_123');
-``` -->
+```
 
 ## Конвертация активов
 
@@ -507,7 +507,7 @@ const result = await okdFinance.disableAutoTransfer('auto_123');
 
 ```http
 GET /api/v1/wallet/convert/quote
-``` -->
+```
 
 ```javascript
 const quote = await okdFinance.getConvertQuote({
@@ -515,7 +515,7 @@ const quote = await okdFinance.getConvertQuote({
   toAsset: 'ETH',
   amount: '0.1'
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -529,25 +529,25 @@ const quote = await okdFinance.getConvertQuote({
   "fee": "0.001",
   "validUntil": "2024-12-20T10:35:00Z"
 }
-``` -->
+```
 
 ### Выполнение конвертации
 
 ```http
 POST /api/v1/wallet/convert
-``` -->
+```
 
 ```javascript
 const conversion = await okdFinance.executeConvert({
   quoteId: 'quote_12345'
 });
-``` -->
+```
 
 ### История конвертаций
 
 ```http
 GET /api/v1/wallet/convert/history
-``` -->
+```
 
 ```javascript
 const conversions = await okdFinance.getConvertHistory({
@@ -555,7 +555,7 @@ const conversions = await okdFinance.getConvertHistory({
   toAsset: 'ETH',
   limit: 50
 });
-``` -->
+```
 
 ## Уведомления и webhook'и
 
@@ -563,7 +563,7 @@ const conversions = await okdFinance.getConvertHistory({
 
 ```http
 POST /api/v1/wallet/webhook
-``` -->
+```
 
 ```javascript
 const webhook = await okdFinance.setWalletWebhook({
@@ -576,17 +576,17 @@ const webhook = await okdFinance.setWalletWebhook({
   ],
   secret: 'webhook-secret-key'
 });
-``` -->
+```
 
 ### Тестирование webhook
 
 ```http
 POST /api/v1/wallet/webhook/test
-``` -->
+```
 
 ```javascript
 const testResult = await okdFinance.testWalletWebhook('webhook_123');
-``` -->
+```
 
 ## Отчеты и аналитика
 
@@ -594,7 +594,7 @@ const testResult = await okdFinance.testWalletWebhook('webhook_123');
 
 ```http
 POST /api/v1/wallet/report
-``` -->
+```
 
 ```javascript
 const report = await okdFinance.generateWalletReport({
@@ -604,18 +604,18 @@ const report = await okdFinance.generateWalletReport({
   includeStaking: true,
   email: 'user@example.com' // отправить на email
 });
-``` -->
+```
 
 ### Статистика портфолио
 
 ```http
 GET /api/v1/wallet/portfolio/stats
-``` -->
+```
 
 ```javascript
 const portfolioStats = await okdFinance.getPortfolioStats();
 console.log(portfolioStats);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -649,7 +649,7 @@ console.log(portfolioStats);
     "1y": "120.5"
   }
 }
-``` -->
+```
 
 ## Безопасность
 
@@ -657,40 +657,40 @@ console.log(portfolioStats);
 
 ```http
 POST /api/v1/wallet/freeze
-``` -->
+```
 
 ```javascript
 const result = await okdFinance.freezeWallet({
   walletType: 'spot', // или 'all'
   reason: 'security_concern'
 });
-``` -->
+```
 
 ### Разморозка кошелька
 
 ```http
 POST /api/v1/wallet/unfreeze
-``` -->
+```
 
 ```javascript
 const result = await okdFinance.unfreezeWallet({
   walletType: 'spot',
   twoFactorCode: '123456'
 });
-``` -->
+```
 
 ### Аудит операций
 
 ```http
 GET /api/v1/wallet/audit
-``` -->
+```
 
 ```javascript
 const auditLog = await okdFinance.getWalletAudit({
   startTime: Date.now() - 86400000 * 7, // последние 7 дней
   limit: 100
 });
-``` -->
+```
 
 ## Коды ошибок
 
@@ -731,4 +731,4 @@ try {
       console.log('Ошибка:', error.message);
   }
 }
-``` -->
+```

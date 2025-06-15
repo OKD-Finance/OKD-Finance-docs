@@ -3,9 +3,9 @@
 OKD Finance provides a comprehensive REST API for all platform functions.
 
 ## Base URL
-``` -->
+```
 https://api.okd.finance
-``` -->
+```
 
 ## Authentication
 
@@ -14,7 +14,7 @@ All API requests require JWT authentication:
 ```bash
 curl -X GET "https://api.okd.finance/endpoint" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
-``` -->
+```
 
 ## API Categories
 
@@ -58,7 +58,7 @@ All responses follow this structure:
   },
   "error": null
 }
-``` -->
+```
 
 ## Error Handling
 
@@ -71,7 +71,7 @@ All responses follow this structure:
     "message": "Error description"
   }
 }
-``` -->
+```
 
 ## WebSocket API
 
@@ -84,7 +84,7 @@ ws.send(JSON.stringify({
   channel: 'prices',
   symbol: 'BTCUSDT'
 }));
-``` -->
+```
 
 ## SDKs and Libraries
 

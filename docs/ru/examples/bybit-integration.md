@@ -29,7 +29,7 @@ const config = {
     enableRateLimit: true
   }
 };
-``` -->
+```
 
 ## Поддерживаемые рынки
 
@@ -51,7 +51,7 @@ const config = {
 const balance = await okdFinance.getBalance('bybit');
 console.log('Спотовый баланс:', balance.spot);
 console.log('Деривативы:', balance.derivatives);
-``` -->
+```
 
 ### Размещение ордера
 
@@ -64,7 +64,7 @@ const order = await okdFinance.createOrder('bybit', {
   price: 45000,
   timeInForce: 'GTC'
 });
-``` -->
+```
 
 ### Получение рыночных данных
 
@@ -77,7 +77,7 @@ const orderbook = await okdFinance.getOrderBook('bybit', 'BTCUSDT');
 
 // Свечи
 const candles = await okdFinance.getCandles('bybit', 'BTCUSDT', '1h');
-``` -->
+```
 
 ## WebSocket подключение
 
@@ -98,7 +98,7 @@ ws.subscribe('trades', ['BTCUSDT']);
 ws.on('ticker', (data) => {
   console.log('Тикер обновлен:', data);
 });
-``` -->
+```
 
 ### Приватные каналы
 
@@ -115,7 +115,7 @@ ws.subscribe('positions');
 ws.on('balance', (data) => {
   console.log('Баланс изменен:', data);
 });
-``` -->
+```
 
 ## Управление рисками
 
@@ -130,7 +130,7 @@ const order = await okdFinance.createOrder('bybit', {
   stopLoss: 44000,
   takeProfit: 46000
 });
-``` -->
+```
 
 ### Позиционное управление
 
@@ -143,7 +143,7 @@ await okdFinance.addMargin('bybit', 'BTCUSDT', 100);
 
 // Закрытие позиции
 await okdFinance.closePosition('bybit', 'BTCUSDT');
-``` -->
+```
 
 ## Обработка ошибок
 
@@ -159,7 +159,7 @@ try {
     console.log('Ошибка:', error.message);
   }
 }
-``` -->
+```
 
 ## Лимиты и ограничения
 
@@ -188,7 +188,7 @@ okdFinance.on('requestTime', (data) => {
 okdFinance.on('error', (error) => {
   console.error('Ошибка Bybit:', error);
 });
-``` -->
+```
 
 ## Дополнительные возможности
 

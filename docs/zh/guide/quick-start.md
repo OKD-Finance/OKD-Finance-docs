@@ -25,7 +25,7 @@
 # 获取您的充值地址
 curl -X GET "https://api.okd.finance/wallets/deposit-address/USDT" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
-``` -->
+```
 
 ### 银行转账
 在支持的地区提供，需要完整的 KYC 验证。
@@ -47,7 +47,7 @@ const order = await fetch('https://api.okd.finance/trading/orders', {
     qty: '0.001'
   })
 });
-``` -->
+```
 
 ## 步骤 5：API 集成
 
@@ -61,7 +61,7 @@ const order = await fetch('https://api.okd.finance/trading/orders', {
 ```bash
 curl -X GET "https://api.okd.finance/auth/me" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
-``` -->
+```
 
 ## 下一步
 

@@ -4,7 +4,7 @@ OKD Finance is built on modern microservices architecture with external exchange
 
 ## Architecture Overview
 
-```plantuml
+```text
 @startuml
 !theme aws-orange
 

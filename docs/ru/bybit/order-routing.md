@@ -18,7 +18,7 @@ const order = await okdFinance.createOrder('bybit', {
   price: 45000,
   routing: 'direct'
 });
-``` -->
+```
 
 ### Умная маршрутизация
 Система автоматически выбирает оптимальный способ исполнения:
@@ -32,7 +32,7 @@ const order = await okdFinance.createOrder('bybit', {
   routing: 'smart',
   maxSlippage: 0.1 // максимальное проскальзывание 0.1%
 });
-``` -->
+```
 
 ### Алгоритмическая маршрутизация
 Использование специальных алгоритмов для крупных ордеров:
@@ -47,7 +47,7 @@ const order = await okdFinance.createOrder('bybit', {
   algorithm: 'TWAP', // Time-Weighted Average Price
   duration: 3600000 // 1 час
 });
-``` -->
+```
 
 ## Алгоритмы исполнения
 
@@ -66,7 +66,7 @@ const twapOrder = await okdFinance.createAlgorithmicOrder('bybit', {
     randomization: 0.1 // 10% рандомизации
   }
 });
-``` -->
+```
 
 ### VWAP (Volume-Weighted Average Price)
 Исполнение с учетом исторических объемов:
@@ -83,7 +83,7 @@ const vwapOrder = await okdFinance.createAlgorithmicOrder('bybit', {
     priceLimit: 44000 // лимит цены
   }
 });
-``` -->
+```
 
 ### Implementation Shortfall
 Минимизация рыночного воздействия:
@@ -100,7 +100,7 @@ const isOrder = await okdFinance.createAlgorithmicOrder('bybit', {
     urgency: 'medium' // срочность: low, medium, high
   }
 });
-``` -->
+```
 
 ## Управление ликвидностью
 
@@ -121,7 +121,7 @@ console.log(liquidityAnalysis);
 //   slippage: 0.08,
 //   recommendation: 'split_order'
 // }
-``` -->
+```
 
 ### Адаптивное исполнение
 
@@ -138,7 +138,7 @@ const adaptiveOrder = await okdFinance.createOrder('bybit', {
     timeLimit: 300000 // 5 минут
   }
 });
-``` -->
+```
 
 ## Мониторинг исполнения
 
@@ -157,7 +157,7 @@ okdFinance.subscribeToOrder(order.id, (update) => {
   //   fees: 0.15
   // }
 });
-``` -->
+```
 
 ### Метрики исполнения
 
@@ -175,7 +175,7 @@ console.log(metrics);
 //   },
 //   efficiency: 0.92
 // }
-``` -->
+```
 
 ## Управление рисками
 
@@ -192,7 +192,7 @@ const order = await okdFinance.createOrder('bybit', {
     action: 'cancel' // действие при превышении: cancel, reduce, continue
   }
 });
-``` -->
+```
 
 ### Лимиты позиций
 
@@ -207,7 +207,7 @@ await okdFinance.setRoutingLimits('bybit', {
     stopLoss: 0.02 // автоматический стоп-лосс
   }
 });
-``` -->
+```
 
 ## Оптимизация исполнения
 
@@ -228,7 +228,7 @@ console.log(timingAnalysis);
 //   liquidityForecast: 'high',
 //   volatilityForecast: 'medium'
 // }
-``` -->
+```
 
 ### Фрагментация ордеров
 
@@ -245,7 +245,7 @@ const fragmentedOrder = await okdFinance.createFragmentedOrder('bybit', {
     intervalRange: [30000, 120000] // от 30 сек до 2 мин
   }
 });
-``` -->
+```
 
 ## Отчетность и аналитика
 
@@ -267,7 +267,7 @@ console.log(report);
 //   successRate: 0.96,
 //   costSavings: 0.02
 // }
-``` -->
+```
 
 ### Сравнительный анализ
 
@@ -279,7 +279,7 @@ const comparison = await okdFinance.compareRoutingStrategies('bybit', {
   period: 86400000,
   orderSizes: [0.1, 0.5, 1.0, 2.0]
 });
-``` -->
+```
 
 ## Настройка и конфигурация
 
@@ -312,7 +312,7 @@ const order = await okdFinance.createOrder('bybit', {
   amount: 0.5,
   routingProfile: 'aggressive_scalping'
 });
-``` -->
+```
 
 ### Автоматические правила
 
@@ -337,4 +337,4 @@ await okdFinance.setRoutingRules('bybit', [
     }
   }
 ]);
-``` -->
+```

@@ -17,7 +17,7 @@ Webhooks позволяют получать HTTP уведомления в ре
 
 ```http
 POST /api/v1/webhooks
-``` -->
+```
 
 ```javascript
 const webhook = await okdFinance.createWebhook({
@@ -33,7 +33,7 @@ const webhook = await okdFinance.createWebhook({
   active: true,
   description: 'Main trading webhook'
 });
-``` -->
+```
 
 **Параметры запроса:**
 ```json
@@ -56,7 +56,7 @@ const webhook = await okdFinance.createWebhook({
     "retryDelay": 1000
   }
 }
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -80,7 +80,7 @@ const webhook = await okdFinance.createWebhook({
     "successRate": 0
   }
 }
-``` -->
+```
 
 ## Управление Webhooks
 
@@ -88,31 +88,31 @@ const webhook = await okdFinance.createWebhook({
 
 ```http
 GET /api/v1/webhooks
-``` -->
+```
 
 ```javascript
 const webhooks = await okdFinance.getWebhooks({
   active: true,
   limit: 50
 });
-``` -->
+```
 
 ### Получение информации о webhook
 
 ```http
 GET /api/v1/webhooks/{webhookId}
-``` -->
+```
 
 ```javascript
 const webhook = await okdFinance.getWebhook('wh_12345');
 console.log(webhook);
-``` -->
+```
 
 ### Обновление webhook
 
 ```http
 PUT /api/v1/webhooks/{webhookId}
-``` -->
+```
 
 ```javascript
 const updatedWebhook = await okdFinance.updateWebhook('wh_12345', {
@@ -125,17 +125,17 @@ const updatedWebhook = await okdFinance.updateWebhook('wh_12345', {
   ],
   active: true
 });
-``` -->
+```
 
 ### Удаление webhook
 
 ```http
 DELETE /api/v1/webhooks/{webhookId}
-``` -->
+```
 
 ```javascript
 const result = await okdFinance.deleteWebhook('wh_12345');
-``` -->
+```
 
 ## Типы событий
 
@@ -165,7 +165,7 @@ const result = await okdFinance.deleteWebhook('wh_12345');
   "timestamp": 1703001600000,
   "userId": "user_123"
 }
-``` -->
+```
 
 #### order.canceled
 Ордер отменен
@@ -189,7 +189,7 @@ const result = await okdFinance.deleteWebhook('wh_12345');
   "timestamp": 1703001600000,
   "userId": "user_123"
 }
-``` -->
+```
 
 ### События кошелька
 
@@ -213,7 +213,7 @@ const result = await okdFinance.deleteWebhook('wh_12345');
   "timestamp": 1703001600000,
   "userId": "user_123"
 }
-``` -->
+```
 
 #### deposit.confirmed
 Депозит подтвержден
@@ -235,7 +235,7 @@ const result = await okdFinance.deleteWebhook('wh_12345');
   "timestamp": 1703001600000,
   "userId": "user_123"
 }
-``` -->
+```
 
 #### withdrawal.completed
 Вывод завершен
@@ -257,7 +257,7 @@ const result = await okdFinance.deleteWebhook('wh_12345');
   "timestamp": 1703001600000,
   "userId": "user_123"
 }
-``` -->
+```
 
 ### События позиций
 
@@ -280,7 +280,7 @@ const result = await okdFinance.deleteWebhook('wh_12345');
   "timestamp": 1703001600000,
   "userId": "user_123"
 }
-``` -->
+```
 
 #### position.closed
 Позиция закрыта
@@ -302,7 +302,7 @@ const result = await okdFinance.deleteWebhook('wh_12345');
   "timestamp": 1703001600000,
   "userId": "user_123"
 }
-``` -->
+```
 
 ## Безопасность
 
@@ -337,13 +337,13 @@ app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
   
   res.status(200).send('OK');
 });
-``` -->
+```
 
 ### IP Whitelist
 
 ```http
 PUT /api/v1/webhooks/{webhookId}/ip-whitelist
-``` -->
+```
 
 ```javascript
 const ipWhitelist = await okdFinance.updateWebhookIPWhitelist('wh_12345', {
@@ -353,7 +353,7 @@ const ipWhitelist = await okdFinance.updateWebhookIPWhitelist('wh_12345', {
     '2001:db8::/32'
   ]
 });
-``` -->
+```
 
 ## Тестирование Webhooks
 
@@ -361,7 +361,7 @@ const ipWhitelist = await okdFinance.updateWebhookIPWhitelist('wh_12345', {
 
 ```http
 POST /api/v1/webhooks/{webhookId}/test
-``` -->
+```
 
 ```javascript
 const testResult = await okdFinance.testWebhook('wh_12345', {
@@ -374,7 +374,7 @@ const testResult = await okdFinance.testWebhook('wh_12345', {
     price: '45000.00'
   }
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -385,20 +385,20 @@ const testResult = await okdFinance.testWebhook('wh_12345', {
   "responseBody": "OK",
   "timestamp": 1703001600000
 }
-``` -->
+```
 
 ### Проверка доставки
 
 ```http
 GET /api/v1/webhooks/{webhookId}/deliveries
-``` -->
+```
 
 ```javascript
 const deliveries = await okdFinance.getWebhookDeliveries('wh_12345', {
   limit: 100,
   status: 'failed' // 'success', 'failed', 'pending'
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -425,17 +425,17 @@ const deliveries = await okdFinance.getWebhookDeliveries('wh_12345', {
     "error": "Connection timeout"
   }
 ]
-``` -->
+```
 
 ### Повторная отправка
 
 ```http
 POST /api/v1/webhooks/deliveries/{deliveryId}/retry
-``` -->
+```
 
 ```javascript
 const retryResult = await okdFinance.retryWebhookDelivery('del_457');
-``` -->
+```
 
 ## Мониторинг и статистика
 
@@ -443,13 +443,13 @@ const retryResult = await okdFinance.retryWebhookDelivery('del_457');
 
 ```http
 GET /api/v1/webhooks/{webhookId}/stats
-``` -->
+```
 
 ```javascript
 const stats = await okdFinance.getWebhookStats('wh_12345', {
   period: '7d' // '1h', '24h', '7d', '30d'
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -473,13 +473,13 @@ const stats = await okdFinance.getWebhookStats('wh_12345', {
     "timeout": 20
   }
 }
-``` -->
+```
 
 ### Настройка алертов
 
 ```http
 POST /api/v1/webhooks/{webhookId}/alerts
-``` -->
+```
 
 ```javascript
 const alerts = await okdFinance.setupWebhookAlerts('wh_12345', {
@@ -489,7 +489,7 @@ const alerts = await okdFinance.setupWebhookAlerts('wh_12345', {
   notificationMethods: ['email', 'sms'],
   recipients: ['admin@example.com']
 });
-``` -->
+```
 
 ## Фильтрация событий
 
@@ -497,7 +497,7 @@ const alerts = await okdFinance.setupWebhookAlerts('wh_12345', {
 
 ```http
 PUT /api/v1/webhooks/{webhookId}/filters
-``` -->
+```
 
 ```javascript
 const filters = await okdFinance.setWebhookFilters('wh_12345', {
@@ -518,13 +518,13 @@ const filters = await okdFinance.setWebhookFilters('wh_12345', {
     }
   ]
 });
-``` -->
+```
 
 ### Группировка событий
 
 ```http
 PUT /api/v1/webhooks/{webhookId}/batching
-``` -->
+```
 
 ```javascript
 const batching = await okdFinance.setupWebhookBatching('wh_12345', {
@@ -533,7 +533,7 @@ const batching = await okdFinance.setupWebhookBatching('wh_12345', {
   maxWaitTime: 5000, // 5 секунд
   events: ['balance.changed'] // только для определенных событий
 });
-``` -->
+```
 
 ## Отладка и логирование
 
@@ -541,7 +541,7 @@ const batching = await okdFinance.setupWebhookBatching('wh_12345', {
 
 ```http
 PUT /api/v1/webhooks/{webhookId}/debug
-``` -->
+```
 
 ```javascript
 const debugMode = await okdFinance.enableWebhookDebug('wh_12345', {
@@ -551,13 +551,13 @@ const debugMode = await okdFinance.enableWebhookDebug('wh_12345', {
   logResponse: true,
   duration: 3600 // 1 час
 });
-``` -->
+```
 
 ### Получение логов
 
 ```http
 GET /api/v1/webhooks/{webhookId}/logs
-``` -->
+```
 
 ```javascript
 const logs = await okdFinance.getWebhookLogs('wh_12345', {
@@ -565,7 +565,7 @@ const logs = await okdFinance.getWebhookLogs('wh_12345', {
   limit: 100,
   startTime: Date.now() - 3600000 // последний час
 });
-``` -->
+```
 
 ## Лимиты и ограничения
 
@@ -592,7 +592,7 @@ okdFinance.on('webhook.quota_exceeded', (data) => {
   console.log('Превышена квота webhook:', data);
   // Обновить план или оптимизировать использование
 });
-``` -->
+```
 
 ## Примеры интеграции
 
@@ -643,4 +643,4 @@ function verifySignature(payload, signature) {
 app.listen(3000, () => {
   console.log('Webhook server running on port 3000');
 });
-``` -->
+```

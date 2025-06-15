@@ -25,7 +25,7 @@ cd okd-finance
 cp .env.example .env
 # Edit .env with your configuration
 docker-compose up -d
-``` -->
+```
 
 ### Environment Variables
 ```bash
@@ -34,7 +34,7 @@ REDIS_URL=redis://redis:6379
 BYBIT_API_KEY=your_bybit_key
 FIREBASE_PROJECT_ID=your_firebase_project
 JWT_SECRET=your_jwt_secret
-``` -->
+```
 
 ## Kubernetes Deployment
 
@@ -42,7 +42,7 @@ JWT_SECRET=your_jwt_secret
 ```bash
 kubectl create namespace okd-finance
 kubectl apply -f k8s/
-``` -->
+```
 
 ### Monitoring
 - Prometheus metrics
@@ -55,14 +55,14 @@ kubectl apply -f k8s/
 ### SSL/TLS
 ```bash
 certbot --nginx -d api.okd.finance
-``` -->
+```
 
 ### Firewall
 ```bash
 ufw allow 22/tcp
 ufw allow 80/tcp
 ufw allow 443/tcp
-``` -->
+```
 
 ### Backup Strategy
 - Database backups

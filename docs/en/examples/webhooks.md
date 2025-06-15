@@ -49,7 +49,7 @@ function verifySignature(req) {
 app.listen(3000, () => {
   console.log('Webhook server running on port 3000');
 });
-``` -->
+```
 
 ### Registering Webhooks
 
@@ -72,7 +72,7 @@ await okdFinance.createWebhook({
     currencies: ['BTC', 'ETH', 'USDT']
   }
 });
-``` -->
+```
 
 ## Event Types and Handlers
 
@@ -128,7 +128,7 @@ function handleOrderCanceled(orderData) {
     retryOrderWithAdjustments(orderData);
   }
 }
-``` -->
+```
 
 ### Balance Events
 
@@ -160,7 +160,7 @@ function checkLowBalanceAlerts(balanceData) {
     });
   }
 }
-``` -->
+```
 
 ### Market Data Events
 
@@ -188,7 +188,7 @@ function handlePriceAlert(alertData) {
     executeBuyStrategy(alertData.symbol);
   }
 }
-``` -->
+```
 
 ## Advanced Webhook Patterns
 
@@ -237,7 +237,7 @@ class WebhookHandler {
     this.logToDeadLetterQueue(event);
   }
 }
-``` -->
+```
 
 ### Webhook Aggregation
 
@@ -315,7 +315,7 @@ class WebhookAggregator {
     });
   }
 }
-``` -->
+```
 
 ### Webhook Security
 
@@ -397,7 +397,7 @@ class SecureWebhookHandler {
     );
   }
 }
-``` -->
+```
 
 ## Integration Examples
 
@@ -449,7 +449,7 @@ class DiscordWebhookIntegration {
     await channel.send({ embeds: [embed] });
   }
 }
-``` -->
+```
 
 ### Telegram Bot Integration
 
@@ -495,7 +495,7 @@ Time: ${new Date().toLocaleString()}
     await this.bot.sendMessage(this.chatId, message, { parse_mode: 'Markdown' });
   }
 }
-``` -->
+```
 
 ### Email Integration
 
@@ -574,7 +574,7 @@ class EmailWebhookIntegration {
     });
   }
 }
-``` -->
+```
 
 ## Testing Webhooks
 
@@ -698,4 +698,4 @@ class WebhookTester {
 // Usage
 const tester = new WebhookTester('http://localhost:3000/webhook/okd-finance');
 tester.runTests();
-``` -->
+```

@@ -8,12 +8,12 @@ API для управления торговым портфолио, анали�
 
 ```http
 GET /api/v1/portfolio/overview
-``` -->
+```
 
 ```javascript
 const portfolio = await okdFinance.getPortfolioOverview();
 console.log(portfolio);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -60,13 +60,13 @@ console.log(portfolio);
   ],
   "lastUpdated": "2024-12-20T10:30:00Z"
 }
-``` -->
+```
 
 ### Детальная информация по активам
 
 ```http
 GET /api/v1/portfolio/assets
-``` -->
+```
 
 ```javascript
 const assets = await okdFinance.getPortfolioAssets({
@@ -74,7 +74,7 @@ const assets = await okdFinance.getPortfolioAssets({
   sortBy: 'value', // 'value', 'pnl', 'percentage'
   sortOrder: 'desc'
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -114,7 +114,7 @@ const assets = await okdFinance.getPortfolioAssets({
     ]
   }
 ]
-``` -->
+```
 
 ## Анализ производительности
 
@@ -122,7 +122,7 @@ const assets = await okdFinance.getPortfolioAssets({
 
 ```http
 GET /api/v1/portfolio/history
-``` -->
+```
 
 ```javascript
 const history = await okdFinance.getPortfolioHistory({
@@ -130,7 +130,7 @@ const history = await okdFinance.getPortfolioHistory({
   interval: '1h', // '1m', '5m', '15m', '1h', '4h', '1d'
   currency: 'USD'
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -163,20 +163,20 @@ const history = await okdFinance.getPortfolioHistory({
     "sharpeRatio": "1.85"
   }
 }
-``` -->
+```
 
 ### Метрики производительности
 
 ```http
 GET /api/v1/portfolio/metrics
-``` -->
+```
 
 ```javascript
 const metrics = await okdFinance.getPortfolioMetrics({
   period: '1y',
   benchmark: 'BTC' // сравнение с BTC
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -212,7 +212,7 @@ const metrics = await okdFinance.getPortfolioMetrics({
   "averageWin": "2.3",
   "averageLoss": "1.2"
 }
-``` -->
+```
 
 ## Управление позициями
 
@@ -220,14 +220,14 @@ const metrics = await okdFinance.getPortfolioMetrics({
 
 ```http
 GET /api/v1/portfolio/positions
-``` -->
+```
 
 ```javascript
 const positions = await okdFinance.getActivePositions({
   type: 'all', // 'spot', 'futures', 'all'
   includeHistory: false
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -251,26 +251,26 @@ const positions = await okdFinance.getActivePositions({
     "takeProfit": "48000.00"
   }
 ]
-``` -->
+```
 
 ### Закрытие позиции
 
 ```http
 POST /api/v1/portfolio/positions/{positionId}/close
-``` -->
+```
 
 ```javascript
 const closeResult = await okdFinance.closePosition('pos_12345', {
   quantity: '0.25', // частичное закрытие
   type: 'market' // 'market' или 'limit'
 });
-``` -->
+```
 
 ### Изменение стоп-лосс и тейк-профит
 
 ```http
 PUT /api/v1/portfolio/positions/{positionId}/risk
-``` -->
+```
 
 ```javascript
 const riskUpdate = await okdFinance.updatePositionRisk('pos_12345', {
@@ -281,7 +281,7 @@ const riskUpdate = await okdFinance.updatePositionRisk('pos_12345', {
     distance: '1000.00' // $1000 от текущей цены
   }
 });
-``` -->
+```
 
 ## Диверсификация и аллокация
 
@@ -289,11 +289,11 @@ const riskUpdate = await okdFinance.updatePositionRisk('pos_12345', {
 
 ```http
 GET /api/v1/portfolio/diversification
-``` -->
+```
 
 ```javascript
 const diversification = await okdFinance.getDiversificationAnalysis();
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -339,13 +339,13 @@ const diversification = await okdFinance.getDiversificationAnalysis();
     "Увеличьте долю стейблкоинов для снижения риска"
   ]
 }
-``` -->
+```
 
 ### Ребалансировка портфолио
 
 ```http
 POST /api/v1/portfolio/rebalance
-``` -->
+```
 
 ```javascript
 const rebalanceStrategy = await okdFinance.createRebalanceStrategy({
@@ -359,7 +359,7 @@ const rebalanceStrategy = await okdFinance.createRebalanceStrategy({
   threshold: 5.0, // ребалансировка при отклонении >5%
   method: 'threshold' // 'threshold', 'periodic', 'volatility'
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -405,20 +405,20 @@ const rebalanceStrategy = await okdFinance.createRebalanceStrategy({
   "estimatedCost": "45.50",
   "estimatedTime": "5-10 minutes"
 }
-``` -->
+```
 
 ### Выполнение ребалансировки
 
 ```http
 POST /api/v1/portfolio/rebalance/{strategyId}/execute
-``` -->
+```
 
 ```javascript
 const execution = await okdFinance.executeRebalance('rebalance_123', {
   confirm: true,
   maxSlippage: 0.5 // максимальное проскальзывание 0.5%
 });
-``` -->
+```
 
 ## Риск-менеджмент
 
@@ -426,14 +426,14 @@ const execution = await okdFinance.executeRebalance('rebalance_123', {
 
 ```http
 GET /api/v1/portfolio/risk-analysis
-``` -->
+```
 
 ```javascript
 const riskAnalysis = await okdFinance.getPortfolioRiskAnalysis({
   timeHorizon: '30d',
   confidenceLevel: 95
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -473,13 +473,13 @@ const riskAnalysis = await okdFinance.getPortfolioRiskAnalysis({
     "Текущий VaR превышает рекомендуемый уровень"
   ]
 }
-``` -->
+```
 
 ### Настройка лимитов риска
 
 ```http
 POST /api/v1/portfolio/risk-limits
-``` -->
+```
 
 ```javascript
 const riskLimits = await okdFinance.setRiskLimits({
@@ -494,7 +494,7 @@ const riskLimits = await okdFinance.setRiskLimits({
     drawdownAlert: 5.0 // алерт при просадке >5%
   }
 });
-``` -->
+```
 
 ## Отчеты и аналитика
 
@@ -502,7 +502,7 @@ const riskLimits = await okdFinance.setRiskLimits({
 
 ```http
 POST /api/v1/portfolio/reports/performance
-``` -->
+```
 
 ```javascript
 const report = await okdFinance.generatePerformanceReport({
@@ -513,13 +513,13 @@ const report = await okdFinance.generatePerformanceReport({
   benchmark: 'BTC',
   email: 'user@example.com' // отправить на email
 });
-``` -->
+```
 
 ### Налоговый отчет
 
 ```http
 POST /api/v1/portfolio/reports/tax
-``` -->
+```
 
 ```javascript
 const taxReport = await okdFinance.generateTaxReport({
@@ -529,7 +529,7 @@ const taxReport = await okdFinance.generateTaxReport({
   includeStaking: true,
   includeFees: true
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -550,7 +550,7 @@ const taxReport = await okdFinance.generateTaxReport({
   "downloadUrl": "https://api.okdfinance.com/reports/tax_2024_123.csv",
   "expiresAt": "2025-01-20T10:30:00Z"
 }
-``` -->
+```
 
 ## Автоматизация портфолио
 
@@ -558,7 +558,7 @@ const taxReport = await okdFinance.generateTaxReport({
 
 ```http
 POST /api/v1/portfolio/automation/strategy
-``` -->
+```
 
 ```javascript
 const autoStrategy = await okdFinance.createAutomationStrategy({
@@ -601,20 +601,20 @@ const autoStrategy = await okdFinance.createAutomationStrategy({
     marketConditions: ["bull", "sideways"]
   }
 });
-``` -->
+```
 
 ### Мониторинг автоматических стратегий
 
 ```http
 GET /api/v1/portfolio/automation/strategies
-``` -->
+```
 
 ```javascript
 const strategies = await okdFinance.getAutomationStrategies({
   status: 'active',
   includePerformance: true
 });
-``` -->
+```
 
 ## Социальная торговля
 
@@ -622,7 +622,7 @@ const strategies = await okdFinance.getAutomationStrategies({
 
 ```http
 POST /api/v1/portfolio/copy
-``` -->
+```
 
 ```javascript
 const copyTrading = await okdFinance.startCopyTrading({
@@ -635,13 +635,13 @@ const copyTrading = await okdFinance.startCopyTrading({
     stopCopyOnDrawdown: 10.0
   }
 });
-``` -->
+```
 
 ### Публикация портфолио
 
 ```http
 POST /api/v1/portfolio/publish
-``` -->
+```
 
 ```javascript
 const publication = await okdFinance.publishPortfolio({
@@ -652,7 +652,7 @@ const publication = await okdFinance.publishPortfolio({
   minCopyAmount: "1000.00",
   riskLevel: "low"
 });
-``` -->
+```
 
 ## WebSocket уведомления
 
@@ -676,7 +676,7 @@ portfolioStream.on('risk_alert', (data) => {
 portfolioStream.on('rebalance_trigger', (data) => {
   console.log('Триггер ребалансировки:', data);
 });
-``` -->
+```
 
 ## Интеграция с внешними сервисами
 
@@ -689,7 +689,7 @@ const tradingViewSync = await okdFinance.setupTradingViewSync({
   syncAlerts: true,
   webhookUrl: 'https://your-domain.com/tradingview-webhook'
 });
-``` -->
+```
 
 ### Экспорт в Portfolio Tracker
 
@@ -703,6 +703,6 @@ const portfolioExport = await okdFinance.exportToPortfolioTracker({
     end: '2024-12-31'
   }
 });
-``` -->
+```
 
 Эта документация покрывает все аспекты управления портфолио в OKD Finance, от базового мониторинга до продвинутых стратегий автоматизации и риск-менеджмента.

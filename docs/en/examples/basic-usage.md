@@ -30,7 +30,7 @@ async function loginUser(email, password) {
     console.error('Login failed:', error);
   }
 }
-``` -->
+```
 
 ### Making Authenticated Requests
 ```javascript
@@ -48,7 +48,7 @@ const apiCall = async (endpoint, options = {}) => {
   
   return response.json();
 };
-``` -->
+```
 
 ## Wallet Operations
 
@@ -65,7 +65,7 @@ async function getBalance() {
 //   "USDT": { "available": "1000.00", "locked": "100.00" },
 //   "BTC": { "available": "0.5", "locked": "0.0" }
 // }
-``` -->
+```
 
 ### Get Deposit Address
 ```javascript
@@ -77,7 +77,7 @@ async function getDepositAddress(currency) {
 
 // Usage
 const btcAddress = await getDepositAddress('BTC');
-``` -->
+```
 
 ### Withdraw Funds
 ```javascript
@@ -98,7 +98,7 @@ async function withdraw(currency, amount, address) {
 
 // Usage
 await withdraw('USDT', '100.00', 'TQrZ9wHAG...');
-``` -->
+```
 
 ## Trading Operations
 
@@ -124,7 +124,7 @@ async function getMarketData(symbol) {
 // Usage
 const btcData = await getMarketData('BTCUSDT');
 console.log('BTC Price:', btcData.price);
-``` -->
+```
 
 ### Place Orders
 ```javascript
@@ -162,7 +162,7 @@ async function placeLimitOrder(symbol, side, quantity, price) {
 // Usage
 const marketOrder = await placeMarketOrder('BTCUSDT', 'Buy', '0.001');
 const limitOrder = await placeLimitOrder('BTCUSDT', 'Buy', '0.001', '45000');
-``` -->
+```
 
 ### Monitor Orders
 ```javascript
@@ -195,7 +195,7 @@ for (const order of activeOrders) {
     await cancelOrder(order.orderId);
   }
 }
-``` -->
+```
 
 ## WebSocket Real-time Data
 
@@ -252,7 +252,7 @@ function updateOrderStatus(orderId, status) {
     element.textContent = status.toUpperCase();
   }
 }
-``` -->
+```
 
 ## Error Handling
 
@@ -280,7 +280,7 @@ async function apiCallWithRetry(endpoint, options = {}, maxRetries = 3) {
     }
   }
 }
-``` -->
+```
 
 ### Token Refresh
 ```javascript
@@ -318,7 +318,7 @@ async function refreshTokenIfNeeded() {
     return null;
   }
 }
-``` -->
+```
 
 ## Python Examples
 

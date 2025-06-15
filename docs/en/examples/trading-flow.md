@@ -25,7 +25,7 @@ const sellOrder = await okdFinance.createOrder('binance', {
   amount: 0.1,
   price: 46000
 });
-``` -->
+```
 
 ### Order Management Flow
 
@@ -78,7 +78,7 @@ class BasicTradingFlow {
     });
   }
 }
-``` -->
+```
 
 ## Advanced Trading Strategies
 
@@ -144,7 +144,7 @@ const dcaStrategy = new DCAStrategy({
 });
 
 dcaStrategy.start();
-``` -->
+```
 
 ### Grid Trading Strategy
 
@@ -249,7 +249,7 @@ class GridTradingStrategy {
     return ticker.last;
   }
 }
-``` -->
+```
 
 ### Arbitrage Trading
 
@@ -355,7 +355,7 @@ class ArbitrageStrategy {
     return Math.min(maxBuySize, maxSellSize, this.maxOrderSize);
   }
 }
-``` -->
+```
 
 ### Trend Following Strategy
 
@@ -472,7 +472,7 @@ class TrendFollowingStrategy {
     return closes.reduce((sum, close) => sum + close, 0) / period;
   }
 }
-``` -->
+```
 
 ## Risk Management Integration
 
@@ -524,7 +524,7 @@ class RiskManagedTrading {
     });
   }
 }
-``` -->
+```
 
 ## Performance Monitoring
 
@@ -613,4 +613,4 @@ class TradingAnalytics {
     return recommendations;
   }
 }
-``` -->
+```

@@ -30,7 +30,7 @@ const allTickers = await okdFinance.getAllTickers('bybit');
 
 // Get multiple specific tickers
 const tickers = await okdFinance.getTickers('okx', ['BTCUSDT', 'ETHUSDT', 'ADAUSDT']);
-``` -->
+```
 
 ### Order Book Data
 
@@ -50,7 +50,7 @@ const deepOrderbook = await okdFinance.getOrderBook('bybit', 'ETHUSDT', 50);
 
 // Get aggregated order book across exchanges
 const aggregatedBook = await okdFinance.getAggregatedOrderBook(['binance', 'bybit', 'okx'], 'BTCUSDT');
-``` -->
+```
 
 ### Trade Data
 
@@ -73,7 +73,7 @@ const historicalTrades = await okdFinance.getTrades('bybit', 'ETHUSDT', {
   to: Date.now(),
   limit: 500
 });
-``` -->
+```
 
 ## Historical Data
 
@@ -100,7 +100,7 @@ const multiExchangeCandles = await okdFinance.getMultiExchangeCandles(
   '1h', 
   { limit: 50 }
 );
-``` -->
+```
 
 ### Volume Analysis
 
@@ -120,7 +120,7 @@ console.log(volumeProfile);
 // Get volume-weighted average price
 const vwap = await okdFinance.getVWAP('bybit', 'ETHUSDT', '1h', 24);
 console.log(`24h VWAP: $${vwap}`);
-``` -->
+```
 
 ## WebSocket Streams
 
@@ -156,7 +156,7 @@ ws.on('candles', (data) => {
   console.log('New candle:', data);
   updateChart(data);
 });
-``` -->
+```
 
 ### Multi-Exchange WebSocket
 
@@ -248,7 +248,7 @@ class MultiExchangeDataFeed {
     return aggregated;
   }
 }
-``` -->
+```
 
 ## Technical Indicators
 
@@ -276,7 +276,7 @@ const volumeSMA = await okdFinance.getVolumeSMA('binance', 'ETHUSDT', '1h', 20);
 console.log('RSI:', rsi);
 console.log('MACD:', macd);
 console.log('Bollinger Bands:', bb);
-``` -->
+```
 
 ### Custom Indicators
 
@@ -324,7 +324,7 @@ class CustomIndicators {
     return vpt;
   }
 }
-``` -->
+```
 
 ## Market Analysis
 
@@ -347,7 +347,7 @@ const correlationMatrix = await okdFinance.getCorrelationMatrix('binance', symbo
 
 console.log('Correlation Matrix:');
 console.table(correlationMatrix);
-``` -->
+```
 
 ### Volatility Analysis
 
@@ -362,7 +362,7 @@ const impliedVol = await okdFinance.getImpliedVolatility('bybit', 'BTCUSDT');
 
 console.log(`Realized volatility: ${realizedVol.toFixed(2)}%`);
 console.log(`Implied volatility: ${impliedVol.toFixed(2)}%`);
-``` -->
+```
 
 ### Market Sentiment
 
@@ -383,7 +383,7 @@ console.log('Social sentiment:', sentiment);
 //   },
 //   volume: 1250 // Number of mentions
 // }
-``` -->
+```
 
 ## Data Quality and Monitoring
 
@@ -525,7 +525,7 @@ class DataQualityMonitor {
     return Math.max(0, score);
   }
 }
-``` -->
+```
 
 ## Performance Optimization
 
@@ -577,7 +577,7 @@ class MarketDataCache {
     return orderbook;
   }
 }
-``` -->
+```
 
 ### Batch Data Requests
 
@@ -639,4 +639,4 @@ class BatchDataFetcher {
     }
   }
 }
-``` -->
+```

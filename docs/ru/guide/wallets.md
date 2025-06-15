@@ -55,7 +55,7 @@ console.log(balance);
     "ETH": "2.0"
   }
 }
-``` -->
+```
 
 ### Перевод между кошельками
 
@@ -66,7 +66,7 @@ const transfer = await okdFinance.transferBetweenWallets({
   fromWallet: 'spot',
   toWallet: 'futures'
 });
-``` -->
+```
 
 ### История операций
 
@@ -77,7 +77,7 @@ const history = await okdFinance.getWalletHistory({
   limit: 50,
   startTime: Date.now() - 86400000 // последние 24 часа
 });
-``` -->
+```
 
 ## Депозиты
 
@@ -93,7 +93,7 @@ console.log(depositAddress);
   "tag": null,
   "network": "BTC"
 }
-``` -->
+```
 
 ### Поддерживаемые сети
 
@@ -123,7 +123,7 @@ const withdrawal = await okdFinance.createWithdrawal({
   network: 'BTC',
   tag: null // для активов, требующих memo/tag
 });
-``` -->
+```
 
 ### Комиссии за вывод
 
@@ -150,7 +150,7 @@ const enable2FA = await okdFinance.enable2FA({
   type: 'withdrawal',
   secret: 'your-2fa-secret'
 });
-``` -->
+```
 
 ### Whitelist адресов
 ```javascript
@@ -160,7 +160,7 @@ const addToWhitelist = await okdFinance.addWithdrawalAddress({
   address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
   label: 'My Hardware Wallet'
 });
-``` -->
+```
 
 ### Уведомления
 - Email уведомления для всех операций
@@ -177,7 +177,7 @@ const webhook = await okdFinance.setWebhook({
   url: 'https://your-server.com/webhook',
   events: ['deposit.confirmed', 'withdrawal.completed']
 });
-``` -->
+```
 
 ### Автоматические переводы
 
@@ -190,7 +190,7 @@ const autoTransfer = await okdFinance.setAutoTransfer({
   threshold: 1000, // перевести когда баланс > 1000 USDT
   amount: 500 // перевести 500 USDT
 });
-``` -->
+```
 
 ## Стейкинг и доходность
 
@@ -203,7 +203,7 @@ const flexibleStaking = await okdFinance.stake({
   type: 'flexible',
   apy: 5.2 // текущая доходность
 });
-``` -->
+```
 
 ### Фиксированный стейкинг
 
@@ -215,7 +215,7 @@ const fixedStaking = await okdFinance.stake({
   duration: 30, // дней
   apy: 8.5
 });
-``` -->
+```
 
 ### Доходность по активам
 
@@ -248,7 +248,7 @@ console.log(portfolio);
     }
   ]
 }
-``` -->
+```
 
 ### Отчеты
 
@@ -258,4 +258,4 @@ const report = await okdFinance.generateWalletReport({
   format: 'pdf',
   includeTransactions: true
 });
-``` -->
+```

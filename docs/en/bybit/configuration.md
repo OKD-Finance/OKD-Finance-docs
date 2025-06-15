@@ -16,7 +16,7 @@ client = BybitClient(
     testnet=False,  # Set to True for testnet
     recv_window=5000
 )
-``` -->
+```
 
 ### Environment Configuration
 
@@ -37,7 +37,7 @@ BYBIT_RATE_LIMIT_WINDOW=60
 BYBIT_WS_PING_INTERVAL=20
 BYBIT_WS_PING_TIMEOUT=10
 BYBIT_WS_CLOSE_TIMEOUT=10
-``` -->
+```
 
 ### Configuration Class
 
@@ -82,7 +82,7 @@ class BybitConfig:
             raise ValueError("recv_window must be between 1 and 60000")
         
         return True
-``` -->
+```
 
 ## Network Configuration
 
@@ -113,7 +113,7 @@ class BybitEndpoints:
             'ws_public': cls.MAINNET_WS_PUBLIC,
             'ws_private': cls.MAINNET_WS_PRIVATE
         }
-``` -->
+```
 
 ### Connection Pool Configuration
 
@@ -159,7 +159,7 @@ class BybitConnectionManager:
         """Close the HTTP session."""
         if self._session and not self._session.closed:
             await self._session.close()
-``` -->
+```
 
 ## Security Configuration
 
@@ -204,7 +204,7 @@ class BybitSecurity:
             'X-BAPI-TIMESTAMP': timestamp,
             'X-BAPI-RECV-WINDOW': '5000'
         }
-``` -->
+```
 
 ### Rate Limiting
 
@@ -240,7 +240,7 @@ class RateLimiter:
             
             # Record this request
             self.requests.append(now)
-``` -->
+```
 
 ## Advanced Configuration
 
@@ -281,7 +281,7 @@ class MultiAccountBybitConfig:
             multi_config.add_account(account_name, config)
         
         return multi_config
-``` -->
+```
 
 ### Configuration Validation
 
@@ -360,7 +360,7 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-``` -->
+```
 
 ## Configuration Best Practices
 
@@ -411,6 +411,6 @@ class BybitConfigLogger:
     def log_rate_limit(self, wait_time: float):
         """Log rate limiting."""
         self.logger.warning(f"Rate limit hit, waiting {wait_time:.2f} seconds")
-``` -->
+```
 
 This comprehensive configuration guide ensures secure, efficient, and reliable integration with Bybit's trading platform.

@@ -31,7 +31,7 @@ const config = {
 };
 
 const okdFinance = new OKDFinance(config);
-``` -->
+```
 
 ## Supported Markets
 
@@ -60,7 +60,7 @@ console.log('Derivatives:', balance.derivatives);
 const fees = await okdFinance.getTradingFees('bybit');
 console.log('Maker fee:', fees.maker);
 console.log('Taker fee:', fees.taker);
-``` -->
+```
 
 ### Market Data
 
@@ -84,7 +84,7 @@ const candles = await okdFinance.getCandles('bybit', 'BTCUSDT', '1h', {
   limit: 100,
   since: Date.now() - 24 * 60 * 60 * 1000 // Last 24 hours
 });
-``` -->
+```
 
 ### Order Management
 
@@ -116,7 +116,7 @@ const stopOrder = await okdFinance.createOrder('bybit', {
   stopPrice: 44000,
   price: 43900
 });
-``` -->
+```
 
 ## Advanced Trading Features
 
@@ -141,7 +141,7 @@ const trailingStop = await okdFinance.createOrder('bybit', {
   amount: 0.001,
   callbackRate: 0.02 // 2% trailing distance
 });
-``` -->
+```
 
 ### Position Management (Derivatives)
 
@@ -161,7 +161,7 @@ await okdFinance.closePosition('bybit', 'BTCUSDT');
 
 // Set position mode (hedge/one-way)
 await okdFinance.setPositionMode('bybit', 'hedge');
-``` -->
+```
 
 ## WebSocket Integration
 
@@ -194,7 +194,7 @@ ws.on('orderbook', (data) => {
 ws.on('trades', (data) => {
   console.log('New trade:', data);
 });
-``` -->
+```
 
 ### Private Data Streams
 
@@ -219,7 +219,7 @@ ws.on('positions', (data) => {
   console.log('Position update:', data);
   updatePositionDisplay(data);
 });
-``` -->
+```
 
 ## Risk Management
 
@@ -241,7 +241,7 @@ const orderWithSLTP = await okdFinance.createOrder('bybit', {
     value: 5 // 5% take profit
   }
 });
-``` -->
+```
 
 ### Position Size Calculation
 
@@ -285,7 +285,7 @@ class BybitRiskManager {
     });
   }
 }
-``` -->
+```
 
 ## Error Handling
 
@@ -342,7 +342,7 @@ class BybitErrorHandler {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
-``` -->
+```
 
 ## Performance Optimization
 
@@ -377,7 +377,7 @@ class BybitConnectionManager {
     });
   }
 }
-``` -->
+```
 
 ### Batch Operations
 
@@ -427,7 +427,7 @@ class BybitBatchProcessor {
     }
   }
 }
-``` -->
+```
 
 ## Monitoring and Analytics
 
@@ -489,7 +489,7 @@ class BybitPerformanceMonitor {
     return recommendations;
   }
 }
-``` -->
+```
 
 ## Testing and Simulation
 
@@ -554,4 +554,4 @@ class BybitPaperTrading {
     return 'paper_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
   }
 }
-``` -->
+```

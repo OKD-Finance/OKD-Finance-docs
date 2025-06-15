@@ -13,7 +13,7 @@
 
 ### Архитектура торговой системы
 
-```plantuml
+```text
 @startuml
 !theme aws-orange
 
@@ -60,16 +60,16 @@ TRADES --> BYBIT_WS
 ## Торговые пары
 
 ### Spot торговля
-``` -->
+```
 BTC/USDT, ETH/USDT, BNB/USDT, ADA/USDT, DOT/USDT,
 SOL/USDT, MATIC/USDT, DOGE/USDT, SHIB/USDT, AVAX/USDT
-``` -->
+```
 
 ### Futures торговля
-``` -->
+```
 BTCUSDT Perpetual, ETHUSDT Perpetual, ADAUSDT Perpetual,
 SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
-``` -->
+```
 
 ## Типы ордеров
 
@@ -81,7 +81,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
   "orderType": "Market",
   "qty": "0.001"
 }
-``` -->
+```
 
 ### Limit Orders
 ```json
@@ -92,7 +92,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
   "qty": "0.001",
   "price": "45000"
 }
-``` -->
+```
 
 ### Stop Loss Orders
 ```json
@@ -103,7 +103,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
   "qty": "0.001",
   "stopPrice": "44000"
 }
-``` -->
+```
 
 ### Take Profit Orders
 ```json
@@ -114,7 +114,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
   "qty": "0.001",
   "stopPrice": "46000"
 }
-``` -->
+```
 
 ## Управление рисками
 
@@ -156,7 +156,7 @@ ws.onmessage = (event) => {
       break;
   }
 };
-``` -->
+```
 
 ### Типы подписок
 - **Prices** - обновления цен
@@ -213,7 +213,7 @@ ws.onmessage = (event) => {
   "permissions": ["read", "trade"],
   "environment": "mainnet"
 }
-``` -->
+```
 
 ## Быстрый старт
 
@@ -222,7 +222,7 @@ ws.onmessage = (event) => {
 curl -X POST "https://api.okd.finance/trading/enable" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
-``` -->
+```
 
 ### 2. Настройка Bybit API
 ```bash
@@ -233,7 +233,7 @@ curl -X POST "https://api.okd.finance/trading/bybit/setup" \
     "apiKey": "your_bybit_api_key",
     "apiSecret": "your_bybit_secret"
   }'
-``` -->
+```
 
 ### 3. Первый ордер
 ```bash
@@ -246,7 +246,7 @@ curl -X POST "https://api.okd.finance/trading/orders" \
     "orderType": "Market",
     "qty": "0.001"
   }'
-``` -->
+```
 
 ## Поддержка
 

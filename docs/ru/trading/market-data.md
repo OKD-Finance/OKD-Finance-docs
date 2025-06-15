@@ -8,12 +8,12 @@ API для получения актуальных рыночных данных
 
 ```http
 GET /api/v1/market/ticker/{symbol}
-``` -->
+```
 
 ```javascript
 const ticker = await okdFinance.getTicker('BTCUSDT');
 console.log(ticker);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -39,40 +39,40 @@ console.log(ticker);
   "closeTime": 1703088000000,
   "count": 125678
 }
-``` -->
+```
 
 ### Получение всех тикеров
 
 ```http
 GET /api/v1/market/ticker
-``` -->
+```
 
 ```javascript
 const allTickers = await okdFinance.getAllTickers();
 console.log(allTickers);
-``` -->
+```
 
 ### Получение цены символа
 
 ```http
 GET /api/v1/market/price/{symbol}
-``` -->
+```
 
 ```javascript
 const price = await okdFinance.getSymbolPrice('BTCUSDT');
 console.log(price); // { "symbol": "BTCUSDT", "price": "45000.00" }
-``` -->
+```
 
 ### Получение лучших цен (bid/ask)
 
 ```http
 GET /api/v1/market/bookTicker/{symbol}
-``` -->
+```
 
 ```javascript
 const bookTicker = await okdFinance.getBookTicker('BTCUSDT');
 console.log(bookTicker);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -83,7 +83,7 @@ console.log(bookTicker);
   "askPrice": "45005.00",
   "askQty": "0.3"
 }
-``` -->
+```
 
 ## Стакан заявок
 
@@ -91,12 +91,12 @@ console.log(bookTicker);
 
 ```http
 GET /api/v1/market/depth/{symbol}
-``` -->
+```
 
 ```javascript
 const orderBook = await okdFinance.getOrderBook('BTCUSDT', 20);
 console.log(orderBook);
-``` -->
+```
 
 **Параметры:**
 | Параметр | Тип | Описание |
@@ -119,13 +119,13 @@ console.log(orderBook);
     ["45015.00", "1.1"]
   ]
 }
-``` -->
+```
 
 ### Агрегированные сделки
 
 ```http
 GET /api/v1/market/aggTrades/{symbol}
-``` -->
+```
 
 ```javascript
 const aggTrades = await okdFinance.getAggTrades({
@@ -133,7 +133,7 @@ const aggTrades = await okdFinance.getAggTrades({
   limit: 100,
   startTime: Date.now() - 3600000 // последний час
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -148,7 +148,7 @@ const aggTrades = await okdFinance.getAggTrades({
     "isBuyerMaker": false
   }
 ]
-``` -->
+```
 
 ## Исторические данные
 
@@ -156,7 +156,7 @@ const aggTrades = await okdFinance.getAggTrades({
 
 ```http
 GET /api/v1/market/klines/{symbol}
-``` -->
+```
 
 ```javascript
 const klines = await okdFinance.getKlines({
@@ -165,7 +165,7 @@ const klines = await okdFinance.getKlines({
   limit: 100,
   startTime: Date.now() - 86400000 // последние 24 часа
 });
-``` -->
+```
 
 **Интервалы:**
 - `1m`, `3m`, `5m`, `15m`, `30m` - минуты
@@ -192,18 +192,18 @@ const klines = await okdFinance.getKlines({
     "0"             // Игнорировать
   ]
 ]
-``` -->
+```
 
 ### Средние цены
 
 ```http
 GET /api/v1/market/avgPrice/{symbol}
-``` -->
+```
 
 ```javascript
 const avgPrice = await okdFinance.getAvgPrice('BTCUSDT');
 console.log(avgPrice);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -211,7 +211,7 @@ console.log(avgPrice);
   "mins": 5,
   "price": "44750.25"
 }
-``` -->
+```
 
 ## Статистика за 24 часа
 
@@ -219,12 +219,12 @@ console.log(avgPrice);
 
 ```http
 GET /api/v1/market/ticker/24hr/{symbol}
-``` -->
+```
 
 ```javascript
 const stats24hr = await okdFinance.get24hrStats('BTCUSDT');
 console.log(stats24hr);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -249,18 +249,18 @@ console.log(stats24hr);
   "closeTime": 1703088000000,
   "count": 125678
 }
-``` -->
+```
 
 ### Статистика по всем символам
 
 ```http
 GET /api/v1/market/ticker/24hr
-``` -->
+```
 
 ```javascript
 const allStats = await okdFinance.getAll24hrStats();
 console.log(allStats);
-``` -->
+```
 
 ## Последние сделки
 
@@ -268,12 +268,12 @@ console.log(allStats);
 
 ```http
 GET /api/v1/market/trades/{symbol}
-``` -->
+```
 
 ```javascript
 const recentTrades = await okdFinance.getRecentTrades('BTCUSDT', 100);
 console.log(recentTrades);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -287,13 +287,13 @@ console.log(recentTrades);
     "isBuyerMaker": false
   }
 ]
-``` -->
+```
 
 ### Исторические сделки
 
 ```http
 GET /api/v1/market/historicalTrades/{symbol}
-``` -->
+```
 
 ```javascript
 const historicalTrades = await okdFinance.getHistoricalTrades({
@@ -301,7 +301,7 @@ const historicalTrades = await okdFinance.getHistoricalTrades({
   limit: 500,
   fromId: 123456
 });
-``` -->
+```
 
 ## WebSocket потоки
 
@@ -317,7 +317,7 @@ tickerStream.on('data', (ticker) => {
 tickerStream.on('error', (error) => {
   console.error('Stream error:', error);
 });
-``` -->
+```
 
 ### Подписка на стакан заявок
 
@@ -327,7 +327,7 @@ const depthStream = okdFinance.subscribeToDepth('BTCUSDT', '100ms');
 depthStream.on('data', (depth) => {
   console.log('Depth update:', depth);
 });
-``` -->
+```
 
 **Скорость обновления:**
 - `100ms` - каждые 100мс
@@ -341,7 +341,7 @@ const tradeStream = okdFinance.subscribeToTrades('BTCUSDT');
 tradeStream.on('data', (trade) => {
   console.log('New trade:', trade);
 });
-``` -->
+```
 
 ### Подписка на свечи
 
@@ -351,7 +351,7 @@ const klineStream = okdFinance.subscribeToKlines('BTCUSDT', '1m');
 klineStream.on('data', (kline) => {
   console.log('Kline update:', kline);
 });
-``` -->
+```
 
 ### Мини-тикер
 
@@ -361,7 +361,7 @@ const miniTickerStream = okdFinance.subscribeToMiniTicker('BTCUSDT');
 miniTickerStream.on('data', (miniTicker) => {
   console.log('Mini ticker:', miniTicker);
 });
-``` -->
+```
 
 **Формат мини-тикера:**
 ```json
@@ -376,7 +376,7 @@ miniTickerStream.on('data', (miniTicker) => {
   "v": "1234.567",
   "q": "55123456.78"
 }
-``` -->
+```
 
 ## Информация о торговых парах
 
@@ -384,12 +384,12 @@ miniTickerStream.on('data', (miniTicker) => {
 
 ```http
 GET /api/v1/market/exchangeInfo
-``` -->
+```
 
 ```javascript
 const exchangeInfo = await okdFinance.getExchangeInfo();
 console.log(exchangeInfo);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -447,7 +447,7 @@ console.log(exchangeInfo);
     }
   ]
 }
-``` -->
+```
 
 ### Фильтры символов
 
@@ -477,7 +477,7 @@ const rsi = await okdFinance.getRSI({
   interval: '1h',
   period: 14
 });
-``` -->
+```
 
 ### Скользящие средние
 
@@ -488,7 +488,7 @@ const sma = await okdFinance.getSMA({
   period: 20,
   type: 'SMA' // 'SMA', 'EMA', 'WMA'
 });
-``` -->
+```
 
 ### MACD
 
@@ -500,7 +500,7 @@ const macd = await okdFinance.getMACD({
   slowPeriod: 26,
   signalPeriod: 9
 });
-``` -->
+```
 
 ### Bollinger Bands
 
@@ -511,7 +511,7 @@ const bb = await okdFinance.getBollingerBands({
   period: 20,
   stdDev: 2
 });
-``` -->
+```
 
 ## Рыночная аналитика
 
@@ -519,26 +519,26 @@ const bb = await okdFinance.getBollingerBands({
 
 ```http
 GET /api/v1/market/top-pairs
-``` -->
+```
 
 ```javascript
 const topPairs = await okdFinance.getTopTradingPairs({
   sortBy: 'volume', // 'volume', 'priceChange', 'count'
   limit: 10
 });
-``` -->
+```
 
 ### Рыночные тренды
 
 ```http
 GET /api/v1/market/trends
-``` -->
+```
 
 ```javascript
 const trends = await okdFinance.getMarketTrends({
   timeframe: '24h' // '1h', '24h', '7d', '30d'
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -566,7 +566,7 @@ const trends = await okdFinance.getMarketTrends({
     }
   ]
 }
-``` -->
+```
 
 ## Кэширование и оптимизация
 
@@ -580,7 +580,7 @@ const cache = okdFinance.createMarketDataCache({
 
 // Использование кэша
 const cachedTicker = await cache.getTicker('BTCUSDT');
-``` -->
+```
 
 ### Batch запросы
 
@@ -590,7 +590,7 @@ const batchData = await okdFinance.getBatchMarketData([
   { type: 'depth', symbol: 'ETHUSDT', limit: 20 },
   { type: 'klines', symbol: 'BNBUSDT', interval: '1h', limit: 100 }
 ]);
-``` -->
+```
 
 ## Лимиты запросов
 
@@ -620,7 +620,7 @@ okdFinance.on('rateLimitExceeded', (error) => {
     // Повторить запрос
   }, error.retryAfter);
 });
-``` -->
+```
 
 ## Примеры использования
 
@@ -642,7 +642,7 @@ async function monitorPrice(symbol, targetPrice) {
 }
 
 monitorPrice('BTCUSDT', 50000);
-``` -->
+```
 
 ### Анализ волатильности
 
@@ -667,4 +667,4 @@ async function analyzeVolatility(symbol, period = 24) {
   
   return volatility;
 }
-``` -->
+```

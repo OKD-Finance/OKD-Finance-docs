@@ -15,7 +15,7 @@ OKD Finance предоставляет полную интеграцию с Bybi
 
 ### Архитектура интеграции
 
-```plantuml
+```text
 @startuml
 !theme aws-orange
 
@@ -98,7 +98,7 @@ Content-Type: application/json
   "enable_futures": true,
   "enable_options": false
 }
-``` -->
+```
 
 ### Разрешения API ключа
 
@@ -128,7 +128,7 @@ Content-Type: application/json
     "size_threshold": 10000
   }
 }
-``` -->
+```
 
 ## Маршрутизация ордеров
 
@@ -160,7 +160,7 @@ Content-Type: application/json
     "max_bybit_percentage": 80
   }
 }
-``` -->
+```
 
 #### VWAP (Volume Weighted Average Price)
 ```http
@@ -178,7 +178,7 @@ Content-Type: application/json
     "prefer_internal": true
   }
 }
-``` -->
+```
 
 ## Синхронизация данных
 
@@ -189,7 +189,7 @@ Content-Type: application/json
 ```http
 GET /api/wallet/balance/consolidated
 Authorization: Bearer YOUR_ACCESS_TOKEN
-``` -->
+```
 
 Ответ:
 ```json
@@ -212,14 +212,14 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
     }
   }
 }
-``` -->
+```
 
 ### Синхронизация позиций
 
 ```http
 GET /api/trading/positions/consolidated
 Authorization: Bearer YOUR_ACCESS_TOKEN
-``` -->
+```
 
 ### Синхронизация ордеров
 
@@ -228,7 +228,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 ```http
 GET /api/trading/orders?include_bybit=true
 Authorization: Bearer YOUR_ACCESS_TOKEN
-``` -->
+```
 
 ## Управление рисками
 
@@ -248,14 +248,14 @@ Content-Type: application/json
   "max_open_orders": 50,
   "stop_loss_required": true
 }
-``` -->
+```
 
 ### Мониторинг позиций
 
 ```http
 GET /api/risk/exposure/bybit
 Authorization: Bearer YOUR_ACCESS_TOKEN
-``` -->
+```
 
 ### Автоматическое закрытие позиций
 
@@ -286,7 +286,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
   "quantity": 1.0,
   "analysis_period": "1h"
 }
-``` -->
+```
 
 Ответ:
 ```json
@@ -309,7 +309,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
     "bybit": 0.2
   }
 }
-``` -->
+```
 
 ## Мониторинг и аналитика
 
@@ -318,7 +318,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 ```http
 GET /api/bybit/integration/status
 Authorization: Bearer YOUR_ACCESS_TOKEN
-``` -->
+```
 
 ### Метрики производительности
 
@@ -335,7 +335,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
     "cost_savings"
   ]
 }
-``` -->
+```
 
 ### Отчеты
 
@@ -348,7 +348,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
   "to": "2024-01-31T23:59:59Z",
   "format": "pdf"
 }
-``` -->
+```
 
 ## Устранение неполадок
 
@@ -366,7 +366,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 ```http
 POST /api/wallet/sync/bybit
 Authorization: Bearer YOUR_ACCESS_TOKEN
-``` -->
+```
 
 #### Проблема: Высокая латентность
 **Решение:**
@@ -385,7 +385,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
   "from": "2024-01-15T00:00:00Z",
   "to": "2024-01-15T23:59:59Z"
 }
-``` -->
+```
 
 ## Лучшие практики
 

@@ -40,7 +40,7 @@ OKD Finance is a modern cryptocurrency exchange platform that provides:
 
 ## System Architecture
 
-```plantuml
+```text
 @startuml
 !theme aws-orange
 

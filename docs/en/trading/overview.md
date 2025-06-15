@@ -26,17 +26,17 @@ Advanced cryptocurrency trading with Bybit integration.
 ### Real-time Prices
 ```bash
 curl -X GET "https://api.okd.finance/trading/ticker/BTCUSDT"
-``` -->
+```
 
 ### Order Book
 ```bash
 curl -X GET "https://api.okd.finance/trading/orderbook/BTCUSDT"
-``` -->
+```
 
 ### Trade History
 ```bash
 curl -X GET "https://api.okd.finance/trading/trades/BTCUSDT"
-``` -->
+```
 
 ## Order Management
 
@@ -51,13 +51,13 @@ curl -X POST "https://api.okd.finance/trading/orders" \
     "qty": "0.001",
     "price": "45000"
   }'
-``` -->
+```
 
 ### Cancel Order
 ```bash
 curl -X DELETE "https://api.okd.finance/trading/orders/ORDER_ID" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
-``` -->
+```
 
 ## Position Management
 
@@ -65,7 +65,7 @@ curl -X DELETE "https://api.okd.finance/trading/orders/ORDER_ID" \
 ```bash
 curl -X GET "https://api.okd.finance/trading/positions" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
-``` -->
+```
 
 ### Close Position
 ```bash
@@ -75,7 +75,7 @@ curl -X POST "https://api.okd.finance/trading/positions/close" \
     "symbol": "BTCUSDT",
     "qty": "0.001"
   }'
-``` -->
+```
 
 ## Risk Management
 

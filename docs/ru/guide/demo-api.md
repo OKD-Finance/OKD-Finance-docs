@@ -5,10 +5,10 @@
 ## Доступ к демо
 
 ### Базовые URL
-``` -->
+```
 Демо API: https://develop.okd.finance/api
 Swagger UI: https://develop.okd.finance/swagger/gateway/
-``` -->
+```
 
 ### Тестовые данные
 

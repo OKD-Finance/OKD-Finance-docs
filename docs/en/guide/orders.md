@@ -26,7 +26,7 @@ const marketSell = await okdFinance.createOrder('bybit', {
   side: 'sell',
   quoteOrderQty: 1000 // Sell $1000 worth of ETH
 });
-``` -->
+```
 
 ### Limit Orders
 
@@ -53,7 +53,7 @@ const expiringLimit = await okdFinance.createOrder('binance', {
   timeInForce: 'GTD', // Good Till Date
   expirationTime: Date.now() + 24 * 60 * 60 * 1000 // 24 hours
 });
-``` -->
+```
 
 ### Stop Orders
 
@@ -78,7 +78,7 @@ const stopLimit = await okdFinance.createOrder('binance', {
   stopPrice: 3600, // Trigger price
   price: 3610 // Limit price after trigger
 });
-``` -->
+```
 
 ## Advanced Order Types
 
@@ -104,7 +104,7 @@ console.log('OCO Order created:', ocoOrder);
 //     { orderId: 790, type: 'stop_limit', stopPrice: 43000 }
 //   ]
 // }
-``` -->
+```
 
 ### Iceberg Orders
 
@@ -120,7 +120,7 @@ const icebergOrder = await okdFinance.createOrder('binance', {
   icebergQty: 0.1, // Show only 0.1 BTC at a time
   timeInForce: 'GTC'
 });
-``` -->
+```
 
 ### Trailing Stop Orders
 
@@ -144,7 +144,7 @@ const conditionalTrailing = await okdFinance.createOrder('okx', {
   activationPrice: 45000, // Start trailing when price reaches this
   callbackRate: 0.03 // 3% trailing distance
 });
-``` -->
+```
 
 ## Order Management
 
@@ -168,7 +168,7 @@ const orderHistory = await okdFinance.getOrderHistory('okx', {
   startTime: Date.now() - 7 * 24 * 60 * 60 * 1000, // Last 7 days
   limit: 100
 });
-``` -->
+```
 
 ### Modifying Orders
 
@@ -184,7 +184,7 @@ await okdFinance.modifyOrderPrice('bybit', 'order_id_456', 3650);
 
 // Modify only quantity
 await okdFinance.modifyOrderQuantity('okx', 'order_id_789', 2.5);
-``` -->
+```
 
 ### Canceling Orders
 
@@ -207,7 +207,7 @@ await okdFinance.cancelOrdersWhere('bybit', {
   side: 'buy',
   priceBelow: 3500
 });
-``` -->
+```
 
 ## Order Monitoring
 
@@ -308,7 +308,7 @@ class OrderMonitor {
     console.log(`📢 ${title}:`, data);
   }
 }
-``` -->
+```
 
 ### Order Analytics
 
@@ -404,7 +404,7 @@ class OrderAnalytics {
     return parseInt(match[1]) * units[match[2]];
   }
 }
-``` -->
+```
 
 ## Conditional Orders
 
@@ -543,7 +543,7 @@ const sellCondition = await conditionalManager.createPriceConditionalOrder(
     price: 43000
   }
 );
-``` -->
+```
 
 ### Time-Based Orders
 
@@ -620,7 +620,7 @@ const scheduledOrderId = scheduler.scheduleOrder(
   },
   Date.now() + 60 * 60 * 1000 // 1 hour
 );
-``` -->
+```
 
 ## Best Practices
 
@@ -723,7 +723,7 @@ class OrderValidator {
     return totalLiquidity;
   }
 }
-``` -->
+```
 
 ### Error Recovery
 
@@ -785,4 +785,4 @@ class OrderErrorRecovery {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
-``` -->
+```

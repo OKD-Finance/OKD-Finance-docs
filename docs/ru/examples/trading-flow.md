@@ -26,7 +26,7 @@ async function initialize() {
     return false;
   }
 }
-``` -->
+```
 
 ### 2. Получение рыночных данных
 
@@ -59,7 +59,7 @@ async function getMarketData(symbol) {
     throw error;
   }
 }
-``` -->
+```
 
 ### 3. Анализ баланса
 
@@ -78,7 +78,7 @@ async function checkBalance(asset) {
     throw error;
   }
 }
-``` -->
+```
 
 ## Стратегия DCA (Dollar Cost Averaging)
 
@@ -165,7 +165,7 @@ const dcaStrategy = new DCAStrategy({
 setInterval(async () => {
   await dcaStrategy.execute();
 }, dcaStrategy.interval);
-``` -->
+```
 
 ## Grid Trading стратегия
 
@@ -327,7 +327,7 @@ async function runGridStrategy() {
     await gridStrategy.monitorAndRebalance();
   }, 30000);
 }
-``` -->
+```
 
 ## Арбитражная стратегия
 
@@ -428,7 +428,7 @@ class ArbitrageStrategy {
     }
   }
 }
-``` -->
+```
 
 ## Стратегия следования за трендом
 
@@ -651,7 +651,7 @@ const trendStrategy = new TrendFollowingStrategy({
 setInterval(async () => {
   await trendStrategy.executeStrategy();
 }, 60 * 60 * 1000);
-``` -->
+```
 
 ## Мониторинг и логирование
 
@@ -754,6 +754,6 @@ logger.logTrade({
   profit: 1.0,
   strategy: 'DCA'
 });
-``` -->
+```
 
 Эти примеры демонстрируют различные торговые стратегии и подходы к автоматизации торговли с использованием API OKD Finance. Каждая стратегия может быть адаптирована под конкретные потребности и рыночные условия.

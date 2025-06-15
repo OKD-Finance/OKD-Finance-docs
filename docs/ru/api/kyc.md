@@ -41,12 +41,12 @@ API для управления процессом верификации пол
 
 ```http
 GET /api/v1/kyc/status
-``` -->
+```
 
 ```javascript
 const kycStatus = await okdFinance.getKYCStatus();
 console.log(kycStatus);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -91,18 +91,18 @@ console.log(kycStatus);
     "source_of_funds"
   ]
 }
-``` -->
+```
 
 ### История верификации
 
 ```http
 GET /api/v1/kyc/history
-``` -->
+```
 
 ```javascript
 const kycHistory = await okdFinance.getKYCHistory();
 console.log(kycHistory);
-``` -->
+```
 
 ## Верификация личности
 
@@ -110,7 +110,7 @@ console.log(kycHistory);
 
 ```http
 POST /api/v1/kyc/identity/document
-``` -->
+```
 
 ```javascript
 const formData = new FormData();
@@ -120,7 +120,7 @@ formData.append('documentBack', backImageFile); // для ID карт
 formData.append('country', 'US');
 
 const identitySubmission = await okdFinance.submitIdentityDocument(formData);
-``` -->
+```
 
 **Параметры:**
 | Параметр | Тип | Описание |
@@ -146,13 +146,13 @@ const identitySubmission = await okdFinance.submitIdentityDocument(formData);
     "allCornersVisible": true
   }
 }
-``` -->
+```
 
 ### Селфи верификация
 
 ```http
 POST /api/v1/kyc/identity/selfie
-``` -->
+```
 
 ```javascript
 const selfieData = new FormData();
@@ -160,7 +160,7 @@ selfieData.append('selfie', selfieImageFile);
 selfieData.append('submissionId', 'kyc_doc_12345');
 
 const selfieSubmission = await okdFinance.submitSelfie(selfieData);
-``` -->
+```
 
 **Требования к селфи:**
 - Четкое изображение лица
@@ -173,12 +173,12 @@ const selfieSubmission = await okdFinance.submitSelfie(selfieData);
 
 ```http
 GET /api/v1/kyc/identity/status/{submissionId}
-``` -->
+```
 
 ```javascript
 const documentStatus = await okdFinance.getDocumentStatus('kyc_doc_12345');
 console.log(documentStatus);
-``` -->
+```
 
 **Возможные статусы:**
 - `pending` - На рассмотрении
@@ -193,7 +193,7 @@ console.log(documentStatus);
 
 ```http
 POST /api/v1/kyc/address/document
-``` -->
+```
 
 ```javascript
 const addressData = new FormData();
@@ -208,7 +208,7 @@ addressData.append('address', JSON.stringify({
 }));
 
 const addressSubmission = await okdFinance.submitAddressDocument(addressData);
-``` -->
+```
 
 **Принимаемые документы:**
 - Счет за коммунальные услуги
@@ -226,7 +226,7 @@ const addressSubmission = await okdFinance.submitAddressDocument(addressData);
 
 ```http
 POST /api/v1/kyc/address/bank-verification
-``` -->
+```
 
 ```javascript
 const bankVerification = await okdFinance.initiateBankAddressVerification({
@@ -244,7 +244,7 @@ const bankVerification = await okdFinance.initiateBankAddressVerification({
     country: 'US'
   }
 });
-``` -->
+```
 
 ## Верификация источника средств
 
@@ -252,7 +252,7 @@ const bankVerification = await okdFinance.initiateBankAddressVerification({
 
 ```http
 POST /api/v1/kyc/source-of-funds
-``` -->
+```
 
 ```javascript
 const sourceOfFunds = await okdFinance.submitSourceOfFunds({
@@ -272,7 +272,7 @@ const sourceOfFunds = await okdFinance.submitSourceOfFunds({
   ],
   supportingDocuments: ['employment_letter', 'pay_stub', 'tax_return']
 });
-``` -->
+```
 
 **Типы источников средств:**
 - `employment` - Трудовая деятельность
@@ -287,7 +287,7 @@ const sourceOfFunds = await okdFinance.submitSourceOfFunds({
 
 ```http
 POST /api/v1/kyc/source-of-funds/documents
-``` -->
+```
 
 ```javascript
 const documentsData = new FormData();
@@ -296,7 +296,7 @@ documentsData.append('document', employmentLetterFile);
 documentsData.append('submissionId', 'sof_12345');
 
 const documentUpload = await okdFinance.uploadSourceOfFundsDocument(documentsData);
-``` -->
+```
 
 ## Корпоративная верификация
 
@@ -304,7 +304,7 @@ const documentUpload = await okdFinance.uploadSourceOfFundsDocument(documentsDat
 
 ```http
 POST /api/v1/kyc/corporate/register
-``` -->
+```
 
 ```javascript
 const corporateRegistration = await okdFinance.registerCorporateAccount({
@@ -332,13 +332,13 @@ const corporateRegistration = await okdFinance.registerCorporateAccount({
     country: 'US'
   }
 });
-``` -->
+```
 
 ### Добавление бенефициарных владельцев
 
 ```http
 POST /api/v1/kyc/corporate/beneficial-owners
-``` -->
+```
 
 ```javascript
 const beneficialOwner = await okdFinance.addBeneficialOwner({
@@ -365,13 +365,13 @@ const beneficialOwner = await okdFinance.addBeneficialOwner({
     issuingCountry: 'US'
   }
 });
-``` -->
+```
 
 ### Загрузка корпоративных документов
 
 ```http
 POST /api/v1/kyc/corporate/documents
-``` -->
+```
 
 ```javascript
 const corporateDocuments = new FormData();
@@ -379,7 +379,7 @@ corporateDocuments.append('documentType', 'certificate_of_incorporation');
 corporateDocuments.append('document', incorporationCertificateFile);
 
 const corpDocUpload = await okdFinance.uploadCorporateDocument(corporateDocuments);
-``` -->
+```
 
 **Требуемые документы:**
 - Свидетельство о регистрации
@@ -394,12 +394,12 @@ const corpDocUpload = await okdFinance.uploadCorporateDocument(corporateDocument
 
 ```http
 GET /api/v1/kyc/sanctions-check/{userId}
-``` -->
+```
 
 ```javascript
 const sanctionsCheck = await okdFinance.checkSanctions('12345');
 console.log(sanctionsCheck);
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -415,13 +415,13 @@ console.log(sanctionsCheck);
   "lastChecked": "2024-12-20T10:30:00Z",
   "nextCheck": "2024-12-21T10:30:00Z"
 }
-``` -->
+```
 
 ### PEP (Politically Exposed Person) проверка
 
 ```http
 POST /api/v1/kyc/pep-check
-``` -->
+```
 
 ```javascript
 const pepCheck = await okdFinance.checkPEP({
@@ -430,13 +430,13 @@ const pepCheck = await okdFinance.checkPEP({
   dateOfBirth: '1980-05-15',
   nationality: 'US'
 });
-``` -->
+```
 
 ### Мониторинг транзакций
 
 ```http
 GET /api/v1/kyc/transaction-monitoring
-``` -->
+```
 
 ```javascript
 const monitoring = await okdFinance.getTransactionMonitoring({
@@ -444,7 +444,7 @@ const monitoring = await okdFinance.getTransactionMonitoring({
   period: '30d',
   includeAlerts: true
 });
-``` -->
+```
 
 **Ответ:**
 ```json
@@ -472,7 +472,7 @@ const monitoring = await okdFinance.getTransactionMonitoring({
   "riskScore": 2.5,
   "riskLevel": "low"
 }
-``` -->
+```
 
 ## Управление документами
 
@@ -480,32 +480,32 @@ const monitoring = await okdFinance.getTransactionMonitoring({
 
 ```http
 GET /api/v1/kyc/documents
-``` -->
+```
 
 ```javascript
 const documents = await okdFinance.getKYCDocuments();
 console.log(documents);
-``` -->
+```
 
 ### Скачивание документа
 
 ```http
 GET /api/v1/kyc/documents/{documentId}/download
-``` -->
+```
 
 ```javascript
 const documentBlob = await okdFinance.downloadKYCDocument('doc_12345');
-``` -->
+```
 
 ### Удаление документа
 
 ```http
 DELETE /api/v1/kyc/documents/{documentId}
-``` -->
+```
 
 ```javascript
 const result = await okdFinance.deleteKYCDocument('doc_12345');
-``` -->
+```
 
 **Примечание:** Удалить можно только документы в статусе `pending` или `rejected`.
 
@@ -515,7 +515,7 @@ const result = await okdFinance.deleteKYCDocument('doc_12345');
 
 ```http
 POST /api/v1/kyc/notifications/subscribe
-``` -->
+```
 
 ```javascript
 const subscription = await okdFinance.subscribeToKYCNotifications({
@@ -530,7 +530,7 @@ const subscription = await okdFinance.subscribeToKYCNotifications({
     'additional_info_required'
   ]
 });
-``` -->
+```
 
 ### Webhook события KYC
 
@@ -570,7 +570,7 @@ function handleDocumentRejected(data) {
     canResubmit: resubmissionAllowed
   });
 }
-``` -->
+```
 
 ## Административные функции
 
@@ -578,7 +578,7 @@ function handleDocumentRejected(data) {
 
 ```http
 POST /api/v1/kyc/admin/review
-``` -->
+```
 
 ```javascript
 const reviewResult = await okdFinance.reviewKYCDocument({
@@ -587,13 +587,13 @@ const reviewResult = await okdFinance.reviewKYCDocument({
   comments: 'Document verified successfully',
   reviewerId: 'admin_123'
 });
-``` -->
+```
 
 ### Установка лимитов пользователя
 
 ```http
 POST /api/v1/kyc/admin/limits
-``` -->
+```
 
 ```javascript
 const limitsUpdate = await okdFinance.updateUserLimits({
@@ -610,7 +610,7 @@ const limitsUpdate = await okdFinance.updateUserLimits({
   },
   reason: 'Enhanced verification completed'
 });
-``` -->
+```
 
 ## Коды ошибок KYC
 
@@ -647,7 +647,7 @@ try {
       showError('Ошибка загрузки документа: ' + error.message);
   }
 }
-``` -->
+```
 
 ## Интеграция с внешними сервисами
 
@@ -670,7 +670,7 @@ async function initiateJumioVerification(userId) {
   
   return jumioSession.redirectUrl;
 }
-``` -->
+```
 
 ### Интеграция с Onfido
 
@@ -691,4 +691,4 @@ async function createOnfidoApplicant(userData) {
   
   return applicant.id;
 }
-``` -->
+```

@@ -41,7 +41,7 @@ const client = new OKDClient({
     apiSecret: process.env.OKD_API_SECRET,
     sandbox: false // 生产环境设置为 false
 });
-``` -->
+```
 
 ### 2. 获取市场数据
 
@@ -65,7 +65,7 @@ async function getMarketOverview() {
         console.error('获取市场数据失败:', error);
     }
 }
-``` -->
+```
 
 ### 3. 账户管理
 
@@ -92,7 +92,7 @@ async function manageAccount() {
         console.error('账户管理失败:', error);
     }
 }
-``` -->
+```
 
 ## 交易执行
 
@@ -229,7 +229,7 @@ await trading.placeLimitOrder('BTCUSDT', 'sell', '0.001', '45000.00');
 
 // 设置止损
 await trading.placeStopLossOrder('BTCUSDT', 'sell', '0.001', '42000.00');
-``` -->
+```
 
 ### 高级交易策略
 
@@ -387,7 +387,7 @@ await strategies.gridTrading('BTCUSDT', 43000, 2, 5, 0.001); // 基准价43000�
 
 // 检查套利机会
 await strategies.arbitrageTrading('BTCUSDT', 'bybit', 'binance', 0.3); // 最小利润率0.3%
-``` -->
+```
 
 ## 风险管理
 
@@ -490,7 +490,7 @@ class PositionManager {
         }
     }
 }
-``` -->
+```
 
 ## 实时数据处理
 
@@ -606,7 +606,7 @@ dataProcessor.subscribe([
     'orders',
     'positions'
 ]);
-``` -->
+```
 
 ## 性能优化
 
@@ -663,7 +663,7 @@ class BatchOperations {
         return chunks;
     }
 }
-``` -->
+```
 
 ## 错误处理和重试
 
@@ -734,7 +734,7 @@ const result = await retryHandler.executeWithRetry(
     () => client.trading.placeOrder(orderData),
     '下单操作'
 );
-``` -->
+```
 
 ## 监控和告警
 
@@ -853,7 +853,7 @@ class TradingMonitor {
 // 启动监控
 const monitor = new TradingMonitor(client);
 monitor.startMonitoring();
-``` -->
+```
 
 ## 最佳实践
 
