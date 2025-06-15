@@ -180,6 +180,17 @@ export default withMermaid(defineConfig({
 
     // Настройки для лучшего SEO
     sitemap: {
-        hostname: 'https://your-domain.com'
+        hostname: 'https://timofvy.github.io'
+    },
+
+    // Настройки для GitHub Pages
+    cleanUrls: true,
+
+    // Настройки производительности
+    vite: {
+        build: {
+            minify: 'terser',
+            chunkSizeWarningLimit: 1000
+        }
     }
 })) 

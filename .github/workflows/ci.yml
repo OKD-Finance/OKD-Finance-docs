@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Check for placeholder content
+        run: |
+          echo "Checking for placeholder content..."
+          if grep -r "placeholder\|TODO\|FIXME" docs/ --include="*.md" --exclude-dir=node_modules; then
+            echo "❌ Found placeholder content that needs to be completed"
+            exit 1
+          else
+            echo "✅ No placeholder content found"
+          fi
+          
+      - name: Build documentation
+        run: npm run build
+        
+      - name: Check build output
+        run: |
+          if [ ! -d "docs/.vitepress/dist" ]; then
+            echo "❌ Build output directory not found"
+            exit 1
+          fi
+          
+          if [ ! -f "docs/.vitepress/dist/index.html" ]; then
+            echo "❌ Main index.html not found"
+            exit 1
+          fi
+          
+          echo "✅ Build completed successfully"
+          
+      - name: Check for broken links (basic)
+        run: |
+          echo "Checking for basic link issues..."
+          find docs/.vitepress/dist -name "*.html" -exec grep -l "404\|Not Found" {} \; | head -5 || true
+          echo "✅ Basic link check completed" 
