@@ -1,0 +1,49 @@
+/* Кастомные стили для OKD Finance документации */
+
+/* Обеспечиваем отображение навигации на главной странице */
+.VPHome .VPNav,
+.Layout .VPNav {
+    display: block !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+}
+
+/* Добавляем отступ сверху для hero секции */
+.VPHome .VPHero {
+    padding-top: 80px !important;
+}
+
+/* Улучшаем внешний вид навигации */
+.VPNav {
+    backdrop-filter: blur(8px) !important;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-bottom: 1px solid var(--vp-c-divider) !important;
+}
+
+.dark .VPNav {
+    background-color: rgba(31, 31, 31, 0.9) !important;
+}
+
+/* Стили для улучшения главной страницы */
+.VPHome .VPHero .name {
+    background: linear-gradient(120deg, #667eea 30%, #764ba2 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.VPHome .VPFeature {
+    border: 1px solid var(--vp-c-border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.VPHome .VPFeature:hover {
+    border-color: var(--vp-c-brand-1);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+}
