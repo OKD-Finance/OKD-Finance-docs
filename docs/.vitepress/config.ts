@@ -5,7 +5,7 @@ export default defineConfig({
     description: 'Complete API documentation for OKD Finance cryptocurrency exchange platform',
 
     // Настройка для GitHub Pages
-    base: '/okd-finance-docs/',
+    base: '/OKD-Finance-docs/',
 
     // Отключаем проверку мертвых ссылок для деплоя
     ignoreDeadLinks: true,
@@ -18,10 +18,10 @@ export default defineConfig({
 
     // Favicon и иконки
     head: [
-        ['link', { rel: 'icon', type: 'image/x-icon', href: '/okd-finance-docs/favicon.ico' }],
-        ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/okd-finance-docs/apple-touch-icon.png' }],
-        ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/okd-finance-docs/favicon-32x32.png' }],
-        ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/okd-finance-docs/favicon-16x16.png' }],
+        ['link', { rel: 'icon', type: 'image/x-icon', href: '/OKD-Finance-docs/favicon.ico' }],
+        ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/OKD-Finance-docs/apple-touch-icon.png' }],
+        ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/OKD-Finance-docs/favicon-32x32.png' }],
+        ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/OKD-Finance-docs/favicon-16x16.png' }],
         ['meta', { name: 'theme-color', content: '#667eea' }],
         ['meta', { name: 'msapplication-TileColor', content: '#667eea' }],
         ['style', {}, `
