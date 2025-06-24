@@ -4,7 +4,7 @@
 
 ## 基础 URL
 ```
-https://api.okd.finance
+https://develop.okd.finance/api
 ```
 
 ## 端点

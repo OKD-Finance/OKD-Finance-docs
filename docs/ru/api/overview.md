@@ -8,7 +8,7 @@ OKD Finance предоставляет мощный RESTful API для инте�
 
 **Продакшн:**
 ```
-https://api.okd.finance/api
+https://develop.okd.finance/api
 ```
 
 **Демо/Разработка:**

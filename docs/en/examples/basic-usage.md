@@ -15,7 +15,7 @@ async function loginUser(email, password) {
     const firebaseToken = await userCredential.user.getIdToken();
     
     // Exchange for JWT token
-    const response = await fetch('https://api.okd.finance/auth/login', {
+    const response = await fetch('https://develop.okd.finance/api/auth/login', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${firebaseToken}`,
@@ -37,7 +37,7 @@ async function loginUser(email, password) {
 const jwtToken = localStorage.getItem('jwt_token');
 
 const apiCall = async (endpoint, options = {}) => {
-  const response = await fetch(`https://api.okd.finance${endpoint}`, {
+  const response = await fetch(`https://develop.okd.finance/api${endpoint}`, {
     ...options,
     headers: {
       'Authorization': `Bearer ${jwtToken}`,
@@ -298,7 +298,7 @@ async function refreshTokenIfNeeded() {
       const firebaseUser = auth.currentUser;
       if (firebaseUser) {
         const firebaseToken = await firebaseUser.getIdToken(true);
-        const response = await fetch('https://api.okd.finance/auth/refresh', {
+        const response = await fetch('https://develop.okd.finance/api/auth/refresh', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${firebaseToken}`,
@@ -330,7 +330,7 @@ from typing import Optional, Dict, Any
 
 class OKDFinanceClient:
     def __init__(self, jwt_token: str):
-        self.base_url = "https://api.okd.finance"
+        self.base_url = "https://develop.okd.finance/api"
         self.jwt_token = jwt_token
         self.session = requests.Session()
         self.session.headers.update({

@@ -23,7 +23,7 @@
 ### 加密货币充值
 ```bash
 # 获取您的充值地址
-curl -X GET "https://api.okd.finance/wallets/deposit-address/USDT" \
+curl -X GET "https://develop.okd.finance/api/wallets/deposit-address/USDT" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
@@ -34,7 +34,7 @@ curl -X GET "https://api.okd.finance/wallets/deposit-address/USDT" \
 
 ### 下您的第一个订单
 ```javascript
-const order = await fetch('https://api.okd.finance/trading/orders', {
+const order = await fetch('https://develop.okd.finance/api/trading/orders', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_JWT_TOKEN',
@@ -59,7 +59,7 @@ const order = await fetch('https://api.okd.finance/trading/orders', {
 
 ### 第一个 API 调用
 ```bash
-curl -X GET "https://api.okd.finance/auth/me" \
+curl -X GET "https://develop.okd.finance/api/auth/me" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 

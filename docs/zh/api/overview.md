@@ -4,7 +4,7 @@ OKD Finance 为所有平台功能提供全面的 REST API。
 
 ## 基础 URL
 ```
-https://api.okd.finance
+https://develop.okd.finance/api
 ```
 
 ## 身份验证
@@ -12,7 +12,7 @@ https://api.okd.finance
 所有 API 请求都需要 JWT 身份验证：
 
 ```bash
-curl -X GET "https://api.okd.finance/endpoint" \
+curl -X GET "https://develop.okd.finance/api/endpoint" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 

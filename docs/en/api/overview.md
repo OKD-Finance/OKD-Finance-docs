@@ -1,71 +1,66 @@
 # API Overview
 
-OKD Finance provides a comprehensive REST API for all platform functions.
+Welcome to the OKD Finance API documentation. This comprehensive guide covers all available endpoints for our cryptocurrency exchange platform.
 
 ## Base URL
 ```
-https://api.okd.finance
+https://develop.okd.finance/api
 ```
 
 ## Authentication
-
-All API requests require JWT authentication:
-
-```bash
-curl -X GET "https://api.okd.finance/endpoint" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+Most endpoints require authentication using Bearer tokens:
+```
+Authorization: Bearer YOUR_ACCESS_TOKEN
 ```
 
 ## API Categories
 
-### Authentication API
-- User registration and login
-- Token management
-- Profile updates
+### Core APIs
+- **Authentication** - User registration, login, token management
+- **Users** - Profile management, settings, activity
+- **Wallets** - Balance, deposits, addresses
+- **Trading** - Orders, trades, positions
+- **KYC** - Identity verification
 
-### Wallet API  
-- Balance inquiries
-- Deposit/withdrawal operations
-- Transaction history
+### Administrative APIs
+- **Access Management** - Role-based access control
+- **Analytics** - Platform analytics and reporting
+- **Audit** - System audit logs
+- **Support** - Customer support tickets
+- **Settings** - Platform configuration
 
-### Trading API
-- Order placement and management
-- Position tracking
-- Market data access
+### Trading APIs
+- **Spot Trading** - Spot market operations
+- **Exchange** - Market data and symbols
+- **P2P** - Peer-to-peer trading
+- **History** - Transaction history
 
-### KYC API
-- Document upload
-- Verification status
-- Compliance checks
+### Specialized APIs
+- **Notifications** - Push notifications
+- **Email Templates** - Email management
+- **Fee Settings** - Trading fees configuration
+- **Withdrawal** - Withdrawal operations
 
 ## Rate Limits
-
-| Category | Limit |
-|----------|-------|
-| Public endpoints | 100 req/min |
-| Private endpoints | 1000 req/min |
-| Trading endpoints | 500 req/min |
+- Public endpoints: 100 requests per minute
+- Private endpoints: 1000 requests per minute
+- Trading endpoints: 10 requests per second
 
 ## Response Format
-
-All responses follow this structure:
-
+All API responses follow this format:
 ```json
 {
   "success": true,
-  "data": {
-    // Response data
-  },
+  "data": { ... },
   "error": null
 }
 ```
 
 ## Error Handling
-
+Error responses include detailed information:
 ```json
 {
   "success": false,
-  "data": null,
   "error": {
     "code": "ERROR_CODE",
     "message": "Error description"
@@ -73,29 +68,8 @@ All responses follow this structure:
 }
 ```
 
-## WebSocket API
-
-Real-time data streams:
-
-```javascript
-const ws = new WebSocket('wss://api.okd.finance/ws');
-ws.send(JSON.stringify({
-  action: 'subscribe',
-  channel: 'prices',
-  symbol: 'BTCUSDT'
-}));
-```
-
-## SDKs and Libraries
-
-- JavaScript/Node.js SDK
-- Python SDK  
-- PHP SDK
-- Go SDK
-
 ## Getting Started
-
-1. [Authentication](/en/api/authentication)
-2. [User Management](/en/api/users)
-3. [Wallet Operations](/en/api/wallets)
-4. [Trading Functions](/en/trading/overview) 
+1. Register an account via the Authentication API
+2. Complete KYC verification
+3. Generate API keys in your account settings
+4. Start trading using the Trading API

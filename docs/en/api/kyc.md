@@ -1,55 +1,33 @@
 # KYC API
 
-Know Your Customer verification endpoints.
+Know Your Customer (KYC) API for identity verification.
+
+## Base URL
+```
+https://develop.okd.finance/api
+```
 
 ## Endpoints
 
-### GET /kyc/status
-Get current KYC verification status.
-
-### POST /kyc/documents
-Upload verification documents.
-
-### GET /kyc/requirements
-Get KYC requirements for user's region.
-
 ### POST /kyc/submit
-Submit KYC application for review.
-
-## KYC Levels
-
-### Level 1 - Basic
-- Email verification
-- Phone verification
-- Basic profile information
-
-### Level 2 - Standard  
-- Government ID upload
-- Address verification
-- Selfie verification
-
-### Level 3 - Advanced
-- Enhanced due diligence
-- Source of funds verification
-- Higher transaction limits
-
-## Document Types
-
-- Government ID (passport, driver's license)
-- Proof of address (utility bill, bank statement)
-- Selfie with ID
-- Additional documents as required
-
-## Examples
+Submit KYC documents for verification.
 
 ```bash
-# Check KYC status
-curl -X GET "https://api.okd.finance/kyc/status" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+curl -X POST "https://develop.okd.finance/api/kyc/submit" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "John",
+    "lastName": "Doe",
+    "dateOfBirth": "1990-01-01",
+    "nationality": "US"
+  }'
+```
 
-# Upload document
-curl -X POST "https://api.okd.finance/kyc/documents" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -F "type=government_id" \
-  -F "file=@passport.jpg"
-``` 
+### GET /kyc/status
+Get KYC verification status.
+
+```bash
+curl -X GET "https://develop.okd.finance/api/kyc/status" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```

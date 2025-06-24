@@ -1,0 +1,1430 @@
+/* API Documentation Styles - Stripe-like Layout */
+
+/* Override VitePress container for full width */
+.VPDoc.has-sidebar .container,
+.VPDoc.has-aside .container {
+    max-width: none !important;
+}
+
+.VPDoc.has-sidebar .content,
+.VPDoc.has-aside .content {
+    max-width: none !important;
+    padding: 0 !important;
+}
+
+/* Main API layout with two columns */
+.api-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Three column layout for wider screens */
+@media (min-width: 1600px) {
+    .api-layout {
+        grid-template-columns: 1fr 1fr 0.5fr;
+    }
+
+    .api-content {
+        grid-column: 1;
+    }
+
+    .api-examples {
+        grid-column: 2 / 4;
+    }
+}
+
+/* Light theme styles */
+.api-content {
+    padding: 2rem;
+    background: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    min-height: 100vh;
+    color: #1a202c;
+    transition: all 0.3s ease;
+}
+
+/* Enhanced light theme styling */
+.api-content h1 {
+    color: #1a202c;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid #e2e8f0;
+    padding-bottom: 1rem;
+}
+
+.api-content h2 {
+    color: #2d3748;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem 0;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 0.5rem;
+}
+
+.api-content h3 {
+    color: #374151;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 1.5rem 0 1rem 0;
+}
+
+.api-content h4 {
+    color: #4a5568;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 1rem 0 0.75rem 0;
+}
+
+.api-content p {
+    color: #4a5568;
+    line-height: 1.7;
+    margin: 1rem 0;
+}
+
+.api-content li {
+    color: #4a5568;
+    line-height: 1.6;
+    margin: 0.5rem 0;
+}
+
+/* Enhanced method badges for light theme */
+.method-get {
+    background: #dcfdf4;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+    box-shadow: 0 1px 3px rgba(6, 95, 70, 0.1);
+}
+
+.method-post {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #93c5fd;
+    box-shadow: 0 1px 3px rgba(30, 64, 175, 0.1);
+}
+
+.method-put {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fbbf24;
+    box-shadow: 0 1px 3px rgba(146, 64, 14, 0.1);
+}
+
+.method-delete {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+    box-shadow: 0 1px 3px rgba(153, 27, 27, 0.1);
+}
+
+/* Enhanced API endpoint styling for light theme */
+.api-endpoint {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.api-endpoint-url {
+    font-weight: 700;
+    color: #1e293b;
+    background: #ffffff;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    display: inline-block;
+}
+
+/* Enhanced parameters table for light theme */
+.params-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.params-table th,
+.params-table td {
+    padding: 1rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.params-table th {
+    background: #f1f5f9;
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.params-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.params-table .param-name {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-weight: 700;
+    color: #7c3aed;
+    background: #f3f4f6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.params-table .param-required {
+    color: #dc2626;
+    font-weight: 700;
+    background: #fef2f2;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+/* Enhanced response examples for light theme */
+.response-example {
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    border-radius: 8px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.response-status {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-weight: 700;
+    color: #059669;
+    font-size: 0.9rem;
+    background: #ecfdf5;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #a7f3d0;
+    display: inline-block;
+}
+
+/* Enhanced code styling for light theme */
+.api-content code:not(.api-examples code) {
+    background: #f1f5f9;
+    color: #5b21b6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875em;
+    font-weight: 600;
+    border: 1px solid #e2e8f0;
+}
+
+.api-content pre:not(.api-examples pre) {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.api-content pre:not(.api-examples pre) code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: #374151;
+}
+
+/* Enhanced blockquotes and tips for light theme */
+.api-content blockquote {
+    border-left: 4px solid #3b82f6;
+    background: #f0f9ff;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 1px 3px rgba(59, 130, 246, 0.1);
+}
+
+.api-content .tip {
+    background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+    border: 1px solid #bae6fd;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+.api-content .tip .custom-block-title {
+    color: #1e40af;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+/* Enhanced links for light theme */
+.api-content a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.api-content a:hover {
+    color: #1d4ed8;
+    border-bottom: 1px solid #1d4ed8;
+}
+
+/* Enhanced lists for light theme */
+.api-content ul,
+.api-content ol {
+    color: #374151;
+    margin: 1.25rem 0;
+    padding-left: 1.75rem;
+}
+
+.api-content ul li::marker {
+    color: #6b7280;
+}
+
+.api-content ol li::marker {
+    color: #6b7280;
+    font-weight: 600;
+}
+
+/* Enhanced strong text for light theme */
+.api-content strong {
+    color: #1f2937;
+    font-weight: 700;
+}
+
+/* Enhanced API section for light theme */
+.api-section {
+    margin: 2.5rem 0;
+    padding: 0 0 1.5rem 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.api-section:last-child {
+    border-bottom: none;
+}
+
+/* Enhanced try-it button for light theme */
+.try-it-button {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+    padding: 0.875rem 1.75rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.try-it-button:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Dark theme styles for content area */
+.dark .api-content {
+    background: #0f172a;
+    border-right: 1px solid #334155;
+    color: #f1f5f9;
+}
+
+/* Text color improvements for dark theme */
+.dark .api-content h1,
+.dark .api-content h2,
+.dark .api-content h3,
+.dark .api-content h4,
+.dark .api-content h5,
+.dark .api-content h6 {
+    color: #f8fafc;
+}
+
+.dark .api-content p {
+    color: #cbd5e1;
+}
+
+.dark .api-content li {
+    color: #cbd5e1;
+}
+
+/* Method badges - enhanced for dark theme */
+.method-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.dark .method-get {
+    background: #064e3b;
+    color: #6ee7b7;
+}
+
+.dark .method-post {
+    background: #1e3a8a;
+    color: #93c5fd;
+}
+
+.dark .method-put {
+    background: #92400e;
+    color: #fbbf24;
+}
+
+.dark .method-delete {
+    background: #991b1b;
+    color: #fca5a5;
+}
+
+/* API endpoint styling */
+.api-endpoint {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.875rem;
+}
+
+.dark .api-endpoint {
+    background: #1e293b;
+    border: 1px solid #475569;
+}
+
+.api-endpoint-url {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.dark .api-endpoint-url {
+    color: #f1f5f9;
+}
+
+/* Parameters table */
+.params-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+}
+
+.params-table th,
+.params-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.dark .params-table th,
+.dark .params-table td {
+    border-bottom: 1px solid #475569;
+}
+
+.params-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #374151;
+}
+
+.dark .params-table th {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+.params-table .param-name {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-weight: 600;
+    color: #7c3aed;
+}
+
+.dark .params-table .param-name {
+    color: #a78bfa;
+}
+
+.dark .params-table td {
+    color: #cbd5e1;
+}
+
+.params-table .param-required {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+.dark .params-table .param-required {
+    color: #f87171;
+}
+
+/* Response examples styling */
+.response-example {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 6px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.dark .response-example {
+    background: #1e293b;
+    border: 1px solid #475569;
+}
+
+.response-status {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-weight: 600;
+    color: #059669;
+    font-size: 0.875rem;
+}
+
+.dark .response-status {
+    color: #34d399;
+}
+
+/* API section improvements */
+.api-section {
+    margin: 2rem 0;
+}
+
+.api-section h2 {
+    color: #1a202c;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.dark .api-section h2 {
+    color: #f8fafc;
+}
+
+.api-section h3 {
+    color: #374151;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.dark .api-section h3 {
+    color: #e2e8f0;
+}
+
+/* Code in content area */
+.api-content code:not(.api-examples code) {
+    background: #f1f5f9;
+    color: #1e293b;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+}
+
+.dark .api-content code:not(.api-examples code) {
+    background: #334155;
+    color: #e2e8f0;
+}
+
+/* Inline code blocks */
+.api-content pre:not(.api-examples pre) {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.dark .api-content pre:not(.api-examples pre) {
+    background: #1e293b;
+    border: 1px solid #475569;
+    color: #e2e8f0;
+}
+
+/* Blockquotes and tips */
+.api-content blockquote {
+    border-left: 4px solid #3b82f6;
+    background: #eff6ff;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.dark .api-content blockquote {
+    border-left: 4px solid #60a5fa;
+    background: #1e3a8a;
+    color: #dbeafe;
+}
+
+/* VitePress tip boxes */
+.api-content .tip {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.dark .api-content .tip {
+    background: #0c4a6e;
+    border: 1px solid #0369a1;
+    color: #bae6fd;
+}
+
+/* Links */
+.api-content a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.api-content a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+.dark .api-content a {
+    color: #60a5fa;
+}
+
+.dark .api-content a:hover {
+    color: #93c5fd;
+}
+
+/* Lists */
+.api-content ul,
+.api-content ol {
+    color: #4b5563;
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.dark .api-content ul,
+.dark .api-content ol {
+    color: #cbd5e1;
+}
+
+/* Strong text */
+.api-content strong {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.dark .api-content strong {
+    color: #f9fafb;
+}
+
+.api-examples {
+    background: #f8fafc;
+    color: #374151;
+    padding: 2rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f8fafc;
+    border-left: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+/* Dark theme for code examples */
+.dark .api-examples {
+    background: #0d1117;
+    color: #f0f6fc;
+    scrollbar-color: #30363d #0d1117;
+    border-left: 1px solid #334155;
+}
+
+/* Language tabs - enhanced styling */
+.code-tabs {
+    display: flex;
+    background: #f1f5f9;
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 0;
+    border: 2px solid #e2e8f0;
+    border-bottom: none;
+    overflow: hidden;
+}
+
+.dark .code-tabs {
+    background: #1e293b;
+    border: 2px solid #334155;
+    border-bottom: none;
+}
+
+.code-tab {
+    padding: 1rem 1.5rem;
+    background: transparent;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    flex: 1;
+    text-align: center;
+}
+
+.code-tab.active {
+    background: #ffffff;
+    color: #1e293b;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.code-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+}
+
+.code-tab:hover {
+    color: #374151;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.dark .code-tab {
+    color: #94a3b8;
+}
+
+.dark .code-tab.active {
+    background: #0f172a;
+    color: #f1f5f9;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark .code-tab:hover {
+    color: #f1f5f9;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Code blocks - harmonious backgrounds */
+.api-examples pre {
+    background: #f8fafc !important;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    margin: 1rem 0;
+    overflow-x: auto;
+    white-space: pre;
+    word-wrap: normal;
+    max-width: 100%;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+.api-examples pre::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    background: #cbd5e1;
+    color: #374151;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.api-examples code {
+    color: #475569 !important;
+    background: transparent !important;
+    white-space: pre;
+    word-wrap: normal;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    padding: 1.5rem;
+    display: block;
+}
+
+/* Enhanced bash blocks */
+.api-examples pre[data-lang="bash"],
+.api-examples pre[class*="language-bash"],
+.api-examples pre[class*="bash"] {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+    border: 2px solid #cbd5e1 !important;
+    position: relative;
+}
+
+.api-examples pre[data-lang="bash"]::before,
+.api-examples pre[class*="language-bash"]::before,
+.api-examples pre[class*="bash"]::before {
+    content: 'bash';
+    background: #64748b;
+    color: white;
+}
+
+.api-examples pre[data-lang="bash"] code,
+.api-examples pre[class*="language-bash"] code,
+.api-examples pre[class*="bash"] code {
+    color: #334155 !important;
+}
+
+/* JSON blocks */
+.api-examples pre[data-lang="json"],
+.api-examples pre[class*="language-json"] {
+    background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%) !important;
+    border: 2px solid #fbbf24 !important;
+}
+
+.api-examples pre[data-lang="json"]::before,
+.api-examples pre[class*="language-json"]::before {
+    content: 'json';
+    background: #f59e0b;
+    color: white;
+}
+
+/* JavaScript blocks */
+.api-examples pre[data-lang="javascript"],
+.api-examples pre[class*="language-javascript"] {
+    background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%) !important;
+    border: 2px solid #c084fc;
+}
+
+.api-examples pre[data-lang="javascript"]::before,
+.api-examples pre[class*="language-javascript"]::before {
+    content: 'js';
+    background: #8b5cf6;
+    color: white;
+}
+
+/* Dark theme for code blocks */
+.dark .api-examples pre {
+    background: #0f172a !important;
+    border: 2px solid #334155 !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark .api-examples pre::before {
+    background: #475569;
+    color: #f1f5f9;
+}
+
+.dark .api-examples code {
+    color: #cbd5e1 !important;
+}
+
+.dark .api-examples pre[data-lang="bash"],
+.dark .api-examples pre[class*="language-bash"] {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+    border: 2px solid #475569 !important;
+}
+
+.dark .api-examples pre[data-lang="bash"] code,
+.dark .api-examples pre[class*="language-bash"] code {
+    color: #e2e8f0 !important;
+}
+
+.dark .api-examples pre[data-lang="json"],
+.dark .api-examples pre[class*="language-json"] {
+    background: linear-gradient(135deg, #451a03 0%, #78350f 100%) !important;
+    border: 2px solid #92400e !important;
+}
+
+.dark .api-examples pre[data-lang="javascript"],
+.dark .api-examples pre[class*="language-javascript"] {
+    background: linear-gradient(135deg, #3c1361 0%, #581c87 100%) !important;
+    border: 2px solid #7c3aed !important;
+}
+
+/* API Configuration section - enhanced design */
+.api-examples .api-key-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 2px solid #cbd5e1;
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+    color: #1e293b;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.api-examples .api-key-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+    border-radius: 16px 16px 0 0;
+}
+
+.api-examples .api-key-section h3 {
+    color: #1e293b !important;
+    margin: 0 0 1.5rem 0 !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.api-examples .api-key-section .api-key-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.api-examples .api-key-section label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.api-examples .api-key-section input {
+    padding: 1rem;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #374151;
+    font-size: 0.875rem;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.api-examples .api-key-section input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.api-examples .api-key-section input::placeholder {
+    color: #9ca3af;
+}
+
+.set-api-key-button {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.set-api-key-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.set-api-key-button:active {
+    transform: translateY(0);
+}
+
+.set-api-key-button.success {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: rgba(76, 175, 80, 0.5);
+}
+
+.api-key-status {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    margin-top: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.api-key-status.success {
+    background: rgba(76, 175, 80, 0.2);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    color: #c8e6c9;
+}
+
+.api-key-status.error {
+    background: rgba(244, 67, 54, 0.2);
+    border: 1px solid rgba(244, 67, 54, 0.3);
+    color: #ffcdd2;
+}
+
+.api-key-info {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+.api-key-info p {
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.api-key-info ol {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.api-key-info li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .api-key-controls {
+        gap: 1rem;
+    }
+
+    .api-key-input-group {
+        gap: 0.5rem;
+    }
+
+    .set-api-key-button {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1rem;
+    }
+
+    .set-api-key-button:hover {
+        transform: none;
+    }
+}
+
+/* Dark theme overrides for mobile */
+@media (max-width: 768px) {
+
+    html.dark .api-content,
+    .dark .api-content {
+        background: #1a1a1a;
+        color: #f0f6fc;
+    }
+
+    html.dark .demo-controls,
+    .dark .demo-controls {
+        background: rgba(13, 17, 23, 0.95);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    html.dark .demo-controls input,
+    html.dark .demo-controls select,
+    .dark .demo-controls input,
+    .dark .demo-controls select {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #f0f6fc;
+    }
+
+    html.dark .demo-controls input:focus,
+    html.dark .demo-controls select:focus,
+    .dark .demo-controls input:focus,
+    .dark .demo-controls select:focus {
+        border-color: #3b82f6;
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    html.dark .demo-controls input::placeholder,
+    .dark .demo-controls input::placeholder {
+        color: rgba(240, 246, 252, 0.6);
+    }
+
+    html.dark .demo-controls label,
+    .dark .demo-controls label {
+        color: #f0f6fc;
+    }
+
+    html.dark .api-demo,
+    .dark .api-demo {
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    html.dark .demo-result,
+    .dark .demo-result {
+        background: rgba(0, 0, 0, 0.4);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #f0f6fc;
+    }
+
+    html.dark .demo-result.success,
+    .dark .demo-result.success {
+        border-color: #10b981;
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+    }
+
+    html.dark .demo-result.error,
+    .dark .demo-result.error {
+        border-color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+    }
+
+    /* API key section dark theme */
+    html.dark .api-key-section,
+    .dark .api-key-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    html.dark .api-key-input,
+    .dark .api-key-input {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: white;
+    }
+
+    html.dark .api-key-input:focus,
+    .dark .api-key-input:focus {
+        border-color: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    }
+
+    html.dark .api-key-input::placeholder,
+    .dark .api-key-input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+}
+
+/* System dark theme support */
+@media (max-width: 768px) and (prefers-color-scheme: dark) {
+
+    /* Apply dark theme styles when system preference is dark */
+    :root {
+        color-scheme: dark;
+    }
+
+    body {
+        background: #1a1a1a;
+        color: #f0f6fc;
+    }
+
+    .api-content,
+    .demo-controls {
+        background: rgba(13, 17, 23, 0.95);
+        color: #f0f6fc;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .demo-controls input,
+    .demo-controls select {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #f0f6fc;
+    }
+
+    .demo-controls label {
+        color: #f0f6fc;
+    }
+
+    .demo-result {
+        background: rgba(0, 0, 0, 0.4);
+        color: #f0f6fc;
+    }
+}
+
+/* Curl Modal Styles */
+.curl-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+}
+
+.curl-modal-content {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.curl-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.curl-modal-header h3 {
+    margin: 0;
+    color: #f0f6fc;
+    font-size: 1.25rem;
+}
+
+.curl-modal-close {
+    background: none;
+    border: none;
+    color: #f0f6fc;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.curl-modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.curl-command {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 1rem;
+    color: #f0f6fc;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.875rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.curl-instruction {
+    color: rgba(240, 246, 252, 0.8);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* Force light theme for all code blocks */
+.api-examples pre,
+.api-examples .example-block pre,
+.api-examples div[class*="language-"] pre,
+.api-examples div[class*="language-"] {
+    background: #f8fafc !important;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    color: #475569 !important;
+}
+
+.api-examples code,
+.api-examples .example-block code,
+.api-examples div[class*="language-"] code {
+    color: #475569 !important;
+    background: transparent !important;
+}
+
+/* Specific overrides for bash blocks in light theme */
+.api-examples pre[class*="bash"],
+.api-examples .example-block[data-lang="bash"] pre,
+.api-examples div[class*="language-bash"],
+.api-examples div[class*="language-bash"] pre {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+    border: 2px solid #cbd5e1 !important;
+}
+
+.api-examples pre[class*="bash"] code,
+.api-examples .example-block[data-lang="bash"] code,
+.api-examples div[class*="language-bash"] code {
+    color: #334155 !important;
+}
+
+/* JSON response blocks */
+.api-examples pre[class*="json"],
+.api-examples .example-block[data-lang="json"] pre,
+.api-examples div[class*="language-json"],
+.api-examples div[class*="language-json"] pre {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
+    border: 2px solid #0ea5e9 !important;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15) !important;
+}
+
+.api-examples pre[class*="json"] code,
+.api-examples .example-block[data-lang="json"] code,
+.api-examples div[class*="language-json"] code {
+    color: #0c4a6e !important;
+}
+
+/* Response sections */
+.api-examples .demo-result,
+.api-examples .response-section {
+    background: #f8fafc !important;
+    border: 2px solid #e2e8f0 !important;
+    color: #475569 !important;
+}
+
+.api-examples .demo-result.success {
+    background: #ecfdf5 !important;
+    border-color: #10b981 !important;
+    color: #065f46 !important;
+}
+
+.api-examples .demo-result.error {
+    background: #fef2f2 !important;
+    border-color: #ef4444 !important;
+    color: #991b1b !important;
+}
+
+/* Dark theme overrides */
+.dark .api-examples pre,
+.dark .api-examples .example-block pre,
+.dark .api-examples div[class*="language-"] pre,
+.dark .api-examples div[class*="language-"] {
+    background: #0f172a !important;
+    border: 2px solid #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+.dark .api-examples code,
+.dark .api-examples .example-block code,
+.dark .api-examples div[class*="language-"] code {
+    color: #cbd5e1 !important;
+}
+
+.dark .api-examples pre[class*="bash"],
+.dark .api-examples .example-block[data-lang="bash"] pre,
+.dark .api-examples div[class*="language-bash"],
+.dark .api-examples div[class*="language-bash"] pre {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+    border: 2px solid #475569 !important;
+}
+
+.dark .api-examples pre[class*="bash"] code,
+.dark .api-examples .example-block[data-lang="bash"] code,
+.dark .api-examples div[class*="language-bash"] code {
+    color: #e2e8f0 !important;
+}
+
+.dark .api-examples pre[class*="json"],
+.dark .api-examples .example-block[data-lang="json"] pre,
+.dark .api-examples div[class*="language-json"],
+.dark .api-examples div[class*="language-json"] pre {
+    background: linear-gradient(135deg, #451a03 0%, #78350f 100%) !important;
+    border: 2px solid #92400e !important;
+}
+
+.dark .api-examples pre[class*="json"] code,
+.dark .api-examples .example-block[data-lang="json"] code,
+.dark .api-examples div[class*="language-json"] code {
+    color: #fbbf24 !important;
+}
+
+.dark .api-examples .demo-result,
+.dark .api-examples .response-section {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f0f6fc !important;
+}
+
+.dark .api-examples .demo-result.success {
+    background: rgba(16, 185, 129, 0.1) !important;
+    border-color: #10b981 !important;
+    color: #10b981 !important;
+}
+
+.dark .api-examples .demo-result.error {
+    background: rgba(239, 68, 68, 0.1) !important;
+    border-color: #ef4444 !important;
+    color: #ef4444 !important;
+}
+
+/* Fix logo and site title positioning */
+.VPNav .VPNavBar .container {
+    max-width: none !important;
+    padding: 0 24px !important;
+}
+
+.VPNavBarTitle {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-shrink: 0 !important;
+}
+
+.VPNavBarTitle .VPImage {
+    width: 32px !important;
+    height: 32px !important;
+    flex-shrink: 0 !important;
+}
+
+.VPNavBarTitle .title {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+
+/* Ensure proper spacing in header */
+.VPNavBar .content {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+}
+
+.VPNavBar .content-body {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+}
+
+/* Fix navigation menu spacing */
+.VPNavBarMenu {
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+}
+
+.VPNavBarMenuLink {
+    margin: 0 8px !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .VPNavBarTitle .title {
+        font-size: 16px !important;
+    }
+
+    .VPNavBarTitle {
+        gap: 8px !important;
+    }
+
+    .VPNavBarTitle .VPImage {
+        width: 28px !important;
+        height: 28px !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .VPNavBarTitle .title {
+        display: none !important;
+    }
+}

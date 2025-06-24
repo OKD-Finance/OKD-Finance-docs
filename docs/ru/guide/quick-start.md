@@ -365,7 +365,7 @@ app.run();
 
 1. **Смените URL на продакшн:**
    ```bash
-   OKD_API_BASE_URL=https://api.okd.finance/api
+   OKD_API_BASE_URL=https://develop.okd.finance/api
    ```
 
 2. **Получите реальные API ключи:**

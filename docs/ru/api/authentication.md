@@ -4,7 +4,7 @@
 
 ## Базовая информация
 
-**Base URL:** `https://api.okd.finance`  
+**Base URL:** `https://develop.okd.finance/api`  
 **Требуется аутентификация:** Firebase Token для большинства endpoints
 
 ## Endpoints
@@ -277,7 +277,7 @@ Content-Type: application/json
 ```javascript
 // Регистрация
 const registerUser = async (firebaseToken, userData) => {
-  const response = await fetch('https://api.okd.finance/auth/register', {
+  const response = await fetch('https://develop.okd.finance/api/auth/register', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${firebaseToken}`,
@@ -292,7 +292,7 @@ const registerUser = async (firebaseToken, userData) => {
 
 // Авторизация
 const loginUser = async (firebaseToken) => {
-  const response = await fetch('https://api.okd.finance/auth/login', {
+  const response = await fetch('https://develop.okd.finance/api/auth/login', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${firebaseToken}`,
@@ -316,7 +316,7 @@ def register_user(firebase_token, user_data):
     }
     
     response = requests.post(
-        'https://api.okd.finance/auth/register',
+        'https://develop.okd.finance/api/auth/register',
         headers=headers,
         json=user_data
     )
@@ -330,7 +330,7 @@ def login_user(firebase_token):
     }
     
     response = requests.post(
-        'https://api.okd.finance/auth/login',
+        'https://develop.okd.finance/api/auth/login',
         headers=headers
     )
     

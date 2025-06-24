@@ -219,14 +219,14 @@ ws.onmessage = (event) => {
 
 ### 1. Получение доступа
 ```bash
-curl -X POST "https://api.okd.finance/trading/enable" \
+curl -X POST "https://develop.okd.finance/api/trading/enable" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json"
 ```
 
 ### 2. Настройка Bybit API
 ```bash
-curl -X POST "https://api.okd.finance/trading/bybit/setup" \
+curl -X POST "https://develop.okd.finance/api/trading/bybit/setup" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -237,7 +237,7 @@ curl -X POST "https://api.okd.finance/trading/bybit/setup" \
 
 ### 3. Первый ордер
 ```bash
-curl -X POST "https://api.okd.finance/trading/orders" \
+curl -X POST "https://develop.okd.finance/api/trading/orders" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{

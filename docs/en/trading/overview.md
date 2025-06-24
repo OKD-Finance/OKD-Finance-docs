@@ -25,24 +25,24 @@ Advanced cryptocurrency trading with Bybit integration.
 
 ### Real-time Prices
 ```bash
-curl -X GET "https://api.okd.finance/trading/ticker/BTCUSDT"
+curl -X GET "https://develop.okd.finance/api/trading/ticker/BTCUSDT"
 ```
 
 ### Order Book
 ```bash
-curl -X GET "https://api.okd.finance/trading/orderbook/BTCUSDT"
+curl -X GET "https://develop.okd.finance/api/trading/orderbook/BTCUSDT"
 ```
 
 ### Trade History
 ```bash
-curl -X GET "https://api.okd.finance/trading/trades/BTCUSDT"
+curl -X GET "https://develop.okd.finance/api/trading/trades/BTCUSDT"
 ```
 
 ## Order Management
 
 ### Place Order
 ```bash
-curl -X POST "https://api.okd.finance/trading/orders" \
+curl -X POST "https://develop.okd.finance/api/trading/orders" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d '{
     "symbol": "BTCUSDT",
@@ -55,7 +55,7 @@ curl -X POST "https://api.okd.finance/trading/orders" \
 
 ### Cancel Order
 ```bash
-curl -X DELETE "https://api.okd.finance/trading/orders/ORDER_ID" \
+curl -X DELETE "https://develop.okd.finance/api/trading/orders/ORDER_ID" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
@@ -63,13 +63,13 @@ curl -X DELETE "https://api.okd.finance/trading/orders/ORDER_ID" \
 
 ### Get Positions
 ```bash
-curl -X GET "https://api.okd.finance/trading/positions" \
+curl -X GET "https://develop.okd.finance/api/trading/positions" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
 ### Close Position
 ```bash
-curl -X POST "https://api.okd.finance/trading/positions/close" \
+curl -X POST "https://develop.okd.finance/api/trading/positions/close" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d '{
     "symbol": "BTCUSDT",

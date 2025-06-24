@@ -37,7 +37,7 @@ OKD Finance provides seamless integration with Bybit Exchange for enhanced tradi
 
 ### 3. Connect to OKD Finance
 ```bash
-curl -X POST "https://api.okd.finance/bybit/connect" \
+curl -X POST "https://develop.okd.finance/api/bybit/connect" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d '{
     "apiKey": "your_bybit_api_key",
@@ -141,11 +141,11 @@ OKD_API -> Client: Real-time Updates
 ### Debug Tools
 ```bash
 # Check connection status
-curl -X GET "https://api.okd.finance/bybit/status" \
+curl -X GET "https://develop.okd.finance/api/bybit/status" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 
 # Test API connectivity  
-curl -X POST "https://api.okd.finance/bybit/test" \
+curl -X POST "https://develop.okd.finance/api/bybit/test" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 

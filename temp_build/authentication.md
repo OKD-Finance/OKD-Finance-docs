@@ -441,3 +441,78 @@ if ($httpCode === 200) {
 
   </template>
 </ApiDoc>
+
+<script>
+// API testing functions
+async function testSignUp() {
+    const email = document.getElementById('signup-email')?.value;
+    const password = document.getElementById('signup-password')?.value;
+    const fingerprint = document.getElementById('signup-fingerprint')?.value;
+    const recaptcha = document.getElementById('signup-recaptcha')?.value;
+    const platformId = document.getElementById('signup-platform-id')?.value;
+    
+    if (!email || !password || !fingerprint || !recaptcha || !platformId) {
+        alert('Please fill all required fields.');
+        return;
+    }
+    
+    const container = document.querySelector('.api-demo');
+    const result = await makeApiRequest('/auth/sign-up', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+        headers: {
+            'Fingerprint': fingerprint,
+            'X-RECAPTCHA': recaptcha,
+            'X-PLATFORM-ID': platformId
+        }
+    });
+    showResult(container, result);
+}
+
+async function testSignIn() {
+    const email = document.getElementById('signin-email')?.value;
+    const password = document.getElementById('signin-password')?.value;
+    const fingerprint = document.getElementById('signin-fingerprint')?.value;
+    const recaptcha = document.getElementById('signin-recaptcha')?.value;
+    const platformId = document.getElementById('signin-platform-id')?.value;
+    
+    if (!email || !password || !fingerprint || !recaptcha || !platformId) {
+        alert('Please fill all required fields.');
+        return;
+    }
+    
+    const container = document.querySelector('.api-demo');
+    const result = await makeApiRequest('/auth/sign-in', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+        headers: {
+            'Fingerprint': fingerprint,
+            'X-RECAPTCHA': recaptcha,
+            'X-PLATFORM-ID': platformId
+        }
+    });
+    showResult(container, result);
+}
+
+async function testRefreshToken() {
+    const refreshToken = document.getElementById('refresh-token')?.value;
+    
+    if (!refreshToken) {
+        alert('Please enter a refresh token.');
+        return;
+    }
+    
+    const container = document.querySelector('.api-demo');
+    const result = await makeApiRequest('/auth/refresh', {
+        method: 'POST',
+        body: JSON.stringify({ refreshToken })
+    });
+    showResult(container, result);
+}
+
+async function testGetProfile() {
+    const container = document.querySelector('.api-demo');
+    const result = await makeApiRequest('/auth/profile', { method: 'GET' });
+    showResult(container, result);
+}
+</script> 

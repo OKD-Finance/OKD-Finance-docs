@@ -35,6 +35,196 @@ export default defineConfig({
                 --okd-light: #f8fafc;
                 --okd-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #10b981 100%);
             }
+
+            /* General Card/Section Styling */
+.api-key-section,
+.api-demo {
+    background-color: #1a1a1a;
+    /* Darker background for sections */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333;
+    /* Subtle border */
+}
+
+/* API Key Section specific gradient */
+.api-key-section {
+    background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
+    /* Dark gradient */
+    border: none;
+    /* Remove border for gradient effect */
+}
+
+/* Input Fields */
+.api-key-input-group label,
+.demo-controls label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ccc;
+    /* Lighter text for labels */
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+.api-key-input,
+.demo-controls input[type="text"],
+.demo-controls input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background-color: #2a2a2a;
+    /* Slightly lighter than section background */
+    color: #eee;
+    /* Light text color */
+    font-size: 0.9em;
+    box-sizing: border-box;
+    /* Include padding and border in the element\'s total width and height */
+}
+
+.api-key-input:focus,
+.demo-controls input[type="text"]:focus,
+.demo-controls input[type="number"]:focus {
+    border-color: #007bff;
+    /* Highlight border on focus */
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* API Key Controls (for the API Key Input and Button) */
+.api-key-controls {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px; /* Space between input group and button */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.api-key-input-group {
+    flex-grow: 1; /* Input group takes available space */
+}
+
+.set-api-key-button {
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.demo-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between items in the row */
+    align-items: flex-end; /* Align items at the bottom */
+}
+
+.input-group {
+    flex: 1 1 calc(33.333% - 20px); /* Three columns for inputs */
+    min-width: 200px; /* Minimum width for inputs before wrapping */
+    background-color: transparent;
+    padding: 10px;
+    margin-bottom: 0; /* Ensure no extra margin */
+}
+
+.button-group {
+    flex: 1 1 calc(33.333% - 20px); /* Make button group also a column */
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    margin-top: 0; /* Remove top margin as gap handles spacing */
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    align-self: flex-end; /* Align buttons to the bottom of the row */
+}
+
+.demo-controls label {
+    margin-bottom: 5px;
+}
+
+.demo-controls input {
+    margin-bottom: 0;
+    /* Remove bottom margin as gap handles spacing */
+}
+
+/* Buttons */
+.set-api-key-button,
+.test-button,
+.copy-curl-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    flex-grow: 1;
+    /* Allow buttons to grow and fill space */
+    min-width: 100px;
+    /* Minimum width for buttons */
+}
+
+.set-api-key-button {
+    background-color: #007bff;
+    /* Blue color */
+    color: white;
+}
+
+.set-api-key-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+.test-button {
+    background-color: #28a745;
+    /* Green color */
+    color: white;
+}
+
+.test-button:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+}
+
+.copy-curl-button {
+    background-color: #3a3a3a;
+    /* Darker grey */
+    color: #e0e0e0;
+}
+
+.copy-curl-button:hover {
+    background-color: #2a2a2a;
+    transform: translateY(-1px);
+}
+
+/* API Key Status */
+.api-key-status {
+    margin-top: 15px;
+    font-size: 0.85em;
+    color: #bbb;
+}
+
+/* Code Block Styling */
+.language-bash {
+    background-color: #23272d;
+    /* VS Code-like dark background */
+    color: #e0e0e0;
+    /* Light text color */
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-top: 25px;
+    overflow-x: auto;
+    /* Allow horizontal scrolling for long lines */
+    font-family: \'SFMono-Regular\', Consolas, \'Liberation Mono\', Menlo, Courier, monospace;
+    font-size: 0.85em;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    /* Wrap long lines */
+}
+
+.language-bash code {
+    background-color: transparent;
+    /* No background for inline code */
+    color: inherit;
+    /* Inherit color from parent */
+    padding: 0;
+}
         `]
     ],
 
@@ -241,10 +431,27 @@ export default defineConfig({
                     items: [
                         { text: 'Overview', link: '/en/api/overview' },
                         { text: 'Authentication', link: '/en/api/authentication' },
-                        { text: 'Users & Accounts', link: '/en/api/users' },
+                        { text: 'Users', link: '/en/api/users' },
                         { text: 'Wallets', link: '/en/api/wallets' },
                         { text: 'KYC', link: '/en/api/kyc' },
-                        { text: 'Webhooks', link: '/en/api/webhooks' }
+                        { text: 'CMC Cases', link: '/en/api/cmc-cases' },
+                        { text: 'Exchange Configuration', link: '/en/api/exchange-configuration' },
+                        { text: 'Access Management', link: '/en/api/access-management' },
+                        { text: 'Withdrawal', link: '/en/api/withdrawal' },
+                        { text: 'Exchange', link: '/en/api/exchange' },
+                        { text: 'Spot Order', link: '/en/api/spot-order' },
+                        { text: 'Trading', link: '/en/api/trading' },
+                        { text: 'Spot', link: '/en/api/spot' },
+                        { text: 'P2P', link: '/en/api/p2p' },
+                        { text: 'History', link: '/en/api/history' },
+                        { text: 'Settings', link: '/en/api/settings' },
+                        { text: 'Newsfeed', link: '/en/api/newsfeed' },
+                        { text: 'Notifications', link: '/en/api/notifications' },
+                        { text: 'Email Templates', link: '/en/api/email-templates' },
+                        { text: 'Fee Settings', link: '/en/api/fee-settings' },
+                        { text: 'Analytics', link: '/en/api/analytics' },
+                        { text: 'Audit', link: '/en/api/audit' },
+                        { text: 'Support', link: '/en/api/support' }
                     ]
                 }
             ],
@@ -254,7 +461,7 @@ export default defineConfig({
                     items: [
                         { text: 'Overview', link: '/en/trading/overview' },
                         { text: 'Market Data', link: '/en/trading/market-data' },
-                        { text: 'Order Management', link: '/en/trading/orders' },
+                        { text: 'Orders', link: '/en/trading/orders' },
                         { text: 'Portfolio', link: '/en/trading/portfolio' }
                     ]
                 }
@@ -266,7 +473,7 @@ export default defineConfig({
                         { text: 'Overview', link: '/en/bybit/overview' },
                         { text: 'Configuration', link: '/en/bybit/configuration' },
                         { text: 'Order Routing', link: '/en/bybit/order-routing' },
-                        { text: 'Market Data Sync', link: '/en/bybit/market-data' }
+                        { text: 'Market Data', link: '/en/bybit/market-data' }
                     ]
                 }
             ],
@@ -275,9 +482,9 @@ export default defineConfig({
                     text: 'Code Examples',
                     items: [
                         { text: 'Basic Usage', link: '/en/examples/basic-usage' },
+                        { text: 'Bybit Integration', link: '/en/examples/bybit-integration' },
                         { text: 'Trading Flow', link: '/en/examples/trading-flow' },
-                        { text: 'Webhook Handling', link: '/en/examples/webhooks' },
-                        { text: 'Bybit Integration', link: '/en/examples/bybit-integration' }
+                        { text: 'Webhooks', link: '/en/examples/webhooks' }
                     ]
                 }
             ]

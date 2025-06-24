@@ -23,7 +23,7 @@ For full trading access, complete identity verification:
 ### Cryptocurrency Deposit
 ```bash
 # Get your deposit address
-curl -X GET "https://api.okd.finance/wallets/deposit-address/USDT" \
+curl -X GET "https://develop.okd.finance/api/wallets/deposit-address/USDT" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
@@ -34,7 +34,7 @@ Available in supported regions with full KYC verification.
 
 ### Place Your First Order
 ```javascript
-const order = await fetch('https://api.okd.finance/trading/orders', {
+const order = await fetch('https://develop.okd.finance/api/trading/orders', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_JWT_TOKEN',
@@ -59,7 +59,7 @@ const order = await fetch('https://api.okd.finance/trading/orders', {
 
 ### First API Call
 ```bash
-curl -X GET "https://api.okd.finance/auth/me" \
+curl -X GET "https://develop.okd.finance/api/auth/me" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
