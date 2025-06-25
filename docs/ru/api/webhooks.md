@@ -150,7 +150,7 @@ const result = await okdFinance.deleteWebhook('wh_12345');
   "data": {
     "orderId": "12345",
     "clientOrderId": "my_order_123",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "side": "buy",
     "type": "limit",
     "quantity": "0.001",
@@ -176,7 +176,7 @@ const result = await okdFinance.deleteWebhook('wh_12345');
   "data": {
     "orderId": "12345",
     "clientOrderId": "my_order_123",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "side": "buy",
     "type": "limit",
     "quantity": "0.001",
@@ -269,7 +269,7 @@ const result = await okdFinance.deleteWebhook('wh_12345');
   "event": "position.opened",
   "data": {
     "positionId": "pos_202",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "side": "long",
     "size": "0.5",
     "entryPrice": "45000.00",
@@ -290,7 +290,7 @@ const result = await okdFinance.deleteWebhook('wh_12345');
   "event": "position.closed",
   "data": {
     "positionId": "pos_202",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "side": "long",
     "size": "0.5",
     "entryPrice": "45000.00",
@@ -368,7 +368,7 @@ const testResult = await okdFinance.testWebhook('wh_12345', {
   event: 'order.filled',
   testData: {
     orderId: 'test_123',
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     side: 'buy',
     quantity: '0.001',
     price: '45000.00'
@@ -505,7 +505,7 @@ const filters = await okdFinance.setWebhookFilters('wh_12345', {
     {
       event: 'order.filled',
       filters: {
-        'data.symbol': ['BTCUSDT', 'ETHUSDT'],
+        'data.symbol': ['BNBETH', 'ETHUSDT'],
         'data.executedQuantity': { '$gte': '0.001' }
       }
     },

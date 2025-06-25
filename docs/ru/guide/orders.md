@@ -10,7 +10,7 @@
 
 ```javascript
 const marketOrder = await okdFinance.createOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   type: 'market',
   quantity: 0.001
@@ -28,7 +28,7 @@ const marketOrder = await okdFinance.createOrder({
 
 ```javascript
 const limitOrder = await okdFinance.createOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   type: 'limit',
   quantity: 0.001,
@@ -49,7 +49,7 @@ const limitOrder = await okdFinance.createOrder({
 
 ```javascript
 const stopLoss = await okdFinance.createOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'sell',
   type: 'stop_loss',
   quantity: 0.001,
@@ -62,7 +62,7 @@ const stopLoss = await okdFinance.createOrder({
 
 ```javascript
 const takeProfit = await okdFinance.createOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'sell',
   type: 'take_profit',
   quantity: 0.001,
@@ -76,7 +76,7 @@ const takeProfit = await okdFinance.createOrder({
 
 ```javascript
 const ocoOrder = await okdFinance.createOCOOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'sell',
   quantity: 0.001,
   price: 46000, // take profit
@@ -92,7 +92,7 @@ const ocoOrder = await okdFinance.createOCOOrder({
 
 ```javascript
 const trailingStop = await okdFinance.createOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'sell',
   type: 'trailing_stop',
   quantity: 0.001,
@@ -105,7 +105,7 @@ const trailingStop = await okdFinance.createOrder({
 
 ```javascript
 const icebergOrder = await okdFinance.createOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   type: 'limit',
   quantity: 1.0,
@@ -120,7 +120,7 @@ const icebergOrder = await okdFinance.createOrder({
 
 ```javascript
 const openOrders = await okdFinance.getOpenOrders({
-  symbol: 'BTCUSDT' // опционально, для конкретной пары
+  symbol: 'BNBETH' // опционально, для конкретной пары
 });
 
 console.log(openOrders);
@@ -131,13 +131,13 @@ console.log(openOrders);
 ```javascript
 // Отмена по ID
 const cancelResult = await okdFinance.cancelOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   orderId: '12345'
 });
 
 // Отмена всех ордеров по символу
 const cancelAllResult = await okdFinance.cancelAllOrders({
-  symbol: 'BTCUSDT'
+  symbol: 'BNBETH'
 });
 ```
 
@@ -157,7 +157,7 @@ const modifyResult = await okdFinance.modifyOrder({
 
 ```javascript
 const orderHistory = await okdFinance.getOrderHistory({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   status: 'filled', // 'new', 'filled', 'canceled', 'rejected'
   limit: 100,
   startTime: Date.now() - 86400000, // последние 24 часа
@@ -169,7 +169,7 @@ const orderHistory = await okdFinance.getOrderHistory({
 
 ```javascript
 const tradeHistory = await okdFinance.getMyTrades({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   orderId: '12345',
   limit: 50
 });
@@ -181,7 +181,7 @@ const tradeHistory = await okdFinance.getMyTrades({
 
 ```javascript
 const scheduledOrder = await okdFinance.createScheduledOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   type: 'market',
   quantity: 0.001,
@@ -198,7 +198,7 @@ const conditionalOrder = await okdFinance.createConditionalOrder({
   type: 'market',
   quantity: 0.1,
   condition: {
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     operator: 'gte', // >=
     price: 50000
   }
@@ -211,7 +211,7 @@ const conditionalOrder = await okdFinance.createConditionalOrder({
 
 ```javascript
 const twapOrder = await okdFinance.createTWAPOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   totalQuantity: 1.0,
   duration: 3600, // секунд
@@ -223,7 +223,7 @@ const twapOrder = await okdFinance.createTWAPOrder({
 
 ```javascript
 const vwapOrder = await okdFinance.createVWAPOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   totalQuantity: 1.0,
   maxParticipationRate: 0.1 // не более 10% от объема рынка
@@ -237,7 +237,7 @@ const vwapOrder = await okdFinance.createVWAPOrder({
 ```javascript
 const batchOrders = await okdFinance.createBatchOrders([
   {
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     side: 'buy',
     type: 'limit',
     quantity: 0.001,
@@ -257,7 +257,7 @@ const batchOrders = await okdFinance.createBatchOrders([
 
 ```javascript
 const cancelBatch = await okdFinance.cancelBatchOrders([
-  { symbol: 'BTCUSDT', orderId: '12345' },
+  { symbol: 'BNBETH', orderId: '12345' },
   { symbol: 'ETHUSDT', orderId: '67890' }
 ]);
 ```
@@ -290,7 +290,7 @@ const webhook = await okdFinance.setOrderWebhook({
 
 ```javascript
 const orderStats = await okdFinance.getOrderStatistics({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   period: '7d'
 });
 
@@ -324,7 +324,7 @@ console.log('Execution details:', executionReport);
 
 | Символ | Мин. количество | Мин. стоимость |
 |--------|----------------|----------------|
-| BTCUSDT | 0.00001 BTC | 10 USDT |
+| BNBETH | 0.00001 BTC | 10 USDT |
 | ETHUSDT | 0.001 ETH | 10 USDT |
 | BNBUSDT | 0.01 BNB | 10 USDT |
 

@@ -51,35 +51,29 @@
         <div class="demo-controls">
           <label for="order-symbol">Symbol:</label>
           <select v-model="orderData.symbol" id="order-symbol">
-            <option value="BTCUSDT">BTCUSDT</option>
+            <option value="BNBETH">BNBETH</option>
             <option value="ETHUSDT">ETHUSDT</option>
             <option value="ADAUSDT">ADAUSDT</option>
             <option value="DOTUSDT">DOTUSDT</option>
           </select>
+          <label for="order-category">Category:</label>
+          <select v-model="orderData.category" id="order-category">
+            <option value="spot">Spot</option>
+          </select>
           <label for="order-side">Side:</label>
           <select v-model="orderData.side" id="order-side">
-            <option value="buy">Buy</option>
-            <option value="sell">Sell</option>
+            <option value="Buy">Buy</option>
+            <option value="Sell">Sell</option>
           </select>
-          <label for="order-type">Type:</label>
-          <select v-model="orderData.type" id="order-type">
-            <option value="market">Market</option>
-            <option value="limit">Limit</option>
-            <option value="stop">Stop</option>
-            <option value="stop_limit">Stop Limit</option>
+          <label for="order-type">Order Type:</label>
+          <select v-model="orderData.orderType" id="order-type">
+            <option value="Market">Market</option>
+            <option value="Limit">Limit</option>
           </select>
           <label for="order-quantity">Quantity:</label>
-          <input v-model="orderData.quantity" type="text" id="order-quantity" placeholder="0.001" />
-          <label for="order-price">Price (for limit orders):</label>
-          <input v-model="orderData.price" type="text" id="order-price" placeholder="45000.00" />
-          <label for="order-stop-price">Stop Price (for stop orders):</label>
-          <input v-model="orderData.stopPrice" type="text" id="order-stop-price" placeholder="44000.00" />
-          <label for="order-time-in-force">Time in Force:</label>
-          <select v-model="orderData.timeInForce" id="order-time-in-force">
-            <option value="GTC">GTC (Good Till Cancelled)</option>
-            <option value="IOC">IOC (Immediate or Cancel)</option>
-            <option value="FOK">FOK (Fill or Kill)</option>
-          </select>
+          <input v-model="orderData.qty" type="text" id="order-quantity" placeholder="2" />
+          <label for="order-price">Price:</label>
+          <input v-model="orderData.price" type="text" id="order-price" placeholder="0.2" />
           <div class="button-group">
             <button @click="testPlaceOrder" class="test-button" :disabled="!apiKey">Place Order</button>
             <button @click="copyCurlPlaceOrder" class="copy-curl-button">📋 Copy curl</button>
@@ -97,7 +91,7 @@
           <label for="orders-symbol">Symbol (optional):</label>
           <select v-model="ordersData.symbol" id="orders-symbol">
             <option value="">All symbols</option>
-            <option value="BTCUSDT">BTCUSDT</option>
+            <option value="BNBETH">BNBETH</option>
             <option value="ETHUSDT">ETHUSDT</option>
             <option value="ADAUSDT">ADAUSDT</option>
             <option value="DOTUSDT">DOTUSDT</option>
@@ -166,7 +160,7 @@
           <label for="cancel-all-symbol">Symbol (optional):</label>
           <select v-model="cancelAllData.symbol" id="cancel-all-symbol">
             <option value="">All symbols</option>
-            <option value="BTCUSDT">BTCUSDT</option>
+            <option value="BNBETH">BNBETH</option>
             <option value="ETHUSDT">ETHUSDT</option>
             <option value="ADAUSDT">ADAUSDT</option>
             <option value="DOTUSDT">DOTUSDT</option>
@@ -188,7 +182,7 @@
           <label for="trades-symbol">Symbol (optional):</label>
           <select v-model="tradesData.symbol" id="trades-symbol">
             <option value="">All symbols</option>
-            <option value="BTCUSDT">BTCUSDT</option>
+            <option value="BNBETH">BNBETH</option>
             <option value="ETHUSDT">ETHUSDT</option>
             <option value="ADAUSDT">ADAUSDT</option>
             <option value="DOTUSDT">DOTUSDT</option>
@@ -215,15 +209,15 @@ export default {
       showApiKey: false,
       API_BASE: 'https://develop.okd.finance/api',
       orderData: {
-        symbol: 'BTCUSDT',
-        side: 'buy',
-        type: 'limit',
-        quantity: '0.001',
-        price: '45000.00',
-        stopPrice: '',
-        timeInForce: 'GTC'
+        category: 'spot',
+        symbol: 'BNBETH',
+        side: 'Buy',
+        orderType: 'Limit',
+        qty: '2',
+        price: '0.2'
       },
       ordersData: {
+        category: 'spot',
         symbol: '',
         status: '',
         side: '',
@@ -338,15 +332,13 @@ export default {
 
     async testPlaceOrder() {
       const requestBody = {
+        category: this.orderData.category,
         symbol: this.orderData.symbol,
         side: this.orderData.side,
-        type: this.orderData.type,
-        quantity: this.orderData.quantity,
-        timeInForce: this.orderData.timeInForce
+        orderType: this.orderData.orderType,
+        qty: this.orderData.qty,
+        price: this.orderData.price
       };
-      
-      if (this.orderData.price) requestBody.price = this.orderData.price;
-      if (this.orderData.stopPrice) requestBody.stopPrice = this.orderData.stopPrice;
       
       const result = await this.makeApiRequest('/spot/orders', {
         method: 'POST',
@@ -357,9 +349,10 @@ export default {
     },
 
     async testGetOrders() {
-      let endpoint = '/spot/orders';
+      let endpoint = '/spot/orders/open';
       const params = new URLSearchParams();
       
+      if (this.ordersData.category) params.append('category', this.ordersData.category);
       if (this.ordersData.symbol) params.append('symbol', this.ordersData.symbol);
       if (this.ordersData.status) params.append('status', this.ordersData.status);
       if (this.ordersData.side) params.append('side', this.ordersData.side);
@@ -414,23 +407,22 @@ export default {
 
     copyCurlPlaceOrder() {
       const requestBody = {
+        category: this.orderData.category,
         symbol: this.orderData.symbol,
         side: this.orderData.side,
-        type: this.orderData.type,
-        quantity: this.orderData.quantity,
-        timeInForce: this.orderData.timeInForce
+        orderType: this.orderData.orderType,
+        qty: this.orderData.qty,
+        price: this.orderData.price
       };
       
-      if (this.orderData.price) requestBody.price = this.orderData.price;
-      if (this.orderData.stopPrice) requestBody.stopPrice = this.orderData.stopPrice;
-      
-      this.copyCurlCommand('/trading/order', { method: 'POST', body: JSON.stringify(requestBody) });
+      this.copyCurlCommand('/spot/orders', { method: 'POST', body: JSON.stringify(requestBody) });
     },
 
     copyCurlGetOrders() {
-      let endpoint = '/trading/orders';
+      let endpoint = '/spot/orders/open';
       const params = new URLSearchParams();
       
+      if (this.ordersData.category) params.append('category', this.ordersData.category);
       if (this.ordersData.symbol) params.append('symbol', this.ordersData.symbol);
       if (this.ordersData.status) params.append('status', this.ordersData.status);
       if (this.ordersData.side) params.append('side', this.ordersData.side);
@@ -444,15 +436,15 @@ export default {
     },
 
     copyCurlGetSpecificOrder() {
-      this.copyCurlCommand(`/trading/orders/${this.specificOrderData.orderId || 'order_123456'}`, { method: 'GET' });
+      this.copyCurlCommand(`/spot/orders/${this.specificOrderData.orderId || 'order_123456'}`, { method: 'GET' });
     },
 
     copyCurlCancelOrder() {
-      this.copyCurlCommand(`/trading/orders/${this.cancelOrderData.orderId || 'order_123456'}`, { method: 'DELETE' });
+      this.copyCurlCommand(`/spot/orders/${this.cancelOrderData.orderId || 'order_123456'}`, { method: 'DELETE' });
     },
 
     copyCurlCancelAllOrders() {
-      let endpoint = '/trading/orders';
+      let endpoint = '/spot/orders';
       const params = new URLSearchParams();
       
       if (this.cancelAllData.symbol) params.append('symbol', this.cancelAllData.symbol);
@@ -465,7 +457,7 @@ export default {
     },
 
     copyCurlGetTrades() {
-      let endpoint = '/trading/trades';
+      let endpoint = '/spot/trades/history';
       const params = new URLSearchParams();
       
       if (this.tradesData.symbol) params.append('symbol', this.tradesData.symbol);

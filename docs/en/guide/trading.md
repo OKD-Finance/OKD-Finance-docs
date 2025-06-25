@@ -23,7 +23,7 @@ OKD Finance provides a powerful trading platform with Bybit integration for cryp
 
 ```javascript
 const order = await okdFinance.createOrder({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   type: 'limit',
   quantity: 0.001,
@@ -36,7 +36,7 @@ const order = await okdFinance.createOrder({
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `symbol` | string | Trading pair (e.g., BTCUSDT) |
+| `symbol` | string | Trading pair (e.g., BNBETH) |
 | `side` | string | Direction: 'buy' or 'sell' |
 | `type` | string | Order type: 'market', 'limit', 'stop' |
 | `quantity` | number | Amount of base asset |
@@ -56,7 +56,7 @@ console.log(positions);
 
 ```javascript
 const result = await okdFinance.closePosition({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   quantity: 0.001
 });
 ```
@@ -67,7 +67,7 @@ const result = await okdFinance.closePosition({
 
 ```javascript
 const stopLoss = await okdFinance.setStopLoss({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   stopPrice: 44000,
   quantity: 0.001
 });
@@ -77,7 +77,7 @@ const stopLoss = await okdFinance.setStopLoss({
 
 ```javascript
 const takeProfit = await okdFinance.setTakeProfit({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   targetPrice: 46000,
   quantity: 0.001
 });
@@ -89,7 +89,7 @@ const takeProfit = await okdFinance.setTakeProfit({
 
 ```javascript
 const dcaStrategy = {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   amount: 100, // USDT
   interval: '1d', // daily
   duration: 30 // days
@@ -102,7 +102,7 @@ await okdFinance.createDCAStrategy(dcaStrategy);
 
 ```javascript
 const gridStrategy = {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   lowerPrice: 40000,
   upperPrice: 50000,
   gridCount: 10,
@@ -138,7 +138,7 @@ await okdFinance.createGridStrategy(gridStrategy);
 
 ```javascript
 const history = await okdFinance.getTradeHistory({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   limit: 100,
   startTime: Date.now() - 86400000 // last 24 hours
 });

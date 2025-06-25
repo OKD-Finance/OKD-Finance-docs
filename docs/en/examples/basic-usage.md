@@ -122,7 +122,7 @@ async function getMarketData(symbol) {
 }
 
 // Usage
-const btcData = await getMarketData('BTCUSDT');
+const btcData = await getMarketData('BNBETH');
 console.log('BTC Price:', btcData.price);
 ```
 
@@ -160,8 +160,8 @@ async function placeLimitOrder(symbol, side, quantity, price) {
 }
 
 // Usage
-const marketOrder = await placeMarketOrder('BTCUSDT', 'Buy', '0.001');
-const limitOrder = await placeLimitOrder('BTCUSDT', 'Buy', '0.001', '45000');
+const marketOrder = await placeMarketOrder('BNBETH', 'Buy', '0.001');
+const limitOrder = await placeLimitOrder('BNBETH', 'Buy', '0.001', '45000');
 ```
 
 ### Monitor Orders
@@ -208,7 +208,7 @@ ws.onopen = () => {
   ws.send(JSON.stringify({
     action: 'subscribe',
     channel: 'prices',
-    symbols: ['BTCUSDT', 'ETHUSDT']
+    symbols: ['BNBETH', 'ETHUSDT']
   }));
   
   // Subscribe to order updates
@@ -377,6 +377,6 @@ balance = client.get_balance()
 print("Balance:", balance['data'])
 
 # Place market order
-order = client.place_order('BTCUSDT', 'Buy', 'Market', '0.001')
+order = client.place_order('BNBETH', 'Buy', 'Market', '0.001')
 print("Order placed:", order['data']['orderId'])
 ``` 

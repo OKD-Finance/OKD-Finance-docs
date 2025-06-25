@@ -13,7 +13,7 @@ Market orders execute immediately at the current market price:
 ```javascript
 // Simple market buy
 const marketBuy = await okdFinance.createOrder('binance', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 0.001
@@ -35,7 +35,7 @@ Limit orders execute only at a specified price or better:
 ```javascript
 // Basic limit order
 const limitOrder = await okdFinance.createOrder('okx', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'limit',
   side: 'buy',
   amount: 0.1,
@@ -62,7 +62,7 @@ Stop orders become market orders when a trigger price is reached:
 ```javascript
 // Stop-loss order
 const stopLoss = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'stop',
   side: 'sell',
   amount: 0.1,
@@ -88,7 +88,7 @@ OCO orders combine a limit order with a stop order:
 
 ```javascript
 const ocoOrder = await okdFinance.createOCOOrder('binance', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'sell',
   amount: 0.1,
   price: 46000, // Take profit price
@@ -112,7 +112,7 @@ Hide large orders by showing only small portions:
 
 ```javascript
 const icebergOrder = await okdFinance.createOrder('binance', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'limit',
   side: 'buy',
   amount: 5.0, // Total amount
@@ -137,7 +137,7 @@ const trailingStop = await okdFinance.createOrder('bybit', {
 
 // Trailing stop with activation price
 const conditionalTrailing = await okdFinance.createOrder('okx', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'trailing_stop',
   side: 'sell',
   amount: 0.5,
@@ -160,7 +160,7 @@ const openOrders = await okdFinance.getOpenOrders('bybit');
 console.log(`${openOrders.length} open orders`);
 
 // Get open orders for specific symbol
-const btcOrders = await okdFinance.getOpenOrders('binance', 'BTCUSDT');
+const btcOrders = await okdFinance.getOpenOrders('binance', 'BNBETH');
 
 // Get order history with filters
 const orderHistory = await okdFinance.getOrderHistory('okx', {
@@ -196,7 +196,7 @@ await okdFinance.cancelOrder('binance', 'order_id_123');
 await okdFinance.cancelOrders('bybit', ['order_id_1', 'order_id_2', 'order_id_3']);
 
 // Cancel all orders for a symbol
-await okdFinance.cancelAllOrders('okx', 'BTCUSDT');
+await okdFinance.cancelAllOrders('okx', 'BNBETH');
 
 // Cancel all orders on exchange
 await okdFinance.cancelAllOrders('binance');
@@ -518,7 +518,7 @@ const conditionalManager = new ConditionalOrderManager();
 const buyCondition = await conditionalManager.createPriceConditionalOrder(
   'binance',
   {
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     type: 'market',
     side: 'buy',
     amount: 0.1
@@ -533,7 +533,7 @@ const buyCondition = await conditionalManager.createPriceConditionalOrder(
 const sellCondition = await conditionalManager.createPriceConditionalOrder(
   'binance',
   {
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     type: 'market',
     side: 'sell',
     amount: 0.1
@@ -613,7 +613,7 @@ const scheduler = new ScheduledOrderManager();
 const scheduledOrderId = scheduler.scheduleOrder(
   'binance',
   {
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     type: 'market',
     side: 'buy',
     amount: 0.1
@@ -631,13 +631,13 @@ class OrderValidator {
   constructor() {
     this.exchangeLimits = {
       binance: {
-        minOrderSize: { BTCUSDT: 0.00001, ETHUSDT: 0.0001 },
-        maxOrderSize: { BTCUSDT: 9000, ETHUSDT: 100000 },
+        minOrderSize: { BNBETH: 0.00001, ETHUSDT: 0.0001 },
+        maxOrderSize: { BNBETH: 9000, ETHUSDT: 100000 },
         priceFilter: { tickSize: 0.01 }
       },
       bybit: {
-        minOrderSize: { BTCUSDT: 0.001, ETHUSDT: 0.01 },
-        maxOrderSize: { BTCUSDT: 100, ETHUSDT: 1000 }
+        minOrderSize: { BNBETH: 0.001, ETHUSDT: 0.01 },
+        maxOrderSize: { BNBETH: 100, ETHUSDT: 1000 }
       }
     };
   }

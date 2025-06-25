@@ -114,7 +114,7 @@ await client.updateBybitTradingConfig(tradingConfig);
 
 ```javascript
 const symbolConfig = {
-  'BTCUSDT': {
+  'BNBETH': {
     enabled: true,
     leverage: 20,
     marginMode: 'isolated',
@@ -151,13 +151,13 @@ await client.updateBybitSymbolConfig(symbolConfig);
 const wsConfig = {
   // Публичные потоки
   public: {
-    orderbook: ['BTCUSDT', 'ETHUSDT'],
-    trades: ['BTCUSDT'],
+    orderbook: ['BNBETH', 'ETHUSDT'],
+    trades: ['BNBETH'],
     klines: {
-      'BTCUSDT': ['1m', '5m', '1h'],
+      'BNBETH': ['1m', '5m', '1h'],
       'ETHUSDT': ['1m', '1h']
     },
-    tickers: ['BTCUSDT', 'ETHUSDT']
+    tickers: ['BNBETH', 'ETHUSDT']
   },
   
   // Приватные потоки
@@ -404,7 +404,7 @@ async function runTests() {
     
     // Тест создания ордера
     const testOrder = await testClient.createBybitOrder({
-      symbol: 'BTCUSDT',
+      symbol: 'BNBETH',
       side: 'buy',
       type: 'limit',
       quantity: 0.001,
@@ -414,7 +414,7 @@ async function runTests() {
     
     // Отмена тестового ордера
     await testClient.cancelBybitOrder({
-      symbol: 'BTCUSDT',
+      symbol: 'BNBETH',
       orderId: testOrder.orderId
     });
     console.log('✓ Отмена ордера успешно');

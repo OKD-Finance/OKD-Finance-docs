@@ -11,7 +11,7 @@
 
 ```javascript
 const marketOrder = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 0.1
@@ -36,7 +36,7 @@ const limitOrder = await okdFinance.createOrder('binance', {
 
 ```javascript
 const stopOrder = await okdFinance.createOrder('okx', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'stop',
   side: 'sell',
   amount: 0.5,
@@ -66,7 +66,7 @@ const stopLimitOrder = await okdFinance.createOrder('bybit', {
 
 ```javascript
 const ocoOrder = await okdFinance.createOCOOrder('binance', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'sell',
   amount: 0.1,
   price: 46000, // лимитная цена
@@ -94,7 +94,7 @@ const icebergOrder = await okdFinance.createOrder('bybit', {
 
 ```javascript
 const trailingStop = await okdFinance.createOrder('okx', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'trailing_stop',
   side: 'sell',
   amount: 0.2,
@@ -109,7 +109,7 @@ const trailingStop = await okdFinance.createOrder('okx', {
 
 ```javascript
 const gtcOrder = await okdFinance.createOrder('binance', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'limit',
   side: 'buy',
   amount: 0.1,
@@ -159,7 +159,7 @@ const activeOrders = await okdFinance.getActiveOrders('bybit');
 
 // История ордеров
 const orderHistory = await okdFinance.getOrderHistory('okx', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   limit: 100,
   from: Date.now() - 86400000 // последние 24 часа
 });
@@ -172,7 +172,7 @@ const orderHistory = await okdFinance.getOrderHistory('okx', {
 await okdFinance.cancelOrder('binance', 'order_id_123');
 
 // Отмена всех ордеров по символу
-await okdFinance.cancelAllOrders('bybit', 'BTCUSDT');
+await okdFinance.cancelAllOrders('bybit', 'BNBETH');
 
 // Отмена всех ордеров на бирже
 await okdFinance.cancelAllOrders('okx');
@@ -197,7 +197,7 @@ await okdFinance.modifyOrderPrice('bybit', 'order_id_456', 3600);
 
 ```javascript
 const scheduledOrder = await okdFinance.createScheduledOrder('binance', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 0.1,
@@ -226,7 +226,7 @@ const indicatorOrder = await okdFinance.createConditionalOrder('bybit', {
 
 ```javascript
 const eventOrder = await okdFinance.createEventOrder('okx', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'limit',
   side: 'sell',
   amount: 0.5,
@@ -245,7 +245,7 @@ const eventOrder = await okdFinance.createEventOrder('okx', {
 
 ```javascript
 const dcaOrder = await okdFinance.createDCAOrder('binance', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   totalAmount: 1000, // $1000 общая сумма
   frequency: 'daily',
@@ -271,7 +271,7 @@ const gridOrder = await okdFinance.createGridOrder('bybit', {
 
 ```javascript
 const smartOrder = await okdFinance.createSmartOrder('multi', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 5.0,
@@ -325,7 +325,7 @@ await okdFinance.setNotifications({
 ```javascript
 const metrics = await okdFinance.getOrderMetrics('binance', {
   period: '24h',
-  symbols: ['BTCUSDT', 'ETHUSDT']
+  symbols: ['BNBETH', 'ETHUSDT']
 });
 
 console.log(metrics);
@@ -342,7 +342,7 @@ console.log(metrics);
 
 ```javascript
 const comparison = await okdFinance.compareExchanges({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   orderType: 'market',
   amount: 1.0,
   exchanges: ['binance', 'bybit', 'okx'],
@@ -356,7 +356,7 @@ const comparison = await okdFinance.compareExchanges({
 
 ```javascript
 const orderWithSL = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 0.1,
@@ -379,7 +379,7 @@ await okdFinance.setPositionLimits('binance', {
   maxPositionSize: 10.0,
   maxDailyLoss: 1000,
   maxOrderSize: 2.0,
-  symbols: ['BTCUSDT', 'ETHUSDT']
+  symbols: ['BNBETH', 'ETHUSDT']
 });
 ```
 
@@ -390,7 +390,7 @@ await okdFinance.setPositionLimits('binance', {
 ```javascript
 const backtest = await okdFinance.backtestOrderStrategy({
   strategy: 'grid_trading',
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   period: {
     from: '2023-01-01',
     to: '2023-12-31'

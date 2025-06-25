@@ -170,7 +170,7 @@ await okdFinance.createWebhook({
   url: 'https://your-domain.com/webhook/price-alerts',
   events: ['price.threshold'],
   filters: {
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     conditions: [
       { type: 'above', value: 50000 },
       { type: 'below', value: 40000 }
@@ -605,7 +605,7 @@ class WebhookTester {
       type: 'order.filled',
       data: {
         orderId: 'test-123',
-        symbol: 'BTCUSDT',
+        symbol: 'BNBETH',
         side: 'buy',
         amount: 0.1,
         price: 45000,

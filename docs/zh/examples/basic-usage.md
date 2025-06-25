@@ -96,7 +96,7 @@ async function getMarketData(symbol) {
 }
 
 // 调用示例
-getMarketData('BTCUSDT');
+getMarketData('BNBETH');
 ```
 
 ### 下单交易
@@ -127,7 +127,7 @@ async function placeOrder(orderData) {
 
 // 市价买单示例
 const marketBuyOrder = {
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     side: 'buy',
     type: 'market',
     quantity: '0.001',
@@ -136,7 +136,7 @@ const marketBuyOrder = {
 
 // 限价卖单示例
 const limitSellOrder = {
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     side: 'sell',
     type: 'limit',
     quantity: '0.001',
@@ -246,7 +246,7 @@ class MarketDataStream {
 // 使用示例
 const stream = new MarketDataStream('your-api-key', 'your-api-secret');
 stream.connect();
-stream.subscribe(['ticker.BTCUSDT', 'orderbook.ETHUSDT', 'orders']);
+stream.subscribe(['ticker.BNBETH', 'orderbook.ETHUSDT', 'orders']);
 ```
 
 ## 错误处理
@@ -315,7 +315,7 @@ async function withRetry(fn, maxRetries = 3, delay = 1000) {
 }
 
 // 使用示例
-const result = await withRetry(() => client.market.getTicker('BTCUSDT'));
+const result = await withRetry(() => client.market.getTicker('BNBETH'));
 ```
 
 ## 完整交易示例
@@ -346,7 +346,7 @@ class SimpleTradingBot {
     }
     
     async checkMarket() {
-        const symbols = ['BTCUSDT', 'ETHUSDT'];
+        const symbols = ['BNBETH', 'ETHUSDT'];
         
         for (const symbol of symbols) {
             const ticker = await this.client.market.getTicker(symbol);
@@ -478,7 +478,7 @@ const rateLimiter = new RateLimiter(100, 60000); // 每分钟100次请求
 
 // 在 API 调用前使用
 await rateLimiter.waitIfNeeded();
-const result = await client.market.getTicker('BTCUSDT');
+const result = await client.market.getTicker('BNBETH');
 ```
 
 ### 3. 数据验证
@@ -517,7 +517,7 @@ const logger = winston.createLogger({
 });
 
 // 在交易操作中使用
-logger.info('下单', { symbol: 'BTCUSDT', side: 'buy', quantity: '0.001' });
+logger.info('下单', { symbol: 'BNBETH', side: 'buy', quantity: '0.001' });
 ```
 
 ## 常见问题

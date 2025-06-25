@@ -11,7 +11,7 @@ This guide provides comprehensive examples of trading flows using OKD Finance pl
 ```javascript
 // Basic market buy
 const buyOrder = await okdFinance.createOrder('binance', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 0.1
@@ -19,7 +19,7 @@ const buyOrder = await okdFinance.createOrder('binance', {
 
 // Basic limit sell
 const sellOrder = await okdFinance.createOrder('binance', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'limit',
   side: 'sell',
   amount: 0.1,
@@ -136,7 +136,7 @@ class DCAStrategy {
 
 // Usage
 const dcaStrategy = new DCAStrategy({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   totalAmount: 1000, // $1000
   intervals: 10,
   frequency: 'daily',

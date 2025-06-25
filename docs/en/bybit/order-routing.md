@@ -650,7 +650,7 @@ async def main():
     
     # Large order example
     large_order = {
-        'symbol': 'BTCUSDT',
+        'symbol': 'BNBETH',
         'side': 'Buy',
         'qty': '10.0',
         'orderType': 'Market'

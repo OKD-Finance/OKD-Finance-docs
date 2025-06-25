@@ -80,44 +80,34 @@
               <h4 class="section-title">⚙️ Body Parameters</h4>
               <div class="param-list">
                 <div class="param-item required">
+                  <code class="param-name">category</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Trading category: "spot"</span>
+                </div>
+                <div class="param-item required">
                   <code class="param-name">symbol</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Trading pair symbol (e.g., "BTCUSDT", "ETHUSDT")</span>
+                  <span class="param-desc">Trading pair symbol (e.g., "BNBETH", "ETHUSDT")</span>
                 </div>
                 <div class="param-item required">
                   <code class="param-name">side</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Order side: "buy" or "sell"</span>
+                  <span class="param-desc">Order side: "Buy" or "Sell"</span>
                 </div>
                 <div class="param-item required">
-                  <code class="param-name">type</code>
+                  <code class="param-name">orderType</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Order type: "market", "limit", "stop", "stop_limit"</span>
+                  <span class="param-desc">Order type: "Market" or "Limit"</span>
                 </div>
                 <div class="param-item required">
-                  <code class="param-name">quantity</code>
+                  <code class="param-name">qty</code>
                   <span class="param-type">string</span>
                   <span class="param-desc">Order quantity in base currency</span>
                 </div>
-                <div class="param-item">
+                <div class="param-item required">
                   <code class="param-name">price</code>
                   <span class="param-type">string</span>
                   <span class="param-desc">Order price (required for limit orders)</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">stopPrice</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Stop price (required for stop orders)</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">timeInForce</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Time in force: "GTC", "IOC", "FOK"</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">clientOrderId</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Client-generated order ID</span>
                 </div>
               </div>
             </div>
@@ -130,13 +120,12 @@ Content-Type: application/json
 Fingerprint: 1358cd229b6bceb25941e99f4228997f
 
 {
-  "symbol": "BTCUSDT",
-  "side": "buy",
-  "type": "limit",
-  "quantity": "0.001",
-  "price": "45000.00",
-  "timeInForce": "GTC",
-  "clientOrderId": "my_order_123"
+  "category": "spot",
+  "symbol": "BNBETH",
+  "side": "Buy",
+  "orderType": "Limit",
+  "qty": "2",
+  "price": "0.2"
 }</pre>
             </div>
 
@@ -145,43 +134,16 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
               <div class="response-example">
                 <div class="response-status success">200 OK - Success</div>
                 <pre class="code-block">{
-  "success": true,
-  "data": {
-    "orderId": "ord_1234567890abcdef",
-    "clientOrderId": "my_order_123",
-    "symbol": "BTCUSDT",
-    "side": "buy",
-    "type": "limit",
-    "quantity": "0.00100000",
-    "price": "45000.00000000",
-    "stopPrice": null,
-    "status": "new",
-    "timeInForce": "GTC",
-    "filledQuantity": "0.00000000",
-    "remainingQuantity": "0.00100000",
-    "avgFillPrice": "0.00000000",
-    "commission": "0.00000000",
-    "commissionAsset": "BTC",
-    "createdAt": "2024-01-15T14:30:00Z",
-    "updatedAt": "2024-01-15T14:30:00Z"
-  },
-  "error": null
+  "orderId": "1980690610151328512",
+  "orderLinkId": "1980690610151328513"
 }</pre>
               </div>
 
               <div class="response-example">
                 <div class="response-status error">400 Bad Request - Error</div>
                 <pre class="code-block">{
-  "success": false,
-  "data": null,
-  "error": {
-    "code": "INSUFFICIENT_BALANCE",
-    "message": "Insufficient USDT balance to place buy order",
-    "details": {
-      "required": "45.00",
-      "available": "20.50"
-    }
-  }
+  "code": 400591,
+  "message": "unknown category"
 }</pre>
               </div>
             </div>
@@ -194,47 +156,39 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
               <div class="form-group">
                 <label>Trading Pair</label>
                 <select v-model="orderData.symbol" class="test-input">
-                  <option value="BTCUSDT">BTCUSDT</option>
+                  <option value="BNBETH">BNBETH</option>
                   <option value="ETHUSDT">ETHUSDT</option>
                   <option value="ADAUSDT">ADAUSDT</option>
                   <option value="DOTUSDT">DOTUSDT</option>
                 </select>
               </div>
               <div class="form-group">
+                <label>Category</label>
+                <select v-model="orderData.category" class="test-input">
+                  <option value="spot">Spot</option>
+                </select>
+              </div>
+              <div class="form-group">
                 <label>Side</label>
                 <select v-model="orderData.side" class="test-input">
-                  <option value="buy">Buy</option>
-                  <option value="sell">Sell</option>
+                  <option value="Buy">Buy</option>
+                  <option value="Sell">Sell</option>
                 </select>
               </div>
               <div class="form-group">
                 <label>Order Type</label>
-                <select v-model="orderData.type" class="test-input">
-                  <option value="market">Market</option>
-                  <option value="limit">Limit</option>
-                  <option value="stop">Stop</option>
-                  <option value="stop_limit">Stop Limit</option>
+                <select v-model="orderData.orderType" class="test-input">
+                  <option value="Market">Market</option>
+                  <option value="Limit">Limit</option>
                 </select>
               </div>
               <div class="form-group">
                 <label>Quantity</label>
-                <input v-model="orderData.quantity" type="text" placeholder="0.001" class="test-input" />
+                <input v-model="orderData.qty" type="text" placeholder="2" class="test-input" />
               </div>
               <div class="form-group">
-                <label>Price (for limit orders)</label>
-                <input v-model="orderData.price" type="text" placeholder="45000.00" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>Stop Price (for stop orders)</label>
-                <input v-model="orderData.stopPrice" type="text" placeholder="44000.00" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>Time in Force</label>
-                <select v-model="orderData.timeInForce" class="test-input">
-                  <option value="GTC">GTC (Good Till Cancelled)</option>
-                  <option value="IOC">IOC (Immediate or Cancel)</option>
-                  <option value="FOK">FOK (Fill or Kill)</option>
-                </select>
+                <label>Price</label>
+                <input v-model="orderData.price" type="text" placeholder="0.2" class="test-input" />
               </div>
               <button @click="testPlaceOrder" class="test-btn" :disabled="!apiToken || !apiBaseUrl">
                 {{ !apiToken ? '🔒 Enter API Token First' : !apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
@@ -243,7 +197,17 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
                 <div class="result-header">
                   <span class="status-badge">{{ results.placeOrder.status }}</span>
                   <span class="timestamp">{{ results.placeOrder.timestamp }}</span>
+                  <button @click="copyToClipboard(results.placeOrder.data, $event)" class="copy-btn">📋 Copy Response</button>
                 </div>
+                <div v-if="results.placeOrder.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.placeOrder.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.placeOrder.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.placeOrder.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
                 <pre class="result-data">{{ results.placeOrder.data }}</pre>
               </div>
             </div>
@@ -257,12 +221,12 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
           <div class="endpoint-docs">
             <div class="method-header">
               <span class="method-badge get">GET</span>
-              <span class="endpoint-path">/spot/orders</span>
+              <span class="endpoint-path">/spot/orders/open</span>
             </div>
             
             <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Get Orders</h3>
-              <p class="endpoint-description">Retrieve all orders for the authenticated user with optional filtering capabilities.</p>
+              <h3 class="endpoint-title">📋 Get Open Orders</h3>
+              <p class="endpoint-description">Retrieve all active (open) orders for the authenticated user with optional filtering capabilities.</p>
             </div>
             
             <div class="api-section">
@@ -284,52 +248,27 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
             <div class="api-section">
               <h4 class="section-title">🔍 Query Parameters</h4>
               <div class="param-list">
+                <div class="param-item required">
+                  <code class="param-name">category</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Trading category: "spot"</span>
+                </div>
                 <div class="param-item">
                   <code class="param-name">symbol</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Filter by trading pair (e.g., "BTCUSDT")</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">status</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Filter by status: "new", "partially_filled", "filled", "cancelled", "rejected"</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">side</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Filter by side: "buy" or "sell"</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">type</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Filter by order type: "market", "limit", "stop", "stop_limit"</span>
+                  <span class="param-desc">Filter by trading pair (e.g., "BNBETH")</span>
                 </div>
                 <div class="param-item">
                   <code class="param-name">limit</code>
                   <span class="param-type">integer</span>
                   <span class="param-desc">Number of orders to return (default: 50, max: 500)</span>
                 </div>
-                <div class="param-item">
-                  <code class="param-name">offset</code>
-                  <span class="param-type">integer</span>
-                  <span class="param-desc">Number of orders to skip (default: 0)</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">startTime</code>
-                  <span class="param-type">integer</span>
-                  <span class="param-desc">Start time timestamp (milliseconds)</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">endTime</code>
-                  <span class="param-type">integer</span>
-                  <span class="param-desc">End time timestamp (milliseconds)</span>
-                </div>
               </div>
             </div>
 
             <div class="api-section">
               <h4 class="section-title">📝 Example Request</h4>
-              <pre class="code-block">GET /spot/orders?symbol=BTCUSDT&status=filled&limit=10
+              <pre class="code-block">GET /spot/orders/open?category=spot&symbol=BNBETH&limit=10
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
             </div>
@@ -339,52 +278,54 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
               <div class="response-example">
                 <div class="response-status success">200 OK - Success</div>
                 <pre class="code-block">{
-  "success": true,
-  "data": {
-    "orders": [
-      {
-        "orderId": "ord_1234567890abcdef",
-        "clientOrderId": "my_order_123",
-        "symbol": "BTCUSDT",
-        "side": "buy",
-        "type": "limit",
-        "quantity": "0.00100000",
-        "price": "45000.00000000",
-        "stopPrice": null,
-        "status": "filled",
-        "timeInForce": "GTC",
-        "filledQuantity": "0.00100000",
-        "remainingQuantity": "0.00000000",
-        "avgFillPrice": "44950.00000000",
-        "commission": "0.00000075",
-        "commissionAsset": "BTC",
-        "createdAt": "2024-01-15T14:30:00Z",
-        "updatedAt": "2024-01-15T14:35:00Z"
-      }
-    ],
-    "pagination": {
-      "total": 25,
-      "limit": 10,
-      "offset": 0,
-      "hasMore": true
+  "category": "spot",
+  "nextPageCursor": "1980696465315826432%3A1750853418446%2C1980675399004556032%3A1750850907146",
+  "list": [
+    {
+      "orderId": "1980696465315826432",
+      "orderLinkId": "1980696465315826433",
+      "blockTradeId": "",
+      "symbol": "BNBETH",
+      "price": "0.2",
+      "qty": "1.00",
+      "side": "Buy",
+      "isLeverage": "0",
+      "positionIdx": 0,
+      "orderStatus": "New",
+      "createType": "",
+      "cancelType": "UNKNOWN",
+      "rejectReason": "EC_NoError",
+      "avgPrice": "0.0",
+      "leavesQty": "1",
+      "leavesValue": "0.200",
+      "cumExecQty": "0",
+      "cumExecValue": "0.000",
+      "cumExecFee": "0",
+      "timeInForce": "GTC",
+      "orderType": "Limit",
+      "triggerPrice": "0.0",
+      "takeProfit": "0",
+      "stopLoss": "0",
+      "basePrice": "0.2",
+      "reduceOnly": false,
+      "closeOnTrigger": false,
+      "smpType": "None",
+      "smpGroup": 0,
+      "smpOrderId": "",
+      "createdTime": "1750853418446",
+      "updatedTime": "1750853418450",
+      "baseCoin": "BNB",
+      "quoteCoin": "ETH"
     }
-  },
-  "error": null
+  ]
 }</pre>
               </div>
 
               <div class="response-example">
                 <div class="response-status error">400 Bad Request - Error</div>
                 <pre class="code-block">{
-  "success": false,
-  "data": null,
-  "error": {
-    "code": "INVALID_PARAMETER",
-    "message": "Invalid symbol format",
-    "details": {
-      "symbol": "Symbol must be in format BASEQUOTE (e.g., BTCUSDT)"
-    }
-  }
+  "code": 400591,
+  "message": "unknown category"
 }</pre>
               </div>
             </div>
@@ -395,30 +336,18 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
             <h4 class="testing-title">🚀 Live Testing</h4>
             <div class="test-section">
               <div class="form-group">
+                <label>Category</label>
+                <select v-model="ordersData.category" class="test-input">
+                  <option value="spot">Spot</option>
+                </select>
+              </div>
+              <div class="form-group">
                 <label>Symbol (optional)</label>
                 <select v-model="ordersData.symbol" class="test-input">
                   <option value="">All symbols</option>
-                  <option value="BTCUSDT">BTCUSDT</option>
+                  <option value="BNBETH">BNBETH</option>
                   <option value="ETHUSDT">ETHUSDT</option>
                   <option value="ADAUSDT">ADAUSDT</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Status (optional)</label>
-                <select v-model="ordersData.status" class="test-input">
-                  <option value="">All statuses</option>
-                  <option value="new">New</option>
-                  <option value="partially_filled">Partially Filled</option>
-                  <option value="filled">Filled</option>
-                  <option value="cancelled">Cancelled</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Side (optional)</label>
-                <select v-model="ordersData.side" class="test-input">
-                  <option value="">All sides</option>
-                  <option value="buy">Buy</option>
-                  <option value="sell">Sell</option>
                 </select>
               </div>
               <div class="form-group">
@@ -432,7 +361,15 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
                 <div class="result-header">
                   <span class="status-badge">{{ results.orders.status }}</span>
                   <span class="timestamp">{{ results.orders.timestamp }}</span>
+                  <button @click="copyToClipboard(results.orders.data, $event)" class="copy-btn">📋 Copy Response</button>
                 </div>
+                <div v-if="results.orders.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.orders.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.orders.headers }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
                 <pre class="result-data">{{ results.orders.data }}</pre>
               </div>
             </div>
@@ -452,20 +389,18 @@ const showToken = ref(false)
 const apiBaseUrl = ref('https://develop.okd.finance/api')
 
 const orderData = reactive({
-  symbol: 'BTCUSDT',
-  side: 'buy',
-  type: 'limit',
-  quantity: '0.001',
-  price: '45000.00',
-  stopPrice: '',
-  timeInForce: 'GTC'
+  category: 'spot',
+  symbol: 'BNBETH',
+  side: 'Buy',
+  orderType: 'Limit',
+  qty: '2',
+  price: '0.2'
 })
 
 const ordersData = reactive({
   symbol: '',
-  status: '',
-  side: '',
-  limit: 50
+  limit: 50,
+  category: 'spot'
 })
 
 const generateFingerprint = () => {
@@ -485,77 +420,123 @@ const results = reactive({
 const testPlaceOrder = async () => {
   try {
     const requestBody = {
+      category: orderData.category,
       symbol: orderData.symbol,
       side: orderData.side,
-      type: orderData.type,
-      quantity: orderData.quantity,
-      timeInForce: orderData.timeInForce
+      orderType: orderData.orderType,
+      qty: orderData.qty,
+      price: orderData.price
     }
     
-    if (orderData.price) requestBody.price = orderData.price
-    if (orderData.stopPrice) requestBody.stopPrice = orderData.stopPrice
+    const fullUrl = `${apiBaseUrl.value}/spot/orders`
+    const fingerprint = generateFingerprint()
+    const headers = {
+      'Authorization': `Bearer ${apiToken.value}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': fingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
     
-    const response = await fetch(`${apiBaseUrl.value}/spot/orders`, {
+    const response = await fetch(fullUrl, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiToken.value}`,
-        'Content-Type': 'application/json',
-        'Fingerprint': generateFingerprint()
-      },
-      body: JSON.stringify(requestBody)
+      headers: headers,
+      body: bodyString
     })
     
     const data = await response.text()
     results.placeOrder = {
       status: `${response.status} ${response.statusText}`,
       data: data,
-      timestamp: new Date().toLocaleTimeString()
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `POST ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
     }
   } catch (error) {
     results.placeOrder = {
       status: 'Network Error',
       data: error.message,
-      timestamp: new Date().toLocaleTimeString()
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
     }
   }
 }
 
 const testGetOrders = async () => {
   try {
-    let endpoint = '/spot/orders'
+    let endpoint = '/spot/orders/open'
     const params = new URLSearchParams()
     
     if (ordersData.symbol) params.append('symbol', ordersData.symbol)
-    if (ordersData.status) params.append('status', ordersData.status)
-    if (ordersData.side) params.append('side', ordersData.side)
     if (ordersData.limit) params.append('limit', ordersData.limit)
+    if (ordersData.category) params.append('category', ordersData.category)
     
     if (params.toString()) {
       endpoint += '?' + params.toString()
     }
     
-    const response = await fetch(`${apiBaseUrl.value}${endpoint}`, {
+    const fullUrl = `${apiBaseUrl.value}${endpoint}`
+    const fingerprint = generateFingerprint()
+    const headers = {
+      'Authorization': `Bearer ${apiToken.value}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': fingerprint
+    }
+    
+    const response = await fetch(fullUrl, {
       method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${apiToken.value}`,
-        'Content-Type': 'application/json',
-        'Fingerprint': generateFingerprint()
-      }
+      headers: headers
     })
     
     const data = await response.text()
     results.orders = {
       status: `${response.status} ${response.statusText}`,
       data: data,
-      timestamp: new Date().toLocaleTimeString()
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `GET ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2)
     }
   } catch (error) {
     results.orders = {
       status: 'Network Error',
       data: error.message,
-      timestamp: new Date().toLocaleTimeString()
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A'
     }
   }
+}
+
+const copyToClipboard = (text, event) => {
+  navigator.clipboard.writeText(text).then(() => {
+    const button = event.target
+    const originalText = button.textContent
+    button.textContent = '✅ Copied!'
+    button.style.background = 'linear-gradient(135deg, #4caf50, #45a049)'
+    setTimeout(() => {
+      button.textContent = originalText
+      button.style.background = ''
+    }, 2000)
+  }).catch(() => {
+    // Fallback for older browsers
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    document.body.appendChild(textArea)
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+    
+    const button = event.target
+    const originalText = button.textContent
+    button.textContent = '✅ Copied!'
+    button.style.background = 'linear-gradient(135deg, #4caf50, #45a049)'
+    setTimeout(() => {
+      button.textContent = originalText
+      button.style.background = ''
+    }, 2000)
+  })
 }
 </script>
 
@@ -567,8 +548,8 @@ const testGetOrders = async () => {
   z-index: 100;
   background: var(--vp-c-bg);
   border-bottom: 2px solid var(--vp-c-brand);
-  padding: 1rem 0;
-  margin-bottom: 2rem;
+  padding: 0.65rem 0;
+  margin-bottom: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -579,16 +560,16 @@ const testGetOrders = async () => {
 }
 
 .auth-title h4 {
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.65rem 0;
   color: var(--vp-c-brand);
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .api-config-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 1rem;
+  gap: 1.5rem;
+  margin-bottom: 0.65rem;
 }
 
 .config-group {
@@ -948,12 +929,13 @@ const testGetOrders = async () => {
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
-  background: linear-gradient(135deg, var(--vp-c-brand), var(--vp-c-brand-light));
+  background: linear-gradient(135deg, #1976d2, #1565c0);
   color: white;
   margin-top: 1rem;
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
 }
 
 .test-btn:hover:not(:disabled) {
@@ -993,6 +975,7 @@ const testGetOrders = async () => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.75rem;
+  gap: 1rem;
 }
 
 .status-badge {
@@ -1010,6 +993,25 @@ const testGetOrders = async () => {
   font-family: var(--vp-font-family-mono);
 }
 
+.copy-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #6c757d, #5a6268);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.copy-btn:hover {
+  background: linear-gradient(135deg, #5a6268, #495057);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
 .result-data {
   background: var(--vp-code-bg);
   padding: 1rem;
@@ -1021,6 +1023,34 @@ const testGetOrders = async () => {
   margin: 0;
   color: var(--vp-code-color);
   max-height: 300px;
+  overflow-y: auto;
+}
+
+.request-info {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: var(--vp-c-bg-soft);
+  border-radius: 6px;
+  border-left: 4px solid var(--vp-c-brand);
+}
+
+.request-info h5 {
+  margin: 0 0 0.5rem 0;
+  color: var(--vp-c-text-1);
+  font-size: 0.9rem;
+}
+
+.request-data {
+  background: var(--vp-code-bg);
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0 0 1rem 0;
+  color: var(--vp-code-color);
+  max-height: 150px;
   overflow-y: auto;
 }
 

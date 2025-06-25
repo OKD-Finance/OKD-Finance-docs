@@ -309,7 +309,7 @@ Content-Type: application/json
 
 ### Получение рыночных данных
 ```http
-GET /bybit/market/ticker?symbol=BTCUSDT
+GET /bybit/market/ticker?symbol=BNBETH
 ```
 
 ### Управление позициями

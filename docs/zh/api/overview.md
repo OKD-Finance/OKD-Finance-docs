@@ -82,7 +82,7 @@ const ws = new WebSocket('wss://api.okd.finance/ws');
 ws.send(JSON.stringify({
   action: 'subscribe',
   channel: 'prices',
-  symbol: 'BTCUSDT'
+  symbol: 'BNBETH'
 }));
 ```
 

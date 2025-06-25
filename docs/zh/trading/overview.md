@@ -57,7 +57,7 @@ async function getMarketOverview() {
         console.log('24小时统计:', stats);
         
         // 获取热门交易对价格
-        const tickers = await client.market.getTickers(['BTCUSDT', 'ETHUSDT', 'ADAUSDT']);
+        const tickers = await client.market.getTickers(['BNBETH', 'ETHUSDT', 'ADAUSDT']);
         console.log('热门币种价格:', tickers);
         
         return { symbols, stats, tickers };
@@ -83,7 +83,7 @@ async function manageAccount() {
         // 获取交易历史
         const trades = await client.account.getTradeHistory({
             limit: 50,
-            symbol: 'BTCUSDT'
+            symbol: 'BNBETH'
         });
         console.log('交易历史:', trades);
         
@@ -222,13 +222,13 @@ class TradingManager {
 const trading = new TradingManager(client);
 
 // 市价买入
-await trading.placeMarketOrder('BTCUSDT', 'buy', '0.001');
+await trading.placeMarketOrder('BNBETH', 'buy', '0.001');
 
 // 限价卖出
-await trading.placeLimitOrder('BTCUSDT', 'sell', '0.001', '45000.00');
+await trading.placeLimitOrder('BNBETH', 'sell', '0.001', '45000.00');
 
 // 设置止损
-await trading.placeStopLossOrder('BTCUSDT', 'sell', '0.001', '42000.00');
+await trading.placeStopLossOrder('BNBETH', 'sell', '0.001', '42000.00');
 ```
 
 ### 高级交易策略
@@ -380,13 +380,13 @@ class AdvancedTradingStrategies {
 const strategies = new AdvancedTradingStrategies(client);
 
 // 执行 DCA 策略
-await strategies.dollarCostAveraging('BTCUSDT', 1000, 10); // 1000 USDT 分10次买入
+await strategies.dollarCostAveraging('BNBETH', 1000, 10); // 1000 USDT 分10次买入
 
 // 执行网格交易
-await strategies.gridTrading('BTCUSDT', 43000, 2, 5, 0.001); // 基准价43000，网格间距2%，5层网格
+await strategies.gridTrading('BNBETH', 43000, 2, 5, 0.001); // 基准价43000，网格间距2%，5层网格
 
 // 检查套利机会
-await strategies.arbitrageTrading('BTCUSDT', 'bybit', 'binance', 0.3); // 最小利润率0.3%
+await strategies.arbitrageTrading('BNBETH', 'bybit', 'binance', 0.3); // 最小利润率0.3%
 ```
 
 ## 风险管理
@@ -601,7 +601,7 @@ dataProcessor.onPositionUpdate((data) => {
 // 连接并订阅数据
 dataProcessor.connect();
 dataProcessor.subscribe([
-    'ticker.BTCUSDT',
+    'ticker.BNBETH',
     'orderbook.ETHUSDT',
     'orders',
     'positions'

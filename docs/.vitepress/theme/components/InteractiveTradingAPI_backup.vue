@@ -65,7 +65,7 @@
                 <div class="param-item required">
                   <code class="param-name">symbol</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Trading pair symbol (e.g., "BTCUSDT", "ETHUSDT")</span>
+                  <span class="param-desc">Trading pair symbol (e.g., "BNBETH", "ETHUSDT")</span>
                 </div>
                 <div class="param-item required">
                   <code class="param-name">side</code>
@@ -113,7 +113,7 @@ Content-Type: application/json
 Fingerprint: 1358cd229b6bceb25941e99f4228997f
 
 {
-  "symbol": "BTCUSDT",
+  "symbol": "BNBETH",
   "side": "buy",
   "type": "limit",
   "quantity": "0.001",
@@ -132,7 +132,7 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
   "data": {
     "orderId": "ord_1234567890abcdef",
     "clientOrderId": "my_order_123",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "side": "buy",
     "type": "limit",
     "quantity": "0.00100000",
@@ -177,10 +177,10 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
               <div class="form-group">
                 <label>Trading Pair</label>
                 <select v-model="orderData.symbol" class="test-input">
-                  <option value="BTCUSDT">BTCUSDT</option>
+                  <option value="BNBETH">BNBETH</option>
                   <option value="ETHUSDT">ETHUSDT</option>
                   <option value="ADAUSDT">ADAUSDT</option>
-                  <option value="DOTUSDT">DOTUSDT</option>
+                  <option value="DOTUSDT">DOTUSDT</option> 
                 </select>
               </div>
               <div class="form-group">
@@ -270,7 +270,7 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
                 <div class="param-item">
                   <code class="param-name">symbol</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Filter by trading pair (e.g., "BTCUSDT")</span>
+                  <span class="param-desc">Filter by trading pair (e.g., "BNBETH")</span>
                 </div>
                 <div class="param-item">
                   <code class="param-name">status</code>
@@ -312,7 +312,7 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
 
             <div class="api-section">
               <h4 class="section-title">📝 Example Request</h4>
-              <pre class="code-block">GET /trading/orders?symbol=BTCUSDT&status=filled&limit=10
+              <pre class="code-block">GET /trading/orders?symbol=BNBETH&status=filled&limit=10
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
             </div>
@@ -328,7 +328,7 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
       {
         "orderId": "ord_1234567890abcdef",
         "clientOrderId": "my_order_123",
-        "symbol": "BTCUSDT",
+        "symbol": "BNBETH",
         "side": "buy",
         "type": "limit",
         "quantity": "0.00100000",
@@ -365,7 +365,7 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
     "code": "INVALID_PARAMETER",
     "message": "Invalid symbol format",
     "details": {
-      "symbol": "Symbol must be in format BASEQUOTE (e.g., BTCUSDT)"
+      "symbol": "Symbol must be in format BASEQUOTE (e.g., BNBETH)"
     }
   }
 }</pre>
@@ -381,7 +381,7 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
                 <label>Symbol (optional)</label>
                 <select v-model="ordersData.symbol" class="test-input">
                   <option value="">All symbols</option>
-                  <option value="BTCUSDT">BTCUSDT</option>
+                  <option value="BNBETH">BNBETH</option>
                   <option value="ETHUSDT">ETHUSDT</option>
                   <option value="ADAUSDT">ADAUSDT</option>
                 </select>
@@ -436,7 +436,7 @@ const apiToken = ref('')
 const showToken = ref(false)
 
 const orderData = reactive({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   type: 'limit',
   quantity: '0.001',

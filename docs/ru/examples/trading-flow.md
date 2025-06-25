@@ -153,7 +153,7 @@ class DCAStrategy {
 
 // Использование DCA стратегии
 const dcaStrategy = new DCAStrategy({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   baseAsset: 'BTC',
   quoteAsset: 'USDT',
   investmentAmount: 100, // $100 за раз
@@ -311,7 +311,7 @@ class GridTradingStrategy {
 
 // Использование Grid стратегии
 const gridStrategy = new GridTradingStrategy({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   lowerPrice: 40000,
   upperPrice: 50000,
   gridCount: 20,
@@ -639,7 +639,7 @@ class TrendFollowingStrategy {
 
 // Использование стратегии следования за трендом
 const trendStrategy = new TrendFollowingStrategy({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   shortPeriod: 10,
   longPeriod: 30,
   rsiPeriod: 14,
@@ -746,7 +746,7 @@ const logger = new TradingLogger();
 
 // Пример логирования сделки
 logger.logTrade({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   quantity: 0.001,
   entryPrice: 45000,

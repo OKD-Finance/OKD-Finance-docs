@@ -234,7 +234,7 @@ const positions = await okdFinance.getActivePositions({
 [
   {
     "positionId": "pos_12345",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "type": "futures",
     "side": "long",
     "size": "0.5",

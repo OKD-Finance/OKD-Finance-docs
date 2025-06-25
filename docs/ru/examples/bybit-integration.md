@@ -57,7 +57,7 @@ console.log('Деривативы:', balance.derivatives);
 
 ```javascript
 const order = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'limit',
   side: 'buy',
   amount: 0.001,
@@ -70,13 +70,13 @@ const order = await okdFinance.createOrder('bybit', {
 
 ```javascript
 // Тикер
-const ticker = await okdFinance.getTicker('bybit', 'BTCUSDT');
+const ticker = await okdFinance.getTicker('bybit', 'BNBETH');
 
 // Стакан заявок
-const orderbook = await okdFinance.getOrderBook('bybit', 'BTCUSDT');
+const orderbook = await okdFinance.getOrderBook('bybit', 'BNBETH');
 
 // Свечи
-const candles = await okdFinance.getCandles('bybit', 'BTCUSDT', '1h');
+const candles = await okdFinance.getCandles('bybit', 'BNBETH', '1h');
 ```
 
 ## WebSocket подключение
@@ -87,13 +87,13 @@ const candles = await okdFinance.getCandles('bybit', 'BTCUSDT', '1h');
 const ws = okdFinance.createWebSocket('bybit');
 
 // Подписка на тикеры
-ws.subscribe('ticker', ['BTCUSDT', 'ETHUSDT']);
+ws.subscribe('ticker', ['BNBETH', 'ETHUSDT']);
 
 // Подписка на стакан
-ws.subscribe('orderbook', ['BTCUSDT']);
+ws.subscribe('orderbook', ['BNBETH']);
 
 // Подписка на сделки
-ws.subscribe('trades', ['BTCUSDT']);
+ws.subscribe('trades', ['BNBETH']);
 
 ws.on('ticker', (data) => {
   console.log('Тикер обновлен:', data);
@@ -123,7 +123,7 @@ ws.on('balance', (data) => {
 
 ```javascript
 const order = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 0.001,
@@ -136,13 +136,13 @@ const order = await okdFinance.createOrder('bybit', {
 
 ```javascript
 // Установка плеча
-await okdFinance.setLeverage('bybit', 'BTCUSDT', 10);
+await okdFinance.setLeverage('bybit', 'BNBETH', 10);
 
 // Изменение маржи
-await okdFinance.addMargin('bybit', 'BTCUSDT', 100);
+await okdFinance.addMargin('bybit', 'BNBETH', 100);
 
 // Закрытие позиции
-await okdFinance.closePosition('bybit', 'BTCUSDT');
+await okdFinance.closePosition('bybit', 'BNBETH');
 ```
 
 ## Обработка ошибок

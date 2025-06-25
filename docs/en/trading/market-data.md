@@ -10,10 +10,10 @@ OKD Finance provides comprehensive market data access across multiple exchanges 
 
 ```javascript
 // Get single ticker
-const ticker = await okdFinance.getTicker('binance', 'BTCUSDT');
+const ticker = await okdFinance.getTicker('binance', 'BNBETH');
 console.log(ticker);
 // {
-//   symbol: 'BTCUSDT',
+//   symbol: 'BNBETH',
 //   last: 45000,
 //   bid: 44995,
 //   ask: 45005,
@@ -29,17 +29,17 @@ console.log(ticker);
 const allTickers = await okdFinance.getAllTickers('bybit');
 
 // Get multiple specific tickers
-const tickers = await okdFinance.getTickers('okx', ['BTCUSDT', 'ETHUSDT', 'ADAUSDT']);
+const tickers = await okdFinance.getTickers('okx', ['BNBETH', 'ETHUSDT', 'ADAUSDT']);
 ```
 
 ### Order Book Data
 
 ```javascript
 // Get order book with default depth
-const orderbook = await okdFinance.getOrderBook('binance', 'BTCUSDT');
+const orderbook = await okdFinance.getOrderBook('binance', 'BNBETH');
 console.log(orderbook);
 // {
-//   symbol: 'BTCUSDT',
+//   symbol: 'BNBETH',
 //   bids: [[44995, 0.5], [44990, 1.2], [44985, 0.8]],
 //   asks: [[45005, 0.8], [45010, 0.9], [45015, 1.1]],
 //   timestamp: 1640995200000
@@ -49,14 +49,14 @@ console.log(orderbook);
 const deepOrderbook = await okdFinance.getOrderBook('bybit', 'ETHUSDT', 50);
 
 // Get aggregated order book across exchanges
-const aggregatedBook = await okdFinance.getAggregatedOrderBook(['binance', 'bybit', 'okx'], 'BTCUSDT');
+const aggregatedBook = await okdFinance.getAggregatedOrderBook(['binance', 'bybit', 'okx'], 'BNBETH');
 ```
 
 ### Trade Data
 
 ```javascript
 // Get recent trades
-const trades = await okdFinance.getTrades('binance', 'BTCUSDT', 100);
+const trades = await okdFinance.getTrades('binance', 'BNBETH', 100);
 console.log(trades[0]);
 // {
 //   id: '12345',
@@ -81,7 +81,7 @@ const historicalTrades = await okdFinance.getTrades('bybit', 'ETHUSDT', {
 
 ```javascript
 // Get OHLCV candles
-const candles = await okdFinance.getCandles('binance', 'BTCUSDT', '1h', {
+const candles = await okdFinance.getCandles('binance', 'BNBETH', '1h', {
   limit: 100,
   since: Date.now() - 24 * 60 * 60 * 1000 // Last 24 hours
 });
@@ -96,7 +96,7 @@ const timeframes = ['1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '6h', '12h
 // Get candles from multiple exchanges
 const multiExchangeCandles = await okdFinance.getMultiExchangeCandles(
   ['binance', 'bybit', 'okx'], 
-  'BTCUSDT', 
+  'BNBETH', 
   '1h', 
   { limit: 50 }
 );
@@ -106,7 +106,7 @@ const multiExchangeCandles = await okdFinance.getMultiExchangeCandles(
 
 ```javascript
 // Get volume profile
-const volumeProfile = await okdFinance.getVolumeProfile('binance', 'BTCUSDT', '1h', 24);
+const volumeProfile = await okdFinance.getVolumeProfile('binance', 'BNBETH', '1h', 24);
 console.log(volumeProfile);
 // {
 //   priceRanges: [
@@ -131,10 +131,10 @@ console.log(`24h VWAP: $${vwap}`);
 const ws = okdFinance.createWebSocket('binance');
 
 // Subscribe to multiple data types
-ws.subscribe('ticker', ['BTCUSDT', 'ETHUSDT']);
-ws.subscribe('orderbook', ['BTCUSDT'], { levels: 20 });
-ws.subscribe('trades', ['BTCUSDT', 'ETHUSDT']);
-ws.subscribe('candles', ['BTCUSDT'], '1m');
+ws.subscribe('ticker', ['BNBETH', 'ETHUSDT']);
+ws.subscribe('orderbook', ['BNBETH'], { levels: 20 });
+ws.subscribe('trades', ['BNBETH', 'ETHUSDT']);
+ws.subscribe('candles', ['BNBETH'], '1m');
 
 // Handle incoming data
 ws.on('ticker', (data) => {
@@ -256,21 +256,21 @@ class MultiExchangeDataFeed {
 
 ```javascript
 // Moving Averages
-const sma20 = await okdFinance.getSMA('binance', 'BTCUSDT', '1h', 20);
-const ema20 = await okdFinance.getEMA('binance', 'BTCUSDT', '1h', 20);
-const wma20 = await okdFinance.getWMA('binance', 'BTCUSDT', '1h', 20);
+const sma20 = await okdFinance.getSMA('binance', 'BNBETH', '1h', 20);
+const ema20 = await okdFinance.getEMA('binance', 'BNBETH', '1h', 20);
+const wma20 = await okdFinance.getWMA('binance', 'BNBETH', '1h', 20);
 
 // Momentum Indicators
 const rsi = await okdFinance.getRSI('bybit', 'ETHUSDT', '1h', 14);
-const macd = await okdFinance.getMACD('okx', 'BTCUSDT', '1h');
+const macd = await okdFinance.getMACD('okx', 'BNBETH', '1h');
 const stoch = await okdFinance.getStochastic('binance', 'ADAUSDT', '1h', 14, 3);
 
 // Volatility Indicators
-const bb = await okdFinance.getBollingerBands('bybit', 'BTCUSDT', '1h', 20, 2);
+const bb = await okdFinance.getBollingerBands('bybit', 'BNBETH', '1h', 20, 2);
 const atr = await okdFinance.getATR('binance', 'ETHUSDT', '1h', 14);
 
 // Volume Indicators
-const obv = await okdFinance.getOBV('okx', 'BTCUSDT', '1h');
+const obv = await okdFinance.getOBV('okx', 'BNBETH', '1h');
 const volumeSMA = await okdFinance.getVolumeSMA('binance', 'ETHUSDT', '1h', 20);
 
 console.log('RSI:', rsi);
@@ -334,7 +334,7 @@ class CustomIndicators {
 // Calculate correlation between symbols
 const correlation = await okdFinance.getCorrelation(
   'binance',
-  ['BTCUSDT', 'ETHUSDT'],
+  ['BNBETH', 'ETHUSDT'],
   '1h',
   168 // 1 week of hourly data
 );
@@ -342,7 +342,7 @@ const correlation = await okdFinance.getCorrelation(
 console.log(`BTC/ETH correlation: ${correlation.toFixed(3)}`);
 
 // Multi-asset correlation matrix
-const symbols = ['BTCUSDT', 'ETHUSDT', 'ADAUSDT', 'DOTUSDT'];
+const symbols = ['BNBETH', 'ETHUSDT', 'ADAUSDT', 'DOTUSDT'];
 const correlationMatrix = await okdFinance.getCorrelationMatrix('binance', symbols, '1h', 168);
 
 console.log('Correlation Matrix:');
@@ -353,12 +353,12 @@ console.table(correlationMatrix);
 
 ```javascript
 // Historical volatility
-const volatility = await okdFinance.getHistoricalVolatility('binance', 'BTCUSDT', '1h', 24);
+const volatility = await okdFinance.getHistoricalVolatility('binance', 'BNBETH', '1h', 24);
 console.log(`24h volatility: ${(volatility * 100).toFixed(2)}%`);
 
 // Realized vs Implied volatility comparison
-const realizedVol = await okdFinance.getRealizedVolatility('bybit', 'BTCUSDT', 30);
-const impliedVol = await okdFinance.getImpliedVolatility('bybit', 'BTCUSDT');
+const realizedVol = await okdFinance.getRealizedVolatility('bybit', 'BNBETH', 30);
+const impliedVol = await okdFinance.getImpliedVolatility('bybit', 'BNBETH');
 
 console.log(`Realized volatility: ${realizedVol.toFixed(2)}%`);
 console.log(`Implied volatility: ${impliedVol.toFixed(2)}%`);
@@ -372,7 +372,7 @@ const fearGreed = await okdFinance.getFearGreedIndex();
 console.log(`Fear & Greed Index: ${fearGreed.value} (${fearGreed.classification})`);
 
 // Social sentiment analysis
-const sentiment = await okdFinance.getSocialSentiment('BTCUSDT');
+const sentiment = await okdFinance.getSocialSentiment('BNBETH');
 console.log('Social sentiment:', sentiment);
 // {
 //   overall: 0.65, // 0-1 scale

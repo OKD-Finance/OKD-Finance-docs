@@ -15,7 +15,7 @@ Execute immediately at the best available price.
 {
     "type": "market",
     "side": "buy",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "quantity": "0.001",
     "exchange": "bybit"
 }
@@ -28,7 +28,7 @@ Execute only at specified price or better.
 {
     "type": "limit",
     "side": "sell",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "quantity": "0.001",
     "price": "45000.00",
     "exchange": "bybit",
@@ -43,7 +43,7 @@ Trigger when price reaches specified level.
 {
     "type": "stop",
     "side": "sell",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "quantity": "0.001",
     "stopPrice": "42000.00",
     "exchange": "bybit"
@@ -57,7 +57,7 @@ Combine stop and limit order features.
 {
     "type": "stop_limit",
     "side": "buy",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "quantity": "0.001",
     "stopPrice": "44000.00",
     "price": "44100.00",
@@ -76,7 +76,7 @@ POST /api/v1/trading/orders
 **Request Body:**
 ```json
 {
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "side": "buy",
     "type": "limit",
     "quantity": "0.001",
@@ -94,7 +94,7 @@ POST /api/v1/trading/orders
     "data": {
         "orderId": "12345678901234567890",
         "clientOrderId": "my-order-123",
-        "symbol": "BTCUSDT",
+        "symbol": "BNBETH",
         "side": "buy",
         "type": "limit",
         "quantity": "0.001",
@@ -119,7 +119,7 @@ POST /api/v1/trading/orders/batch
 {
     "orders": [
         {
-            "symbol": "BTCUSDT",
+            "symbol": "BNBETH",
             "side": "buy",
             "type": "limit",
             "quantity": "0.001",
@@ -153,7 +153,7 @@ GET /api/v1/trading/orders/{orderId}
     "data": {
         "orderId": "12345678901234567890",
         "clientOrderId": "my-order-123",
-        "symbol": "BTCUSDT",
+        "symbol": "BNBETH",
         "side": "buy",
         "type": "limit",
         "quantity": "0.001",
@@ -180,12 +180,12 @@ GET /api/v1/trading/orders/{orderId}
 
 ### Get Open Orders
 ```http
-GET /api/v1/trading/orders/open?symbol=BTCUSDT&exchange=bybit
+GET /api/v1/trading/orders/open?symbol=BNBETH&exchange=bybit
 ```
 
 ### Get Order History
 ```http
-GET /api/v1/trading/orders/history?symbol=BTCUSDT&exchange=bybit&limit=100
+GET /api/v1/trading/orders/history?symbol=BNBETH&exchange=bybit&limit=100
 ```
 
 ### Cancel Order
@@ -200,7 +200,7 @@ DELETE /api/v1/trading/orders/{orderId}
     "data": {
         "orderId": "12345678901234567890",
         "clientOrderId": "my-order-123",
-        "symbol": "BTCUSDT",
+        "symbol": "BNBETH",
         "status": "canceled",
         "timestamp": 1703123456789
     }
@@ -209,7 +209,7 @@ DELETE /api/v1/trading/orders/{orderId}
 
 ### Cancel All Orders
 ```http
-DELETE /api/v1/trading/orders/all?symbol=BTCUSDT&exchange=bybit
+DELETE /api/v1/trading/orders/all?symbol=BNBETH&exchange=bybit
 ```
 
 ### Modify Order
@@ -255,7 +255,7 @@ Break large orders into smaller chunks to hide order size.
 {
     "type": "limit",
     "side": "buy",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "quantity": "1.0",
     "price": "43000.00",
     "icebergQty": "0.1",
@@ -270,7 +270,7 @@ Combine entry, profit target, and stop loss in one order.
 {
     "type": "bracket",
     "side": "buy",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "quantity": "0.001",
     "price": "43000.00",
     "takeProfitPrice": "45000.00",
@@ -286,7 +286,7 @@ Automatically adjust stop price as market moves favorably.
 {
     "type": "trailing_stop",
     "side": "sell",
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "quantity": "0.001",
     "callbackRate": "0.02",
     "exchange": "bybit"
@@ -305,7 +305,7 @@ Automatically adjust stop price as market moves favorably.
 ```javascript
 // Validate order before placement
 const validation = await okd.trading.validateOrder({
-    symbol: "BTCUSDT",
+    symbol: "BNBETH",
     side: "buy",
     type: "limit",
     quantity: "0.001",
@@ -382,7 +382,7 @@ ws.onmessage = function(event) {
     "timestamp": 1703123456789,
     "order": {
         "orderId": "12345678901234567890",
-        "symbol": "BTCUSDT",
+        "symbol": "BNBETH",
         "status": "filled",
         "executedQuantity": "0.001",
         "avgPrice": "43000.00"
@@ -466,7 +466,7 @@ const orderManager = new OrderManager('your-api-key', 'your-api-secret');
 
 // Place a limit order
 const order = await orderManager.placeOrder({
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     side: 'buy',
     type: 'limit',
     quantity: '0.001',
