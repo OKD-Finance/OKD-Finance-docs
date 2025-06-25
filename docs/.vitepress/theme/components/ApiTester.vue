@@ -362,7 +362,7 @@ export default {
         endpoint += '?' + params.toString();
       }
 
-      let curlCommand = `curl -X GET "${this.API_BASE}${endpoint}" \\\n  -H "Authorization: Bearer ${this.apiKey}"`;
+      const curlCommand = `curl -X GET "${this.API_BASE}${endpoint}" \\\n  -H "Authorization: Bearer ${this.apiKey}"`;
       this.copyToClipboard(curlCommand);
     },
 
