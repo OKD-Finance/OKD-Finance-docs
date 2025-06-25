@@ -78,7 +78,7 @@ Fingerprint: your-device-unique-id
 Основной API для торговли и управления аккаунтами:
 
 ```http
-GET    /api/user/profile           # Профиль пользователя
+GET    /api/auth/profile           # Профиль пользователя
 POST   /api/trading/order          # Создать ордер
 GET    /api/trading/orders         # Список ордеров
 GET    /api/wallet/balance         # Баланс кошелька

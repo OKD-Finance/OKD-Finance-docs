@@ -236,6 +236,10 @@ export default defineConfig({
             title: 'OKD Finance Exchange',
             description: 'Complete API documentation for OKD Finance cryptocurrency exchange platform',
             themeConfig: {
+                outline: {
+                    level: [2, 3],
+                    label: 'On this page'
+                },
                 nav: [
                     { text: 'Guide', link: '/en/guide/introduction' },
                     { text: 'API Reference', link: '/en/api/overview' },
@@ -252,6 +256,10 @@ export default defineConfig({
             title: 'OKD Finance Биржа',
             description: 'Полная документация API для криптовалютной биржи OKD Finance',
             themeConfig: {
+                outline: {
+                    level: [2, 3],
+                    label: 'На этой странице'
+                },
                 nav: [
                     { text: 'Руководство', link: '/ru/guide/introduction' },
                     { text: 'API Справочник', link: '/ru/api/overview' },
@@ -337,6 +345,10 @@ export default defineConfig({
             title: 'OKD Finance 交易所',
             description: 'OKD Finance 加密货币交易所平台完整API文档',
             themeConfig: {
+                outline: {
+                    level: [2, 3],
+                    label: '本页内容'
+                },
                 nav: [
                     { text: '指南', link: '/zh/guide/introduction' },
                     { text: 'API 参考', link: '/zh/api/overview' },
@@ -376,6 +388,12 @@ export default defineConfig({
             dark: '/logo-dark.svg'
         },
         siteTitle: 'OK! Digital',
+
+        // Настройка содержания страницы
+        outline: {
+            level: [2, 3],
+            label: 'On this page'
+        },
 
         socialLinks: [
             { icon: 'github', link: 'https://github.com/OKD-Finance/Backend' }
