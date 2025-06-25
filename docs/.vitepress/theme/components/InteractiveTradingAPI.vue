@@ -26,37 +26,40 @@
       </div>
     </div>
 
-    <!-- Column 2: Documentation -->
+    <!-- Column 2: Documentation and Testing -->
     <div class="documentation-column">
       <section id="place-order" class="endpoint-section">
-        <div class="method-header">
-          <span class="method-badge post">POST</span>
-          <span class="endpoint-path">/trading/order</span>
-        </div>
-        <h3>Place Trading Order</h3>
-        <p>Place a new trading order on the exchange.</p>
-        
-        <h4>Headers</h4>
-        <ul>
-          <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
-          <li><code>Content-Type: application/json</code></li>
-          <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
-        </ul>
-        
-        <h4>Body Parameters</h4>
-        <ul>
-          <li><code>symbol</code> (string, required) - Trading pair symbol (e.g., "BTCUSDT", "ETHUSDT")</li>
-          <li><code>side</code> (string, required) - Order side ("buy" or "sell")</li>
-          <li><code>type</code> (string, required) - Order type ("market", "limit", "stop", "stop_limit")</li>
-          <li><code>quantity</code> (string, required) - Order quantity in base currency</li>
-          <li><code>price</code> (string, optional) - Order price (required for limit orders)</li>
-          <li><code>stopPrice</code> (string, optional) - Stop price (required for stop orders)</li>
-          <li><code>timeInForce</code> (string, optional) - Time in force ("GTC", "IOC", "FOK")</li>
-          <li><code>clientOrderId</code> (string, optional) - Client-generated order ID</li>
-        </ul>
+        <div class="endpoint-layout">
+          <!-- Documentation -->
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge post">POST</span>
+              <span class="endpoint-path">/trading/order</span>
+            </div>
+            <h3>Place Trading Order</h3>
+            <p>Place a new trading order on the exchange.</p>
+            
+            <h4>Headers</h4>
+            <ul>
+              <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
+              <li><code>Content-Type: application/json</code></li>
+              <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+            </ul>
+            
+            <h4>Body Parameters</h4>
+            <ul>
+              <li><code>symbol</code> (string, required) - Trading pair symbol (e.g., "BTCUSDT", "ETHUSDT")</li>
+              <li><code>side</code> (string, required) - Order side ("buy" or "sell")</li>
+              <li><code>type</code> (string, required) - Order type ("market", "limit", "stop", "stop_limit")</li>
+              <li><code>quantity</code> (string, required) - Order quantity in base currency</li>
+              <li><code>price</code> (string, optional) - Order price (required for limit orders)</li>
+              <li><code>stopPrice</code> (string, optional) - Stop price (required for stop orders)</li>
+              <li><code>timeInForce</code> (string, optional) - Time in force ("GTC", "IOC", "FOK")</li>
+              <li><code>clientOrderId</code> (string, optional) - Client-generated order ID</li>
+            </ul>
 
-        <h4>Example Request</h4>
-        <pre class="code-block">POST /trading/order
+            <h4>Example Request</h4>
+            <pre class="code-block">POST /trading/order
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Content-Type: application/json
 Fingerprint: 1358cd229b6bceb25941e99f4228997f
@@ -71,10 +74,10 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
   "clientOrderId": "my_order_123"
 }</pre>
 
-        <h4>Response</h4>
-        <div class="response-example">
-          <div class="response-status success">200 OK</div>
-          <pre class="code-block">{
+            <h4>Response</h4>
+            <div class="response-example">
+              <div class="response-status success">200 OK</div>
+              <pre class="code-block">{
   "success": true,
   "data": {
     "orderId": "ord_1234567890abcdef",
@@ -97,11 +100,11 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
   },
   "error": null
 }</pre>
-        </div>
+            </div>
 
-        <div class="response-example">
-          <div class="response-status error">400 Bad Request</div>
-          <pre class="code-block">{
+            <div class="response-example">
+              <div class="response-status error">400 Bad Request</div>
+              <pre class="code-block">{
   "success": false,
   "data": null,
   "error": {
@@ -113,185 +116,217 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
     }
   }
 }</pre>
+            </div>
+          </div>
+
+          <!-- Testing Panel -->
+          <div class="endpoint-testing">
+            <h4>Live Testing</h4>
+            <div class="test-section">
+              <select v-model="orderData.symbol" class="test-input">
+                <option value="BTCUSDT">BTCUSDT</option>
+                <option value="ETHUSDT">ETHUSDT</option>
+                <option value="ADAUSDT">ADAUSDT</option>
+                <option value="DOTUSDT">DOTUSDT</option>
+              </select>
+              <select v-model="orderData.side" class="test-input">
+                <option value="buy">Buy</option>
+                <option value="sell">Sell</option>
+              </select>
+              <select v-model="orderData.type" class="test-input">
+                <option value="market">Market</option>
+                <option value="limit">Limit</option>
+                <option value="stop">Stop</option>
+                <option value="stop_limit">Stop Limit</option>
+              </select>
+              <input v-model="orderData.quantity" type="text" placeholder="Quantity (0.001)" class="test-input" />
+              <input v-model="orderData.price" type="text" placeholder="Price (for limit orders)" class="test-input" />
+              <input v-model="orderData.stopPrice" type="text" placeholder="Stop Price (for stop orders)" class="test-input" />
+              <select v-model="orderData.timeInForce" class="test-input">
+                <option value="GTC">GTC (Good Till Cancelled)</option>
+                <option value="IOC">IOC (Immediate or Cancel)</option>
+                <option value="FOK">FOK (Fill or Kill)</option>
+              </select>
+              <button @click="testPlaceOrder" class="test-btn">Test Request</button>
+              <div v-if="results.placeOrder" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.placeOrder.status }}</span>
+                  <span class="timestamp">{{ results.placeOrder.timestamp }}</span>
+                </div>
+                <pre class="result-data">{{ results.placeOrder.data }}</pre>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section id="get-orders" class="endpoint-section">
-        <div class="method-header">
-          <span class="method-badge get">GET</span>
-          <span class="endpoint-path">/trading/orders</span>
+        <div class="endpoint-layout">
+          <!-- Documentation -->
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge get">GET</span>
+              <span class="endpoint-path">/trading/orders</span>
+            </div>
+            <h3>Get Orders</h3>
+            <p>Get all orders for the authenticated user.</p>
+            
+            <h4>Query Parameters</h4>
+            <ul>
+              <li><code>symbol</code> (string, optional) - Filter by trading pair</li>
+              <li><code>status</code> (string, optional) - Filter by status (open, filled, cancelled)</li>
+              <li><code>side</code> (string, optional) - Filter by side (buy, sell)</li>
+              <li><code>limit</code> (integer, optional) - Number of orders to return (default: 50)</li>
+            </ul>
+          </div>
+
+          <!-- Testing Panel -->
+          <div class="endpoint-testing">
+            <h4>Live Testing</h4>
+            <div class="test-section">
+              <select v-model="ordersData.symbol" class="test-input">
+                <option value="">All symbols</option>
+                <option value="BTCUSDT">BTCUSDT</option>
+                <option value="ETHUSDT">ETHUSDT</option>
+                <option value="ADAUSDT">ADAUSDT</option>
+              </select>
+              <select v-model="ordersData.status" class="test-input">
+                <option value="">All statuses</option>
+                <option value="open">Open</option>
+                <option value="filled">Filled</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+              <select v-model="ordersData.side" class="test-input">
+                <option value="">All sides</option>
+                <option value="buy">Buy</option>
+                <option value="sell">Sell</option>
+              </select>
+              <input v-model.number="ordersData.limit" type="number" placeholder="Limit (50)" class="test-input" />
+              <button @click="testGetOrders" class="test-btn">Test Request</button>
+              <div v-if="results.orders" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.orders.status }}</span>
+                  <span class="timestamp">{{ results.orders.timestamp }}</span>
+                </div>
+                <pre class="result-data">{{ results.orders.data }}</pre>
+              </div>
+            </div>
+          </div>
         </div>
-        <h3>Get Orders</h3>
-        <p>Get all orders for the authenticated user.</p>
-        
-        <h4>Query Parameters</h4>
-        <ul>
-          <li><code>symbol</code> (string, optional) - Filter by trading pair</li>
-          <li><code>status</code> (string, optional) - Filter by status (open, filled, cancelled)</li>
-          <li><code>side</code> (string, optional) - Filter by side (buy, sell)</li>
-          <li><code>limit</code> (integer, optional) - Number of orders to return (default: 50)</li>
-        </ul>
       </section>
 
       <section id="get-order" class="endpoint-section">
-        <div class="method-header">
-          <span class="method-badge get">GET</span>
-          <span class="endpoint-path">/trading/orders/{orderId}</span>
+        <div class="endpoint-layout">
+          <!-- Documentation -->
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge get">GET</span>
+              <span class="endpoint-path">/trading/orders/{orderId}</span>
+            </div>
+            <h3>Get Specific Order</h3>
+            <p>Get details of a specific order.</p>
+            
+            <h4>Path Parameters</h4>
+            <ul>
+              <li><code>orderId</code> (string, required) - Order ID</li>
+            </ul>
+          </div>
+
+          <!-- Testing Panel -->
+          <div class="endpoint-testing">
+            <h4>Live Testing</h4>
+            <div class="test-section">
+              <input v-model="specificOrderData.orderId" type="text" placeholder="Order ID" class="test-input" />
+              <button @click="testGetSpecificOrder" class="test-btn">Test Request</button>
+              <div v-if="results.specificOrder" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.specificOrder.status }}</span>
+                  <span class="timestamp">{{ results.specificOrder.timestamp }}</span>
+                </div>
+                <pre class="result-data">{{ results.specificOrder.data }}</pre>
+              </div>
+            </div>
+          </div>
         </div>
-        <h3>Get Specific Order</h3>
-        <p>Get details of a specific order.</p>
-        
-        <h4>Path Parameters</h4>
-        <ul>
-          <li><code>orderId</code> (string, required) - Order ID</li>
-        </ul>
       </section>
 
       <section id="cancel-order" class="endpoint-section">
-        <div class="method-header">
-          <span class="method-badge delete">DELETE</span>
-          <span class="endpoint-path">/trading/orders/{orderId}</span>
+        <div class="endpoint-layout">
+          <!-- Documentation -->
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge delete">DELETE</span>
+              <span class="endpoint-path">/trading/orders/{orderId}</span>
+            </div>
+            <h3>Cancel Order</h3>
+            <p>Cancel a specific order.</p>
+            
+            <h4>Path Parameters</h4>
+            <ul>
+              <li><code>orderId</code> (string, required) - Order ID</li>
+            </ul>
+          </div>
+
+          <!-- Testing Panel -->
+          <div class="endpoint-testing">
+            <h4>Live Testing</h4>
+            <div class="test-section">
+              <input v-model="cancelOrderData.orderId" type="text" placeholder="Order ID" class="test-input" />
+              <button @click="testCancelOrder" class="test-btn">Test Request</button>
+              <div v-if="results.cancelOrder" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.cancelOrder.status }}</span>
+                  <span class="timestamp">{{ results.cancelOrder.timestamp }}</span>
+                </div>
+                <pre class="result-data">{{ results.cancelOrder.data }}</pre>
+              </div>
+            </div>
+          </div>
         </div>
-        <h3>Cancel Order</h3>
-        <p>Cancel a specific order.</p>
-        
-        <h4>Path Parameters</h4>
-        <ul>
-          <li><code>orderId</code> (string, required) - Order ID</li>
-        </ul>
       </section>
 
       <section id="get-trades" class="endpoint-section">
-        <div class="method-header">
-          <span class="method-badge get">GET</span>
-          <span class="endpoint-path">/trading/trades</span>
+        <div class="endpoint-layout">
+          <!-- Documentation -->
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge get">GET</span>
+              <span class="endpoint-path">/trading/trades</span>
+            </div>
+            <h3>Get Trade History</h3>
+            <p>Get trade history for the authenticated user.</p>
+            
+            <h4>Query Parameters</h4>
+            <ul>
+              <li><code>symbol</code> (string, optional) - Filter by trading pair</li>
+              <li><code>orderId</code> (string, optional) - Filter by order ID</li>
+              <li><code>limit</code> (integer, optional) - Number of trades to return (default: 50)</li>
+            </ul>
+          </div>
+
+          <!-- Testing Panel -->
+          <div class="endpoint-testing">
+            <h4>Live Testing</h4>
+            <div class="test-section">
+              <select v-model="tradesData.symbol" class="test-input">
+                <option value="">All symbols</option>
+                <option value="BTCUSDT">BTCUSDT</option>
+                <option value="ETHUSDT">ETHUSDT</option>
+                <option value="ADAUSDT">ADAUSDT</option>
+              </select>
+              <input v-model.number="tradesData.limit" type="number" placeholder="Limit (50)" class="test-input" />
+              <button @click="testGetTrades" class="test-btn">Test Request</button>
+              <div v-if="results.trades" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.trades.status }}</span>
+                  <span class="timestamp">{{ results.trades.timestamp }}</span>
+                </div>
+                <pre class="result-data">{{ results.trades.data }}</pre>
+              </div>
+            </div>
+          </div>
         </div>
-        <h3>Get Trade History</h3>
-        <p>Get trade history for the authenticated user.</p>
-        
-        <h4>Query Parameters</h4>
-        <ul>
-          <li><code>symbol</code> (string, optional) - Filter by trading pair</li>
-          <li><code>orderId</code> (string, optional) - Filter by order ID</li>
-          <li><code>limit</code> (integer, optional) - Number of trades to return (default: 50)</li>
-        </ul>
       </section>
-    </div>
-
-    <!-- Column 3: Testing -->
-    <div class="testing-column">
-      <h3>Live Testing</h3>
-      
-      <div class="test-section">
-        <h4>POST Place Order</h4>
-        <select v-model="orderData.symbol" class="test-input">
-          <option value="BTCUSDT">BTCUSDT</option>
-          <option value="ETHUSDT">ETHUSDT</option>
-          <option value="ADAUSDT">ADAUSDT</option>
-          <option value="DOTUSDT">DOTUSDT</option>
-        </select>
-        <select v-model="orderData.side" class="test-input">
-          <option value="buy">Buy</option>
-          <option value="sell">Sell</option>
-        </select>
-        <select v-model="orderData.type" class="test-input">
-          <option value="market">Market</option>
-          <option value="limit">Limit</option>
-          <option value="stop">Stop</option>
-          <option value="stop_limit">Stop Limit</option>
-        </select>
-        <input v-model="orderData.quantity" type="text" placeholder="Quantity (0.001)" class="test-input" />
-        <input v-model="orderData.price" type="text" placeholder="Price (for limit orders)" class="test-input" />
-        <input v-model="orderData.stopPrice" type="text" placeholder="Stop Price (for stop orders)" class="test-input" />
-        <select v-model="orderData.timeInForce" class="test-input">
-          <option value="GTC">GTC (Good Till Cancelled)</option>
-          <option value="IOC">IOC (Immediate or Cancel)</option>
-          <option value="FOK">FOK (Fill or Kill)</option>
-        </select>
-        <button @click="testPlaceOrder" class="test-btn">Test Request</button>
-        <div v-if="results.placeOrder" class="result-container">
-          <div class="result-header">
-            <span class="status-badge">{{ results.placeOrder.status }}</span>
-            <span class="timestamp">{{ results.placeOrder.timestamp }}</span>
-          </div>
-          <pre class="result-data">{{ results.placeOrder.data }}</pre>
-        </div>
-      </div>
-
-      <div class="test-section">
-        <h4>GET Orders</h4>
-        <select v-model="ordersData.symbol" class="test-input">
-          <option value="">All symbols</option>
-          <option value="BTCUSDT">BTCUSDT</option>
-          <option value="ETHUSDT">ETHUSDT</option>
-          <option value="ADAUSDT">ADAUSDT</option>
-        </select>
-        <select v-model="ordersData.status" class="test-input">
-          <option value="">All statuses</option>
-          <option value="open">Open</option>
-          <option value="filled">Filled</option>
-          <option value="cancelled">Cancelled</option>
-        </select>
-        <select v-model="ordersData.side" class="test-input">
-          <option value="">All sides</option>
-          <option value="buy">Buy</option>
-          <option value="sell">Sell</option>
-        </select>
-        <input v-model.number="ordersData.limit" type="number" placeholder="Limit (50)" class="test-input" />
-        <button @click="testGetOrders" class="test-btn">Test Request</button>
-        <div v-if="results.orders" class="result-container">
-          <div class="result-header">
-            <span class="status-badge">{{ results.orders.status }}</span>
-            <span class="timestamp">{{ results.orders.timestamp }}</span>
-          </div>
-          <pre class="result-data">{{ results.orders.data }}</pre>
-        </div>
-      </div>
-
-      <div class="test-section">
-        <h4>GET Specific Order</h4>
-        <input v-model="specificOrderData.orderId" type="text" placeholder="Order ID" class="test-input" />
-        <button @click="testGetSpecificOrder" class="test-btn">Test Request</button>
-        <div v-if="results.specificOrder" class="result-container">
-          <div class="result-header">
-            <span class="status-badge">{{ results.specificOrder.status }}</span>
-            <span class="timestamp">{{ results.specificOrder.timestamp }}</span>
-          </div>
-          <pre class="result-data">{{ results.specificOrder.data }}</pre>
-        </div>
-      </div>
-
-      <div class="test-section">
-        <h4>DELETE Cancel Order</h4>
-        <input v-model="cancelOrderData.orderId" type="text" placeholder="Order ID" class="test-input" />
-        <button @click="testCancelOrder" class="test-btn">Test Request</button>
-        <div v-if="results.cancelOrder" class="result-container">
-          <div class="result-header">
-            <span class="status-badge">{{ results.cancelOrder.status }}</span>
-            <span class="timestamp">{{ results.cancelOrder.timestamp }}</span>
-          </div>
-          <pre class="result-data">{{ results.cancelOrder.data }}</pre>
-        </div>
-      </div>
-
-      <div class="test-section">
-        <h4>GET Trade History</h4>
-        <select v-model="tradesData.symbol" class="test-input">
-          <option value="">All symbols</option>
-          <option value="BTCUSDT">BTCUSDT</option>
-          <option value="ETHUSDT">ETHUSDT</option>
-          <option value="ADAUSDT">ADAUSDT</option>
-        </select>
-        <input v-model.number="tradesData.limit" type="number" placeholder="Limit (50)" class="test-input" />
-        <button @click="testGetTrades" class="test-btn">Test Request</button>
-        <div v-if="results.trades" class="result-container">
-          <div class="result-header">
-            <span class="status-badge">{{ results.trades.status }}</span>
-            <span class="timestamp">{{ results.trades.timestamp }}</span>
-          </div>
-          <pre class="result-data">{{ results.trades.data }}</pre>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -516,7 +551,7 @@ const testGetTrades = async () => {
 <style scoped>
 .interactive-api-container {
   display: grid;
-  grid-template-columns: 250px 1fr 350px;
+  grid-template-columns: 250px 1fr;
   gap: 2rem;
   margin-top: 2rem;
 }
@@ -567,13 +602,26 @@ const testGetTrades = async () => {
 }
 
 .documentation-column {
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
 
 .endpoint-section {
   margin-bottom: 3rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--vp-c-border);
+}
+
+.endpoint-layout {
+  display: flex;
+  gap: 2rem;
+}
+
+.endpoint-docs {
+  flex: 1;
+}
+
+.endpoint-testing {
+  flex: 1;
 }
 
 .method-header {
@@ -612,16 +660,23 @@ const testGetTrades = async () => {
   color: var(--vp-c-text-1);
 }
 
-.testing-column {
-  border-left: 1px solid var(--vp-c-border);
-  padding-left: 2rem;
-}
-
 .test-section {
-  margin-bottom: 2rem;
   padding: 1rem;
   border: 1px solid var(--vp-c-border);
   border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+}
+
+.endpoint-testing {
+  border-left: 1px solid var(--vp-c-border);
+  padding-left: 1.5rem;
+}
+
+.endpoint-testing h4 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--vp-c-brand);
+  font-size: 1rem;
 }
 
 .test-section h4 {
@@ -741,10 +796,21 @@ const testGetTrades = async () => {
     gap: 1rem;
   }
   
-  .api-docs-column,
-  .testing-column {
+  .api-docs-column {
     border: none;
     padding: 0;
+  }
+
+  .endpoint-layout {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .endpoint-testing {
+    border-left: none;
+    border-top: 1px solid var(--vp-c-border);
+    padding-left: 0;
+    padding-top: 1rem;
   }
 }
 </style> 
