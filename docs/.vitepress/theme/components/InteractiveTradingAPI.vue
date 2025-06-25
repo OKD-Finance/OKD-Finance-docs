@@ -34,18 +34,86 @@
           <span class="endpoint-path">/trading/order</span>
         </div>
         <h3>Place Trading Order</h3>
-        <p>Place a new trading order.</p>
+        <p>Place a new trading order on the exchange.</p>
+        
+        <h4>Headers</h4>
+        <ul>
+          <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
+          <li><code>Content-Type: application/json</code></li>
+          <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+        </ul>
         
         <h4>Body Parameters</h4>
         <ul>
-          <li><code>symbol</code> (string, required) - Trading pair symbol (e.g., "BTCUSDT")</li>
+          <li><code>symbol</code> (string, required) - Trading pair symbol (e.g., "BTCUSDT", "ETHUSDT")</li>
           <li><code>side</code> (string, required) - Order side ("buy" or "sell")</li>
           <li><code>type</code> (string, required) - Order type ("market", "limit", "stop", "stop_limit")</li>
-          <li><code>quantity</code> (string, required) - Order quantity</li>
+          <li><code>quantity</code> (string, required) - Order quantity in base currency</li>
           <li><code>price</code> (string, optional) - Order price (required for limit orders)</li>
           <li><code>stopPrice</code> (string, optional) - Stop price (required for stop orders)</li>
           <li><code>timeInForce</code> (string, optional) - Time in force ("GTC", "IOC", "FOK")</li>
+          <li><code>clientOrderId</code> (string, optional) - Client-generated order ID</li>
         </ul>
+
+        <h4>Example Request</h4>
+        <pre class="code-block">POST /trading/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Content-Type: application/json
+Fingerprint: 1358cd229b6bceb25941e99f4228997f
+
+{
+  "symbol": "BTCUSDT",
+  "side": "buy",
+  "type": "limit",
+  "quantity": "0.001",
+  "price": "45000.00",
+  "timeInForce": "GTC",
+  "clientOrderId": "my_order_123"
+}</pre>
+
+        <h4>Response</h4>
+        <div class="response-example">
+          <div class="response-status success">200 OK</div>
+          <pre class="code-block">{
+  "success": true,
+  "data": {
+    "orderId": "ord_1234567890abcdef",
+    "clientOrderId": "my_order_123",
+    "symbol": "BTCUSDT",
+    "side": "buy",
+    "type": "limit",
+    "quantity": "0.00100000",
+    "price": "45000.00000000",
+    "stopPrice": null,
+    "status": "new",
+    "timeInForce": "GTC",
+    "filledQuantity": "0.00000000",
+    "remainingQuantity": "0.00100000",
+    "avgFillPrice": "0.00000000",
+    "commission": "0.00000000",
+    "commissionAsset": "BTC",
+    "createdAt": "2024-01-15T14:30:00Z",
+    "updatedAt": "2024-01-15T14:30:00Z"
+  },
+  "error": null
+}</pre>
+        </div>
+
+        <div class="response-example">
+          <div class="response-status error">400 Bad Request</div>
+          <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "INSUFFICIENT_BALANCE",
+    "message": "Insufficient USDT balance to place buy order",
+    "details": {
+      "required": "45.00",
+      "available": "20.50"
+    }
+  }
+}</pre>
+        </div>
       </section>
 
       <section id="get-orders" class="endpoint-section">
@@ -622,6 +690,49 @@ const testGetTrades = async () => {
   white-space: pre-wrap;
   word-break: break-all;
   margin: 0;
+}
+
+.code-block {
+  background: var(--vp-code-bg);
+  color: var(--vp-code-color);
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.response-example {
+  margin: 1rem 0;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.response-status {
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.response-status.success {
+  background: #f0f9ff;
+  color: #0369a1;
+  border-bottom: 1px solid #e0f2fe;
+}
+
+.response-status.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border-bottom: 1px solid #fecaca;
+}
+
+.response-example .code-block {
+  margin: 0;
+  border-radius: 0;
+  border: none;
 }
 
 @media (max-width: 1200px) {

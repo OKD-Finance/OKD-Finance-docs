@@ -33,18 +33,88 @@
           <span class="endpoint-path">/kyc/submit</span>
         </div>
         <h3>Submit KYC Documents</h3>
-        <p>Submit KYC documents for verification.</p>
+        <p>Submit KYC documents and personal information for verification.</p>
+        
+        <h4>Headers</h4>
+        <ul>
+          <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
+          <li><code>Content-Type: application/json</code></li>
+          <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+        </ul>
         
         <h4>Body Parameters</h4>
         <ul>
-          <li><code>firstName</code> (string, required) - First name</li>
-          <li><code>lastName</code> (string, required) - Last name</li>
-          <li><code>dateOfBirth</code> (string, required) - Date of birth (YYYY-MM-DD)</li>
-          <li><code>nationality</code> (string, required) - Nationality code</li>
-          <li><code>documentType</code> (string, required) - Document type (passport, id_card, driver_license)</li>
-          <li><code>documentNumber</code> (string, required) - Document number</li>
+          <li><code>firstName</code> (string, required) - First name as shown on document</li>
+          <li><code>lastName</code> (string, required) - Last name as shown on document</li>
+          <li><code>dateOfBirth</code> (string, required) - Date of birth in YYYY-MM-DD format</li>
+          <li><code>nationality</code> (string, required) - ISO 3166-1 alpha-2 country code</li>
+          <li><code>documentType</code> (string, required) - Document type ("passport", "id_card", "driver_license")</li>
+          <li><code>documentNumber</code> (string, required) - Document number or ID</li>
           <li><code>address</code> (object, optional) - Address information</li>
+          <li><code>phoneNumber</code> (string, optional) - Phone number with country code</li>
         </ul>
+
+        <h4>Example Request</h4>
+        <pre class="code-block">POST /kyc/submit
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Content-Type: application/json
+Fingerprint: 1358cd229b6bceb25941e99f4228997f
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "dateOfBirth": "1990-01-15",
+  "nationality": "US",
+  "documentType": "passport",
+  "documentNumber": "A12345678",
+  "phoneNumber": "+1234567890",
+  "address": {
+    "street": "123 Main Street",
+    "city": "New York",
+    "state": "NY",
+    "postalCode": "10001",
+    "country": "US"
+  }
+}</pre>
+
+        <h4>Response</h4>
+        <div class="response-example">
+          <div class="response-status success">200 OK</div>
+          <pre class="code-block">{
+  "success": true,
+  "data": {
+    "kycId": "kyc_1234567890abcdef",
+    "status": "pending_review",
+    "submittedAt": "2024-01-15T14:30:00Z",
+    "estimatedReviewTime": "2-3 business days",
+    "requiredDocuments": [
+      "passport_front",
+      "proof_of_address"
+    ],
+    "nextSteps": [
+      "Upload passport photo",
+      "Upload proof of address document"
+    ]
+  },
+  "error": null
+}</pre>
+        </div>
+
+        <div class="response-example">
+          <div class="response-status error">400 Bad Request</div>
+          <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid or missing required fields",
+    "details": {
+      "dateOfBirth": "Date of birth must be in YYYY-MM-DD format",
+      "nationality": "Invalid country code"
+    }
+  }
+}</pre>
+        </div>
       </section>
 
       <section id="kyc-status" class="endpoint-section">
@@ -567,6 +637,49 @@ const testGetKycHistory = async () => {
   white-space: pre-wrap;
   word-break: break-all;
   margin: 0;
+}
+
+.code-block {
+  background: var(--vp-code-bg);
+  color: var(--vp-code-color);
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.response-example {
+  margin: 1rem 0;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.response-status {
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.response-status.success {
+  background: #f0f9ff;
+  color: #0369a1;
+  border-bottom: 1px solid #e0f2fe;
+}
+
+.response-status.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border-bottom: 1px solid #fecaca;
+}
+
+.response-example .code-block {
+  margin: 0;
+  border-radius: 0;
+  border: none;
 }
 
 @media (max-width: 1200px) {

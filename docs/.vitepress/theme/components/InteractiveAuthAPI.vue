@@ -38,9 +38,9 @@
         <h4>Headers</h4>
         <ul>
           <li><code>Content-Type: application/json</code></li>
-          <li><code>Fingerprint: device_unique_id</code></li>
-          <li><code>X-RECAPTCHA: recaptcha_token</code></li>
-          <li><code>X-PLATFORM-ID: platform_id</code></li>
+          <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+          <li><code>X-RECAPTCHA: recaptcha_token</code> - Google reCAPTCHA token</li>
+          <li><code>X-PLATFORM-ID: platform_id</code> - Platform identifier</li>
         </ul>
         
         <h4>Body Parameters</h4>
@@ -48,6 +48,48 @@
           <li><code>email</code> (string, required) - User's email address</li>
           <li><code>password</code> (string, required) - User's password (min 8 chars)</li>
         </ul>
+
+        <h4>Example Request</h4>
+        <pre class="code-block">POST /auth/sign-up
+Content-Type: application/json
+Fingerprint: 1358cd229b6bceb25941e99f4228997f
+X-RECAPTCHA: 03AGdBq25...
+X-PLATFORM-ID: web_app
+
+{
+  "email": "user@example.com",
+  "password": "securepassword123"
+}</pre>
+
+        <h4>Response</h4>
+        <div class="response-example">
+          <div class="response-status success">200 OK</div>
+          <pre class="code-block">{
+  "success": true,
+  "data": {
+    "userId": "usr_1234567890abcdef",
+    "email": "user@example.com",
+    "status": "pending_verification"
+  },
+  "error": null
+}</pre>
+        </div>
+
+        <div class="response-example">
+          <div class="response-status error">400 Bad Request</div>
+          <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid email format or password too weak",
+    "details": {
+      "email": "Invalid email format",
+      "password": "Password must be at least 8 characters"
+    }
+  }
+}</pre>
+        </div>
       </section>
 
       <section id="sign-in" class="endpoint-section">
@@ -61,9 +103,9 @@
         <h4>Headers</h4>
         <ul>
           <li><code>Content-Type: application/json</code></li>
-          <li><code>Fingerprint: device_unique_id</code></li>
-          <li><code>X-RECAPTCHA: recaptcha_token</code></li>
-          <li><code>X-PLATFORM-ID: platform_id</code></li>
+          <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+          <li><code>X-RECAPTCHA: recaptcha_token</code> - Google reCAPTCHA token</li>
+          <li><code>X-PLATFORM-ID: platform_id</code> - Platform identifier</li>
         </ul>
         
         <h4>Body Parameters</h4>
@@ -71,6 +113,54 @@
           <li><code>email</code> (string, required) - User's email address</li>
           <li><code>password</code> (string, required) - User's password</li>
         </ul>
+
+        <h4>Example Request</h4>
+        <pre class="code-block">POST /auth/sign-in
+Content-Type: application/json
+Fingerprint: 1358cd229b6bceb25941e99f4228997f
+X-RECAPTCHA: 03AGdBq25...
+X-PLATFORM-ID: web_app
+
+{
+  "email": "user@example.com",
+  "password": "securepassword123"
+}</pre>
+
+        <h4>Response</h4>
+        <div class="response-example">
+          <div class="response-status success">200 OK</div>
+          <pre class="code-block">{
+  "success": true,
+  "data": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "expiresIn": 3600,
+    "tokenType": "Bearer",
+    "user": {
+      "id": "usr_1234567890abcdef",
+      "email": "user@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "status": "active",
+      "kycStatus": "verified",
+      "createdAt": "2024-01-01T10:00:00Z"
+    }
+  },
+  "error": null
+}</pre>
+        </div>
+
+        <div class="response-example">
+          <div class="response-status error">401 Unauthorized</div>
+          <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "INVALID_CREDENTIALS",
+    "message": "Invalid email or password"
+  }
+}</pre>
+        </div>
       </section>
 
       <section id="refresh" class="endpoint-section">
@@ -81,10 +171,51 @@
         <h3>Refresh Access Token</h3>
         <p>Refreshes an expired access token using the refresh token.</p>
         
+        <h4>Headers</h4>
+        <ul>
+          <li><code>Content-Type: application/json</code></li>
+          <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+        </ul>
+        
         <h4>Body Parameters</h4>
         <ul>
-          <li><code>refreshToken</code> (string, required) - The refresh token</li>
+          <li><code>refreshToken</code> (string, required) - The refresh token obtained from sign-in</li>
         </ul>
+
+        <h4>Example Request</h4>
+        <pre class="code-block">POST /auth/refresh
+Content-Type: application/json
+Fingerprint: 1358cd229b6bceb25941e99f4228997f
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}</pre>
+
+        <h4>Response</h4>
+        <div class="response-example">
+          <div class="response-status success">200 OK</div>
+          <pre class="code-block">{
+  "success": true,
+  "data": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "expiresIn": 3600,
+    "tokenType": "Bearer"
+  },
+  "error": null
+}</pre>
+        </div>
+
+        <div class="response-example">
+          <div class="response-status error">401 Unauthorized</div>
+          <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "INVALID_REFRESH_TOKEN",
+    "message": "Refresh token is invalid or expired"
+  }
+}</pre>
+        </div>
       </section>
 
       <section id="profile" class="endpoint-section">
@@ -97,9 +228,57 @@
         
         <h4>Headers</h4>
         <ul>
-          <li><code>Authorization: Bearer access_token</code></li>
-          <li><code>Fingerprint: device_unique_id</code></li>
+          <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
+          <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
         </ul>
+
+        <h4>Example Request</h4>
+        <pre class="code-block">GET /auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
+
+        <h4>Response</h4>
+        <div class="response-example">
+          <div class="response-status success">200 OK</div>
+          <pre class="code-block">{
+  "success": true,
+  "data": {
+    "id": "usr_1234567890abcdef",
+    "email": "user@example.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "phone": "+1234567890",
+    "status": "active",
+    "kycStatus": "verified",
+    "twoFactorEnabled": true,
+    "preferences": {
+      "language": "en",
+      "timezone": "UTC",
+      "notifications": {
+        "email": true,
+        "push": false,
+        "trading": true
+      }
+    },
+    "createdAt": "2024-01-01T10:00:00Z",
+    "updatedAt": "2024-01-15T14:30:00Z",
+    "lastLoginAt": "2024-01-15T14:30:00Z"
+  },
+  "error": null
+}</pre>
+        </div>
+
+        <div class="response-example">
+          <div class="response-status error">401 Unauthorized</div>
+          <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "Access token is invalid or expired"
+  }
+}</pre>
+        </div>
       </section>
     </div>
 
@@ -503,6 +682,49 @@ const testGetProfile = async () => {
   white-space: pre-wrap;
   word-break: break-all;
   margin: 0;
+}
+
+.code-block {
+  background: var(--vp-code-bg);
+  color: var(--vp-code-color);
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.response-example {
+  margin: 1rem 0;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.response-status {
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.response-status.success {
+  background: #f0f9ff;
+  color: #0369a1;
+  border-bottom: 1px solid #e0f2fe;
+}
+
+.response-status.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border-bottom: 1px solid #fecaca;
+}
+
+.response-example .code-block {
+  margin: 0;
+  border-radius: 0;
+  border: none;
 }
 
 @media (max-width: 1200px) {

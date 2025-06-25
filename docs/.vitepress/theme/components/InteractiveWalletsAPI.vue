@@ -38,9 +38,50 @@
         
         <h4>Headers</h4>
         <ul>
-          <li><code>Authorization: Bearer access_token</code></li>
-          <li><code>Fingerprint: device_unique_id</code></li>
+          <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
+          <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
         </ul>
+
+        <h4>Example Request</h4>
+        <pre class="code-block">GET /wallets/balance
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
+
+        <h4>Response</h4>
+        <div class="response-example">
+          <div class="response-status success">200 OK</div>
+          <pre class="code-block">{
+  "success": true,
+  "data": {
+    "balances": [
+      {
+        "currency": "BTC",
+        "available": "0.54320000",
+        "locked": "0.00000000",
+        "total": "0.54320000",
+        "valueUSD": "23456.78"
+      },
+      {
+        "currency": "ETH",
+        "available": "12.34560000",
+        "locked": "2.10000000",
+        "total": "14.44560000",
+        "valueUSD": "28901.23"
+      },
+      {
+        "currency": "USDT",
+        "available": "1000.00000000",
+        "locked": "500.00000000",
+        "total": "1500.00000000",
+        "valueUSD": "1500.00"
+      }
+    ],
+    "totalValueUSD": "53857.01",
+    "lastUpdated": "2024-01-15T14:30:00Z"
+  },
+  "error": null
+}</pre>
+        </div>
       </section>
 
       <section id="get-balance" class="endpoint-section">
@@ -65,11 +106,62 @@
         <h3>Generate Deposit Address</h3>
         <p>Generate a new deposit address for a specific currency.</p>
         
+        <h4>Headers</h4>
+        <ul>
+          <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
+          <li><code>Content-Type: application/json</code></li>
+          <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+        </ul>
+        
         <h4>Body Parameters</h4>
         <ul>
-          <li><code>currency</code> (string, required) - Currency code</li>
+          <li><code>currency</code> (string, required) - Currency code (BTC, ETH, USDT, etc.)</li>
           <li><code>label</code> (string, optional) - Address label for identification</li>
+          <li><code>network</code> (string, optional) - Network type (for multi-network currencies like USDT)</li>
         </ul>
+
+        <h4>Example Request</h4>
+        <pre class="code-block">POST /wallets/address
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Content-Type: application/json
+Fingerprint: 1358cd229b6bceb25941e99f4228997f
+
+{
+  "currency": "BTC",
+  "label": "Main deposit address",
+  "network": "bitcoin"
+}</pre>
+
+        <h4>Response</h4>
+        <div class="response-example">
+          <div class="response-status success">200 OK</div>
+          <pre class="code-block">{
+  "success": true,
+  "data": {
+    "id": "addr_1234567890abcdef",
+    "currency": "BTC",
+    "address": "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+    "label": "Main deposit address",
+    "network": "bitcoin",
+    "qrCode": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...",
+    "createdAt": "2024-01-15T14:30:00Z",
+    "isActive": true
+  },
+  "error": null
+}</pre>
+        </div>
+
+        <div class="response-example">
+          <div class="response-status error">400 Bad Request</div>
+          <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "UNSUPPORTED_CURRENCY",
+    "message": "Currency BTC is not supported for address generation"
+  }
+}</pre>
+        </div>
       </section>
 
       <section id="get-addresses" class="endpoint-section">
@@ -581,6 +673,49 @@ const testGetDeposits = async () => {
   white-space: pre-wrap;
   word-break: break-all;
   margin: 0;
+}
+
+.code-block {
+  background: var(--vp-code-bg);
+  color: var(--vp-code-color);
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.response-example {
+  margin: 1rem 0;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.response-status {
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.response-status.success {
+  background: #f0f9ff;
+  color: #0369a1;
+  border-bottom: 1px solid #e0f2fe;
+}
+
+.response-status.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border-bottom: 1px solid #fecaca;
+}
+
+.response-example .code-block {
+  margin: 0;
+  border-radius: 0;
+  border: none;
 }
 
 @media (max-width: 1200px) {

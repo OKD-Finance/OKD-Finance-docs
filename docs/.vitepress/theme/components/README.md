@@ -6,8 +6,8 @@ This directory contains Vue.js components for interactive API testing across dif
 
 ### Core Components
 
-1. **`ApiTester.vue`** - Legacy Users API tester (original)
-2. **`InteractiveAPI.vue`** - Modern 3-column interactive API documentation layout
+1. **`UserTester.vue`** - Legacy Users API tester (original)
+2. **`InteractiveUserAPI.vue`** - Modern 3-column interactive API documentation layout
 
 ### Specialized API Testers
 
@@ -101,8 +101,8 @@ To create a new API tester component:
 ```
 docs/.vitepress/theme/components/
 ├── README.md                    # This documentation
-├── ApiTester.vue               # Legacy Users API tester
-├── InteractiveAPI.vue          # Modern 3-column layout
+├── UserTester.vue               # Legacy Users API tester
+├── InteractiveUserAPI.vue          # Modern 3-column layout
 ├── AuthenticationTester.vue    # Authentication API
 ├── WalletsTester.vue          # Wallets API
 ├── TradingTester.vue          # Trading API
