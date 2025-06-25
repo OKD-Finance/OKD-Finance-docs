@@ -24,7 +24,7 @@
 ```bash
 # 获取您的充值地址
 curl -X GET "https://develop.okd.finance/api/wallets/deposit-address/USDT" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 ### 银行转账
@@ -37,7 +37,7 @@ curl -X GET "https://develop.okd.finance/api/wallets/deposit-address/USDT" \
 const order = await fetch('https://develop.okd.finance/api/trading/orders', {
   method: 'POST',
   headers: {
-    'Authorization': 'Bearer YOUR_JWT_TOKEN',
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
@@ -60,7 +60,7 @@ const order = await fetch('https://develop.okd.finance/api/trading/orders', {
 ### 第一个 API 调用
 ```bash
 curl -X GET "https://develop.okd.finance/api/auth/me" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 ## 下一步

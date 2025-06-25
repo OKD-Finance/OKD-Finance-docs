@@ -220,14 +220,14 @@ ws.onmessage = (event) => {
 ### 1. Получение доступа
 ```bash
 curl -X POST "https://develop.okd.finance/api/trading/enable" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -H "Content-Type: application/json"
 ```
 
 ### 2. Настройка Bybit API
 ```bash
 curl -X POST "https://develop.okd.finance/api/trading/bybit/setup" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -H "Content-Type: application/json" \
   -d '{
     "apiKey": "your_bybit_api_key",
@@ -238,7 +238,7 @@ curl -X POST "https://develop.okd.finance/api/trading/bybit/setup" \
 ### 3. Первый ордер
 ```bash
 curl -X POST "https://develop.okd.finance/api/trading/orders" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -H "Content-Type: application/json" \
   -d '{
     "symbol": "BTCUSDT",

@@ -13,7 +13,7 @@ https://develop.okd.finance/api
 
 ```bash
 curl -X GET "https://develop.okd.finance/api/endpoint" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 ## API 类别

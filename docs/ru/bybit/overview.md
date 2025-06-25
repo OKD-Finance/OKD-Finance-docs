@@ -87,7 +87,7 @@ I --> K
 2. **Настройте ключи в OKD Finance:**
 ```http
 POST /api/settings/bybit-integration
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Content-Type: application/json
 
 {
@@ -188,7 +188,7 @@ Content-Type: application/json
 
 ```http
 GET /api/wallet/balance/consolidated
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 Ответ:
@@ -218,7 +218,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 
 ```http
 GET /api/trading/positions/consolidated
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 ### Синхронизация ордеров
@@ -227,7 +227,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 
 ```http
 GET /api/trading/orders?include_bybit=true
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 ## Управление рисками
@@ -254,7 +254,7 @@ Content-Type: application/json
 
 ```http
 GET /api/risk/exposure/bybit
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 ### Автоматическое закрытие позиций
@@ -278,7 +278,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 
 ```http
 GET /api/analytics/cost-analysis
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 {
   "symbol": "BTCUSDT",
@@ -317,14 +317,14 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 
 ```http
 GET /api/bybit/integration/status
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 ### Метрики производительности
 
 ```http
 GET /api/analytics/bybit/performance
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 {
   "period": "24h",
@@ -341,7 +341,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 
 ```http
 GET /api/reports/bybit-integration
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 {
   "from": "2024-01-01T00:00:00Z",
@@ -365,7 +365,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 1. Принудительная синхронизация:
 ```http
 POST /api/wallet/sync/bybit
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 #### Проблема: Высокая латентность
@@ -378,7 +378,7 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 
 ```http
 GET /api/logs/bybit-integration
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 {
   "level": "error",

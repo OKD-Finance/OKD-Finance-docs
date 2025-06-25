@@ -67,7 +67,7 @@ X-PLATFORM-ID: your-platform-id
 Все защищенные запросы должны включать:
 
 ```http
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Content-Type: application/json
 Fingerprint: your-device-unique-id
 ```
@@ -78,7 +78,7 @@ Fingerprint: your-device-unique-id
 Основной API для торговли и управления аккаунтами:
 
 ```http
-GET    /api/user/profile           # Профиль пользователя
+GET    /api/auth/profile           # Профиль пользователя
 POST   /api/trading/order          # Создать ордер
 GET    /api/trading/orders         # Список ордеров
 GET    /api/wallet/balance         # Баланс кошелька

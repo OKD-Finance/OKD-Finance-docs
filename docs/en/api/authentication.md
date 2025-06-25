@@ -100,7 +100,7 @@ This API allows users to:
   <div class="api-key-controls">
     <div class="api-key-input-group">
       <label for="global-api-key">API Key:</label>
-      <input type="text" id="global-api-key" class="api-key-input" placeholder="YOUR_JWT_TOKEN" />
+      <input type="text" id="global-api-key" class="api-key-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
     </div>
     <button onclick="setGlobalApiKey()" class="set-api-key-button">Set API Key</button>
   </div>
@@ -160,7 +160,7 @@ curl -X POST "https://develop.okd.finance/api/auth/sign-up" \
     <label for="signin-email">Email:</label>
     <input type="email" id="signin-email" placeholder="user@example.com" />
     <label for="signin-password">Password:</label>
-    <input type="password" id="signin-password" placeholder="your password" />
+    <input type="password" id="signin-password" placeholder="securepassword123" />
     <label for="signin-fingerprint">Fingerprint:</label>
     <input type="text" id="signin-fingerprint" placeholder="device_unique_id" />
     <label for="signin-recaptcha">X-RECAPTCHA:</label>
@@ -211,7 +211,7 @@ curl -X POST "https://develop.okd.finance/api/auth/sign-in" \
     <input type="text" id="refresh-token" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." />
     <div class="button-group">
       <button onclick="testRefreshToken()" class="test-button">Test</button>
-      <button onclick="copyCurlCommand('/auth/refresh', {method: 'POST', body: JSON.stringify({refreshToken: 'your_refresh_token'})})" class="copy-curl-button">📋 Copy curl</button>
+      <button onclick="copyCurlCommand('/auth/refresh', {method: 'POST', body: JSON.stringify({refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'})})" class="copy-curl-button">📋 Copy curl</button>
     </div>
   </div>
 </div>
@@ -249,7 +249,7 @@ curl -X POST "https://develop.okd.finance/api/auth/refresh" \
 
 ```bash
 curl -X GET "https://develop.okd.finance/api/auth/profile" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
