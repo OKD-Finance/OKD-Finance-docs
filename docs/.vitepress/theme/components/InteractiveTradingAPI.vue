@@ -30,7 +30,7 @@
           <div class="endpoint-docs">
             <div class="method-header">
               <span class="method-badge post">POST</span>
-              <span class="endpoint-path">/trading/order</span>
+              <span class="endpoint-path">/spot/orders</span>
             </div>
             
             <div class="endpoint-info">
@@ -107,7 +107,7 @@
 
             <div class="api-section">
               <h4 class="section-title">📝 Example Request</h4>
-              <pre class="code-block">POST /trading/order
+              <pre class="code-block">POST /spot/orders
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Content-Type: application/json
 Fingerprint: 1358cd229b6bceb25941e99f4228997f
@@ -240,7 +240,7 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
           <div class="endpoint-docs">
             <div class="method-header">
               <span class="method-badge get">GET</span>
-              <span class="endpoint-path">/trading/orders</span>
+              <span class="endpoint-path">/spot/orders</span>
             </div>
             
             <div class="endpoint-info">
@@ -312,7 +312,7 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
 
             <div class="api-section">
               <h4 class="section-title">📝 Example Request</h4>
-              <pre class="code-block">GET /trading/orders?symbol=BTCUSDT&status=filled&limit=10
+              <pre class="code-block">GET /spot/orders?symbol=BTCUSDT&status=filled&limit=10
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
             </div>
@@ -477,7 +477,7 @@ const testPlaceOrder = async () => {
     if (orderData.price) requestBody.price = orderData.price
     if (orderData.stopPrice) requestBody.stopPrice = orderData.stopPrice
     
-    const response = await fetch('https://develop.okd.finance/api/trading/order', {
+    const response = await fetch('https://develop.okd.finance/api/spot/orders', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiToken.value}`,
@@ -504,7 +504,7 @@ const testPlaceOrder = async () => {
 
 const testGetOrders = async () => {
   try {
-    let endpoint = '/trading/orders'
+    let endpoint = '/spot/orders'
     const params = new URLSearchParams()
     
     if (ordersData.symbol) params.append('symbol', ordersData.symbol)

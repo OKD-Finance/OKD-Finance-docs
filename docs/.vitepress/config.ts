@@ -486,15 +486,14 @@ export default defineConfig({
             ],
             '/en/api/trading': [
                 {
-                    text: 'Trading API Endpoints',
+                    text: 'Spot Trading API',
                     collapsed: false,
                     items: [
-                        { text: 'POST Place Order', link: '/en/api/trading#place-order' },
-                        { text: 'GET Orders', link: '/en/api/trading#get-orders' },
-                        { text: 'GET Specific Order', link: '/en/api/trading#get-order' },
-                        { text: 'DELETE Cancel Order', link: '/en/api/trading#cancel-order' },
-                        { text: 'DELETE Cancel All Orders', link: '/en/api/trading#cancel-all-orders' },
-                        { text: 'GET Trade History', link: '/en/api/trading#get-trades' }
+                        { text: 'POST Create Order', link: '/en/api/trading#place-order' },
+                        { text: 'GET All Orders', link: '/en/api/trading#get-orders' },
+                        { text: 'GET Open Orders', link: '/en/api/trading#open-orders' },
+                        { text: 'GET Order History', link: '/en/api/trading#order-history' },
+                        { text: 'GET Trade History', link: '/en/api/trading#trade-history' }
                     ]
                 }
             ],
