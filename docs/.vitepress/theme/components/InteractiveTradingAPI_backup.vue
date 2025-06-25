@@ -422,6 +422,8 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
           </div>
         </div>
       </section>
+
+      <!-- Additional sections would continue here with the same pattern... -->
       
     </div>
   </div>
@@ -890,14 +892,14 @@ const testGetOrders = async () => {
 }
 
 .test-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #0d47a1, #1565c0);
+  background: linear-gradient(135deg, #1976d2, #42a5f5);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(13, 71, 161, 0.6);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4);
 }
 
 .test-btn:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(13, 71, 161, 0.4);
+  box-shadow: 0 2px 6px rgba(25, 118, 210, 0.4);
 }
 
 .test-btn:disabled {
@@ -909,8 +911,8 @@ const testGetOrders = async () => {
 
 /* Dark theme button adjustments */
 .dark .test-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1565c0, #1976d2);
-  box-shadow: 0 8px 25px rgba(21, 101, 192, 0.7);
+  background: linear-gradient(135deg, var(--vp-c-brand-dark), var(--vp-c-brand));
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
 }
 
 .result-container {
