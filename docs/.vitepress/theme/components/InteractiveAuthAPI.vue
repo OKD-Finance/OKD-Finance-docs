@@ -640,10 +640,24 @@ const testGetProfile = async () => {
   background: var(--vp-c-brand);
   color: white;
   margin-bottom: 1rem;
+  transition: all 0.2s ease;
 }
 
 .test-btn:hover {
+  background: var(--vp-c-brand-light);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.test-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme specific button hover */
+.dark .test-btn:hover {
   background: var(--vp-c-brand-dark);
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
 }
 
 .result-container {

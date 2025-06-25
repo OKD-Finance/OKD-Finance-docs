@@ -22,6 +22,7 @@
         <a href="#get-orders" class="nav-link">GET Orders</a>
         <a href="#get-order" class="nav-link">GET Specific Order</a>
         <a href="#cancel-order" class="nav-link">DELETE Cancel Order</a>
+        <a href="#cancel-all-orders" class="nav-link">DELETE Cancel All Orders</a>
         <a href="#get-trades" class="nav-link">GET Trade History</a>
       </div>
     </div>
@@ -169,15 +170,93 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
               <span class="endpoint-path">/trading/orders</span>
             </div>
             <h3>Get Orders</h3>
-            <p>Get all orders for the authenticated user.</p>
+            <p>Get all orders for the authenticated user with optional filtering.</p>
+            
+            <h4>Headers</h4>
+            <ul>
+              <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
+              <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+            </ul>
             
             <h4>Query Parameters</h4>
             <ul>
-              <li><code>symbol</code> (string, optional) - Filter by trading pair</li>
-              <li><code>status</code> (string, optional) - Filter by status (open, filled, cancelled)</li>
-              <li><code>side</code> (string, optional) - Filter by side (buy, sell)</li>
-              <li><code>limit</code> (integer, optional) - Number of orders to return (default: 50)</li>
+              <li><code>symbol</code> (string, optional) - Filter by trading pair (e.g., "BTCUSDT")</li>
+              <li><code>status</code> (string, optional) - Filter by status ("new", "partially_filled", "filled", "cancelled", "rejected")</li>
+              <li><code>side</code> (string, optional) - Filter by side ("buy" or "sell")</li>
+              <li><code>type</code> (string, optional) - Filter by order type ("market", "limit", "stop", "stop_limit")</li>
+              <li><code>limit</code> (integer, optional) - Number of orders to return (default: 50, max: 500)</li>
+              <li><code>offset</code> (integer, optional) - Number of orders to skip (default: 0)</li>
+              <li><code>startTime</code> (integer, optional) - Start time timestamp (milliseconds)</li>
+              <li><code>endTime</code> (integer, optional) - End time timestamp (milliseconds)</li>
             </ul>
+
+            <h4>Example Request</h4>
+            <pre class="code-block">GET /trading/orders?symbol=BTCUSDT&status=filled&limit=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
+
+            <h4>Response</h4>
+            <div class="response-example">
+              <div class="response-status success">200 OK</div>
+              <pre class="code-block">{
+  "success": true,
+  "data": {
+    "orders": [
+      {
+        "orderId": "ord_1234567890abcdef",
+        "clientOrderId": "my_order_123",
+        "symbol": "BTCUSDT",
+        "side": "buy",
+        "type": "limit",
+        "quantity": "0.00100000",
+        "price": "45000.00000000",
+        "stopPrice": null,
+        "status": "filled",
+        "timeInForce": "GTC",
+        "filledQuantity": "0.00100000",
+        "remainingQuantity": "0.00000000",
+        "avgFillPrice": "44950.00000000",
+        "commission": "0.00000075",
+        "commissionAsset": "BTC",
+        "createdAt": "2024-01-15T14:30:00Z",
+        "updatedAt": "2024-01-15T14:35:00Z",
+        "fills": [
+          {
+            "tradeId": "trade_987654321",
+            "price": "44950.00000000",
+            "quantity": "0.00100000",
+            "commission": "0.00000075",
+            "commissionAsset": "BTC",
+            "timestamp": "2024-01-15T14:35:00Z"
+          }
+        ]
+      }
+    ],
+    "pagination": {
+      "total": 25,
+      "limit": 10,
+      "offset": 0,
+      "hasMore": true
+    }
+  },
+  "error": null
+}</pre>
+            </div>
+
+            <div class="response-example">
+              <div class="response-status error">400 Bad Request</div>
+              <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "INVALID_PARAMETER",
+    "message": "Invalid symbol format",
+    "details": {
+      "symbol": "Symbol must be in format BASEQUOTE (e.g., BTCUSDT)"
+    }
+  }
+}</pre>
+            </div>
           </div>
 
           <!-- Testing Panel -->
@@ -224,12 +303,88 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
               <span class="endpoint-path">/trading/orders/{orderId}</span>
             </div>
             <h3>Get Specific Order</h3>
-            <p>Get details of a specific order.</p>
+            <p>Get detailed information about a specific order by its ID.</p>
+            
+            <h4>Headers</h4>
+            <ul>
+              <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
+              <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+            </ul>
             
             <h4>Path Parameters</h4>
             <ul>
-              <li><code>orderId</code> (string, required) - Order ID</li>
+              <li><code>orderId</code> (string, required) - Unique order identifier</li>
             </ul>
+
+            <h4>Example Request</h4>
+            <pre class="code-block">GET /trading/orders/ord_1234567890abcdef
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
+
+            <h4>Response</h4>
+            <div class="response-example">
+              <div class="response-status success">200 OK</div>
+              <pre class="code-block">{
+  "success": true,
+  "data": {
+    "orderId": "ord_1234567890abcdef",
+    "clientOrderId": "my_order_123",
+    "symbol": "BTCUSDT",
+    "side": "buy",
+    "type": "limit",
+    "quantity": "0.00100000",
+    "price": "45000.00000000",
+    "stopPrice": null,
+    "status": "filled",
+    "timeInForce": "GTC",
+    "filledQuantity": "0.00100000",
+    "remainingQuantity": "0.00000000",
+    "avgFillPrice": "44950.00000000",
+    "commission": "0.00000075",
+    "commissionAsset": "BTC",
+    "createdAt": "2024-01-15T14:30:00Z",
+    "updatedAt": "2024-01-15T14:35:00Z",
+    "fills": [
+      {
+        "tradeId": "trade_987654321",
+        "price": "44950.00000000",
+        "quantity": "0.00100000",
+        "commission": "0.00000075",
+        "commissionAsset": "BTC",
+        "timestamp": "2024-01-15T14:35:00Z",
+        "isMaker": false
+      }
+    ],
+    "events": [
+      {
+        "type": "order_created",
+        "timestamp": "2024-01-15T14:30:00Z"
+      },
+      {
+        "type": "order_filled",
+        "timestamp": "2024-01-15T14:35:00Z",
+        "details": {
+          "fillPrice": "44950.00000000",
+          "fillQuantity": "0.00100000"
+        }
+      }
+    ]
+  },
+  "error": null
+}</pre>
+            </div>
+
+            <div class="response-example">
+              <div class="response-status error">404 Not Found</div>
+              <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "ORDER_NOT_FOUND",
+    "message": "Order not found or does not belong to this user"
+  }
+}</pre>
+            </div>
           </div>
 
           <!-- Testing Panel -->
@@ -259,12 +414,80 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
               <span class="endpoint-path">/trading/orders/{orderId}</span>
             </div>
             <h3>Cancel Order</h3>
-            <p>Cancel a specific order.</p>
+            <p>Cancel a specific open order. Only orders with status "new" or "partially_filled" can be cancelled.</p>
+            
+            <h4>Headers</h4>
+            <ul>
+              <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
+              <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+            </ul>
             
             <h4>Path Parameters</h4>
             <ul>
-              <li><code>orderId</code> (string, required) - Order ID</li>
+              <li><code>orderId</code> (string, required) - Unique order identifier to cancel</li>
             </ul>
+
+            <h4>Example Request</h4>
+            <pre class="code-block">DELETE /trading/orders/ord_1234567890abcdef
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
+
+            <h4>Response</h4>
+            <div class="response-example">
+              <div class="response-status success">200 OK</div>
+              <pre class="code-block">{
+  "success": true,
+  "data": {
+    "orderId": "ord_1234567890abcdef",
+    "clientOrderId": "my_order_123",
+    "symbol": "BTCUSDT",
+    "side": "buy",
+    "type": "limit",
+    "quantity": "0.00100000",
+    "price": "45000.00000000",
+    "status": "cancelled",
+    "timeInForce": "GTC",
+    "filledQuantity": "0.00050000",
+    "remainingQuantity": "0.00050000",
+    "avgFillPrice": "44980.00000000",
+    "commission": "0.0000003",
+    "commissionAsset": "BTC",
+    "createdAt": "2024-01-15T14:30:00Z",
+    "updatedAt": "2024-01-15T14:40:00Z",
+    "cancelledAt": "2024-01-15T14:40:00Z",
+    "cancelReason": "user_requested"
+  },
+  "error": null
+}</pre>
+            </div>
+
+            <div class="response-example">
+              <div class="response-status error">400 Bad Request</div>
+              <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "CANNOT_CANCEL_ORDER",
+    "message": "Order cannot be cancelled",
+    "details": {
+      "currentStatus": "filled",
+      "reason": "Order is already filled and cannot be cancelled"
+    }
+  }
+}</pre>
+            </div>
+
+            <div class="response-example">
+              <div class="response-status error">404 Not Found</div>
+              <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "ORDER_NOT_FOUND",
+    "message": "Order not found or does not belong to this user"
+  }
+}</pre>
+            </div>
           </div>
 
           <!-- Testing Panel -->
@@ -294,14 +517,105 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
               <span class="endpoint-path">/trading/trades</span>
             </div>
             <h3>Get Trade History</h3>
-            <p>Get trade history for the authenticated user.</p>
+            <p>Get detailed trade execution history for the authenticated user with optional filtering.</p>
+            
+            <h4>Headers</h4>
+            <ul>
+              <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
+              <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+            </ul>
             
             <h4>Query Parameters</h4>
             <ul>
-              <li><code>symbol</code> (string, optional) - Filter by trading pair</li>
-              <li><code>orderId</code> (string, optional) - Filter by order ID</li>
-              <li><code>limit</code> (integer, optional) - Number of trades to return (default: 50)</li>
+              <li><code>symbol</code> (string, optional) - Filter by trading pair (e.g., "BTCUSDT")</li>
+              <li><code>orderId</code> (string, optional) - Filter by specific order ID</li>
+              <li><code>side</code> (string, optional) - Filter by trade side ("buy" or "sell")</li>
+              <li><code>limit</code> (integer, optional) - Number of trades to return (default: 50, max: 1000)</li>
+              <li><code>offset</code> (integer, optional) - Number of trades to skip (default: 0)</li>
+              <li><code>startTime</code> (integer, optional) - Start time timestamp (milliseconds)</li>
+              <li><code>endTime</code> (integer, optional) - End time timestamp (milliseconds)</li>
+              <li><code>fromTradeId</code> (string, optional) - Start from specific trade ID</li>
             </ul>
+
+            <h4>Example Request</h4>
+            <pre class="code-block">GET /trading/trades?symbol=BTCUSDT&limit=10&startTime=1705320600000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
+
+            <h4>Response</h4>
+            <div class="response-example">
+              <div class="response-status success">200 OK</div>
+              <pre class="code-block">{
+  "success": true,
+  "data": {
+    "trades": [
+      {
+        "tradeId": "trade_987654321",
+        "orderId": "ord_1234567890abcdef",
+        "clientOrderId": "my_order_123",
+        "symbol": "BTCUSDT",
+        "side": "buy",
+        "price": "44950.00000000",
+        "quantity": "0.00100000",
+        "quoteQuantity": "44.95000000",
+        "commission": "0.00000075",
+        "commissionAsset": "BTC",
+        "isMaker": false,
+        "isBuyer": true,
+        "timestamp": "2024-01-15T14:35:00Z",
+        "orderType": "limit",
+        "feeRate": "0.001"
+      },
+      {
+        "tradeId": "trade_987654320",
+        "orderId": "ord_0987654321fedcba",
+        "clientOrderId": "my_order_124",
+        "symbol": "BTCUSDT",
+        "side": "sell",
+        "price": "45100.00000000",
+        "quantity": "0.00050000",
+        "quoteQuantity": "22.55000000",
+        "commission": "0.02255000",
+        "commissionAsset": "USDT",
+        "isMaker": true,
+        "isBuyer": false,
+        "timestamp": "2024-01-15T15:20:00Z",
+        "orderType": "limit",
+        "feeRate": "0.001"
+      }
+    ],
+    "pagination": {
+      "total": 156,
+      "limit": 10,
+      "offset": 0,
+      "hasMore": true
+    },
+    "summary": {
+      "totalVolume": "67.50000000",
+      "totalCommission": "0.04510075",
+      "profitLoss": "+2.60000000",
+      "currency": "USDT"
+    }
+  },
+  "error": null
+}</pre>
+            </div>
+
+            <div class="response-example">
+              <div class="response-status error">400 Bad Request</div>
+              <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "INVALID_TIME_RANGE",
+    "message": "Invalid time range specified",
+    "details": {
+      "startTime": "Start time cannot be greater than end time",
+      "maxRange": "Maximum time range is 30 days"
+    }
+  }
+}</pre>
+            </div>
           </div>
 
           <!-- Testing Panel -->
@@ -322,6 +636,145 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
                   <span class="timestamp">{{ results.trades.timestamp }}</span>
                 </div>
                 <pre class="result-data">{{ results.trades.data }}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cancel All Orders -->
+      <section id="cancel-all-orders" class="endpoint-section">
+        <div class="endpoint-layout">
+          <!-- Documentation -->
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge delete">DELETE</span>
+              <span class="endpoint-path">/trading/orders</span>
+            </div>
+            <h3>Cancel All Orders</h3>
+            <p>Cancel all open orders for the authenticated user. Only orders with status "new" or "partially_filled" will be cancelled.</p>
+            
+            <h4>Headers</h4>
+            <ul>
+              <li><code>Authorization: Bearer access_token</code> - JWT access token</li>
+              <li><code>Fingerprint: device_unique_id</code> - 32-character hex string for device identification</li>
+            </ul>
+            
+            <h4>Query Parameters</h4>
+            <ul>
+              <li><code>symbol</code> (string, optional) - Cancel orders for specific trading pair only (e.g., "BTCUSDT")</li>
+              <li><code>side</code> (string, optional) - Cancel orders for specific side only ("buy" or "sell")</li>
+              <li><code>type</code> (string, optional) - Cancel orders of specific type only ("market", "limit", "stop", "stop_limit")</li>
+            </ul>
+
+            <h4>Example Request</h4>
+            <pre class="code-block">DELETE /trading/orders?symbol=BTCUSDT&side=buy
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
+
+            <h4>Response</h4>
+            <div class="response-example">
+              <div class="response-status success">200 OK</div>
+              <pre class="code-block">{
+  "success": true,
+  "data": {
+    "cancelledOrders": [
+      {
+        "orderId": "ord_1234567890abcdef",
+        "clientOrderId": "my_order_123",
+        "symbol": "BTCUSDT",
+        "side": "buy",
+        "type": "limit",
+        "quantity": "0.00100000",
+        "price": "45000.00000000",
+        "status": "cancelled",
+        "cancelledAt": "2024-01-15T14:45:00Z",
+        "cancelReason": "user_requested_bulk"
+      },
+      {
+        "orderId": "ord_2345678901bcdefg",
+        "clientOrderId": "my_order_124",
+        "symbol": "BTCUSDT",
+        "side": "buy",
+        "type": "limit",
+        "quantity": "0.00200000",
+        "price": "44500.00000000",
+        "status": "cancelled",
+        "cancelledAt": "2024-01-15T14:45:00Z",
+        "cancelReason": "user_requested_bulk"
+      }
+    ],
+    "summary": {
+      "totalOrders": 5,
+      "cancelledCount": 2,
+      "failedCount": 0,
+      "skippedCount": 3,
+      "skippedReasons": [
+        "already_filled",
+        "already_cancelled"
+      ]
+    }
+  },
+  "error": null
+}</pre>
+            </div>
+
+            <div class="response-example">
+              <div class="response-status success">200 OK - No Orders</div>
+              <pre class="code-block">{
+  "success": true,
+  "data": {
+    "cancelledOrders": [],
+    "summary": {
+      "totalOrders": 0,
+      "cancelledCount": 0,
+      "failedCount": 0,
+      "skippedCount": 0,
+      "message": "No open orders found matching the criteria"
+    }
+  },
+  "error": null
+}</pre>
+            </div>
+
+            <div class="response-example">
+              <div class="response-status error">400 Bad Request</div>
+              <pre class="code-block">{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "INVALID_SYMBOL",
+    "message": "Invalid trading symbol",
+    "details": {
+      "symbol": "Symbol must be in format BASEQUOTE (e.g., BTCUSDT)"
+    }
+  }
+}</pre>
+            </div>
+          </div>
+
+          <!-- Testing Panel -->
+          <div class="endpoint-testing">
+            <h4>Live Testing</h4>
+            <div class="test-section">
+              <select v-model="cancelAllOrdersData.symbol" class="test-input">
+                <option value="">All symbols</option>
+                <option value="BTCUSDT">BTCUSDT</option>
+                <option value="ETHUSDT">ETHUSDT</option>
+                <option value="ADAUSDT">ADAUSDT</option>
+              </select>
+              <select v-model="cancelAllOrdersData.side" class="test-input">
+                <option value="">All sides</option>
+                <option value="buy">Buy</option>
+                <option value="sell">Sell</option>
+              </select>
+              <button @click="testCancelAllOrders" class="test-btn">Cancel All Orders</button>
+              <div v-if="results.cancelAllOrders" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.cancelAllOrders.status }}</span>
+                  <span class="timestamp">{{ results.cancelAllOrders.timestamp }}</span>
+                </div>
+                <pre class="result-data">{{ results.cancelAllOrders.data }}</pre>
               </div>
             </div>
           </div>
@@ -366,6 +819,11 @@ const tradesData = reactive({
   limit: 50
 })
 
+const cancelAllOrdersData = reactive({
+  symbol: '',
+  side: ''
+})
+
 const generateFingerprint = () => {
   const chars = '0123456789abcdef'
   let result = ''
@@ -380,7 +838,8 @@ const results = reactive({
   orders: null,
   specificOrder: null,
   cancelOrder: null,
-  trades: null
+  trades: null,
+  cancelAllOrders: null
 })
 
 const testPlaceOrder = async () => {
@@ -546,6 +1005,42 @@ const testGetTrades = async () => {
     }
   }
 }
+
+const testCancelAllOrders = async () => {
+  try {
+    let endpoint = '/trading/orders'
+    const params = new URLSearchParams()
+    
+    if (cancelAllOrdersData.symbol) params.append('symbol', cancelAllOrdersData.symbol)
+    if (cancelAllOrdersData.side) params.append('side', cancelAllOrdersData.side)
+    
+    if (params.toString()) {
+      endpoint += '?' + params.toString()
+    }
+    
+    const response = await fetch(`https://develop.okd.finance/api${endpoint}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${apiToken.value}`,
+        'Content-Type': 'application/json',
+        'Fingerprint': generateFingerprint()
+      }
+    })
+    
+    const data = await response.text()
+    results.cancelAllOrders = {
+      status: `${response.status} ${response.statusText}`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString()
+    }
+  } catch (error) {
+    results.cancelAllOrders = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString()
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -618,10 +1113,14 @@ const testGetTrades = async () => {
 
 .endpoint-docs {
   flex: 1;
+  min-width: 0;
+  width: 50%;
 }
 
 .endpoint-testing {
   flex: 1;
+  min-width: 0;
+  width: 50%;
 }
 
 .method-header {
@@ -703,10 +1202,24 @@ const testGetTrades = async () => {
   background: var(--vp-c-brand);
   color: white;
   margin-bottom: 1rem;
+  transition: all 0.2s ease;
 }
 
 .test-btn:hover {
+  background: var(--vp-c-brand-light);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.test-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme specific button hover */
+.dark .test-btn:hover {
   background: var(--vp-c-brand-dark);
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
 }
 
 .result-container {
