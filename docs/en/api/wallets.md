@@ -10,7 +10,7 @@ https://develop.okd.finance/api
 ## Authentication
 All endpoints require authentication via Bearer token:
 ```
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 ## Endpoints
@@ -21,7 +21,7 @@ Get all wallet balances for the authenticated user.
 **Example Request:**
 ```bash
 curl -X GET "https://develop.okd.finance/api/wallets/balance" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
@@ -63,7 +63,7 @@ Get balance for a specific currency.
 **Example Request:**
 ```bash
 curl -X GET "https://develop.okd.finance/api/wallets/balance/BTC" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
@@ -90,7 +90,7 @@ Generate a new deposit address for a specific currency.
 **Example Request:**
 ```bash
 curl -X POST "https://develop.okd.finance/api/wallets/address" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -H "Content-Type: application/json" \
   -d '{
     "currency": "BTC",
@@ -123,7 +123,7 @@ Get all deposit addresses for the authenticated user.
 **Example Request:**
 ```bash
 curl -X GET "https://develop.okd.finance/api/wallets/addresses?currency=BTC&limit=10" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
@@ -165,7 +165,7 @@ Get deposit history for the authenticated user.
 **Example Request:**
 ```bash
 curl -X GET "https://develop.okd.finance/api/wallets/deposits?currency=BTC&status=confirmed&limit=10" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
@@ -206,7 +206,7 @@ Get details of a specific deposit.
 **Example Request:**
 ```bash
 curl -X GET "https://develop.okd.finance/api/wallets/deposits/deposit_123" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
@@ -236,7 +236,7 @@ Get list of supported currencies for deposits and withdrawals.
 **Example Request:**
 ```bash
 curl -X GET "https://develop.okd.finance/api/wallets/supported-currencies" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**

@@ -10,7 +10,7 @@ https://develop.okd.finance/api
 ## Authentication
 Most endpoints require authentication using Bearer tokens:
 ```
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 ## API Categories

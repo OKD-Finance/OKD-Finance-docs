@@ -43,7 +43,7 @@ curl -X GET "https://develop.okd.finance/api/trading/trades/BTCUSDT"
 ### Place Order
 ```bash
 curl -X POST "https://develop.okd.finance/api/trading/orders" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -d '{
     "symbol": "BTCUSDT",
     "side": "Buy", 
@@ -56,7 +56,7 @@ curl -X POST "https://develop.okd.finance/api/trading/orders" \
 ### Cancel Order
 ```bash
 curl -X DELETE "https://develop.okd.finance/api/trading/orders/ORDER_ID" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 ## Position Management
@@ -64,13 +64,13 @@ curl -X DELETE "https://develop.okd.finance/api/trading/orders/ORDER_ID" \
 ### Get Positions
 ```bash
 curl -X GET "https://develop.okd.finance/api/trading/positions" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 ### Close Position
 ```bash
 curl -X POST "https://develop.okd.finance/api/trading/positions/close" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -d '{
     "symbol": "BTCUSDT",
     "qty": "0.001"

@@ -10,7 +10,7 @@ https://develop.okd.finance/api
 ## Authentication
 All endpoints require authentication via Bearer token:
 ```
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 ## Endpoints
@@ -30,7 +30,7 @@ Place a new trading order.
 **Example Request:**
 ```bash
 curl -X POST "https://develop.okd.finance/api/trading/order" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -H "Content-Type: application/json" \
   -d '{
     "symbol": "BTCUSDT",
@@ -73,7 +73,7 @@ Get all orders for the authenticated user.
 **Example Request:**
 ```bash
 curl -X GET "https://develop.okd.finance/api/trading/orders?symbol=BTCUSDT&status=open" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
@@ -114,7 +114,7 @@ Get details of a specific order.
 **Example Request:**
 ```bash
 curl -X GET "https://develop.okd.finance/api/trading/orders/order_123456" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
@@ -150,7 +150,7 @@ Cancel a specific order.
 **Example Request:**
 ```bash
 curl -X DELETE "https://develop.okd.finance/api/trading/orders/order_123456" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
@@ -174,7 +174,7 @@ Cancel all open orders.
 **Example Request:**
 ```bash
 curl -X DELETE "https://develop.okd.finance/api/trading/orders?symbol=BTCUSDT" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
@@ -208,7 +208,7 @@ Get trade history for the authenticated user.
 **Example Request:**
 ```bash
 curl -X GET "https://develop.okd.finance/api/trading/trades?symbol=BTCUSDT&limit=10" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
@@ -249,7 +249,7 @@ Get current trading positions.
 **Example Request:**
 ```bash
 curl -X GET "https://develop.okd.finance/api/trading/positions" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**
@@ -281,7 +281,7 @@ Get trading account information.
 **Example Request:**
 ```bash
 curl -X GET "https://develop.okd.finance/api/trading/account" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 **Response:**

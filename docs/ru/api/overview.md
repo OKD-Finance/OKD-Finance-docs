@@ -67,7 +67,7 @@ X-PLATFORM-ID: your-platform-id
 Все защищенные запросы должны включать:
 
 ```http
-Authorization: Bearer YOUR_ACCESS_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Content-Type: application/json
 Fingerprint: your-device-unique-id
 ```
