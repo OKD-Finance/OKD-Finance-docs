@@ -1,23 +1,46 @@
 <template>
   <div class="trading-tester">
-    <!-- API Key Configuration -->
+    <!-- API Configuration -->
     <div class="api-key-config">
       <h3>📈 Trading API Testing</h3>
-      <div class="key-input-group">
-        <input 
-          v-model="apiKey" 
-          type="password" 
-          placeholder="Enter your API key (JWT token)" 
-          class="api-key-input"
-          @input="saveApiKey"
-        />
-        <button @click="toggleApiKeyVisibility" class="toggle-key-btn">
-          {{ showApiKey ? '🙈' : '👁️' }}
-        </button>
+      
+      <div class="config-row">
+        <div class="config-group">
+          <label class="config-label">🌐 API Base URL</label>
+          <input 
+            v-model="API_BASE" 
+            type="text" 
+            placeholder="https://develop.okd.finance/api" 
+            class="api-url-input"
+            @input="saveApiConfig"
+          />
+        </div>
+        
+        <div class="config-group">
+          <label class="config-label">🔑 API Key</label>
+          <div class="key-input-group">
+            <input 
+              v-model="apiKey" 
+              type="password" 
+              placeholder="Enter your API key (JWT token)" 
+              class="api-key-input"
+              @input="saveApiConfig"
+            />
+            <button @click="toggleApiKeyVisibility" class="toggle-key-btn">
+              {{ showApiKey ? '🙈' : '👁️' }}
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="api-key-status">
-        <span v-if="apiKey" style="color: var(--vp-c-green);">✅ API Key configured</span>
-        <span v-else style="color: var(--vp-c-red);">❌ API Key required</span>
+      
+      <div class="api-status-row">
+        <div class="url-status">
+          🌐 API: {{ API_BASE || 'Not set' }}
+        </div>
+        <div class="key-status">
+          <span v-if="apiKey" style="color: var(--vp-c-green);">✅ API Key configured ({{ apiKey.length }} chars)</span>
+          <span v-else style="color: var(--vp-c-red);">❌ API Key required</span>
+        </div>
       </div>
     </div>
 
@@ -223,13 +246,18 @@ export default {
   },
   mounted() {
     const savedKey = localStorage.getItem('okd_api_key');
+    const savedUrl = localStorage.getItem('okd_api_base_url');
     if (savedKey) {
       this.apiKey = savedKey;
     }
+    if (savedUrl) {
+      this.API_BASE = savedUrl;
+    }
   },
   methods: {
-    saveApiKey() {
+    saveApiConfig() {
       localStorage.setItem('okd_api_key', this.apiKey);
+      localStorage.setItem('okd_api_base_url', this.API_BASE);
     },
     
     toggleApiKeyVisibility() {
@@ -320,7 +348,7 @@ export default {
       if (this.orderData.price) requestBody.price = this.orderData.price;
       if (this.orderData.stopPrice) requestBody.stopPrice = this.orderData.stopPrice;
       
-      const result = await this.makeApiRequest('/trading/order', {
+      const result = await this.makeApiRequest('/spot/orders', {
         method: 'POST',
         body: JSON.stringify(requestBody)
       });
@@ -329,7 +357,7 @@ export default {
     },
 
     async testGetOrders() {
-      let endpoint = '/trading/orders';
+      let endpoint = '/spot/orders';
       const params = new URLSearchParams();
       
       if (this.ordersData.symbol) params.append('symbol', this.ordersData.symbol);
@@ -346,17 +374,17 @@ export default {
     },
 
     async testGetSpecificOrder() {
-      const result = await this.makeApiRequest(`/trading/orders/${this.specificOrderData.orderId}`, { method: 'GET' });
+      const result = await this.makeApiRequest(`/spot/orders/${this.specificOrderData.orderId}`, { method: 'GET' });
       this.displayResults(this.$refs.specificOrderResults, result);
     },
 
     async testCancelOrder() {
-      const result = await this.makeApiRequest(`/trading/orders/${this.cancelOrderData.orderId}`, { method: 'DELETE' });
+      const result = await this.makeApiRequest(`/spot/orders/${this.cancelOrderData.orderId}`, { method: 'DELETE' });
       this.displayResults(this.$refs.cancelOrderResults, result);
     },
 
     async testCancelAllOrders() {
-      let endpoint = '/trading/orders';
+      let endpoint = '/spot/orders';
       const params = new URLSearchParams();
       
       if (this.cancelAllData.symbol) params.append('symbol', this.cancelAllData.symbol);
@@ -370,7 +398,7 @@ export default {
     },
 
     async testGetTrades() {
-      let endpoint = '/trading/trades';
+      let endpoint = '/spot/trades/history';
       const params = new URLSearchParams();
       
       if (this.tradesData.symbol) params.append('symbol', this.tradesData.symbol);
@@ -518,14 +546,61 @@ export default {
 }
 
 .api-key-config h3 {
-  margin: 0 0 15px 0;
+  margin: 0 0 20px 0;
   color: var(--vp-c-text-1);
+}
+
+.config-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.config-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.config-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  margin-bottom: 8px;
+}
+
+.api-url-input {
+  padding: 10px;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 4px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.9rem;
 }
 
 .key-input-group {
   display: flex;
   gap: 10px;
-  margin-bottom: 10px;
+}
+
+.api-status-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid var(--vp-c-border-soft);
+}
+
+.url-status {
+  color: var(--vp-c-brand);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: monospace;
+  background: var(--vp-c-bg-soft);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--vp-c-border);
 }
 
 .api-key-input {
@@ -695,6 +770,17 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .config-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .api-status-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
   .button-group {
     flex-direction: column;
   }

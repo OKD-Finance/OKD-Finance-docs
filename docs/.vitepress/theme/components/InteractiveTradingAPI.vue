@@ -5,18 +5,35 @@
       <div class="auth-title">
         <h4>🔐 API Authentication</h4>
       </div>
-      <div class="token-input-group">
-        <input 
-          v-model="apiToken" 
-          :type="showToken ? 'text' : 'password'" 
-          placeholder="Paste your access token here (without 'Bearer')" 
-          class="token-input" 
-        />
-        <button @click="showToken = !showToken" class="token-toggle" :title="showToken ? 'Hide token' : 'Show token'">
-          {{ showToken ? '🙈' : '👁️' }}
-        </button>
+      <div class="api-config-row">
+        <div class="config-group">
+          <label class="config-label">🌐 API Base URL</label>
+          <input 
+            v-model="apiBaseUrl" 
+            type="text" 
+            placeholder="https://develop.okd.finance/api" 
+            class="config-input" 
+          />
+        </div>
+        <div class="config-group token-group">
+          <label class="config-label">🔑 Access Token</label>
+          <div class="token-input-group">
+            <input 
+              v-model="apiToken" 
+              :type="showToken ? 'text' : 'password'" 
+              placeholder="Paste your access token here (without 'Bearer')" 
+              class="token-input" 
+            />
+            <button @click="showToken = !showToken" class="token-toggle" :title="showToken ? 'Hide token' : 'Show token'">
+              {{ showToken ? '🙈' : '👁️' }}
+            </button>
+          </div>
+        </div>
       </div>
-      <div v-if="apiToken" class="token-status">✅ Token configured ({{ apiToken.length }} chars)</div>
+      <div class="status-row">
+        <div v-if="apiBaseUrl" class="url-status">🌐 API: {{ apiBaseUrl }}</div>
+        <div v-if="apiToken" class="token-status">✅ Token configured ({{ apiToken.length }} chars)</div>
+      </div>
       <div class="token-hint">💡 Don't include "Bearer" - it's added automatically</div>
     </div>
   </div>
@@ -219,8 +236,8 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
                   <option value="FOK">FOK (Fill or Kill)</option>
                 </select>
               </div>
-              <button @click="testPlaceOrder" class="test-btn" :disabled="!apiToken">
-                {{ !apiToken ? '🔒 Enter API Token First' : '🚀 Test Request' }}
+              <button @click="testPlaceOrder" class="test-btn" :disabled="!apiToken || !apiBaseUrl">
+                {{ !apiToken ? '🔒 Enter API Token First' : !apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
               <div v-if="results.placeOrder" class="result-container">
                 <div class="result-header">
@@ -408,8 +425,8 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
                 <label>Limit</label>
                 <input v-model.number="ordersData.limit" type="number" placeholder="50" class="test-input" />
               </div>
-              <button @click="testGetOrders" class="test-btn" :disabled="!apiToken">
-                {{ !apiToken ? '🔒 Enter API Token First' : '🚀 Test Request' }}
+              <button @click="testGetOrders" class="test-btn" :disabled="!apiToken || !apiBaseUrl">
+                {{ !apiToken ? '🔒 Enter API Token First' : !apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
               <div v-if="results.orders" class="result-container">
                 <div class="result-header">
@@ -432,6 +449,7 @@ import { ref, reactive } from 'vue'
 
 const apiToken = ref('')
 const showToken = ref(false)
+const apiBaseUrl = ref('https://develop.okd.finance/api')
 
 const orderData = reactive({
   symbol: 'BTCUSDT',
@@ -477,7 +495,7 @@ const testPlaceOrder = async () => {
     if (orderData.price) requestBody.price = orderData.price
     if (orderData.stopPrice) requestBody.stopPrice = orderData.stopPrice
     
-    const response = await fetch('https://develop.okd.finance/api/spot/orders', {
+    const response = await fetch(`${apiBaseUrl.value}/spot/orders`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiToken.value}`,
@@ -516,7 +534,7 @@ const testGetOrders = async () => {
       endpoint += '?' + params.toString()
     }
     
-    const response = await fetch(`https://develop.okd.finance/api${endpoint}`, {
+    const response = await fetch(`${apiBaseUrl.value}${endpoint}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${apiToken.value}`,
@@ -566,10 +584,42 @@ const testGetOrders = async () => {
   font-size: 1.1rem;
 }
 
+.api-config-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.config-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.config-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+  margin-bottom: 0.5rem;
+}
+
+.config-input {
+  padding: 0.75rem;
+  border: 2px solid var(--vp-c-border);
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+
+.config-input:focus {
+  outline: none;
+  border-color: var(--vp-c-brand);
+}
+
 .token-input-group {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 
 .token-input {
@@ -600,6 +650,23 @@ const testGetOrders = async () => {
   background: var(--vp-c-brand);
   color: white;
   border-color: var(--vp-c-brand);
+}
+
+.status-row {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.url-status {
+  color: var(--vp-c-brand);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: monospace;
+  background: var(--vp-c-bg-soft);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
 }
 
 .token-status {
@@ -981,6 +1048,17 @@ const testGetOrders = async () => {
 @media (max-width: 768px) {
   .auth-header-fixed {
     padding: 0.75rem 0;
+  }
+  
+  .api-config-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .status-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
   
   .token-input-group {
