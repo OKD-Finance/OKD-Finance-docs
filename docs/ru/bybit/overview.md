@@ -149,7 +149,7 @@ POST /api/trading/order
 Content-Type: application/json
 
 {
-  "symbol": "BTCUSDT",
+  "symbol": "BNBETH",
   "side": "buy",
   "type": "twap",
   "quantity": 10.0,
@@ -168,7 +168,7 @@ POST /api/trading/order
 Content-Type: application/json
 
 {
-  "symbol": "BTCUSDT",
+  "symbol": "BNBETH",
   "side": "sell",
   "type": "vwap",
   "quantity": 5.0,
@@ -281,7 +281,7 @@ GET /api/analytics/cost-analysis
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 {
-  "symbol": "BTCUSDT",
+  "symbol": "BNBETH",
   "side": "buy",
   "quantity": 1.0,
   "analysis_period": "1h"

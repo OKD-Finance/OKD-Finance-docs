@@ -11,14 +11,14 @@ GET /api/v1/market/ticker/{symbol}
 ```
 
 ```javascript
-const ticker = await okdFinance.getTicker('BTCUSDT');
+const ticker = await okdFinance.getTicker('BNBETH');
 console.log(ticker);
 ```
 
 **Ответ:**
 ```json
 {
-  "symbol": "BTCUSDT",
+  "symbol": "BNBETH",
   "price": "45000.00",
   "priceChange": "1500.00",
   "priceChangePercent": "3.45",
@@ -59,8 +59,8 @@ GET /api/v1/market/price/{symbol}
 ```
 
 ```javascript
-const price = await okdFinance.getSymbolPrice('BTCUSDT');
-console.log(price); // { "symbol": "BTCUSDT", "price": "45000.00" }
+const price = await okdFinance.getSymbolPrice('BNBETH');
+console.log(price); // { "symbol": "BNBETH", "price": "45000.00" }
 ```
 
 ### Получение лучших цен (bid/ask)
@@ -70,14 +70,14 @@ GET /api/v1/market/bookTicker/{symbol}
 ```
 
 ```javascript
-const bookTicker = await okdFinance.getBookTicker('BTCUSDT');
+const bookTicker = await okdFinance.getBookTicker('BNBETH');
 console.log(bookTicker);
 ```
 
 **Ответ:**
 ```json
 {
-  "symbol": "BTCUSDT",
+  "symbol": "BNBETH",
   "bidPrice": "44995.00",
   "bidQty": "0.5",
   "askPrice": "45005.00",
@@ -94,7 +94,7 @@ GET /api/v1/market/depth/{symbol}
 ```
 
 ```javascript
-const orderBook = await okdFinance.getOrderBook('BTCUSDT', 20);
+const orderBook = await okdFinance.getOrderBook('BNBETH', 20);
 console.log(orderBook);
 ```
 
@@ -129,7 +129,7 @@ GET /api/v1/market/aggTrades/{symbol}
 
 ```javascript
 const aggTrades = await okdFinance.getAggTrades({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   limit: 100,
   startTime: Date.now() - 3600000 // последний час
 });
@@ -160,7 +160,7 @@ GET /api/v1/market/klines/{symbol}
 
 ```javascript
 const klines = await okdFinance.getKlines({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   interval: '1h',
   limit: 100,
   startTime: Date.now() - 86400000 // последние 24 часа
@@ -201,7 +201,7 @@ GET /api/v1/market/avgPrice/{symbol}
 ```
 
 ```javascript
-const avgPrice = await okdFinance.getAvgPrice('BTCUSDT');
+const avgPrice = await okdFinance.getAvgPrice('BNBETH');
 console.log(avgPrice);
 ```
 
@@ -222,14 +222,14 @@ GET /api/v1/market/ticker/24hr/{symbol}
 ```
 
 ```javascript
-const stats24hr = await okdFinance.get24hrStats('BTCUSDT');
+const stats24hr = await okdFinance.get24hrStats('BNBETH');
 console.log(stats24hr);
 ```
 
 **Ответ:**
 ```json
 {
-  "symbol": "BTCUSDT",
+  "symbol": "BNBETH",
   "priceChange": "1500.00",
   "priceChangePercent": "3.45",
   "weightedAvgPrice": "44750.25",
@@ -271,7 +271,7 @@ GET /api/v1/market/trades/{symbol}
 ```
 
 ```javascript
-const recentTrades = await okdFinance.getRecentTrades('BTCUSDT', 100);
+const recentTrades = await okdFinance.getRecentTrades('BNBETH', 100);
 console.log(recentTrades);
 ```
 
@@ -297,7 +297,7 @@ GET /api/v1/market/historicalTrades/{symbol}
 
 ```javascript
 const historicalTrades = await okdFinance.getHistoricalTrades({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   limit: 500,
   fromId: 123456
 });
@@ -308,7 +308,7 @@ const historicalTrades = await okdFinance.getHistoricalTrades({
 ### Подписка на тикер
 
 ```javascript
-const tickerStream = okdFinance.subscribeToTicker('BTCUSDT');
+const tickerStream = okdFinance.subscribeToTicker('BNBETH');
 
 tickerStream.on('data', (ticker) => {
   console.log('Ticker update:', ticker);
@@ -322,7 +322,7 @@ tickerStream.on('error', (error) => {
 ### Подписка на стакан заявок
 
 ```javascript
-const depthStream = okdFinance.subscribeToDepth('BTCUSDT', '100ms');
+const depthStream = okdFinance.subscribeToDepth('BNBETH', '100ms');
 
 depthStream.on('data', (depth) => {
   console.log('Depth update:', depth);
@@ -336,7 +336,7 @@ depthStream.on('data', (depth) => {
 ### Подписка на сделки
 
 ```javascript
-const tradeStream = okdFinance.subscribeToTrades('BTCUSDT');
+const tradeStream = okdFinance.subscribeToTrades('BNBETH');
 
 tradeStream.on('data', (trade) => {
   console.log('New trade:', trade);
@@ -346,7 +346,7 @@ tradeStream.on('data', (trade) => {
 ### Подписка на свечи
 
 ```javascript
-const klineStream = okdFinance.subscribeToKlines('BTCUSDT', '1m');
+const klineStream = okdFinance.subscribeToKlines('BNBETH', '1m');
 
 klineStream.on('data', (kline) => {
   console.log('Kline update:', kline);
@@ -356,7 +356,7 @@ klineStream.on('data', (kline) => {
 ### Мини-тикер
 
 ```javascript
-const miniTickerStream = okdFinance.subscribeToMiniTicker('BTCUSDT');
+const miniTickerStream = okdFinance.subscribeToMiniTicker('BNBETH');
 
 miniTickerStream.on('data', (miniTicker) => {
   console.log('Mini ticker:', miniTicker);
@@ -368,7 +368,7 @@ miniTickerStream.on('data', (miniTicker) => {
 {
   "e": "24hrMiniTicker",
   "E": 1703001600000,
-  "s": "BTCUSDT",
+  "s": "BNBETH",
   "c": "45000.00",
   "o": "43500.00",
   "h": "45200.00",
@@ -406,7 +406,7 @@ console.log(exchangeInfo);
   ],
   "symbols": [
     {
-      "symbol": "BTCUSDT",
+      "symbol": "BNBETH",
       "status": "TRADING",
       "baseAsset": "BTC",
       "baseAssetPrecision": 8,
@@ -473,7 +473,7 @@ console.log(exchangeInfo);
 
 ```javascript
 const rsi = await okdFinance.getRSI({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   interval: '1h',
   period: 14
 });
@@ -483,7 +483,7 @@ const rsi = await okdFinance.getRSI({
 
 ```javascript
 const sma = await okdFinance.getSMA({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   interval: '1h',
   period: 20,
   type: 'SMA' // 'SMA', 'EMA', 'WMA'
@@ -494,7 +494,7 @@ const sma = await okdFinance.getSMA({
 
 ```javascript
 const macd = await okdFinance.getMACD({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   interval: '1h',
   fastPeriod: 12,
   slowPeriod: 26,
@@ -506,7 +506,7 @@ const macd = await okdFinance.getMACD({
 
 ```javascript
 const bb = await okdFinance.getBollingerBands({
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   interval: '1h',
   period: 20,
   stdDev: 2
@@ -545,7 +545,7 @@ const trends = await okdFinance.getMarketTrends({
 {
   "trending": [
     {
-      "symbol": "BTCUSDT",
+      "symbol": "BNBETH",
       "priceChangePercent": "5.67",
       "volume": "12345.67",
       "rank": 1
@@ -579,14 +579,14 @@ const cache = okdFinance.createMarketDataCache({
 });
 
 // Использование кэша
-const cachedTicker = await cache.getTicker('BTCUSDT');
+const cachedTicker = await cache.getTicker('BNBETH');
 ```
 
 ### Batch запросы
 
 ```javascript
 const batchData = await okdFinance.getBatchMarketData([
-  { type: 'ticker', symbol: 'BTCUSDT' },
+  { type: 'ticker', symbol: 'BNBETH' },
   { type: 'depth', symbol: 'ETHUSDT', limit: 20 },
   { type: 'klines', symbol: 'BNBUSDT', interval: '1h', limit: 100 }
 ]);
@@ -641,7 +641,7 @@ async function monitorPrice(symbol, targetPrice) {
   });
 }
 
-monitorPrice('BTCUSDT', 50000);
+monitorPrice('BNBETH', 50000);
 ```
 
 ### Анализ волатильности

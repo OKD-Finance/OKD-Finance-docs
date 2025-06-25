@@ -35,7 +35,7 @@ ws.onopen = function() {
         method: 'subscribe',
         params: {
             exchange: 'bybit',
-            channels: ['ticker.BTCUSDT', 'orderbook.ETHUSDT']
+            channels: ['ticker.BNBETH', 'orderbook.ETHUSDT']
         }
     }));
 };
@@ -50,7 +50,7 @@ ws.onopen = function() {
     "method": "subscribe",
     "params": {
         "exchange": "bybit",
-        "channels": ["ticker.BTCUSDT"]
+        "channels": ["ticker.BNBETH"]
     }
 }
 ```
@@ -62,7 +62,7 @@ ws.onopen = function() {
     "method": "subscribe",
     "params": {
         "exchange": "bybit",
-        "channels": ["orderbook.BTCUSDT"]
+        "channels": ["orderbook.BNBETH"]
     }
 }
 ```
@@ -74,7 +74,7 @@ ws.onopen = function() {
     "method": "subscribe",
     "params": {
         "exchange": "bybit",
-        "channels": ["trades.BTCUSDT"]
+        "channels": ["trades.BNBETH"]
     }
 }
 ```
@@ -83,7 +83,7 @@ ws.onopen = function() {
 
 ### Get Market Summary
 ```http
-GET /api/v1/bybit/market/summary?symbol=BTCUSDT
+GET /api/v1/bybit/market/summary?symbol=BNBETH
 ```
 
 **Response:**
@@ -91,7 +91,7 @@ GET /api/v1/bybit/market/summary?symbol=BTCUSDT
 {
     "success": true,
     "data": {
-        "symbol": "BTCUSDT",
+        "symbol": "BNBETH",
         "lastPrice": "43250.50",
         "priceChange": "1250.30",
         "priceChangePercent": "2.98",
@@ -107,7 +107,7 @@ GET /api/v1/bybit/market/summary?symbol=BTCUSDT
 
 ### Get Order Book
 ```http
-GET /api/v1/bybit/market/orderbook?symbol=BTCUSDT&limit=100
+GET /api/v1/bybit/market/orderbook?symbol=BNBETH&limit=100
 ```
 
 **Response:**
@@ -115,7 +115,7 @@ GET /api/v1/bybit/market/orderbook?symbol=BTCUSDT&limit=100
 {
     "success": true,
     "data": {
-        "symbol": "BTCUSDT",
+        "symbol": "BNBETH",
         "bids": [
             ["43250.50", "0.5420"],
             ["43250.00", "1.2340"]
@@ -131,7 +131,7 @@ GET /api/v1/bybit/market/orderbook?symbol=BTCUSDT&limit=100
 
 ### Get Recent Trades
 ```http
-GET /api/v1/bybit/market/trades?symbol=BTCUSDT&limit=50
+GET /api/v1/bybit/market/trades?symbol=BNBETH&limit=50
 ```
 
 ## Data Normalization
@@ -149,7 +149,7 @@ OKD Finance normalizes Bybit's market data to provide consistent format:
 - ISO 8601 format available on request
 
 ### Symbol Naming
-- Unified symbol format: `BASEQUOTE` (e.g., `BTCUSDT`)
+- Unified symbol format: `BASEQUOTE` (e.g., `BNBETH`)
 - Exchange-specific symbols mapped automatically
 - Support for both spot and derivative symbols
 
@@ -321,7 +321,7 @@ class BybitMarketDataClient {
 // Usage
 const client = new BybitMarketDataClient('your-api-key', 'your-api-secret');
 client.connect();
-client.subscribe(['ticker.BTCUSDT', 'orderbook.ETHUSDT', 'trades.ADAUSDT']);
+client.subscribe(['ticker.BNBETH', 'orderbook.ETHUSDT', 'trades.ADAUSDT']);
 ```
 
 ## Troubleshooting

@@ -698,7 +698,7 @@ async function testWebhook() {
     event: 'order.filled',
     data: {
       orderId: 'test_12345',
-      symbol: 'BTCUSDT',
+      symbol: 'BNBETH',
       side: 'buy',
       quantity: '0.001',
       price: '45000.00',

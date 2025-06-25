@@ -484,6 +484,19 @@ export default defineConfig({
                     ]
                 }
             ],
+            '/en/api/trading': [
+                {
+                    text: 'Spot Trading API',
+                    collapsed: false,
+                    items: [
+                        { text: 'POST Create Order', link: '/en/api/trading#place-order' },
+                        { text: 'GET All Orders', link: '/en/api/trading#get-orders' },
+                        { text: 'GET Open Orders', link: '/en/api/trading#open-orders' },
+                        { text: 'GET Order History', link: '/en/api/trading#order-history' },
+                        { text: 'GET Trade History', link: '/en/api/trading#trade-history' }
+                    ]
+                }
+            ],
             '/en/bybit/': [
                 {
                     text: 'Bybit Integration',

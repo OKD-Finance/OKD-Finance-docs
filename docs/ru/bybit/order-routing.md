@@ -11,7 +11,7 @@
 
 ```javascript
 const order = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'limit',
   side: 'buy',
   amount: 0.1,
@@ -25,7 +25,7 @@ const order = await okdFinance.createOrder('bybit', {
 
 ```javascript
 const order = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 1.0,
@@ -39,7 +39,7 @@ const order = await okdFinance.createOrder('bybit', {
 
 ```javascript
 const order = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 10.0,
@@ -56,7 +56,7 @@ const order = await okdFinance.createOrder('bybit', {
 
 ```javascript
 const twapOrder = await okdFinance.createAlgorithmicOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   amount: 5.0,
   algorithm: 'TWAP',
@@ -73,7 +73,7 @@ const twapOrder = await okdFinance.createAlgorithmicOrder('bybit', {
 
 ```javascript
 const vwapOrder = await okdFinance.createAlgorithmicOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'sell',
   amount: 3.0,
   algorithm: 'VWAP',
@@ -108,7 +108,7 @@ const isOrder = await okdFinance.createAlgorithmicOrder('bybit', {
 
 ```javascript
 // Получение анализа ликвидности
-const liquidityAnalysis = await okdFinance.analyzeLiquidity('bybit', 'BTCUSDT', {
+const liquidityAnalysis = await okdFinance.analyzeLiquidity('bybit', 'BNBETH', {
   amount: 2.0,
   side: 'buy'
 });
@@ -127,7 +127,7 @@ console.log(liquidityAnalysis);
 
 ```javascript
 const adaptiveOrder = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 2.0,
@@ -183,7 +183,7 @@ console.log(metrics);
 
 ```javascript
 const order = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 1.0,
@@ -215,7 +215,7 @@ await okdFinance.setRoutingLimits('bybit', {
 
 ```javascript
 // Анализ оптимального времени для исполнения
-const timingAnalysis = await okdFinance.analyzeOptimalTiming('bybit', 'BTCUSDT', {
+const timingAnalysis = await okdFinance.analyzeOptimalTiming('bybit', 'BNBETH', {
   amount: 1.0,
   side: 'buy',
   timeHorizon: 3600000 // 1 час
@@ -235,7 +235,7 @@ console.log(timingAnalysis);
 ```javascript
 // Автоматическая фрагментация крупных ордеров
 const fragmentedOrder = await okdFinance.createFragmentedOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'buy',
   amount: 5.0,
   fragmentation: {
@@ -256,7 +256,7 @@ const fragmentedOrder = await okdFinance.createFragmentedOrder('bybit', {
 const report = await okdFinance.getExecutionReport('bybit', {
   from: Date.now() - 86400000, // последние 24 часа
   to: Date.now(),
-  symbols: ['BTCUSDT', 'ETHUSDT']
+  symbols: ['BNBETH', 'ETHUSDT']
 });
 
 console.log(report);
@@ -275,7 +275,7 @@ console.log(report);
 // Сравнение различных стратегий маршрутизации
 const comparison = await okdFinance.compareRoutingStrategies('bybit', {
   strategies: ['direct', 'smart', 'TWAP'],
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   period: 86400000,
   orderSizes: [0.1, 0.5, 1.0, 2.0]
 });
@@ -306,7 +306,7 @@ await okdFinance.createRoutingProfile('aggressive_scalping', {
 
 // Применение профиля
 const order = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 0.5,

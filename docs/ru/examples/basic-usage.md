@@ -149,7 +149,7 @@ async function createOrder(symbol, side, type, quantity, price = null) {
 }
 
 // Пример использования
-const order = await createOrder('BTCUSDT', 'buy', 'limit', 0.001, 45000);
+const order = await createOrder('BNBETH', 'buy', 'limit', 0.001, 45000);
 ```
 
 #### Python
@@ -274,11 +274,11 @@ async function main() {
     console.log('Баланс:', balance);
     
     // Получение тикера
-    const ticker = await getTicker('BTCUSDT');
+    const ticker = await getTicker('BNBETH');
     console.log('Цена BTC:', ticker.price);
     
     // Создание ордера
-    const order = await createOrder('BTCUSDT', 'buy', 'limit', 0.001, 45000);
+    const order = await createOrder('BNBETH', 'buy', 'limit', 0.001, 45000);
     console.log('Ордер создан:', order);
     
   } catch (error) {

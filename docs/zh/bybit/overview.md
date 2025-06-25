@@ -71,7 +71,7 @@ async function getBybitAccount() {
 ```javascript
 async function placeBybitOrder() {
     const order = {
-        symbol: 'BTCUSDT',
+        symbol: 'BNBETH',
         side: 'buy',
         type: 'limit',
         quantity: '0.001',
@@ -176,7 +176,7 @@ const spotTrading = new BybitSpotTrading(client);
 
 // 下限价买单
 const buyOrder = await spotTrading.placeSpotOrder({
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     side: 'buy',
     type: 'limit',
     quantity: '0.001',
@@ -237,11 +237,11 @@ class BybitDerivativeTrading {
 const derivativeTrading = new BybitDerivativeTrading(client);
 
 // 设置杠杆
-await derivativeTrading.setLeverage('BTCUSDT', 10);
+await derivativeTrading.setLeverage('BNBETH', 10);
 
 // 开多仓
 const longOrder = await derivativeTrading.placePerpetualOrder({
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     side: 'buy',
     type: 'market',
     quantity: '0.01'
@@ -299,9 +299,9 @@ class BybitMarketData {
     
     subscribeToChannels() {
         const subscriptions = [
-            'orderbook.1.BTCUSDT',
-            'publicTrade.BTCUSDT',
-            'tickers.BTCUSDT'
+            'orderbook.1.BNBETH',
+            'publicTrade.BNBETH',
+            'tickers.BNBETH'
         ];
         
         this.ws.send(JSON.stringify({
@@ -429,7 +429,7 @@ class BybitRiskManager {
 async function batchOrderOperations() {
     const orders = [
         {
-            symbol: 'BTCUSDT',
+            symbol: 'BNBETH',
             side: 'buy',
             type: 'limit',
             quantity: '0.001',
@@ -463,7 +463,7 @@ async function batchOrderOperations() {
 ```javascript
 async function placeConditionalOrder() {
     const conditionalOrder = {
-        symbol: 'BTCUSDT',
+        symbol: 'BNBETH',
         side: 'buy',
         type: 'limit',
         quantity: '0.001',

@@ -67,7 +67,7 @@ SOL/USDT, MATIC/USDT, DOGE/USDT, SHIB/USDT, AVAX/USDT
 
 ### Futures торговля
 ```
-BTCUSDT Perpetual, ETHUSDT Perpetual, ADAUSDT Perpetual,
+BNBETH Perpetual, ETHUSDT Perpetual, ADAUSDT Perpetual,
 SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
 ```
 
@@ -76,7 +76,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
 ### Market Orders
 ```json
 {
-  "symbol": "BTCUSDT",
+  "symbol": "BNBETH",
   "side": "Buy",
   "orderType": "Market",
   "qty": "0.001"
@@ -86,7 +86,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
 ### Limit Orders
 ```json
 {
-  "symbol": "BTCUSDT", 
+  "symbol": "BNBETH", 
   "side": "Buy",
   "orderType": "Limit",
   "qty": "0.001",
@@ -97,7 +97,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
 ### Stop Loss Orders
 ```json
 {
-  "symbol": "BTCUSDT",
+  "symbol": "BNBETH",
   "side": "Sell", 
   "orderType": "StopLoss",
   "qty": "0.001",
@@ -108,7 +108,7 @@ SOLUSDT Perpetual, MATICUSDT Perpetual, DOGEUSDT Perpetual
 ### Take Profit Orders
 ```json
 {
-  "symbol": "BTCUSDT",
+  "symbol": "BNBETH",
   "side": "Sell",
   "orderType": "TakeProfit", 
   "qty": "0.001",
@@ -241,7 +241,7 @@ curl -X POST "https://develop.okd.finance/api/trading/orders" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -H "Content-Type: application/json" \
   -d '{
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "side": "Buy",
     "orderType": "Market",
     "qty": "0.001"

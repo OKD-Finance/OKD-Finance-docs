@@ -41,7 +41,7 @@ const order = await fetch('https://develop.okd.finance/api/trading/orders', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    symbol: 'BTCUSDT',
+    symbol: 'BNBETH',
     side: 'Buy',
     orderType: 'Market',
     qty: '0.001'

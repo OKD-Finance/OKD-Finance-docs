@@ -66,21 +66,21 @@ console.log('Taker fee:', fees.taker);
 
 ```javascript
 // Get ticker information
-const ticker = await okdFinance.getTicker('bybit', 'BTCUSDT');
+const ticker = await okdFinance.getTicker('bybit', 'BNBETH');
 console.log('Last price:', ticker.last);
 console.log('24h volume:', ticker.volume);
 
 // Get order book
-const orderbook = await okdFinance.getOrderBook('bybit', 'BTCUSDT', 20);
+const orderbook = await okdFinance.getOrderBook('bybit', 'BNBETH', 20);
 console.log('Best bid:', orderbook.bids[0]);
 console.log('Best ask:', orderbook.asks[0]);
 
 // Get recent trades
-const trades = await okdFinance.getTrades('bybit', 'BTCUSDT', 50);
+const trades = await okdFinance.getTrades('bybit', 'BNBETH', 50);
 console.log('Latest trade:', trades[0]);
 
 // Get candlestick data
-const candles = await okdFinance.getCandles('bybit', 'BTCUSDT', '1h', {
+const candles = await okdFinance.getCandles('bybit', 'BNBETH', '1h', {
   limit: 100,
   since: Date.now() - 24 * 60 * 60 * 1000 // Last 24 hours
 });
@@ -91,7 +91,7 @@ const candles = await okdFinance.getCandles('bybit', 'BTCUSDT', '1h', {
 ```javascript
 // Place market order
 const marketOrder = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 0.001
@@ -109,7 +109,7 @@ const limitOrder = await okdFinance.createOrder('bybit', {
 
 // Place stop order
 const stopOrder = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'stop',
   side: 'sell',
   amount: 0.001,
@@ -125,7 +125,7 @@ const stopOrder = await okdFinance.createOrder('bybit', {
 ```javascript
 // OCO (One-Cancels-Other) Order
 const ocoOrder = await okdFinance.createOCOOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   side: 'sell',
   amount: 0.001,
   price: 46000, // Limit price
@@ -135,7 +135,7 @@ const ocoOrder = await okdFinance.createOCOOrder('bybit', {
 
 // Trailing Stop Order
 const trailingStop = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'trailing_stop',
   side: 'sell',
   amount: 0.001,
@@ -147,17 +147,17 @@ const trailingStop = await okdFinance.createOrder('bybit', {
 
 ```javascript
 // Set leverage
-await okdFinance.setLeverage('bybit', 'BTCUSDT', 10);
+await okdFinance.setLeverage('bybit', 'BNBETH', 10);
 
 // Get current positions
 const positions = await okdFinance.getPositions('bybit');
 console.log('Open positions:', positions);
 
 // Add margin to position
-await okdFinance.addMargin('bybit', 'BTCUSDT', 100);
+await okdFinance.addMargin('bybit', 'BNBETH', 100);
 
 // Close position
-await okdFinance.closePosition('bybit', 'BTCUSDT');
+await okdFinance.closePosition('bybit', 'BNBETH');
 
 // Set position mode (hedge/one-way)
 await okdFinance.setPositionMode('bybit', 'hedge');
@@ -171,16 +171,16 @@ await okdFinance.setPositionMode('bybit', 'hedge');
 const ws = okdFinance.createWebSocket('bybit');
 
 // Subscribe to ticker updates
-ws.subscribe('ticker', ['BTCUSDT', 'ETHUSDT']);
+ws.subscribe('ticker', ['BNBETH', 'ETHUSDT']);
 
 // Subscribe to order book updates
-ws.subscribe('orderbook', ['BTCUSDT'], { levels: 25 });
+ws.subscribe('orderbook', ['BNBETH'], { levels: 25 });
 
 // Subscribe to trade updates
-ws.subscribe('trades', ['BTCUSDT']);
+ws.subscribe('trades', ['BNBETH']);
 
 // Subscribe to candlestick updates
-ws.subscribe('candles', ['BTCUSDT'], '1m');
+ws.subscribe('candles', ['BNBETH'], '1m');
 
 // Handle incoming data
 ws.on('ticker', (data) => {
@@ -228,7 +228,7 @@ ws.on('positions', (data) => {
 ```javascript
 // Order with automatic stop loss and take profit
 const orderWithSLTP = await okdFinance.createOrder('bybit', {
-  symbol: 'BTCUSDT',
+  symbol: 'BNBETH',
   type: 'market',
   side: 'buy',
   amount: 0.001,

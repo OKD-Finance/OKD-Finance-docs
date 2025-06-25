@@ -2,32 +2,12 @@
 
 Know Your Customer (KYC) API for identity verification.
 
-## Base URL
-```
-https://develop.okd.finance/api
-```
+::: tip Interactive Testing
+Test the KYC API endpoints in real-time using the interactive component below. Submit documents, check verification status, and manage your KYC process.
+:::
 
-## Endpoints
+<KycTester />
 
-### POST /kyc/submit
-Submit KYC documents for verification.
-
-```bash
-curl -X POST "https://develop.okd.finance/api/kyc/submit" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "firstName": "John",
-    "lastName": "Doe",
-    "dateOfBirth": "1990-01-01",
-    "nationality": "US"
-  }'
-```
-
-### GET /kyc/status
-Get KYC verification status.
-
-```bash
-curl -X GET "https://develop.okd.finance/api/kyc/status" \
-  -H "Authorization: Bearer YOUR_TOKEN"
-```
+<script setup>
+import KycTester from '../../.vitepress/theme/components/KycTester.vue'
+</script>

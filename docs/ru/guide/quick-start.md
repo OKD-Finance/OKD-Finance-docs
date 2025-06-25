@@ -195,7 +195,7 @@ async function getMarketData() {
     const response = await axios.get(
       `${process.env.OKD_API_BASE_URL}/market/ticker`,
       {
-        params: { symbol: 'BTCUSDT' }
+        params: { symbol: 'BNBETH' }
       }
     );
 
@@ -221,7 +221,7 @@ async function createTestOrder(accessToken) {
     const response = await axios.post(
       `${process.env.OKD_API_BASE_URL}/trading/order`,
       {
-        symbol: 'BTCUSDT',
+        symbol: 'BNBETH',
         side: 'buy',
         type: 'limit',
         quantity: 0.001,
@@ -295,7 +295,7 @@ class OKDQuickStart {
     return response.data;
   }
 
-  async getMarketData(symbol = 'BTCUSDT') {
+  async getMarketData(symbol = 'BNBETH') {
     const response = await axios.get(`${this.baseURL}/market/ticker`, {
       params: { symbol }
     });
@@ -330,12 +330,12 @@ class OKDQuickStart {
 
       // 3. Рыночные данные
       console.log('\n📊 Получение рыночных данных...');
-      const ticker = await this.getMarketData('BTCUSDT');
+      const ticker = await this.getMarketData('BNBETH');
       console.log(`BTC/USDT: $${ticker.price}`);
 
       // 4. Тестовый ордер
       console.log('\n📝 Создание тестового ордера...');
-      const order = await this.createTestOrder('BTCUSDT', 'buy', 'limit', 0.001, 40000);
+      const order = await this.createTestOrder('BNBETH', 'buy', 'limit', 0.001, 40000);
       console.log('Ордер создан:', order.order_id);
 
       console.log('\n✅ Все операции выполнены успешно!');

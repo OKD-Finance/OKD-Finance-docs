@@ -9,5 +9,5 @@ Welcome to the Users API documentation. This interactive documentation allows yo
 <InteractiveAPI />
 
 <script setup>
-import InteractiveAPI from '../../.vitepress/theme/components/InteractiveAPI.vue'
+import InteractiveAPI from '../../.vitepress/theme/components/InteractiveUserAPI.vue'
 </script> 

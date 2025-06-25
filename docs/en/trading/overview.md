@@ -25,17 +25,17 @@ Advanced cryptocurrency trading with Bybit integration.
 
 ### Real-time Prices
 ```bash
-curl -X GET "https://develop.okd.finance/api/trading/ticker/BTCUSDT"
+curl -X GET "https://develop.okd.finance/api/trading/ticker/BNBETH"
 ```
 
 ### Order Book
 ```bash
-curl -X GET "https://develop.okd.finance/api/trading/orderbook/BTCUSDT"
+curl -X GET "https://develop.okd.finance/api/trading/orderbook/BNBETH"
 ```
 
 ### Trade History
 ```bash
-curl -X GET "https://develop.okd.finance/api/trading/trades/BTCUSDT"
+curl -X GET "https://develop.okd.finance/api/trading/trades/BNBETH"
 ```
 
 ## Order Management
@@ -45,7 +45,7 @@ curl -X GET "https://develop.okd.finance/api/trading/trades/BTCUSDT"
 curl -X POST "https://develop.okd.finance/api/trading/orders" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -d '{
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "side": "Buy", 
     "orderType": "Limit",
     "qty": "0.001",
@@ -72,7 +72,7 @@ curl -X GET "https://develop.okd.finance/api/trading/positions" \
 curl -X POST "https://develop.okd.finance/api/trading/positions/close" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
   -d '{
-    "symbol": "BTCUSDT",
+    "symbol": "BNBETH",
     "qty": "0.001"
   }'
 ```

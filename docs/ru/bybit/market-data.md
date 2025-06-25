@@ -11,10 +11,10 @@ Bybit предоставляет обширные рыночные данные 
 
 ```javascript
 // Получение тикера для одного символа
-const ticker = await okdFinance.getTicker('bybit', 'BTCUSDT');
+const ticker = await okdFinance.getTicker('bybit', 'BNBETH');
 console.log(ticker);
 // {
-//   symbol: 'BTCUSDT',
+//   symbol: 'BNBETH',
 //   last: 45000,
 //   bid: 44995,
 //   ask: 45005,
@@ -32,7 +32,7 @@ const allTickers = await okdFinance.getAllTickers('bybit');
 
 ```javascript
 // Полный стакан
-const orderbook = await okdFinance.getOrderBook('bybit', 'BTCUSDT');
+const orderbook = await okdFinance.getOrderBook('bybit', 'BNBETH');
 console.log(orderbook);
 // {
 //   bids: [[44995, 0.5], [44990, 1.2], ...],
@@ -41,7 +41,7 @@ console.log(orderbook);
 // }
 
 // Ограниченный стакан (топ 20 уровней)
-const limitedOrderbook = await okdFinance.getOrderBook('bybit', 'BTCUSDT', 20);
+const limitedOrderbook = await okdFinance.getOrderBook('bybit', 'BNBETH', 20);
 ```
 
 ### Исторические свечи
@@ -49,7 +49,7 @@ const limitedOrderbook = await okdFinance.getOrderBook('bybit', 'BTCUSDT', 20);
 
 ```javascript
 // Получение свечей
-const candles = await okdFinance.getCandles('bybit', 'BTCUSDT', '1h', {
+const candles = await okdFinance.getCandles('bybit', 'BNBETH', '1h', {
   since: Date.now() - 24 * 60 * 60 * 1000, // последние 24 часа
   limit: 100
 });
@@ -69,7 +69,7 @@ console.log(candles[0]);
 История выполненных сделок:
 
 ```javascript
-const trades = await okdFinance.getTrades('bybit', 'BTCUSDT', 50);
+const trades = await okdFinance.getTrades('bybit', 'BNBETH', 50);
 console.log(trades[0]);
 // {
 //   id: '12345',
@@ -88,16 +88,16 @@ console.log(trades[0]);
 const ws = okdFinance.createWebSocket('bybit');
 
 // Подписка на тикеры
-ws.subscribe('ticker', ['BTCUSDT', 'ETHUSDT']);
+ws.subscribe('ticker', ['BNBETH', 'ETHUSDT']);
 
 // Подписка на стакан заявок
-ws.subscribe('orderbook', ['BTCUSDT']);
+ws.subscribe('orderbook', ['BNBETH']);
 
 // Подписка на сделки
-ws.subscribe('trades', ['BTCUSDT']);
+ws.subscribe('trades', ['BNBETH']);
 
 // Подписка на свечи
-ws.subscribe('candles', ['BTCUSDT'], '1m');
+ws.subscribe('candles', ['BNBETH'], '1m');
 ```
 
 ### Обработка данных
@@ -130,17 +130,17 @@ ws.on('candles', (data) => {
 
 ```javascript
 // Скользящие средние
-const sma = await okdFinance.getSMA('bybit', 'BTCUSDT', '1h', 20);
-const ema = await okdFinance.getEMA('bybit', 'BTCUSDT', '1h', 20);
+const sma = await okdFinance.getSMA('bybit', 'BNBETH', '1h', 20);
+const ema = await okdFinance.getEMA('bybit', 'BNBETH', '1h', 20);
 
 // RSI
-const rsi = await okdFinance.getRSI('bybit', 'BTCUSDT', '1h', 14);
+const rsi = await okdFinance.getRSI('bybit', 'BNBETH', '1h', 14);
 
 // MACD
-const macd = await okdFinance.getMACD('bybit', 'BTCUSDT', '1h');
+const macd = await okdFinance.getMACD('bybit', 'BNBETH', '1h');
 
 // Bollinger Bands
-const bb = await okdFinance.getBollingerBands('bybit', 'BTCUSDT', '1h', 20);
+const bb = await okdFinance.getBollingerBands('bybit', 'BNBETH', '1h', 20);
 ```
 
 ### Пользовательские индикаторы
@@ -155,7 +155,7 @@ const customIndicator = okdFinance.createIndicator({
   }
 });
 
-const result = await customIndicator.calculate('bybit', 'BTCUSDT', '1h', 10);
+const result = await customIndicator.calculate('bybit', 'BNBETH', '1h', 10);
 ```
 
 ## Анализ рынка
@@ -164,7 +164,7 @@ const result = await customIndicator.calculate('bybit', 'BTCUSDT', '1h', 10);
 
 ```javascript
 // Расчет волатильности
-const volatility = await okdFinance.getVolatility('bybit', 'BTCUSDT', '1h', 24);
+const volatility = await okdFinance.getVolatility('bybit', 'BNBETH', '1h', 24);
 console.log(`Волатильность за 24 часа: ${volatility}%`);
 ```
 
@@ -173,7 +173,7 @@ console.log(`Волатильность за 24 часа: ${volatility}%`);
 ```javascript
 // Корреляция между инструментами
 const correlation = await okdFinance.getCorrelation('bybit', 
-  ['BTCUSDT', 'ETHUSDT'], '1h', 168); // за неделю
+  ['BNBETH', 'ETHUSDT'], '1h', 168); // за неделю
 console.log(`Корреляция BTC/ETH: ${correlation}`);
 ```
 
@@ -181,7 +181,7 @@ console.log(`Корреляция BTC/ETH: ${correlation}`);
 
 ```javascript
 // Анализ объемов
-const volumeProfile = await okdFinance.getVolumeProfile('bybit', 'BTCUSDT', '1h', 24);
+const volumeProfile = await okdFinance.getVolumeProfile('bybit', 'BNBETH', '1h', 24);
 console.log('Профиль объемов:', volumeProfile);
 ```
 
@@ -203,7 +203,7 @@ okdFinance.enableCache({
 ```javascript
 // Получение данных для нескольких символов
 const multiData = await okdFinance.getMultipleData('bybit', {
-  symbols: ['BTCUSDT', 'ETHUSDT', 'ADAUSDT'],
+  symbols: ['BNBETH', 'ETHUSDT', 'ADAUSDT'],
   types: ['ticker', 'orderbook'],
   params: { orderbookLimit: 10 }
 });
@@ -216,7 +216,7 @@ const multiData = await okdFinance.getMultipleData('bybit', {
 ws.enableCompression(true);
 
 // Фильтрация данных
-ws.subscribe('orderbook', ['BTCUSDT'], {
+ws.subscribe('orderbook', ['BNBETH'], {
   levels: 10, // только топ 10 уровней
   updateSpeed: '100ms' // обновления каждые 100мс
 });
@@ -257,14 +257,14 @@ class TradingBot {
   }
 
   setupStreams() {
-    this.ws.subscribe('ticker', ['BTCUSDT']);
-    this.ws.subscribe('candles', ['BTCUSDT'], '5m');
+    this.ws.subscribe('ticker', ['BNBETH']);
+    this.ws.subscribe('candles', ['BNBETH'], '5m');
     
     this.ws.on('candles', this.onNewCandle.bind(this));
   }
 
   async onNewCandle(candle) {
-    const rsi = await okdFinance.getRSI('bybit', 'BTCUSDT', '5m', 14);
+    const rsi = await okdFinance.getRSI('bybit', 'BNBETH', '5m', 14);
     
     if (rsi < 30) {
       // Сигнал на покупку
@@ -283,7 +283,7 @@ class TradingBot {
 class ArbitrageScanner {
   constructor() {
     this.exchanges = ['bybit', 'binance', 'okx'];
-    this.symbols = ['BTCUSDT', 'ETHUSDT'];
+    this.symbols = ['BNBETH', 'ETHUSDT'];
     this.setupStreams();
   }
 
