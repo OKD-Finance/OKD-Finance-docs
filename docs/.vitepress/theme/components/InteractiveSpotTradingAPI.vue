@@ -597,70 +597,14 @@ https://bybit-exchange.github.io/docs/v5/order/cancel-order
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { ref, reactive } from 'vue'
 
 const apiToken = ref('')
 const showToken = ref(false)
 const apiBaseUrl = ref('https://develop.okd.finance/api')
 
-// Header collapse functionality
+// Header collapse functionality - только ручное управление
 const isHeaderCollapsed = ref(false)
-const lastScrollY = ref(0)
-const scrollDirection = ref('none')
-let scrollTimer = null
-
-const handleScroll = () => {
-  // Очищаем предыдущий таймер
-  if (scrollTimer) {
-    clearTimeout(scrollTimer)
-  }
-  
-  // Устанавливаем новый таймер с задержкой
-  scrollTimer = setTimeout(() => {
-    const currentScrollY = window.scrollY
-    const scrollDelta = currentScrollY - lastScrollY.value
-    
-    // Игнорируем мелкие изменения
-    if (Math.abs(scrollDelta) < 10) {
-      return
-    }
-    
-    // Определяем направление прокрутки
-    const newDirection = scrollDelta > 0 ? 'down' : 'up'
-    
-    // Логика сворачивания только при значительных изменениях
-    if (currentScrollY > 200) {
-      // Далеко от начала страницы
-      if (newDirection === 'down' && scrollDirection.value !== 'down') {
-        // Начали прокрутку вниз - сворачиваем
-        isHeaderCollapsed.value = true
-        scrollDirection.value = 'down'
-      } else if (newDirection === 'up' && scrollDirection.value !== 'up') {
-        // Начали прокрутку вверх - разворачиваем
-        isHeaderCollapsed.value = false
-        scrollDirection.value = 'up'
-      }
-    } else if (currentScrollY < 100) {
-      // Близко к началу страницы - всегда разворачиваем
-      isHeaderCollapsed.value = false
-      scrollDirection.value = 'up'
-    }
-    
-    lastScrollY.value = currentScrollY
-  }, 100) // Увеличиваем задержку до 100ms для стабильности
-}
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll, { passive: true })
-  lastScrollY.value = window.scrollY
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-  if (scrollTimer) {
-    clearTimeout(scrollTimer)
-  }
-})
 
 // Code examples tabs
 const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
