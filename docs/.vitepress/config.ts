@@ -464,8 +464,8 @@ export default defineConfig({
                             'link': '/en/api/spot',
                             'collapsed': false,
                             'items': [
-                                { 'text': 'POST /spot/orders', 'link': '/en/api/spot#place-trading-order' },
-                                { 'text': 'GET /spot/orders/open', 'link': '/en/api/spot#get-open-orders' }
+                                { 'text': 'POST /spot/orders', 'link': '/en/api/spot#place-order' },
+                                { 'text': 'GET /spot/orders/open', 'link': '/en/api/spot#get-orders' }
                             ]
                         },
                         {
@@ -586,19 +586,7 @@ export default defineConfig({
                     ]
                 }
             ],
-            '/en/api/trading': [
-                {
-                    text: 'Spot Trading API',
-                    collapsed: false,
-                    items: [
-                        { text: 'POST Create Order', link: '/en/api/trading#place-order' },
-                        { text: 'GET All Orders', link: '/en/api/trading#get-orders' },
-                        { text: 'GET Open Orders', link: '/en/api/trading#open-orders' },
-                        { text: 'GET Order History', link: '/en/api/trading#order-history' },
-                        { text: 'GET Trade History', link: '/en/api/trading#trade-history' }
-                    ]
-                }
-            ],
+
             '/en/bybit/': [
                 {
                     text: 'Bybit Integration',
