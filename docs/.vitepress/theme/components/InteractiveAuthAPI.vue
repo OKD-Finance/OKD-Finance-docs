@@ -55,13 +55,13 @@
         <div class="endpoint-layout">
           <div class="endpoint-docs">
             <div class="method-header">
-              <span class="method-badge put">PUT</span>
-              <span class="endpoint-path">/user/flags</span>
+              <span class="method-badge post">POST</span>
+              <span class="endpoint-path">/auth/login</span>
             </div>
 
             <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Set Profile Flags</h3>
-              <p class="endpoint-description">Update user profile flags and preferences</p>
+              <h3 class="endpoint-title">📋 User Login</h3>
+              <p class="endpoint-description">Authenticate user with email and password</p>
             </div>
 
             <div class="api-section">
@@ -89,19 +89,14 @@
               <h4 class="section-title">⚙️ Body Parameters</h4>
               <div class="param-list">
                 <div class="param-item required">
-                  <code class="param-name">notifications</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Enable/disable notifications</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">marketing</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Enable/disable marketing emails</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">privacy</code>
+                  <code class="param-name">email</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Privacy level (public/private)</span>
+                  <span class="param-desc">User email address</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">password</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">User password</span>
                 </div>
               </div>
             </div>
@@ -119,11 +114,11 @@
                 <div v-show="activeCodeTab1 === 'cURL'" class="code-block-container">
                   <button @click="copyCodeToClipboard('curl', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>curl -X PUT &quot;https://develop.okd.finance/api/user/flags&quot; \
+                    <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/login&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;notifications&quot;:&quot;example&quot;,&quot;marketing&quot;:&quot;example&quot;,&quot;privacy&quot;:&quot;example&quot;}&#x27;</pre>
+  -d &#x27;{&quot;email&quot;:&quot;example&quot;,&quot;password&quot;:&quot;example&quot;}&#x27;</pre>
                   </div>
                 </div>
 
@@ -162,22 +157,12 @@
             <h4 class="testing-title">🚀 Live Testing</h4>
             <div class="test-section">
               <div class="form-group">
-                <label>Notifications</label>
-                <select v-model="testData1.notifications" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
+                <label>Email</label>
+                <input v-model="testData1.email" type="text" placeholder="example_email" class="test-input" />
               </div>
               <div class="form-group">
-                <label>Marketing</label>
-                <select v-model="testData1.marketing" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Privacy</label>
-                <input v-model="testData1.privacy" type="text" placeholder="example_privacy" class="test-input" />
+                <label>Password</label>
+                <input v-model="testData1.password" type="text" placeholder="example_password" class="test-input" />
               </div>
               <button @click="testEndpoint1" class="test-btn"
                 :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
@@ -209,13 +194,13 @@
         <div class="endpoint-layout">
           <div class="endpoint-docs">
             <div class="method-header">
-              <span class="method-badge patch">PATCH</span>
-              <span class="endpoint-path">/user/notifications</span>
+              <span class="method-badge post">POST</span>
+              <span class="endpoint-path">/auth/register</span>
             </div>
 
             <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Subscribe to Notifications</h3>
-              <p class="endpoint-description">Subscribe or unsubscribe from various notification types</p>
+              <h3 class="endpoint-title">📋 User Registration</h3>
+              <p class="endpoint-description">Register a new user account</p>
             </div>
 
             <div class="api-section">
@@ -244,18 +229,23 @@
               <div class="param-list">
                 <div class="param-item required">
                   <code class="param-name">email</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Email notifications</span>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">User email address</span>
                 </div>
                 <div class="param-item required">
-                  <code class="param-name">push</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Push notifications</span>
+                  <code class="param-name">password</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">User password</span>
                 </div>
                 <div class="param-item required">
-                  <code class="param-name">sms</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">SMS notifications</span>
+                  <code class="param-name">firstName</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">First name</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">lastName</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Last name</span>
                 </div>
               </div>
             </div>
@@ -273,11 +263,11 @@
                 <div v-show="activeCodeTab2 === 'cURL'" class="code-block-container">
                   <button @click="copyCodeToClipboard('curl', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>curl -X PATCH &quot;https://develop.okd.finance/api/user/notifications&quot; \
+                    <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/register&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;email&quot;:&quot;example&quot;,&quot;push&quot;:&quot;example&quot;,&quot;sms&quot;:&quot;example&quot;}&#x27;</pre>
+  -d &#x27;{&quot;email&quot;:&quot;example&quot;,&quot;password&quot;:&quot;example&quot;,&quot;firstName&quot;:&quot;example&quot;,&quot;lastName&quot;:&quot;example&quot;}&#x27;</pre>
                   </div>
                 </div>
 
@@ -317,24 +307,19 @@
             <div class="test-section">
               <div class="form-group">
                 <label>Email</label>
-                <select v-model="testData2.email" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
+                <input v-model="testData2.email" type="text" placeholder="example_email" class="test-input" />
               </div>
               <div class="form-group">
-                <label>Push</label>
-                <select v-model="testData2.push" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
+                <label>Password</label>
+                <input v-model="testData2.password" type="text" placeholder="example_password" class="test-input" />
               </div>
               <div class="form-group">
-                <label>Sms</label>
-                <select v-model="testData2.sms" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
+                <label>FirstName</label>
+                <input v-model="testData2.firstName" type="text" placeholder="example_firstName" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>LastName</label>
+                <input v-model="testData2.lastName" type="text" placeholder="example_lastName" class="test-input" />
               </div>
               <button @click="testEndpoint2" class="test-btn"
                 :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
@@ -366,13 +351,13 @@
         <div class="endpoint-layout">
           <div class="endpoint-docs">
             <div class="method-header">
-              <span class="method-badge patch">PATCH</span>
-              <span class="endpoint-path">/user/profile</span>
+              <span class="method-badge post">POST</span>
+              <span class="endpoint-path">/auth/logout</span>
             </div>
 
             <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Subscribe to Profile Events</h3>
-              <p class="endpoint-description">Subscribe to profile-related events and updates</p>
+              <h3 class="endpoint-title">📋 User Logout</h3>
+              <p class="endpoint-description">Logout current user session</p>
             </div>
 
             <div class="api-section">
@@ -396,21 +381,7 @@
               </div>
             </div>
 
-            <div class="api-section">
-              <h4 class="section-title">⚙️ Body Parameters</h4>
-              <div class="param-list">
-                <div class="param-item required">
-                  <code class="param-name">profileUpdates</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Profile update notifications</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">securityAlerts</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Security alert notifications</span>
-                </div>
-              </div>
-            </div>
+            
 
             <div class="api-section">
               <h4 class="section-title">📝 Example Request</h4>
@@ -425,11 +396,11 @@
                 <div v-show="activeCodeTab3 === 'cURL'" class="code-block-container">
                   <button @click="copyCodeToClipboard('curl', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>curl -X PATCH &quot;https://develop.okd.finance/api/user/profile&quot; \
+                    <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/logout&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;profileUpdates&quot;:&quot;example&quot;,&quot;securityAlerts&quot;:&quot;example&quot;}&#x27;</pre>
+  -d &#x27;{}&#x27;</pre>
                   </div>
                 </div>
 
@@ -467,20 +438,7 @@
           <div class="endpoint-testing">
             <h4 class="testing-title">🚀 Live Testing</h4>
             <div class="test-section">
-              <div class="form-group">
-                <label>ProfileUpdates</label>
-                <select v-model="testData3.profileUpdates" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>SecurityAlerts</label>
-                <select v-model="testData3.securityAlerts" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
-              </div>
+              
               <button @click="testEndpoint3" class="test-btn"
                 :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
                 {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
@@ -534,9 +492,9 @@ const activeCodeTab1 = ref('cURL')
 const activeCodeTab2 = ref('cURL')
 const activeCodeTab3 = ref('cURL')
 
-const testData1 = reactive({ notifications: true, marketing: true, privacy: 'example_privacy' })
-const testData2 = reactive({ email: true, push: true, sms: true })
-const testData3 = reactive({ profileUpdates: true, securityAlerts: true })
+const testData1 = reactive({ email: 'example_email', password: 'example_password' })
+const testData2 = reactive({ email: 'example_email', password: 'example_password', firstName: 'example_firstName', lastName: 'example_lastName' })
+const testData3 = reactive({  })
 
 
 
@@ -563,12 +521,11 @@ const testEndpoint1 = async () => {
     }
 
     const requestBody = {
-      notifications: testData1.notifications,
-      marketing: testData1.marketing,
-      privacy: testData1.privacy
+      email: testData1.email,
+      password: testData1.password
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/user/flags`
+    const fullUrl = `${authValues.apiBaseUrl}/auth/login`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
@@ -577,7 +534,7 @@ const testEndpoint1 = async () => {
     const bodyString = JSON.stringify(requestBody)
 
     const response = await fetch(fullUrl, {
-      method: 'PUT',
+      method: 'POST',
       headers: headers,
       body: bodyString
     })
@@ -587,7 +544,7 @@ const testEndpoint1 = async () => {
       status: `${response.status} ${response.statusText}`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `PUT ${fullUrl}`,
+      requestUrl: `POST ${fullUrl}`,
       headers: JSON.stringify(headers, null, 2),
       body: bodyString
     }
@@ -621,11 +578,12 @@ const testEndpoint2 = async () => {
 
     const requestBody = {
       email: testData2.email,
-      push: testData2.push,
-      sms: testData2.sms
+      password: testData2.password,
+      firstName: testData2.firstName,
+      lastName: testData2.lastName
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/user/notifications`
+    const fullUrl = `${authValues.apiBaseUrl}/auth/register`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
@@ -634,7 +592,7 @@ const testEndpoint2 = async () => {
     const bodyString = JSON.stringify(requestBody)
 
     const response = await fetch(fullUrl, {
-      method: 'PATCH',
+      method: 'POST',
       headers: headers,
       body: bodyString
     })
@@ -644,7 +602,7 @@ const testEndpoint2 = async () => {
       status: `${response.status} ${response.statusText}`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `PATCH ${fullUrl}`,
+      requestUrl: `POST ${fullUrl}`,
       headers: JSON.stringify(headers, null, 2),
       body: bodyString
     }
@@ -677,11 +635,10 @@ const testEndpoint3 = async () => {
     }
 
     const requestBody = {
-      profileUpdates: testData3.profileUpdates,
-      securityAlerts: testData3.securityAlerts
+      
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/user/profile`
+    const fullUrl = `${authValues.apiBaseUrl}/auth/logout`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
@@ -690,7 +647,7 @@ const testEndpoint3 = async () => {
     const bodyString = JSON.stringify(requestBody)
 
     const response = await fetch(fullUrl, {
-      method: 'PATCH',
+      method: 'POST',
       headers: headers,
       body: bodyString
     })
@@ -700,7 +657,7 @@ const testEndpoint3 = async () => {
       status: `${response.status} ${response.statusText}`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `PATCH ${fullUrl}`,
+      requestUrl: `POST ${fullUrl}`,
       headers: JSON.stringify(headers, null, 2),
       body: bodyString
     }
@@ -755,21 +712,21 @@ const copyCodeToClipboard = (lang, endpointNum) => {
 
 const codeExamples = {
   curl: {
-    1: `curl -X PUT "https://develop.okd.finance/api/user/flags" \\
+    1: `curl -X POST "https://develop.okd.finance/api/auth/login" \\
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
   -H "Content-Type: application/json" \\
   -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"notifications":"example","marketing":"example","privacy":"example"}'`,
-    2: `curl -X PATCH "https://develop.okd.finance/api/user/notifications" \\
+  -d '{"email":"example","password":"example"}'`,
+    2: `curl -X POST "https://develop.okd.finance/api/auth/register" \\
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
   -H "Content-Type: application/json" \\
   -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"email":"example","push":"example","sms":"example"}'`,
-    3: `curl -X PATCH "https://develop.okd.finance/api/user/profile" \\
+  -d '{"email":"example","password":"example","firstName":"example","lastName":"example"}'`,
+    3: `curl -X POST "https://develop.okd.finance/api/auth/logout" \\
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
   -H "Content-Type: application/json" \\
   -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"profileUpdates":"example","securityAlerts":"example"}'`
+  -d '{}'`
   },
   go: {
     1: `package main
@@ -782,15 +739,15 @@ import (
     "net/http"
 )
 
-type SetProfileFlagsRequest struct {
-    Notifications string \`json:"notifications"\`\n    Marketing string \`json:"marketing"\`\n    Privacy string \`json:"privacy"\`
+type UserLoginRequest struct {
+    Email string \`json:"email"\`\n    Password string \`json:"password"\`
 }
 
-func setprofileflags() error {
-    url := "https://develop.okd.finance/api/user/flags"
+func userlogin() error {
+    url := "https://develop.okd.finance/api/auth/login"
     
-    requestData := SetProfileFlagsRequest{
-        Notifications: "example",\n        Marketing: "example",\n        Privacy: "example",
+    requestData := UserLoginRequest{
+        Email: "example",\n        Password: "example",
     }
     
     jsonData, err := json.Marshal(requestData)
@@ -798,7 +755,7 @@ func setprofileflags() error {
         return err
     }
     
-    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
     if err != nil {
         return err
     }
@@ -824,7 +781,7 @@ func setprofileflags() error {
 }
 
 func main() {
-    if err := setprofileflags(); err != nil {
+    if err := userlogin(); err != nil {
         fmt.Printf("Error: %v\\n", err)
     }
 }`,
@@ -838,15 +795,15 @@ import (
     "net/http"
 )
 
-type SubscribetoNotificationsRequest struct {
-    Email string \`json:"email"\`\n    Push string \`json:"push"\`\n    Sms string \`json:"sms"\`
+type UserRegistrationRequest struct {
+    Email string \`json:"email"\`\n    Password string \`json:"password"\`\n    FirstName string \`json:"firstName"\`\n    LastName string \`json:"lastName"\`
 }
 
-func subscribetonotifications() error {
-    url := "https://develop.okd.finance/api/user/notifications"
+func userregistration() error {
+    url := "https://develop.okd.finance/api/auth/register"
     
-    requestData := SubscribetoNotificationsRequest{
-        Email: "example",\n        Push: "example",\n        Sms: "example",
+    requestData := UserRegistrationRequest{
+        Email: "example",\n        Password: "example",\n        FirstName: "example",\n        LastName: "example",
     }
     
     jsonData, err := json.Marshal(requestData)
@@ -854,7 +811,7 @@ func subscribetonotifications() error {
         return err
     }
     
-    req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(jsonData))
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
     if err != nil {
         return err
     }
@@ -880,7 +837,7 @@ func subscribetonotifications() error {
 }
 
 func main() {
-    if err := subscribetonotifications(); err != nil {
+    if err := userregistration(); err != nil {
         fmt.Printf("Error: %v\\n", err)
     }
 }`,
@@ -894,15 +851,15 @@ import (
     "net/http"
 )
 
-type SubscribetoProfileEventsRequest struct {
-    ProfileUpdates string \`json:"profileUpdates"\`\n    SecurityAlerts string \`json:"securityAlerts"\`
+type UserLogoutRequest struct {
+
 }
 
-func subscribetoprofileevents() error {
-    url := "https://develop.okd.finance/api/user/profile"
+func userlogout() error {
+    url := "https://develop.okd.finance/api/auth/logout"
     
-    requestData := SubscribetoProfileEventsRequest{
-        ProfileUpdates: "example",\n        SecurityAlerts: "example",
+    requestData := UserLogoutRequest{
+
     }
     
     jsonData, err := json.Marshal(requestData)
@@ -910,7 +867,7 @@ func subscribetoprofileevents() error {
         return err
     }
     
-    req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(jsonData))
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
     if err != nil {
         return err
     }
@@ -936,23 +893,23 @@ func subscribetoprofileevents() error {
 }
 
 func main() {
-    if err := subscribetoprofileevents(); err != nil {
+    if err := userlogout(); err != nil {
         fmt.Printf("Error: %v\\n", err)
     }
 }`
   },
   typescript: {
-    1: `interface SetProfileFlagsRequest {
-  notifications: boolean;\n  marketing: boolean;\n  privacy: string;
+    1: `interface UserLoginRequest {
+  email: string;\n  password: string;
 }
 
-async function setprofileflags(
+async function userlogin(
   baseUrl: string,
   accessToken: string,
-  data: SetProfileFlagsRequest
+  data: UserLoginRequest
 ): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/user/flags\`, {
-    method: 'PUT',
+  const response = await fetch(\`\${baseUrl}/auth/login\`, {
+    method: 'POST',
     headers: {
       'Authorization': \`Bearer \${accessToken}\`,
       'Content-Type': 'application/json',
@@ -971,11 +928,11 @@ async function setprofileflags(
 // Usage example
 async function main() {
   try {
-    const result = await setprofileflags(
+    const result = await userlogin(
       'https://develop.okd.finance/api',
       'YOUR_ACCESS_TOKEN',
       {
-        notifications: true,\n        marketing: true,\n        privacy: "example",
+        email: "example",\n        password: "example",
       }
     );
     console.log('Success:', result);
@@ -985,17 +942,17 @@ async function main() {
 }
 
 main();`,
-    2: `interface SubscribetoNotificationsRequest {
-  email: boolean;\n  push: boolean;\n  sms: boolean;
+    2: `interface UserRegistrationRequest {
+  email: string;\n  password: string;\n  firstName: string;\n  lastName: string;
 }
 
-async function subscribetonotifications(
+async function userregistration(
   baseUrl: string,
   accessToken: string,
-  data: SubscribetoNotificationsRequest
+  data: UserRegistrationRequest
 ): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/user/notifications\`, {
-    method: 'PATCH',
+  const response = await fetch(\`\${baseUrl}/auth/register\`, {
+    method: 'POST',
     headers: {
       'Authorization': \`Bearer \${accessToken}\`,
       'Content-Type': 'application/json',
@@ -1014,11 +971,11 @@ async function subscribetonotifications(
 // Usage example
 async function main() {
   try {
-    const result = await subscribetonotifications(
+    const result = await userregistration(
       'https://develop.okd.finance/api',
       'YOUR_ACCESS_TOKEN',
       {
-        email: true,\n        push: true,\n        sms: true,
+        email: "example",\n        password: "example",\n        firstName: "example",\n        lastName: "example",
       }
     );
     console.log('Success:', result);
@@ -1028,17 +985,17 @@ async function main() {
 }
 
 main();`,
-    3: `interface SubscribetoProfileEventsRequest {
-  profileUpdates: boolean;\n  securityAlerts: boolean;
+    3: `interface UserLogoutRequest {
+
 }
 
-async function subscribetoprofileevents(
+async function userlogout(
   baseUrl: string,
   accessToken: string,
-  data: SubscribetoProfileEventsRequest
+  data: UserLogoutRequest
 ): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/user/profile\`, {
-    method: 'PATCH',
+  const response = await fetch(\`\${baseUrl}/auth/logout\`, {
+    method: 'POST',
     headers: {
       'Authorization': \`Bearer \${accessToken}\`,
       'Content-Type': 'application/json',
@@ -1057,11 +1014,11 @@ async function subscribetoprofileevents(
 // Usage example
 async function main() {
   try {
-    const result = await subscribetoprofileevents(
+    const result = await userlogout(
       'https://develop.okd.finance/api',
       'YOUR_ACCESS_TOKEN',
       {
-        profileUpdates: true,\n        securityAlerts: true,
+
       }
     );
     console.log('Success:', result);
@@ -1075,8 +1032,8 @@ main();`
   php: {
     1: `<?php
 
-function setprofileflags($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/user/flags';
+function userlogin($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/login';
     
     $headers = [
         'Authorization: Bearer ' . $accessToken,
@@ -1087,7 +1044,7 @@ function setprofileflags($baseUrl, $accessToken, $data) {
     $ch = curl_init();
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS => json_encode($data),
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_RETURNTRANSFER => true,
@@ -1119,10 +1076,10 @@ function setprofileflags($baseUrl, $accessToken, $data) {
 
 try {
     $data = [
-        'notifications' => true,\n        'marketing' => true,\n        'privacy' => 'example',
+        'email' => 'example',\n        'password' => 'example',
     ];
 
-    $result = setprofileflags(
+    $result = userlogin(
         'https://develop.okd.finance/api',
         'YOUR_ACCESS_TOKEN',
         $data
@@ -1137,8 +1094,8 @@ try {
 ?>`,
     2: `<?php
 
-function subscribetonotifications($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/user/notifications';
+function userregistration($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/register';
     
     $headers = [
         'Authorization: Bearer ' . $accessToken,
@@ -1149,7 +1106,7 @@ function subscribetonotifications($baseUrl, $accessToken, $data) {
     $ch = curl_init();
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'PATCH',
+        CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS => json_encode($data),
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_RETURNTRANSFER => true,
@@ -1181,10 +1138,10 @@ function subscribetonotifications($baseUrl, $accessToken, $data) {
 
 try {
     $data = [
-        'email' => true,\n        'push' => true,\n        'sms' => true,
+        'email' => 'example',\n        'password' => 'example',\n        'firstName' => 'example',\n        'lastName' => 'example',
     ];
 
-    $result = subscribetonotifications(
+    $result = userregistration(
         'https://develop.okd.finance/api',
         'YOUR_ACCESS_TOKEN',
         $data
@@ -1199,8 +1156,8 @@ try {
 ?>`,
     3: `<?php
 
-function subscribetoprofileevents($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/user/profile';
+function userlogout($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/logout';
     
     $headers = [
         'Authorization: Bearer ' . $accessToken,
@@ -1211,7 +1168,7 @@ function subscribetoprofileevents($baseUrl, $accessToken, $data) {
     $ch = curl_init();
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'PATCH',
+        CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS => json_encode($data),
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_RETURNTRANSFER => true,
@@ -1243,10 +1200,10 @@ function subscribetoprofileevents($baseUrl, $accessToken, $data) {
 
 try {
     $data = [
-        'profileUpdates' => true,\n        'securityAlerts' => true,
+
     ];
 
-    $result = subscribetoprofileevents(
+    $result = userlogout(
         'https://develop.okd.finance/api',
         'YOUR_ACCESS_TOKEN',
         $data
@@ -1266,13 +1223,13 @@ import json
 from typing import Dict, Any
 
 
-def setprofileflags(
+def userlogin(
     base_url: str,
     access_token: str,
     data: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Update user profile flags and preferences"""
-    url = f"{base_url}/user/flags"
+    """Authenticate user with email and password"""
+    url = f"{base_url}/auth/login"
     
     headers = {
         'Authorization': f'Bearer {access_token}',
@@ -1282,7 +1239,7 @@ def setprofileflags(
     
     try:
         response = requests.request(
-            'PUT',
+            'POST',
             url,
             headers=headers,
             json=data,
@@ -1298,11 +1255,11 @@ def setprofileflags(
 
 def main():
     data = {
-        'notifications': True,\n        'marketing': True,\n        'privacy': 'example',
+        'email': 'example',\n        'password': 'example',
     }
     
     try:
-        result = setprofileflags(
+        result = userlogin(
             'https://develop.okd.finance/api',
             'YOUR_ACCESS_TOKEN',
             data
@@ -1321,13 +1278,13 @@ import json
 from typing import Dict, Any
 
 
-def subscribetonotifications(
+def userregistration(
     base_url: str,
     access_token: str,
     data: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Subscribe or unsubscribe from various notification types"""
-    url = f"{base_url}/user/notifications"
+    """Register a new user account"""
+    url = f"{base_url}/auth/register"
     
     headers = {
         'Authorization': f'Bearer {access_token}',
@@ -1337,7 +1294,7 @@ def subscribetonotifications(
     
     try:
         response = requests.request(
-            'PATCH',
+            'POST',
             url,
             headers=headers,
             json=data,
@@ -1353,11 +1310,11 @@ def subscribetonotifications(
 
 def main():
     data = {
-        'email': True,\n        'push': True,\n        'sms': True,
+        'email': 'example',\n        'password': 'example',\n        'firstName': 'example',\n        'lastName': 'example',
     }
     
     try:
-        result = subscribetonotifications(
+        result = userregistration(
             'https://develop.okd.finance/api',
             'YOUR_ACCESS_TOKEN',
             data
@@ -1376,13 +1333,13 @@ import json
 from typing import Dict, Any
 
 
-def subscribetoprofileevents(
+def userlogout(
     base_url: str,
     access_token: str,
     data: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Subscribe to profile-related events and updates"""
-    url = f"{base_url}/user/profile"
+    """Logout current user session"""
+    url = f"{base_url}/auth/logout"
     
     headers = {
         'Authorization': f'Bearer {access_token}',
@@ -1392,7 +1349,7 @@ def subscribetoprofileevents(
     
     try:
         response = requests.request(
-            'PATCH',
+            'POST',
             url,
             headers=headers,
             json=data,
@@ -1408,11 +1365,11 @@ def subscribetoprofileevents(
 
 def main():
     data = {
-        'profileUpdates': True,\n        'securityAlerts': True,
+
     }
     
     try:
-        result = subscribetoprofileevents(
+        result = userlogout(
             'https://develop.okd.finance/api',
             'YOUR_ACCESS_TOKEN',
             data

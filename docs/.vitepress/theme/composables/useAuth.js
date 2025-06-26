@@ -1,4 +1,4 @@
-import { ref, reactive, watch, toRef } from 'vue'
+import { reactive, watch, toRef } from 'vue'
 
 // Глобальное состояние аутентификации
 const globalAuthState = reactive({
@@ -40,6 +40,7 @@ function loadAuthFromStorage() {
             globalAuthState.isHeaderCollapsed = false
         }
     } catch (error) {
+        // eslint-disable-next-line no-console
         console.warn('Failed to load auth from localStorage:', error)
         // В случае ошибки блок открыт по умолчанию
         globalAuthState.isHeaderCollapsed = false
@@ -57,6 +58,7 @@ function saveAuthToStorage() {
         }
         localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave))
     } catch (error) {
+        // eslint-disable-next-line no-console
         console.warn('Failed to save auth to localStorage:', error)
     }
 }

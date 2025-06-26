@@ -11,8 +11,8 @@ function escapeHtml(text) {
 }
 
 // Generate code examples for all 5 languages
-function generateCodeExamples(endpoint, method, params, endpointId) {
-  const functionName = `${method}${endpoint.replace(/[\/\-]/g, '')}`;
+function generateCodeExamples(endpoint, method, params) {
+  const functionName = `${method}${endpoint.replace(/[/-]/g, '')}`;
 
   // Generate example data
   let exampleData = {};
@@ -444,7 +444,7 @@ ${formFields}
       <div class="endpoints-info">
         <h3>📊 Available Endpoints (${endpoints.length})</h3>
         <ul>
-${endpoints.map((endpoint, index) => `          <li><strong>${endpoint.method.toUpperCase()}</strong> ${endpoint.path} - ${endpoint.summary}</li>`).join('\n')}
+${endpoints.map((endpoint) => `          <li><strong>${endpoint.method.toUpperCase()}</strong> ${endpoint.path} - ${endpoint.summary}</li>`).join('\n')}
         </ul>
       </div>
 
