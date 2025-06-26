@@ -1,0 +1,20 @@
+# Swagger Generator Configuration
+
+# Swagger JSON URL (required)
+SWAGGER_URL=https://develop.okd.finance/api/swagger/swagger.json
+
+# API Base URL for examples and testing (required)
+API_BASE_URL=https://develop.okd.finance/api
+
+# Output directories (optional - defaults provided)
+COMPONENTS_DIR=./docs/.vitepress/theme/components
+DOCS_DIR=./docs/en/api
+
+# Generator options (optional)
+GENERATE_CODE_EXAMPLES=true
+GENERATE_TESTING_FORMS=true
+INCLUDE_AUTH_HEADER=true
+
+# Development options
+DEBUG=false
+VERBOSE=true 
