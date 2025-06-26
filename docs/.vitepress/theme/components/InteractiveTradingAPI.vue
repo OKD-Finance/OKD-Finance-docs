@@ -114,36 +114,260 @@
 
             <div class="api-section">
               <h4 class="section-title">📝 Example Request</h4>
-              <pre class="code-block">POST /spot/orders
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-Content-Type: application/json
-Fingerprint: 1358cd229b6bceb25941e99f4228997f
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button 
+                    v-for="lang in codeLangs" 
+                    :key="lang" 
+                    @click="activeCodeTab1 = lang"
+                    :class="['code-tab', { active: activeCodeTab1 === lang }]"
+                  >
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab1 === 'cURL'" class="code-block"># Place a trading order
+curl -X POST "https://develop.okd.finance/api/spot/orders" \
+     -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+     -H "Content-Type: application/json" \
+     -H "Fingerprint: 1358cd229b6bceb25941e99f4228997f" \
+     -d '{
+       "category": "spot",
+       "symbol": "BNBETH",
+       "side": "Buy",
+       "orderType": "Limit",
+       "qty": "2",
+       "price": "0.2"
+     }'</div>
 
-{
-  "category": "spot",
-  "symbol": "BNBETH",
-  "side": "Buy",
-  "orderType": "Limit",
-  "qty": "2",
-  "price": "0.2"
-}</pre>
+                <div v-show="activeCodeTab1 === 'Go'" class="code-block">// Place Order - Go Example
+package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type OrderRequest struct {
+    Category  string `json:"category"`
+    Symbol    string `json:"symbol"`
+    Side      string `json:"side"`  
+    OrderType string `json:"orderType"`
+    Qty       string `json:"qty"`
+    Price     string `json:"price"`
+}
+
+func placeOrder() error {
+    url := "https://develop.okd.finance/api/spot/orders"
+    
+    orderData := OrderRequest{
+        Category:  "spot",
+        Symbol:    "BNBETH",
+        Side:      "Buy",
+        OrderType: "Limit",
+        Qty:       "2",
+        Price:     "0.2",
+    }
+    
+    jsonData, _ := json.Marshal(orderData)
+    req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "1358cd229b6bceb25941e99f4228997f")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, _ := io.ReadAll(resp.Body)
+    fmt.Printf("Response: %s\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := placeOrder(); err != nil {
+        fmt.Printf("Error: %v\n", err)
+    }
+}</div>
+
+                <div v-show="activeCodeTab1 === 'TypeScript'" class="code-block">// Place Order - TypeScript Example
+
+interface OrderRequest {
+  category: 'spot';
+  symbol: string;
+  side: 'Buy' | 'Sell';
+  orderType: 'Market' | 'Limit';
+  qty: string;
+  price: string;
+}
+
+interface OrderResponse {
+  orderId: string;
+  orderLinkId: string;
+}
+
+async function placeOrder(
+  baseUrl: string,
+  accessToken: string
+): Promise&lt;OrderResponse&gt; {
+  const orderData: OrderRequest = {
+    category: 'spot',
+    symbol: 'BNBETH',
+    side: 'Buy',
+    orderType: 'Limit',
+    qty: '2',
+    price: '0.2'
+  };
+
+  const response = await fetch(`${baseUrl}/spot/orders`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+    },
+    body: JSON.stringify(orderData)
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return await response.json();
+}
+
+// Usage
+async function main() {
+  try {
+    const result = await placeOrder(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN'
+    );
+    console.log('Order placed:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();</div>
+
+                <div v-show="activeCodeTab1 === 'PHP'" class="code-block">&lt;?php
+// Place Order - PHP Example
+
+$url = 'https://develop.okd.finance/api/spot/orders';
+$accessToken = 'YOUR_ACCESS_TOKEN';
+
+$orderData = [
+    'category' => 'spot',
+    'symbol' => 'BNBETH',
+    'side' => 'Buy',
+    'orderType' => 'Limit',
+    'qty' => '2',
+    'price' => '0.2'
+];
+
+$headers = [
+    'Authorization: Bearer ' . $accessToken,
+    'Content-Type: application/json',
+    'Fingerprint: 1358cd229b6bceb25941e99f4228997f'
+];
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($orderData));
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+if ($httpCode === 200) {
+    $data = json_decode($response, true);
+    echo "✅ Order placed successfully!\n";
+    echo "Order ID: " . $data['orderId'] . "\n";
+    echo "Order Link ID: " . $data['orderLinkId'] . "\n";
+} else {
+    echo "❌ Error: " . $response . "\n";
+}
+
+?&gt;</div>
+
+                <div v-show="activeCodeTab1 === 'Python'" class="code-block"># Place Order - Python Example
+import requests
+import json
+
+def place_order(api_base_url: str, access_token: str):
+    """Place a trading order using the API"""
+    
+    url = f"{api_base_url}/spot/orders"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+    }
+    
+    order_data = {
+        'category': 'spot',
+        'symbol': 'BNBETH',
+        'side': 'Buy',
+        'orderType': 'Limit',
+        'qty': '2',
+        'price': '0.2'
+    }
+    
+    try:
+        response = requests.post(
+            url,
+            headers=headers, 
+            json=order_data,
+            timeout=30
+        )
+        response.raise_for_status()
+        
+        result = response.json()
+        print(f"✅ Order placed successfully!")
+        print(f"📋 Order ID: {result['orderId']}")
+        print(f"🔗 Order Link ID: {result['orderLinkId']}")
+        return result
+        
+    except requests.exceptions.RequestException as e:
+        print(f"❌ Error placing order: {e}")
+        return None
+
+# Usage
+api_url = "https://develop.okd.finance/api"
+token = "YOUR_ACCESS_TOKEN"
+place_order(api_url, token)</div>
+              </div>
             </div>
 
             <div class="api-section">
               <h4 class="section-title">✅ Response Examples</h4>
               <div class="response-example">
                 <div class="response-status success">200 OK - Success</div>
-                <pre class="code-block">{
-  "orderId": "1980690610151328512",
-  "orderLinkId": "1980690610151328513"
+                <pre class="code-block"># Successful order placement
+{
+  "orderId": "1980690610151328512",        // Unique order identifier
+  "orderLinkId": "1980690610151328513"     // Linked order ID for tracking
 }</pre>
               </div>
 
               <div class="response-example">
                 <div class="response-status error">400 Bad Request - Error</div>
-                <pre class="code-block">{
-  "code": 400591,
-  "message": "unknown category"
+                <pre class="code-block"># Error response example
+{
+  "code": 400591,                          // Error code
+  "message": "unknown category"            // Error description
 }</pre>
               </div>
             </div>
@@ -268,54 +492,282 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f
 
             <div class="api-section">
               <h4 class="section-title">📝 Example Request</h4>
-              <pre class="code-block">GET /spot/orders/open?category=spot&symbol=BNBETH&limit=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button 
+                    v-for="lang in codeLangs" 
+                    :key="lang" 
+                    @click="activeCodeTab2 = lang"
+                    :class="['code-tab', { active: activeCodeTab2 === lang }]"
+                  >
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab2 === 'cURL'" class="code-block"># Get open orders with filtering
+curl -X GET "https://develop.okd.finance/api/spot/orders/open?category=spot&symbol=BNBETH&limit=10" \
+     -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+     -H "Fingerprint: 1358cd229b6bceb25941e99f4228997f"</div>
+
+                <div v-show="activeCodeTab2 === 'Go'" class="code-block">// Get Orders - Go Example
+package main
+
+import (
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+    "net/url"
+)
+
+func getOrders() error {
+    baseURL := "https://develop.okd.finance/api/spot/orders/open"
+    
+    // Build query parameters
+    params := url.Values{}
+    params.Add("category", "spot")
+    params.Add("symbol", "BNBETH")
+    params.Add("limit", "10")
+    
+    fullURL := baseURL + "?" + params.Encode()
+    
+    req, _ := http.NewRequest("GET", fullURL, nil)
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Fingerprint", "1358cd229b6bceb25941e99f4228997f")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, _ := io.ReadAll(resp.Body)
+    
+    var result map[string]interface{}
+    json.Unmarshal(body, &result)
+    
+    fmt.Printf("Orders retrieved: %v\n", result)
+    return nil
+}
+
+func main() {
+    if err := getOrders(); err != nil {
+        fmt.Printf("Error: %v\n", err)
+    }
+}</div>
+
+                <div v-show="activeCodeTab2 === 'TypeScript'" class="code-block">// Get Orders - TypeScript Example
+
+interface OrdersParams {
+  category: 'spot';
+  symbol?: string;
+  limit?: number;
+}
+
+interface Order {
+  orderId: string;
+  symbol: string;
+  side: string;
+  price: string;
+  qty: string;
+  orderStatus: string;
+}
+
+interface OrdersResponse {
+  category: string;
+  list: Order[];
+  nextPageCursor?: string;
+}
+
+async function getOrders(
+  baseUrl: string,
+  accessToken: string,
+  params: OrdersParams
+): Promise&lt;OrdersResponse&gt; {
+  const queryParams = new URLSearchParams();
+  queryParams.append('category', params.category);
+  
+  if (params.symbol) {
+    queryParams.append('symbol', params.symbol);
+  }
+  
+  if (params.limit) {
+    queryParams.append('limit', params.limit.toString());
+  }
+
+  const url = `${baseUrl}/spot/orders/open?${queryParams.toString()}`;
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return await response.json();
+}
+
+// Usage
+async function main() {
+  try {
+    const result = await getOrders(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      { category: 'spot', symbol: 'BNBETH', limit: 10 }
+    );
+    console.log('Orders:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();</div>
+
+                <div v-show="activeCodeTab2 === 'PHP'" class="code-block">&lt;?php
+// Get Orders - PHP Example
+
+$baseUrl = 'https://develop.okd.finance/api/spot/orders/open';
+$accessToken = 'YOUR_ACCESS_TOKEN';
+
+// Build query parameters
+$params = [
+    'category' => 'spot',
+    'symbol' => 'BNBETH',
+    'limit' => 10
+];
+
+$url = $baseUrl . '?' . http_build_query($params);
+
+$headers = [
+    'Authorization: Bearer ' . $accessToken,
+    'Fingerprint: 1358cd229b6bceb25941e99f4228997f'
+];
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+if ($httpCode === 200) {
+    $data = json_decode($response, true);
+    echo "✅ Orders retrieved successfully!\n";
+    echo "Category: " . $data['category'] . "\n";
+    echo "Total orders: " . count($data['list']) . "\n";
+    
+    foreach ($data['list'] as $order) {
+        echo "Order ID: " . $order['orderId'] . "\n";
+        echo "Symbol: " . $order['symbol'] . "\n";
+        echo "Side: " . $order['side'] . "\n";
+        echo "Price: " . $order['price'] . "\n";
+        echo "---\n";
+    }
+} else {
+    echo "❌ Error: " . $response . "\n";
+}
+
+?&gt;</div>
+
+                <div v-show="activeCodeTab2 === 'Python'" class="code-block"># Get Orders - Python Example
+import requests
+
+def get_orders(api_base_url: str, access_token: str):
+    """Get open orders from the API"""
+    
+    url = f"{api_base_url}/spot/orders/open"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+    }
+    
+    params = {
+        'category': 'spot',
+        'symbol': 'BNBETH',
+        'limit': 10
+    }
+    
+    try:
+        response = requests.get(
+            url,
+            headers=headers,
+            params=params,
+            timeout=30
+        )
+        response.raise_for_status()
+        
+        result = response.json()
+        print(f"✅ Orders retrieved successfully!")
+        print(f"📊 Category: {result['category']}")
+        print(f"📋 Total orders: {len(result['list'])}")
+        
+        for i, order in enumerate(result['list'], 1):
+            print(f"\n📋 Order #{i}:")
+            print(f"   ID: {order['orderId']}")
+            print(f"   Symbol: {order['symbol']}")
+            print(f"   Side: {order['side']}")
+            print(f"   Price: {order['price']}")
+            print(f"   Quantity: {order['qty']}")
+            print(f"   Status: {order['orderStatus']}")
+        
+        return result
+        
+    except requests.exceptions.RequestException as e:
+        print(f"❌ Error getting orders: {e}")
+        return None
+
+# Usage
+api_url = "https://develop.okd.finance/api"
+token = "YOUR_ACCESS_TOKEN"
+get_orders(api_url, token)</div>
+              </div>
             </div>
 
             <div class="api-section">
               <h4 class="section-title">✅ Response Examples</h4>
               <div class="response-example">
                 <div class="response-status success">200 OK - Success</div>
-                <pre class="code-block">{
-  "category": "spot",
-  "nextPageCursor": "1980696465315826432%3A1750853418446%2C1980675399004556032%3A1750850907146",
-  "list": [
+                <pre class="code-block"># Successful orders retrieval
+{
+  "category": "spot",                                     // Trading category
+  "nextPageCursor": "1980696465315826432%3A1750853418446...", // Pagination cursor
+  "list": [                                               // Array of orders
     {
-      "orderId": "1980696465315826432",
-      "orderLinkId": "1980696465315826433",
-      "blockTradeId": "",
-      "symbol": "BNBETH",
-      "price": "0.2",
-      "qty": "1.00",
-      "side": "Buy",
-      "isLeverage": "0",
-      "positionIdx": 0,
-      "orderStatus": "New",
-      "createType": "",
-      "cancelType": "UNKNOWN",
-      "rejectReason": "EC_NoError",
-      "avgPrice": "0.0",
-      "leavesQty": "1",
-      "leavesValue": "0.200",
-      "cumExecQty": "0",
-      "cumExecValue": "0.000",
-      "cumExecFee": "0",
-      "timeInForce": "GTC",
-      "orderType": "Limit",
-      "triggerPrice": "0.0",
-      "takeProfit": "0",
-      "stopLoss": "0",
-      "basePrice": "0.2",
-      "reduceOnly": false,
-      "closeOnTrigger": false,
-      "smpType": "None",
-      "smpGroup": 0,
-      "smpOrderId": "",
-      "createdTime": "1750853418446",
-      "updatedTime": "1750853418450",
-      "baseCoin": "BNB",
-      "quoteCoin": "ETH"
+      // Order identification
+      "orderId": "1980696465315826432",                   // Unique order ID
+      "orderLinkId": "1980696465315826433",               // Client order ID
+      "symbol": "BNBETH",                                 // Trading pair
+      
+      // Order details  
+      "price": "0.2",                                     // Order price
+      "qty": "1.00",                                      // Order quantity
+      "side": "Buy",                                      // Buy or Sell
+      "orderType": "Limit",                               // Order type
+      "orderStatus": "New",                               // Current status
+      "timeInForce": "GTC",                               // Time in force
+      
+      // Execution details
+      "avgPrice": "0.0",                                  // Average executed price
+      "leavesQty": "1",                                   // Remaining quantity
+      "cumExecQty": "0",                                  // Executed quantity
+      "cumExecFee": "0",                                  // Total fees paid
+      
+      // Trading pair coins
+      "baseCoin": "BNB",                                  // Base currency
+      "quoteCoin": "ETH",                                 // Quote currency
+      
+      // Timestamps (milliseconds)
+      "createdTime": "1750853418446",                     // Order created
+      "updatedTime": "1750853418450"                      // Last updated
     }
   ]
 }</pre>
@@ -323,9 +775,10 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f</pre>
 
               <div class="response-example">
                 <div class="response-status error">400 Bad Request - Error</div>
-                <pre class="code-block">{
-  "code": 400591,
-  "message": "unknown category"
+                <pre class="code-block"># Error response example
+{
+  "code": 400591,                          // Error code
+  "message": "unknown category"            // Error description
 }</pre>
               </div>
             </div>
@@ -387,6 +840,11 @@ import { ref, reactive } from 'vue'
 const apiToken = ref('')
 const showToken = ref(false)
 const apiBaseUrl = ref('https://develop.okd.finance/api')
+
+// Code examples tabs
+const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
+const activeCodeTab1 = ref('cURL')
+const activeCodeTab2 = ref('cURL')
 
 const orderData = reactive({
   category: 'spot',
@@ -836,6 +1294,47 @@ const copyToClipboard = (text, event) => {
   overflow-x: auto;
   margin: 1rem 0;
   border: 1px solid var(--vp-c-border);
+  white-space: pre-wrap;
+}
+
+/* Code Examples with Tabs */
+.code-examples {
+  margin: 1rem 0;
+}
+
+.code-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0;
+  border-bottom: 2px solid var(--vp-c-border);
+  padding-bottom: 0.5rem;
+}
+
+.code-tab {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+  cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid var(--vp-c-border);
+  border-bottom: none;
+}
+
+.code-tab:hover {
+  background: var(--vp-c-bg-mute);
+  color: var(--vp-c-text-1);
+}
+
+.code-tab.active {
+  background: var(--vp-c-bg);
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+  font-weight: 600;
 }
 
 /* Response Examples */
@@ -1101,6 +1600,22 @@ const copyToClipboard = (text, event) => {
   
   .endpoint-layout {
     gap: 1.5rem;
+  }
+
+  .code-tabs {
+    gap: 0.125rem;
+    flex-wrap: wrap;
+  }
+
+  .code-tab {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .code-block {
+    font-size: 0.85rem;
+    padding: 1rem;
   }
 }
 </style> 
