@@ -1512,7 +1512,11 @@ if __name__ == "__main__":
     const apiNameLower = apiName.toLowerCase().replace(/\s+/g, '-').replace(/-api$/, '');
     const fileName = apiNameLower === 'user' ? 'users' : apiNameLower;
 
-    const markdownPage = `# ${apiName}
+    const markdownPage = `---
+layout: page
+---
+
+# ${apiName}
 
 <script setup>
 import ${componentName} from '../../.vitepress/theme/components/${componentName}.vue'
