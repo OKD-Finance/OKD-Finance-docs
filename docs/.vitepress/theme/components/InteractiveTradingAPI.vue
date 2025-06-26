@@ -39,12 +39,9 @@
       </div>
       <div class="status-row">
         <div v-if="getRawValues().apiBaseUrl" class="url-status">🌐 API: {{ getRawValues().apiBaseUrl }}</div>
-        <div v-if="getRawValues().apiToken" class="token-status">✅ Token configured ({{ getRawValues().apiToken.length
-          }} chars)</div>
-        <div v-if="getRawValues().apiFingerprint" class="fingerprint-status">🔐 Fingerprint configured ({{ getRawValues().apiFingerprint.length
-          }} chars)</div>
-        <button v-if="getRawValues().apiToken || getRawValues().apiFingerprint" @click="clearAuth" class="clear-auth-btn"
-          title="Clear authentication data">
+        <div v-if="getRawValues().apiToken" class="token-status">✅ Token configured ({{ getRawValues().apiToken.length }} chars)</div>
+        <div v-if="getRawValues().apiFingerprint" class="fingerprint-status">🔐 Fingerprint configured ({{ getRawValues().apiFingerprint.length }} chars)</div>
+        <button v-if="getRawValues().apiToken || getRawValues().apiFingerprint" @click="clearAuth" class="clear-auth-btn" title="Clear authentication data">
           🗑️ Clear Auth
         </button>
       </div>
@@ -53,21 +50,18 @@
   </div>
 
   <div class="interactive-api-container">
-    <!-- Main Documentation and Testing Column -->
     <div class="main-content">
-      <section id="place-order" class="endpoint-section">
+      <section id="endpoint-1" class="endpoint-section">
         <div class="endpoint-layout">
-          <!-- Documentation -->
           <div class="endpoint-docs">
             <div class="method-header">
               <span class="method-badge post">POST</span>
-              <span class="endpoint-path">/spot/orders</span>
+              <span class="endpoint-path">/spot/order</span>
             </div>
 
             <div class="endpoint-info">
-              <h3 class="endpoint-title">📈 Place Trading Order</h3>
-              <p class="endpoint-description">Place a new trading order on the exchange with comprehensive order types
-                and parameters.</p>
+              <h3 class="endpoint-title">📋 Place Spot Order</h3>
+              <p class="endpoint-description">Place a new spot trading order</p>
             </div>
 
             <div class="api-section">
@@ -95,34 +89,29 @@
               <h4 class="section-title">⚙️ Body Parameters</h4>
               <div class="param-list">
                 <div class="param-item required">
-                  <code class="param-name">category</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Trading category: "spot"</span>
-                </div>
-                <div class="param-item required">
                   <code class="param-name">symbol</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Trading pair symbol (e.g., "BNBETH", "ETHUSDT")</span>
+                  <span class="param-desc">Trading pair symbol (e.g., BTCUSDT)</span>
                 </div>
                 <div class="param-item required">
                   <code class="param-name">side</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Order side: "Buy" or "Sell"</span>
+                  <span class="param-desc">Order side (BUY or SELL)</span>
                 </div>
                 <div class="param-item required">
-                  <code class="param-name">orderType</code>
+                  <code class="param-name">type</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Order type: "Market" or "Limit"</span>
+                  <span class="param-desc">Order type (MARKET, LIMIT)</span>
                 </div>
                 <div class="param-item required">
-                  <code class="param-name">qty</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Order quantity in base currency</span>
+                  <code class="param-name">quantity</code>
+                  <span class="param-type">number</span>
+                  <span class="param-desc">Order quantity</span>
                 </div>
                 <div class="param-item required">
                   <code class="param-name">price</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Order price (required for limit orders)</span>
+                  <span class="param-type">number</span>
+                  <span class="param-desc">Order price (for LIMIT orders)</span>
                 </div>
               </div>
             </div>
@@ -136,457 +125,109 @@
                     {{ lang }}
                   </button>
                 </div>
-
+                
                 <div v-show="activeCodeTab1 === 'cURL'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('curl', 1)" class="copy-code-btn" title="Copy to clipboard">
-                    📋
-                  </button>
+                  <button @click="copyCodeToClipboard('curl', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>curl -X POST "https://develop.okd.finance/api/spot/orders" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Content-Type: application/json" \
-  -H "Fingerprint: YOUR_FINGERPRINT" \
-  -d '{
-  "category": "spot",
-  "symbol": "BNBETH",
-  "side": "Buy",
-  "orderType": "Limit",
-  "qty": "2",
-  "price": "0.2"
-  }'</pre>
+                    <pre>curl -X POST &quot;https://develop.okd.finance/api/spot/order&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{&quot;symbol&quot;:&quot;example&quot;,&quot;side&quot;:&quot;example&quot;,&quot;type&quot;:&quot;example&quot;,&quot;quantity&quot;:&quot;example&quot;,&quot;price&quot;:&quot;example&quot;}&#x27;</pre>
                   </div>
                 </div>
 
                 <div v-show="activeCodeTab1 === 'Go'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('go', 1)" class="copy-code-btn" title="Copy to clipboard">
-                    📋
-                  </button>
+                  <button @click="copyCodeToClipboard('go', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "io"
-    "net/http"
-)
-
-type OrderRequest struct {
-    Category  string `json:"category"`
-    Symbol    string `json:"symbol"`
-    Side      string `json:"side"`
-    OrderType string `json:"orderType"`
-    Qty       string `json:"qty"`
-    Price     string `json:"price"`
-}
-
-type OrderResponse struct {
-    OrderID     string `json:"orderId"`
-    OrderLinkID string `json:"orderLinkId"`
-}
-
-func placeOrder() (*OrderResponse, error) {
-    url := "https://develop.okd.finance/api/spot/orders"
-    
-    orderData := OrderRequest{
-        Category:  "spot",
-        Symbol:    "BNBETH",
-        Side:      "Buy",
-        OrderType: "Limit",
-        Qty:       "2",
-        Price:     "0.2",
-    }
-    
-    jsonData, err := json.Marshal(orderData)
-    if err != nil {
-        return nil, err
-    }
-    
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    if err != nil {
-        return nil, err
-    }
-    
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
-    
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        return nil, err
-    }
-    defer resp.Body.Close()
-    
-    body, err := io.ReadAll(resp.Body)
-    if err != nil {
-        return nil, err
-    }
-    
-    if resp.StatusCode != http.StatusOK {
-        return nil, fmt.Errorf("API error: %s", string(body))
-    }
-    
-    var orderResp OrderResponse
-    if err := json.Unmarshal(body, &orderResp); err != nil {
-        return nil, err
-    }
-    
-    return &orderResp, nil
-}
-
-func main() {
-    order, err := placeOrder()
-    if err != nil {
-        fmt.Printf("Error: %v\n", err)
-        return
-    }
-    
-    fmt.Printf("Order placed successfully!\n")
-    fmt.Printf("Order ID: %s\n", order.OrderID)
-    fmt.Printf("Order Link ID: %s\n", order.OrderLinkID)
-}</pre>
+                    <pre>{{ codeExamples.go[1] }}</pre>
                   </div>
                 </div>
 
                 <div v-show="activeCodeTab1 === 'TypeScript'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('typescript', 1)" class="copy-code-btn" title="Copy to clipboard">
-                    📋
-                  </button>
+                  <button @click="copyCodeToClipboard('typescript', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>interface OrderRequest {
-  category: 'spot';
-  symbol: string;
-  side: 'Buy' | 'Sell';
-  orderType: 'Market' | 'Limit';
-  qty: string;
-  price: string;
-}
-
-interface OrderResponse {
-  orderId: string;
-  orderLinkId: string;
-}
-
-interface ApiError {
-  code: number;
-  message: string;
-}
-
-async function placeOrder(
-  baseUrl: string,
-  accessToken: string,
-  orderData: OrderRequest
-): Promise&lt;OrderResponse&gt; {
-  const response = await fetch(`${baseUrl}/spot/orders`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-      'Fingerprint': 'YOUR_FINGERPRINT'
-    },
-    body: JSON.stringify(orderData)
-  });
-
-  const responseData = await response.json();
-
-  if (!response.ok) {
-    const error = responseData as ApiError;
-    throw new Error(`API Error ${error.code}: ${error.message}`);
-  }
-
-  return responseData as OrderResponse;
-}
-
-async function main(): Promise&lt;void&gt; {
-  const orderData: OrderRequest = {
-    category: 'spot',
-    symbol: 'BNBETH',
-    side: 'Buy',
-    orderType: 'Limit',
-    qty: '2',
-    price: '0.2'
-  };
-
-  try {
-    const result = await placeOrder(
-      'https://develop.okd.finance/api',
-      'YOUR_ACCESS_TOKEN',
-      orderData
-    );
-    
-    console.log('Order placed successfully!');
-    console.log(`Order ID: ${result.orderId}`);
-    console.log(`Order Link ID: ${result.orderLinkId}`);
-  } catch (error) {
-    console.error('Error placing order:', error);
-  }
-}
-
-main();</pre>
+                    <pre>{{ codeExamples.typescript[1] }}</pre>
                   </div>
                 </div>
 
                 <div v-show="activeCodeTab1 === 'PHP'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('php', 1)" class="copy-code-btn" title="Copy to clipboard">
-                    📋
-                  </button>
+                  <button @click="copyCodeToClipboard('php', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>&lt;?php
-
-function placeOrder($baseUrl, $accessToken, $orderData) {
-    $url = $baseUrl . '/spot/orders';
-    
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => json_encode($orderData),
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYPEER => true
-    ]);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false || !empty($error)) {
-        throw new Exception("cURL Error: " . $error);
-    }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception("Invalid JSON response");
-    }
-
-    if ($httpCode !== 200) {
-        $message = $data['message'] ?? 'Unknown API error';
-        $code = $data['code'] ?? $httpCode;
-        throw new Exception("API Error {$code}: {$message}");
-    }
-
-    return $data;
-}
-
-try {
-    $orderData = [
-        'category' => 'spot',
-        'symbol' => 'BNBETH',
-        'side' => 'Buy',
-        'orderType' => 'Limit',
-        'qty' => '2',
-        'price' => '0.2'
-    ];
-
-    $result = placeOrder(
-        'https://develop.okd.finance/api',
-        'YOUR_ACCESS_TOKEN',
-        $orderData
-    );
-
-    echo "Order placed successfully!\\n";
-    echo "Order ID: " . $result['orderId'] . "\\n";
-    echo "Order Link ID: " . $result['orderLinkId'] . "\\n";
-
-} catch (Exception $e) {
-    echo "Error placing order: " . $e->getMessage() . "\\n";
-}
-
-?&gt;</pre>
+                    <pre>{{ codeExamples.php[1] }}</pre>
                   </div>
                 </div>
 
                 <div v-show="activeCodeTab1 === 'Python'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('python', 1)" class="copy-code-btn" title="Copy to clipboard">
-                    📋
-                  </button>
+                  <button @click="copyCodeToClipboard('python', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>import requests
-import json
-from typing import Dict, Optional
-
-
-class TradingAPIError(Exception):
-    def __init__(self, code: int, message: str):
-        self.code = code
-        self.message = message
-        super().__init__(f"API Error {code}: {message}")
-
-
-def place_order(base_url: str, access_token: str, order_data: Dict) -> Dict:
-    """Place a trading order using the API"""
-    url = f"{base_url}/spot/orders"
-    
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json',
-        'Fingerprint': 'YOUR_FINGERPRINT'
-    }
-    
-    try:
-        response = requests.post(
-            url,
-            headers=headers,
-            json=order_data,
-            timeout=30
-        )
-        
-        response_data = response.json()
-        
-        if not response.ok:
-            error_code = response_data.get('code', response.status_code)
-            error_message = response_data.get('message', 'Unknown API error')
-            raise TradingAPIError(error_code, error_message)
-        
-        return response_data
-        
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Network error: {e}")
-
-
-def main():
-    order_data = {
-        'category': 'spot',
-        'symbol': 'BNBETH',
-        'side': 'Buy',
-        'orderType': 'Limit',
-        'qty': '2',
-        'price': '0.2'
-    }
-    
-    try:
-        result = place_order(
-            'https://develop.okd.finance/api',
-            'YOUR_ACCESS_TOKEN',
-            order_data
-        )
-        
-        print("Order placed successfully!")
-        print(f"Order ID: {result['orderId']}")
-        print(f"Order Link ID: {result['orderLinkId']}")
-        
-    except (TradingAPIError, Exception) as e:
-        print(f"Error placing order: {e}")
-
-
-if __name__ == "__main__":
-    main()</pre>
+                    <pre>{{ codeExamples.python[1] }}</pre>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="api-section">
-              <h4 class="section-title">✅ Response Examples</h4>
-              <div class="response-example">
-                <div class="response-status success">200 OK - Success</div>
-                <pre class="code-block">{
-  "orderId": "1980690610151328512",
-  "orderLinkId": "1980690610151328513"
-}</pre>
-              </div>
-
-              <div class="response-example">
-                <div class="response-status error">400 Bad Request - Error</div>
-                <pre class="code-block">{
-  "code": 400591,
-  "message": "unknown category"
-}</pre>
-              </div>
-            </div>
           </div>
 
-          <!-- Testing Panel -->
           <div class="endpoint-testing">
             <h4 class="testing-title">🚀 Live Testing</h4>
             <div class="test-section">
               <div class="form-group">
-                <label>Trading Pair</label>
-                <select v-model="orderData.symbol" class="test-input">
-                  <option value="BNBETH">BNBETH</option>
-                  <option value="ETHUSDT">ETHUSDT</option>
-                  <option value="ADAUSDT">ADAUSDT</option>
-                  <option value="DOTUSDT">DOTUSDT</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Category</label>
-                <select v-model="orderData.category" class="test-input">
-                  <option value="spot">Spot</option>
-                </select>
+                <label>Symbol</label>
+                <input v-model="testData1.symbol" type="text" placeholder="example_symbol" class="test-input" />
               </div>
               <div class="form-group">
                 <label>Side</label>
-                <select v-model="orderData.side" class="test-input">
-                  <option value="Buy">Buy</option>
-                  <option value="Sell">Sell</option>
-                </select>
+                <input v-model="testData1.side" type="text" placeholder="example_side" class="test-input" />
               </div>
               <div class="form-group">
-                <label>Order Type</label>
-                <select v-model="orderData.orderType" class="test-input">
-                  <option value="Market">Market</option>
-                  <option value="Limit">Limit</option>
-                </select>
+                <label>Type</label>
+                <input v-model="testData1.type" type="text" placeholder="example_type" class="test-input" />
               </div>
               <div class="form-group">
                 <label>Quantity</label>
-                <input v-model="orderData.qty" type="text" placeholder="2" class="test-input" />
+                <input v-model="testData1.quantity" type="text" placeholder="example_quantity" class="test-input" />
               </div>
               <div class="form-group">
                 <label>Price</label>
-                <input v-model="orderData.price" type="text" placeholder="0.2" class="test-input" />
+                <input v-model="testData1.price" type="text" placeholder="example_price" class="test-input" />
               </div>
-              <button @click="testPlaceOrder" class="test-btn"
+              <button @click="testEndpoint1" class="test-btn"
                 :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
                 {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
-              <div v-if="results.placeOrder" class="result-container">
+              <div v-if="results.endpoint1" class="result-container">
                 <div class="result-header">
-                  <span class="status-badge">{{ results.placeOrder.status }}</span>
-                  <span class="timestamp">{{ results.placeOrder.timestamp }}</span>
-                  <button @click="copyToClipboard(results.placeOrder.data, $event)" class="copy-btn">📋 Copy
-                    Response</button>
+                  <span class="status-badge">{{ results.endpoint1.status }}</span>
+                  <span class="timestamp">{{ results.endpoint1.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint1.data, $event)" class="copy-btn">📋 Copy Response</button>
                 </div>
-                <div v-if="results.placeOrder.requestUrl" class="request-info">
+                <div v-if="results.endpoint1.requestUrl" class="request-info">
                   <h5>📤 Actual Request:</h5>
-                  <pre class="request-data">{{ results.placeOrder.requestUrl }}</pre>
+                  <pre class="request-data">{{ results.endpoint1.requestUrl }}</pre>
                   <h5>📋 Headers:</h5>
-                  <pre class="request-data">{{ results.placeOrder.headers }}</pre>
+                  <pre class="request-data">{{ results.endpoint1.headers }}</pre>
                   <h5>📦 Body:</h5>
-                  <pre class="request-data">{{ results.placeOrder.body }}</pre>
+                  <pre class="request-data">{{ results.endpoint1.body }}</pre>
                 </div>
                 <h5>📥 Response:</h5>
-                <pre class="result-data">{{ results.placeOrder.data }}</pre>
+                <pre class="result-data">{{ results.endpoint1.data }}</pre>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="get-orders" class="endpoint-section">
+      <section id="endpoint-2" class="endpoint-section">
         <div class="endpoint-layout">
-          <!-- Documentation -->
           <div class="endpoint-docs">
             <div class="method-header">
               <span class="method-badge get">GET</span>
-              <span class="endpoint-path">/spot/orders/open</span>
+              <span class="endpoint-path">/spot/orders</span>
             </div>
 
             <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Get Open Orders</h3>
-              <p class="endpoint-description">Retrieve all active (open) orders for the authenticated user with optional
-                filtering capabilities.</p>
+              <h3 class="endpoint-title">📋 Get Orders</h3>
+              <p class="endpoint-description">Retrieve list of trading orders</p>
             </div>
 
             <div class="api-section">
@@ -598,6 +239,11 @@ if __name__ == "__main__":
                   <span class="param-desc">JWT access token for authentication</span>
                 </div>
                 <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
                   <code class="param-name">Fingerprint</code>
                   <span class="param-type">string</span>
                   <span class="param-desc">32-character hex string for device identification</span>
@@ -606,22 +252,22 @@ if __name__ == "__main__":
             </div>
 
             <div class="api-section">
-              <h4 class="section-title">🔍 Query Parameters</h4>
+              <h4 class="section-title">⚙️ Body Parameters</h4>
               <div class="param-list">
                 <div class="param-item required">
-                  <code class="param-name">category</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Trading category: "spot"</span>
-                </div>
-                <div class="param-item">
                   <code class="param-name">symbol</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Filter by trading pair (e.g., "BNBETH")</span>
+                  <span class="param-desc">Trading pair symbol</span>
                 </div>
-                <div class="param-item">
+                <div class="param-item required">
+                  <code class="param-name">status</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Order status filter</span>
+                </div>
+                <div class="param-item required">
                   <code class="param-name">limit</code>
                   <span class="param-type">integer</span>
-                  <span class="param-desc">Number of orders to return (default: 50, max: 500)</span>
+                  <span class="param-desc">Number of orders to return</span>
                 </div>
               </div>
             </div>
@@ -635,497 +281,228 @@ if __name__ == "__main__":
                     {{ lang }}
                   </button>
                 </div>
-
+                
                 <div v-show="activeCodeTab2 === 'cURL'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('curl', 2)" class="copy-code-btn" title="Copy to clipboard">
-                    📋
-                  </button>
+                  <button @click="copyCodeToClipboard('curl', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>curl -X GET "https://develop.okd.finance/api/spot/orders/open?category=spot&symbol=BNBETH&limit=10" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Fingerprint: YOUR_FINGERPRINT"</pre>
+                    <pre>curl -X GET &quot;https://develop.okd.finance/api/spot/orders&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{&quot;symbol&quot;:&quot;example&quot;,&quot;status&quot;:&quot;example&quot;,&quot;limit&quot;:&quot;example&quot;}&#x27;</pre>
                   </div>
                 </div>
 
                 <div v-show="activeCodeTab2 === 'Go'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('go', 2)" class="copy-code-btn" title="Copy to clipboard">
-                    📋
-                  </button>
+                  <button @click="copyCodeToClipboard('go', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>package main
-
-import (
-    "encoding/json"
-    "fmt"
-    "io"
-    "net/http"
-    "net/url"
-)
-
-type Order struct {
-    OrderID     string `json:"orderId"`
-    OrderLinkID string `json:"orderLinkId"`
-    Symbol      string `json:"symbol"`
-    Side        string `json:"side"`
-    Price       string `json:"price"`
-    Qty         string `json:"qty"`
-    OrderStatus string `json:"orderStatus"`
-    OrderType   string `json:"orderType"`
-    BaseCoin    string `json:"baseCoin"`
-    QuoteCoin   string `json:"quoteCoin"`
-}
-
-type OrdersResponse struct {
-    Category       string  `json:"category"`
-    NextPageCursor string  `json:"nextPageCursor,omitempty"`
-    List           []Order `json:"list"`
-}
-
-func getOrders(category, symbol string, limit int) (*OrdersResponse, error) {
-    baseURL := "https://develop.okd.finance/api/spot/orders/open"
-    
-    params := url.Values{}
-    params.Add("category", category)
-    if symbol != "" {
-        params.Add("symbol", symbol)
-    }
-    if limit > 0 {
-        params.Add("limit", fmt.Sprintf("%d", limit))
-    }
-    
-    fullURL := baseURL + "?" + params.Encode()
-    
-    req, err := http.NewRequest("GET", fullURL, nil)
-    if err != nil {
-        return nil, err
-    }
-    
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
-    
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        return nil, err
-    }
-    defer resp.Body.Close()
-    
-    body, err := io.ReadAll(resp.Body)
-    if err != nil {
-        return nil, err
-    }
-    
-    if resp.StatusCode != http.StatusOK {
-        return nil, fmt.Errorf("API error: %s", string(body))
-    }
-    
-    var ordersResp OrdersResponse
-    if err := json.Unmarshal(body, &ordersResp); err != nil {
-        return nil, err
-    }
-    
-    return &ordersResp, nil
-}
-
-func main() {
-    orders, err := getOrders("spot", "BNBETH", 10)
-    if err != nil {
-        fmt.Printf("Error: %v\n", err)
-        return
-    }
-    
-    fmt.Printf("Retrieved %d orders\n", len(orders.List))
-    for i, order := range orders.List {
-        fmt.Printf("Order %d: %s %s %s@%s\n", 
-            i+1, order.Symbol, order.Side, order.Qty, order.Price)
-    }
-}</pre>
+                    <pre>{{ codeExamples.go[2] }}</pre>
                   </div>
                 </div>
 
                 <div v-show="activeCodeTab2 === 'TypeScript'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('typescript', 2)" class="copy-code-btn" title="Copy to clipboard">
-                    📋
-                  </button>
+                  <button @click="copyCodeToClipboard('typescript', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>interface OrdersParams {
-  category: 'spot';
-  symbol?: string;
-  limit?: number;
-}
-
-interface Order {
-  orderId: string;
-  orderLinkId: string;
-  symbol: string;
-  side: string;
-  price: string;
-  qty: string;
-  orderStatus: string;
-  orderType: string;
-  baseCoin: string;
-  quoteCoin: string;
-  createdTime: string;
-  updatedTime: string;
-}
-
-interface OrdersResponse {
-  category: string;
-  list: Order[];
-  nextPageCursor?: string;
-}
-
-interface ApiError {
-  code: number;
-  message: string;
-}
-
-function buildQueryString(params: OrdersParams): string {
-  const searchParams = new URLSearchParams();
-  searchParams.append('category', params.category);
-  
-  if (params.symbol) {
-    searchParams.append('symbol', params.symbol);
-  }
-  
-  if (params.limit) {
-    searchParams.append('limit', params.limit.toString());
-  }
-  
-  return searchParams.toString();
-}
-
-async function getOrders(
-  baseUrl: string,
-  accessToken: string,
-  params: OrdersParams
-): Promise&lt;OrdersResponse&gt; {
-  const queryString = buildQueryString(params);
-  const url = `${baseUrl}/spot/orders/open?${queryString}`;
-
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${accessToken}`,
-      'Fingerprint': 'YOUR_FINGERPRINT'
-    }
-  });
-
-  const responseData = await response.json();
-
-  if (!response.ok) {
-    const error = responseData as ApiError;
-    throw new Error(`API Error ${error.code}: ${error.message}`);
-  }
-
-  return responseData as OrdersResponse;
-}
-
-function displayOrders(response: OrdersResponse): void {
-  console.log(`Retrieved ${response.list.length} orders`);
-  console.log(`Category: ${response.category}`);
-  
-  response.list.forEach((order, index) => {
-    console.log(`Order ${index + 1}:`);
-    console.log(`  Symbol: ${order.symbol} (${order.baseCoin}/${order.quoteCoin})`);
-    console.log(`  Side: ${order.side} | Type: ${order.orderType}`);
-    console.log(`  Price: ${order.price} | Qty: ${order.qty}`);
-    console.log(`  Status: ${order.orderStatus}`);
-  });
-}
-
-async function main(): Promise&lt;void&gt; {
-  try {
-    const result = await getOrders(
-      'https://develop.okd.finance/api',
-      'YOUR_ACCESS_TOKEN',
-      { category: 'spot', symbol: 'BNBETH', limit: 10 }
-    );
-    
-    displayOrders(result);
-  } catch (error) {
-    console.error('Error getting orders:', error);
-  }
-}
-
-main();</pre>
+                    <pre>{{ codeExamples.typescript[2] }}</pre>
                   </div>
                 </div>
 
                 <div v-show="activeCodeTab2 === 'PHP'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('php', 2)" class="copy-code-btn" title="Copy to clipboard">
-                    📋
-                  </button>
+                  <button @click="copyCodeToClipboard('php', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>&lt;?php
-
-function getOrders($baseUrl, $accessToken, $params) {
-    $queryString = http_build_query(array_filter($params));
-    $url = $baseUrl . '/spot/orders/open?' . $queryString;
-    
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_HTTPGET => true,
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYPEER => true
-    ]);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false || !empty($error)) {
-        throw new Exception("cURL Error: " . $error);
-    }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception("Invalid JSON response");
-    }
-
-    if ($httpCode !== 200) {
-        $message = $data['message'] ?? 'Unknown API error';
-        $code = $data['code'] ?? $httpCode;
-        throw new Exception("API Error {$code}: {$message}");
-    }
-
-    return $data;
-}
-
-function displayOrders($ordersData) {
-    $orderCount = count($ordersData['list']);
-    echo "Retrieved {$orderCount} orders\n";
-    echo "Category: {$ordersData['category']}\n\n";
-    
-    foreach ($ordersData['list'] as $index => $order) {
-        $orderNum = $index + 1;
-        echo "Order {$orderNum}:\n";
-        echo "  Symbol: {$order['symbol']} ({$order['baseCoin']}/{$order['quoteCoin']})\n";
-        echo "  Side: {$order['side']} | Type: {$order['orderType']}\n";
-        echo "  Price: {$order['price']} | Qty: {$order['qty']}\n";
-        echo "  Status: {$order['orderStatus']}\n";
-        echo "  Order ID: {$order['orderId']}\n\n";
-    }
-}
-
-try {
-    $params = [
-        'category' => 'spot',
-        'symbol' => 'BNBETH',
-        'limit' => 10
-    ];
-
-    $ordersData = getOrders(
-        'https://develop.okd.finance/api',
-        'YOUR_ACCESS_TOKEN',
-        $params
-    );
-
-    displayOrders($ordersData);
-
-} catch (Exception $e) {
-    echo "Error getting orders: " . $e->getMessage() . "\n";
-}
-
-?&gt;</pre>
+                    <pre>{{ codeExamples.php[2] }}</pre>
                   </div>
                 </div>
 
                 <div v-show="activeCodeTab2 === 'Python'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('python', 2)" class="copy-code-btn" title="Copy to clipboard">
-                    📋
-                  </button>
+                  <button @click="copyCodeToClipboard('python', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>import requests
-from typing import Dict, List, Optional
-
-
-class TradingAPIError(Exception):
-    def __init__(self, code: int, message: str):
-        self.code = code
-        self.message = message
-        super().__init__(f"API Error {code}: {message}")
-
-
-def get_orders(
-    base_url: str,
-    access_token: str,
-    category: str = 'spot',
-    symbol: Optional[str] = None,
-    limit: Optional[int] = None
-) -> Dict:
-    """Get open orders from the API"""
-    url = f"{base_url}/spot/orders/open"
-    
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Fingerprint': 'YOUR_FINGERPRINT'
-    }
-    
-    params = {'category': category}
-    if symbol:
-        params['symbol'] = symbol
-    if limit:
-        params['limit'] = limit
-    
-    try:
-        response = requests.get(
-            url,
-            headers=headers,
-            params=params,
-            timeout=30
-        )
-        
-        response_data = response.json()
-        
-        if not response.ok:
-            error_code = response_data.get('code', response.status_code)
-            error_message = response_data.get('message', 'Unknown API error')
-            raise TradingAPIError(error_code, error_message)
-        
-        return response_data
-        
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Network error: {e}")
-
-
-def display_orders(orders_data: Dict) -> None:
-    """Display orders in a formatted way"""
-    orders_list = orders_data.get('list', [])
-    print(f"Retrieved {len(orders_list)} orders")
-    print(f"Category: {orders_data.get('category', 'N/A')}\n")
-    
-    for i, order in enumerate(orders_list, 1):
-        print(f"Order {i}:")
-        print(f"  Symbol: {order['symbol']} ({order['baseCoin']}/{order['quoteCoin']})")
-        print(f"  Side: {order['side']} | Type: {order['orderType']}")
-        print(f"  Price: {order['price']} | Qty: {order['qty']}")
-        print(f"  Status: {order['orderStatus']}")
-        print(f"  Order ID: {order['orderId']}")
-        print()
-
-
-def main():
-    try:
-        orders_data = get_orders(
-            base_url='https://develop.okd.finance/api',
-            access_token='YOUR_ACCESS_TOKEN',
-            category='spot',
-            symbol='BNBETH',
-            limit=10
-        )
-        
-        display_orders(orders_data)
-        
-    except (TradingAPIError, Exception) as e:
-        print(f"Error getting orders: {e}")
-
-
-if __name__ == "__main__":
-    main()</pre>
+                    <pre>{{ codeExamples.python[2] }}</pre>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="api-section">
-              <h4 class="section-title">✅ Response Examples</h4>
-              <div class="response-example">
-                <div class="response-status success">200 OK - Success</div>
-                <pre class="code-block">{
-  "category": "spot",
-  "nextPageCursor": "1980696465315826432%3A1750853418446%2C1980675399004556032%3A1750850907146",
-  "list": [
-    {
-      "orderId": "1980696465315826432",
-      "orderLinkId": "1980696465315826433",
-      "symbol": "BNBETH",
-      "price": "0.2",
-      "qty": "1.00",
-      "side": "Buy",
-      "orderType": "Limit",
-      "orderStatus": "New",
-      "timeInForce": "GTC",
-      "avgPrice": "0.0",
-      "leavesQty": "1",
-      "cumExecQty": "0",
-      "cumExecFee": "0",
-      "baseCoin": "BNB",
-      "quoteCoin": "ETH",
-      "createdTime": "1750853418446",
-      "updatedTime": "1750853418450"
-    }
-  ]
-}</pre>
-              </div>
-
-              <div class="response-example">
-                <div class="response-status error">400 Bad Request - Error</div>
-                <pre class="code-block">{
-  "code": 400591,
-  "message": "unknown category"
-}</pre>
-              </div>
-            </div>
           </div>
 
-          <!-- Testing Panel -->
           <div class="endpoint-testing">
             <h4 class="testing-title">🚀 Live Testing</h4>
             <div class="test-section">
               <div class="form-group">
-                <label>Category</label>
-                <select v-model="ordersData.category" class="test-input">
-                  <option value="spot">Spot</option>
-                </select>
+                <label>Symbol</label>
+                <input v-model="testData2.symbol" type="text" placeholder="example_symbol" class="test-input" />
               </div>
               <div class="form-group">
-                <label>Symbol (optional)</label>
-                <select v-model="ordersData.symbol" class="test-input">
-                  <option value="">All symbols</option>
-                  <option value="BNBETH">BNBETH</option>
-                  <option value="ETHUSDT">ETHUSDT</option>
-                  <option value="ADAUSDT">ADAUSDT</option>
-                </select>
+                <label>Status</label>
+                <input v-model="testData2.status" type="text" placeholder="example_status" class="test-input" />
               </div>
               <div class="form-group">
                 <label>Limit</label>
-                <input v-model.number="ordersData.limit" type="number" placeholder="50" class="test-input" />
+                <input v-model="testData2.limit" type="number" placeholder="example_limit" class="test-input" />
               </div>
-              <button @click="testGetOrders" class="test-btn"
+              <button @click="testEndpoint2" class="test-btn"
                 :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
                 {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
-              <div v-if="results.orders" class="result-container">
+              <div v-if="results.endpoint2" class="result-container">
                 <div class="result-header">
-                  <span class="status-badge">{{ results.orders.status }}</span>
-                  <span class="timestamp">{{ results.orders.timestamp }}</span>
-                  <button @click="copyToClipboard(results.orders.data, $event)" class="copy-btn">📋 Copy
-                    Response</button>
+                  <span class="status-badge">{{ results.endpoint2.status }}</span>
+                  <span class="timestamp">{{ results.endpoint2.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint2.data, $event)" class="copy-btn">📋 Copy Response</button>
                 </div>
-                <div v-if="results.orders.requestUrl" class="request-info">
+                <div v-if="results.endpoint2.requestUrl" class="request-info">
                   <h5>📤 Actual Request:</h5>
-                  <pre class="request-data">{{ results.orders.requestUrl }}</pre>
+                  <pre class="request-data">{{ results.endpoint2.requestUrl }}</pre>
                   <h5>📋 Headers:</h5>
-                  <pre class="request-data">{{ results.orders.headers }}</pre>
+                  <pre class="request-data">{{ results.endpoint2.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint2.body }}</pre>
                 </div>
                 <h5>📥 Response:</h5>
-                <pre class="result-data">{{ results.orders.data }}</pre>
+                <pre class="result-data">{{ results.endpoint2.data }}</pre>
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      <section id="endpoint-3" class="endpoint-section">
+        <div class="endpoint-layout">
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge delete">DELETE</span>
+              <span class="endpoint-path">/spot/order</span>
+            </div>
+
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">📋 Cancel Order</h3>
+              <p class="endpoint-description">Cancel an existing trading order</p>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📋 Headers</h4>
+              <div class="param-list">
+                <div class="param-item">
+                  <code class="param-name">Authorization</code>
+                  <span class="param-type">Bearer token</span>
+                  <span class="param-desc">JWT access token for authentication</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Fingerprint</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">32-character hex string for device identification</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">⚙️ Body Parameters</h4>
+              <div class="param-list">
+                <div class="param-item required">
+                  <code class="param-name">orderId</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Order ID to cancel</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">symbol</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Trading pair symbol</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📝 Example Request</h4>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab3 = lang"
+                    :class="['code-tab', { active: activeCodeTab3 === lang }]">
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab3 === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>curl -X DELETE &quot;https://develop.okd.finance/api/spot/order&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{&quot;orderId&quot;:&quot;example&quot;,&quot;symbol&quot;:&quot;example&quot;}&#x27;</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab3 === 'Go'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('go', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.go[3] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab3 === 'TypeScript'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('typescript', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.typescript[3] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab3 === 'PHP'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('php', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.php[3] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab3 === 'Python'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('python', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.python[3] }}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="endpoint-testing">
+            <h4 class="testing-title">🚀 Live Testing</h4>
+            <div class="test-section">
+              <div class="form-group">
+                <label>OrderId</label>
+                <input v-model="testData3.orderId" type="text" placeholder="example_orderId" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Symbol</label>
+                <input v-model="testData3.symbol" type="text" placeholder="example_symbol" class="test-input" />
+              </div>
+              <button @click="testEndpoint3" class="test-btn"
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+              </button>
+              <div v-if="results.endpoint3" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.endpoint3.status }}</span>
+                  <span class="timestamp">{{ results.endpoint3.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint3.data, $event)" class="copy-btn">📋 Copy Response</button>
+                </div>
+                <div v-if="results.endpoint3.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.endpoint3.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.endpoint3.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint3.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
+                <pre class="result-data">{{ results.endpoint3.data }}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -1134,7 +511,7 @@ if __name__ == "__main__":
 import { reactive, ref } from 'vue'
 import { useAuth } from '../composables/useAuth.js'
 
-// Используем глобальное состояние аутентификации
+// Global authentication state
 const {
   apiToken,
   apiBaseUrl,
@@ -1152,36 +529,26 @@ const {
 const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
 const activeCodeTab1 = ref('cURL')
 const activeCodeTab2 = ref('cURL')
+const activeCodeTab3 = ref('cURL')
 
-const orderData = reactive({
-  category: 'spot',
-  symbol: 'BNBETH',
-  side: 'Buy',
-  orderType: 'Limit',
-  qty: '2',
-  price: '0.2'
-})
-
-const ordersData = reactive({
-  symbol: '',
-  limit: 50,
-  category: 'spot'
-})
+const testData1 = reactive({ symbol: 'example_symbol', side: 'example_side', type: 'example_type', quantity: 'example_quantity', price: 'example_price' })
+const testData2 = reactive({ symbol: 'example_symbol', status: 'example_status', limit: 123 })
+const testData3 = reactive({ orderId: 'example_orderId', symbol: 'example_symbol' })
 
 
 
 const results = reactive({
-  placeOrder: null,
-  orders: null
+  endpoint1: null,
+  endpoint2: null,
+  endpoint3: null
 })
 
-const testPlaceOrder = async () => {
+const testEndpoint1 = async () => {
   try {
     const authValues = getRawValues()
     
-    // Проверяем готовность к отправке запроса
     if (!isReadyToSendRequest()) {
-      results.placeOrder = {
+      results.endpoint1 = {
         status: 'Authentication Error',
         data: 'Both Access Token and Fingerprint are required',
         timestamp: new Date().toLocaleTimeString(),
@@ -1193,15 +560,14 @@ const testPlaceOrder = async () => {
     }
 
     const requestBody = {
-      category: orderData.category,
-      symbol: orderData.symbol,
-      side: orderData.side,
-      orderType: orderData.orderType,
-      qty: orderData.qty,
-      price: orderData.price
+      symbol: testData1.symbol,
+      side: testData1.side,
+      type: testData1.type,
+      quantity: testData1.quantity,
+      price: testData1.price
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/spot/orders`
+    const fullUrl = `${authValues.apiBaseUrl}/spot/order`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
@@ -1216,7 +582,7 @@ const testPlaceOrder = async () => {
     })
 
     const data = await response.text()
-    results.placeOrder = {
+    results.endpoint1 = {
       status: `${response.status} ${response.statusText}`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
@@ -1225,7 +591,7 @@ const testPlaceOrder = async () => {
       body: bodyString
     }
   } catch (error) {
-    results.placeOrder = {
+    results.endpoint1 = {
       status: 'Network Error',
       data: error.message,
       timestamp: new Date().toLocaleTimeString(),
@@ -1236,60 +602,115 @@ const testPlaceOrder = async () => {
   }
 }
 
-const testGetOrders = async () => {
+const testEndpoint2 = async () => {
   try {
     const authValues = getRawValues()
     
-    // Проверяем готовность к отправке запроса
     if (!isReadyToSendRequest()) {
-      results.orders = {
+      results.endpoint2 = {
         status: 'Authentication Error',
         data: 'Both Access Token and Fingerprint are required',
         timestamp: new Date().toLocaleTimeString(),
         requestUrl: 'Request not sent',
-        headers: 'N/A'
+        headers: 'N/A',
+        body: 'N/A'
       }
       return
     }
 
-    let endpoint = '/spot/orders/open'
-    const params = new URLSearchParams()
-
-    if (ordersData.symbol) params.append('symbol', ordersData.symbol)
-    if (ordersData.limit) params.append('limit', ordersData.limit)
-    if (ordersData.category) params.append('category', ordersData.category)
-
-    if (params.toString()) {
-      endpoint += '?' + params.toString()
+    const requestBody = {
+      symbol: testData2.symbol,
+      status: testData2.status,
+      limit: testData2.limit
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}${endpoint}`
+    const fullUrl = `${authValues.apiBaseUrl}/spot/orders`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
       'Fingerprint': authValues.apiFingerprint
     }
+    const bodyString = JSON.stringify(requestBody)
 
     const response = await fetch(fullUrl, {
       method: 'GET',
-      headers: headers
+      headers: headers,
+      body: bodyString
     })
 
     const data = await response.text()
-    results.orders = {
+    results.endpoint2 = {
       status: `${response.status} ${response.statusText}`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
       requestUrl: `GET ${fullUrl}`,
-      headers: JSON.stringify(headers, null, 2)
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
     }
   } catch (error) {
-    results.orders = {
+    results.endpoint2 = {
       status: 'Network Error',
       data: error.message,
       timestamp: new Date().toLocaleTimeString(),
       requestUrl: 'Request failed',
-      headers: 'N/A'
+      headers: 'N/A',
+      body: 'N/A'
+    }
+  }
+}
+
+const testEndpoint3 = async () => {
+  try {
+    const authValues = getRawValues()
+    
+    if (!isReadyToSendRequest()) {
+      results.endpoint3 = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
+      }
+      return
+    }
+
+    const requestBody = {
+      orderId: testData3.orderId,
+      symbol: testData3.symbol
+    }
+
+    const fullUrl = `${authValues.apiBaseUrl}/spot/order`
+    const headers = {
+      'Authorization': `Bearer ${authValues.apiToken}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: 'DELETE',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    results.endpoint3 = {
+      status: `${response.status} ${response.statusText}`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `DELETE ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
+  } catch (error) {
+    results.endpoint3 = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
     }
   }
 }
@@ -1305,43 +726,49 @@ const copyToClipboard = (text, event) => {
       button.style.background = ''
     }, 2000)
   }).catch(() => {
-    // Fallback for older browsers
     const textArea = document.createElement('textarea')
     textArea.value = text
     document.body.appendChild(textArea)
     textArea.select()
     document.execCommand('copy')
     document.body.removeChild(textArea)
-
-    const button = event.target
-    const originalText = button.textContent
-    button.textContent = '✅ Copied!'
-    button.style.background = 'linear-gradient(135deg, #4caf50, #45a049)'
-    setTimeout(() => {
-      button.textContent = originalText
-      button.style.background = ''
-    }, 2000)
   })
 }
 
-// Code examples for copying
+const copyCodeToClipboard = (lang, endpointNum) => {
+  const authValues = getRawValues()
+  let code = codeExamples[lang]?.[endpointNum]
+  
+  if (code) {
+    code = code.replace(/YOUR_ACCESS_TOKEN/g, authValues.apiToken || 'YOUR_ACCESS_TOKEN')
+    code = code.replace(/YOUR_FINGERPRINT/g, authValues.apiFingerprint || 'YOUR_FINGERPRINT')
+    code = code.replace(/https:\/\/develop\.okd\.finance\/api/g, authValues.apiBaseUrl || 'https://develop.okd.finance/api')
+    
+    navigator.clipboard.writeText(code).then(() => {
+      console.log('Code copied to clipboard!')
+    }).catch(err => {
+      console.error('Failed to copy code:', err)
+    })
+  }
+}
+
 const codeExamples = {
   curl: {
-    1: `curl -X POST "https://develop.okd.finance/api/spot/orders" \\
+    1: `curl -X POST "https://develop.okd.finance/api/spot/order" \\
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
   -H "Content-Type: application/json" \\
   -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{
-    "category": "spot",
-    "symbol": "BNBETH",
-    "side": "Buy",
-    "orderType": "Limit",
-    "qty": "2",
-    "price": "0.2"
-  }'`,
-    2: `curl -X GET "https://develop.okd.finance/api/spot/orders/open?category=spot&symbol=BNBETH&limit=10" \\
+  -d '{"symbol":"example","side":"example","type":"example","quantity":"example","price":"example"}'`,
+    2: `curl -X GET "https://develop.okd.finance/api/spot/orders" \\
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Fingerprint: YOUR_FINGERPRINT"`
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"symbol":"example","status":"example","limit":"example"}'`,
+    3: `curl -X DELETE "https://develop.okd.finance/api/spot/order" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"orderId":"example","symbol":"example"}'`
   },
   go: {
     1: `package main
@@ -1354,40 +781,25 @@ import (
     "net/http"
 )
 
-type OrderRequest struct {
-    Category  string \`json:"category"\`
-    Symbol    string \`json:"symbol"\`
-    Side      string \`json:"side"\`
-    OrderType string \`json:"orderType"\`
-    Qty       string \`json:"qty"\`
-    Price     string \`json:"price"\`
+type PlaceSpotOrderRequest struct {
+    Symbol string \`json:"symbol"\`\n    Side string \`json:"side"\`\n    Type string \`json:"type"\`\n    Quantity string \`json:"quantity"\`\n    Price string \`json:"price"\`
 }
 
-type OrderResponse struct {
-    OrderID     string \`json:"orderId"\`
-    OrderLinkID string \`json:"orderLinkId"\`
-}
-
-func placeOrder() (*OrderResponse, error) {
-    url := "https://develop.okd.finance/api/spot/orders"
+func placespotorder() error {
+    url := "https://develop.okd.finance/api/spot/order"
     
-    orderData := OrderRequest{
-        Category:  "spot",
-        Symbol:    "BNBETH",
-        Side:      "Buy",
-        OrderType: "Limit",
-        Qty:       "2",
-        Price:     "0.2",
+    requestData := PlaceSpotOrderRequest{
+        Symbol: "example",\n        Side: "example",\n        Type: "example",\n        Quantity: "example",\n        Price: "example",
     }
     
-    jsonData, err := json.Marshal(orderData)
+    jsonData, err := json.Marshal(requestData)
     if err != nil {
-        return nil, err
+        return err
     }
     
     req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
     if err != nil {
-        return nil, err
+        return err
     }
     
     req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
@@ -1397,295 +809,263 @@ func placeOrder() (*OrderResponse, error) {
     client := &http.Client{}
     resp, err := client.Do(req)
     if err != nil {
-        return nil, err
+        return err
     }
     defer resp.Body.Close()
     
     body, err := io.ReadAll(resp.Body)
     if err != nil {
-        return nil, err
+        return err
     }
     
-    if resp.StatusCode != http.StatusOK {
-        return nil, fmt.Errorf("API error: %s", string(body))
-    }
-    
-    var orderResp OrderResponse
-    if err := json.Unmarshal(body, &orderResp); err != nil {
-        return nil, err
-    }
-    
-    return &orderResp, nil
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
 }
 
 func main() {
-    order, err := placeOrder()
-    if err != nil {
+    if err := placespotorder(); err != nil {
         fmt.Printf("Error: %v\\n", err)
-        return
     }
-    
-    fmt.Printf("Order placed successfully!\\n")
-    fmt.Printf("Order ID: %s\\n", order.OrderID)
-    fmt.Printf("Order Link ID: %s\\n", order.OrderLinkID)
 }`,
     2: `package main
 
 import (
+    "bytes"
     "encoding/json"
     "fmt"
     "io"
     "net/http"
-    "net/url"
 )
 
-type Order struct {
-    OrderID     string \`json:"orderId"\`
-    OrderLinkID string \`json:"orderLinkId"\`
-    Symbol      string \`json:"symbol"\`
-    Side        string \`json:"side"\`
-    Price       string \`json:"price"\`
-    Qty         string \`json:"qty"\`
-    OrderStatus string \`json:"orderStatus"\`
-    OrderType   string \`json:"orderType"\`
-    BaseCoin    string \`json:"baseCoin"\`
-    QuoteCoin   string \`json:"quoteCoin"\`
+type GetOrdersRequest struct {
+    Symbol string \`json:"symbol"\`\n    Status string \`json:"status"\`\n    Limit string \`json:"limit"\`
 }
 
-type OrdersResponse struct {
-    Category       string  \`json:"category"\`
-    NextPageCursor string  \`json:"nextPageCursor,omitempty"\`
-    List           []Order \`json:"list"\`
-}
-
-func getOrders(category, symbol string, limit int) (*OrdersResponse, error) {
-    baseURL := "https://develop.okd.finance/api/spot/orders/open"
+func getorders() error {
+    url := "https://develop.okd.finance/api/spot/orders"
     
-    params := url.Values{}
-    params.Add("category", category)
-    if symbol != "" {
-        params.Add("symbol", symbol)
-    }
-    if limit > 0 {
-        params.Add("limit", fmt.Sprintf("%d", limit))
+    requestData := GetOrdersRequest{
+        Symbol: "example",\n        Status: "example",\n        Limit: "example",
     }
     
-    fullURL := baseURL + "?" + params.Encode()
-    
-    req, err := http.NewRequest("GET", fullURL, nil)
+    jsonData, err := json.Marshal(requestData)
     if err != nil {
-        return nil, err
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
     }
     
     req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
     req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
     
     client := &http.Client{}
     resp, err := client.Do(req)
     if err != nil {
-        return nil, err
+        return err
     }
     defer resp.Body.Close()
     
     body, err := io.ReadAll(resp.Body)
     if err != nil {
-        return nil, err
+        return err
     }
     
-    if resp.StatusCode != http.StatusOK {
-        return nil, fmt.Errorf("API error: %s", string(body))
-    }
-    
-    var ordersResp OrdersResponse
-    if err := json.Unmarshal(body, &ordersResp); err != nil {
-        return nil, err
-    }
-    
-    return &ordersResp, nil
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
 }
 
 func main() {
-    orders, err := getOrders("spot", "BNBETH", 10)
-    if err != nil {
+    if err := getorders(); err != nil {
         fmt.Printf("Error: %v\\n", err)
-        return
+    }
+}`,
+    3: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type CancelOrderRequest struct {
+    OrderId string \`json:"orderId"\`\n    Symbol string \`json:"symbol"\`
+}
+
+func cancelorder() error {
+    url := "https://develop.okd.finance/api/spot/order"
+    
+    requestData := CancelOrderRequest{
+        OrderId: "example",\n        Symbol: "example",
     }
     
-    fmt.Printf("Retrieved %d orders\\n", len(orders.List))
-    for i, order := range orders.List {
-        fmt.Printf("Order %d: %s %s %s@%s\\n", 
-            i+1, order.Symbol, order.Side, order.Qty, order.Price)
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := cancelorder(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
     }
 }`
   },
   typescript: {
-    1: `interface OrderRequest {
-  category: 'spot';
-  symbol: string;
-  side: 'Buy' | 'Sell';
-  orderType: 'Market' | 'Limit';
-  qty: string;
-  price: string;
+    1: `interface PlaceSpotOrderRequest {
+  symbol: string;\n  side: string;\n  type: string;\n  quantity: string;\n  price: string;
 }
 
-interface OrderResponse {
-  orderId: string;
-  orderLinkId: string;
-}
-
-interface ApiError {
-  code: number;
-  message: string;
-}
-
-async function placeOrder(
+async function placespotorder(
   baseUrl: string,
   accessToken: string,
-  orderData: OrderRequest
-): Promise<OrderResponse> {
-  const response = await fetch(\`\${baseUrl}/spot/orders\`, {
+  data: PlaceSpotOrderRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/spot/order\`, {
     method: 'POST',
     headers: {
       'Authorization': \`Bearer \${accessToken}\`,
       'Content-Type': 'application/json',
       'Fingerprint': 'YOUR_FINGERPRINT'
     },
-    body: JSON.stringify(orderData)
+    body: JSON.stringify(data)
   });
 
-  const responseData = await response.json();
-
   if (!response.ok) {
-    const error = responseData as ApiError;
-    throw new Error(\`API Error \${error.code}: \${error.message}\`);
+    throw new Error(\`HTTP error! status: \${response.status}\`);
   }
 
-  return responseData as OrderResponse;
+  return await response.json();
 }
 
-async function main(): Promise<void> {
-  const orderData: OrderRequest = {
-    category: 'spot',
-    symbol: 'BNBETH',
-    side: 'Buy',
-    orderType: 'Limit',
-    qty: '2',
-    price: '0.2'
-  };
-
+// Usage example
+async function main() {
   try {
-    const result = await placeOrder(
+    const result = await placespotorder(
       'https://develop.okd.finance/api',
       'YOUR_ACCESS_TOKEN',
-      orderData
+      {
+        symbol: "example",\n        side: "example",\n        type: "example",\n        quantity: "example",\n        price: "example",
+      }
     );
-    
-    console.log('Order placed successfully!');
-    console.log(\`Order ID: \${result.orderId}\`);
-    console.log(\`Order Link ID: \${result.orderLinkId}\`);
+    console.log('Success:', result);
   } catch (error) {
-    console.error('Error placing order:', error);
+    console.error('Error:', error);
   }
 }
 
 main();`,
-    2: `interface OrdersParams {
-  category: 'spot';
-  symbol?: string;
-  limit?: number;
+    2: `interface GetOrdersRequest {
+  symbol: string;\n  status: string;\n  limit: string;
 }
 
-interface Order {
-  orderId: string;
-  orderLinkId: string;
-  symbol: string;
-  side: string;
-  price: string;
-  qty: string;
-  orderStatus: string;
-  orderType: string;
-  baseCoin: string;
-  quoteCoin: string;
-  createdTime: string;
-  updatedTime: string;
-}
-
-interface OrdersResponse {
-  category: string;
-  list: Order[];
-  nextPageCursor?: string;
-}
-
-interface ApiError {
-  code: number;
-  message: string;
-}
-
-function buildQueryString(params: OrdersParams): string {
-  const searchParams = new URLSearchParams();
-  searchParams.append('category', params.category);
-  
-  if (params.symbol) {
-    searchParams.append('symbol', params.symbol);
-  }
-  
-  if (params.limit) {
-    searchParams.append('limit', params.limit.toString());
-  }
-  
-  return searchParams.toString();
-}
-
-async function getOrders(
+async function getorders(
   baseUrl: string,
   accessToken: string,
-  params: OrdersParams
-): Promise<OrdersResponse> {
-  const queryString = buildQueryString(params);
-  const url = \`\${baseUrl}/spot/orders/open?\${queryString}\`;
-
-  const response = await fetch(url, {
+  data: GetOrdersRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/spot/orders\`, {
     method: 'GET',
     headers: {
       'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
       'Fingerprint': 'YOUR_FINGERPRINT'
-    }
+    },
+    body: JSON.stringify(data)
   });
-
-  const responseData = await response.json();
 
   if (!response.ok) {
-    const error = responseData as ApiError;
-    throw new Error(\`API Error \${error.code}: \${error.message}\`);
+    throw new Error(\`HTTP error! status: \${response.status}\`);
   }
 
-  return responseData as OrdersResponse;
+  return await response.json();
 }
 
-function displayOrders(response: OrdersResponse): void {
-  console.log(\`Retrieved \${response.list.length} orders\`);
-  console.log(\`Category: \${response.category}\`);
-  
-  response.list.forEach((order, index) => {
-    console.log(\`Order \${index + 1}:\`);
-    console.log(\`  Symbol: \${order.symbol} (\${order.baseCoin}/\${order.quoteCoin})\`);
-    console.log(\`  Side: \${order.side} | Type: \${order.orderType}\`);
-    console.log(\`  Price: \${order.price} | Qty: \${order.qty}\`);
-    console.log(\`  Status: \${order.orderStatus}\`);
-  });
-}
-
-async function main(): Promise<void> {
+// Usage example
+async function main() {
   try {
-    const result = await getOrders(
+    const result = await getorders(
       'https://develop.okd.finance/api',
       'YOUR_ACCESS_TOKEN',
-      { category: 'spot', symbol: 'BNBETH', limit: 10 }
+      {
+        symbol: "example",\n        status: "example",\n        limit: "example",
+      }
     );
-    
-    displayOrders(result);
+    console.log('Success:', result);
   } catch (error) {
-    console.error('Error getting orders:', error);
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    3: `interface CancelOrderRequest {
+  orderId: string;\n  symbol: string;
+}
+
+async function cancelorder(
+  baseUrl: string,
+  accessToken: string,
+  data: CancelOrderRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/spot/order\`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await cancelorder(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        orderId: "example",\n        symbol: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
   }
 }
 
@@ -1694,7 +1074,69 @@ main();`
   php: {
     1: `<?php
 
-function placeOrder($baseUrl, $accessToken, $orderData) {
+function placespotorder($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/spot/order';
+    
+    $headers = [
+        'Authorization: Bearer ' . $accessToken,
+        'Content-Type: application/json',
+        'Fingerprint: YOUR_FINGERPRINT'
+    ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'symbol' => 'example',\n        'side' => 'example',\n        'type' => 'example',\n        'quantity' => 'example',\n        'price' => 'example',
+    ];
+
+    $result = placespotorder(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    2: `<?php
+
+function getorders($baseUrl, $accessToken, $data) {
     $url = $baseUrl . '/spot/orders';
     
     $headers = [
@@ -1706,8 +1148,8 @@ function placeOrder($baseUrl, $accessToken, $orderData) {
     $ch = curl_init();
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => json_encode($orderData),
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_TIMEOUT => 30,
@@ -1730,53 +1172,46 @@ function placeOrder($baseUrl, $accessToken, $orderData) {
 
     if ($httpCode !== 200) {
         $message = $data['message'] ?? 'Unknown API error';
-        $code = $data['code'] ?? $httpCode;
-        throw new Exception("API Error {$code}: {$message}");
+        throw new Exception("API Error: " . $message);
     }
 
     return $data;
 }
 
 try {
-    $orderData = [
-        'category' => 'spot',
-        'symbol' => 'BNBETH',
-        'side' => 'Buy',
-        'orderType' => 'Limit',
-        'qty' => '2',
-        'price' => '0.2'
+    $data = [
+        'symbol' => 'example',\n        'status' => 'example',\n        'limit' => 'example',
     ];
 
-    $result = placeOrder(
+    $result = getorders(
         'https://develop.okd.finance/api',
         'YOUR_ACCESS_TOKEN',
-        $orderData
+        $data
     );
 
-    echo "Order placed successfully!\\n";
-    echo "Order ID: " . $result['orderId'] . "\\n";
-    echo "Order Link ID: " . $result['orderLinkId'] . "\\n";
+    echo "Success: " . json_encode($result) . "\\n";
 
 } catch (Exception $e) {
-    echo "Error placing order: " . $e->getMessage() . "\\n";
+    echo "Error: " . $e->getMessage() . "\\n";
 }
 
 ?>`,
-    2: `<?php
+    3: `<?php
 
-function getOrders($baseUrl, $accessToken, $params) {
-    $queryString = http_build_query(array_filter($params));
-    $url = $baseUrl . '/spot/orders/open?' . $queryString;
+function cancelorder($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/spot/order';
     
     $headers = [
         'Authorization: Bearer ' . $accessToken,
+        'Content-Type: application/json',
         'Fingerprint: YOUR_FINGERPRINT'
     ];
 
     $ch = curl_init();
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
-        CURLOPT_HTTPGET => true,
+        CURLOPT_CUSTOMREQUEST => 'DELETE',
+        CURLOPT_POSTFIELDS => json_encode($data),
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_TIMEOUT => 30,
@@ -1799,46 +1234,27 @@ function getOrders($baseUrl, $accessToken, $params) {
 
     if ($httpCode !== 200) {
         $message = $data['message'] ?? 'Unknown API error';
-        $code = $data['code'] ?? $httpCode;
-        throw new Exception("API Error {$code}: {$message}");
+        throw new Exception("API Error: " . $message);
     }
 
     return $data;
 }
 
-function displayOrders($ordersData) {
-    $orderCount = count($ordersData['list']);
-    echo "Retrieved {$orderCount} orders\\n";
-    echo "Category: {$ordersData['category']}\\n\\n";
-    
-    foreach ($ordersData['list'] as $index => $order) {
-        $orderNum = $index + 1;
-        echo "Order {$orderNum}:\\n";
-        echo "  Symbol: {$order['symbol']} ({$order['baseCoin']}/{$order['quoteCoin']})\\n";
-        echo "  Side: {$order['side']} | Type: {$order['orderType']}\\n";
-        echo "  Price: {$order['price']} | Qty: {$order['qty']}\\n";
-        echo "  Status: {$order['orderStatus']}\\n";
-        echo "  Order ID: {$order['orderId']}\\n\\n";
-    }
-}
-
 try {
-    $params = [
-        'category' => 'spot',
-        'symbol' => 'BNBETH',
-        'limit' => 10
+    $data = [
+        'orderId' => 'example',\n        'symbol' => 'example',
     ];
 
-    $ordersData = getOrders(
+    $result = cancelorder(
         'https://develop.okd.finance/api',
         'YOUR_ACCESS_TOKEN',
-        $params
+        $data
     );
 
-    displayOrders($ordersData);
+    echo "Success: " . json_encode($result) . "\\n";
 
 } catch (Exception $e) {
-    echo "Error getting orders: " . $e->getMessage() . "\\n";
+    echo "Error: " . $e->getMessage() . "\\n";
 }
 
 ?>`
@@ -1846,18 +1262,70 @@ try {
   python: {
     1: `import requests
 import json
-from typing import Dict, Optional
+from typing import Dict, Any
 
 
-class TradingAPIError(Exception):
-    def __init__(self, code: int, message: str):
-        self.code = code
-        self.message = message
-        super().__init__(f"API Error {code}: {message}")
+def placespotorder(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """Place a new spot trading order"""
+    url = f"{base_url}/spot/order"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
 
 
-def place_order(base_url: str, access_token: str, order_data: Dict) -> Dict:
-    """Place a trading order using the API"""
+def main():
+    data = {
+        'symbol': 'example',\n        'side': 'example',\n        'type': 'example',\n        'quantity': 'example',\n        'price': 'example',
+    }
+    
+    try:
+        result = placespotorder(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    2: `import requests
+import json
+from typing import Dict, Any
+
+
+def getorders(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """Retrieve list of trading orders"""
     url = f"{base_url}/spot/orders"
     
     headers = {
@@ -1867,159 +1335,96 @@ def place_order(base_url: str, access_token: str, order_data: Dict) -> Dict:
     }
     
     try:
-        response = requests.post(
+        response = requests.request(
+            'GET',
             url,
             headers=headers,
-            json=order_data,
+            json=data,
             timeout=30
         )
         
-        response_data = response.json()
-        
-        if not response.ok:
-            error_code = response_data.get('code', response.status_code)
-            error_message = response_data.get('message', 'Unknown API error')
-            raise TradingAPIError(error_code, error_message)
-        
-        return response_data
+        response.raise_for_status()
+        return response.json()
         
     except requests.exceptions.RequestException as e:
-        raise Exception(f"Network error: {e}")
+        raise Exception(f"Request failed: {e}")
 
 
 def main():
-    order_data = {
-        'category': 'spot',
-        'symbol': 'BNBETH',
-        'side': 'Buy',
-        'orderType': 'Limit',
-        'qty': '2',
-        'price': '0.2'
+    data = {
+        'symbol': 'example',\n        'status': 'example',\n        'limit': 'example',
     }
     
     try:
-        result = place_order(
+        result = getorders(
             'https://develop.okd.finance/api',
             'YOUR_ACCESS_TOKEN',
-            order_data
+            data
         )
         
-        print("Order placed successfully!")
-        print(f"Order ID: {result['orderId']}")
-        print(f"Order Link ID: {result['orderLinkId']}")
+        print("Success:", json.dumps(result, indent=2))
         
-    except (TradingAPIError, Exception) as e:
-        print(f"Error placing order: {e}")
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 if __name__ == "__main__":
     main()`,
-    2: `import requests
-from typing import Dict, List, Optional
+    3: `import requests
+import json
+from typing import Dict, Any
 
 
-class TradingAPIError(Exception):
-    def __init__(self, code: int, message: str):
-        self.code = code
-        self.message = message
-        super().__init__(f"API Error {code}: {message}")
-
-
-def get_orders(
+def cancelorder(
     base_url: str,
     access_token: str,
-    category: str = 'spot',
-    symbol: Optional[str] = None,
-    limit: Optional[int] = None
-) -> Dict:
-    """Get open orders from the API"""
-    url = f"{base_url}/spot/orders/open"
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """Cancel an existing trading order"""
+    url = f"{base_url}/spot/order"
     
     headers = {
         'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
         'Fingerprint': 'YOUR_FINGERPRINT'
     }
     
-    params = {'category': category}
-    if symbol:
-        params['symbol'] = symbol
-    if limit:
-        params['limit'] = limit
-    
     try:
-        response = requests.get(
+        response = requests.request(
+            'DELETE',
             url,
             headers=headers,
-            params=params,
+            json=data,
             timeout=30
         )
         
-        response_data = response.json()
-        
-        if not response.ok:
-            error_code = response_data.get('code', response.status_code)
-            error_message = response_data.get('message', 'Unknown API error')
-            raise TradingAPIError(error_code, error_message)
-        
-        return response_data
+        response.raise_for_status()
+        return response.json()
         
     except requests.exceptions.RequestException as e:
-        raise Exception(f"Network error: {e}")
-
-
-def display_orders(orders_data: Dict) -> None:
-    """Display orders in a formatted way"""
-    orders_list = orders_data.get('list', [])
-    print(f"Retrieved {len(orders_list)} orders")
-    print(f"Category: {orders_data.get('category', 'N/A')}\\n")
-    
-    for i, order in enumerate(orders_list, 1):
-        print(f"Order {i}:")
-        print(f"  Symbol: {order['symbol']} ({order['baseCoin']}/{order['quoteCoin']})")
-        print(f"  Side: {order['side']} | Type: {order['orderType']}")
-        print(f"  Price: {order['price']} | Qty: {order['qty']}")
-        print(f"  Status: {order['orderStatus']}")
-        print(f"  Order ID: {order['orderId']}")
-        print()
+        raise Exception(f"Request failed: {e}")
 
 
 def main():
+    data = {
+        'orderId': 'example',\n        'symbol': 'example',
+    }
+    
     try:
-        orders_data = get_orders(
-            base_url='https://develop.okd.finance/api',
-            access_token='YOUR_ACCESS_TOKEN',
-            category='spot',
-            symbol='BNBETH',
-            limit=10
+        result = cancelorder(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
         )
         
-        display_orders(orders_data)
+        print("Success:", json.dumps(result, indent=2))
         
-    except (TradingAPIError, Exception) as e:
-        print(f"Error getting orders: {e}")
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 if __name__ == "__main__":
     main()`
-  }
-}
-
-const copyCodeToClipboard = (lang, endpointNum) => {
-  const authValues = getRawValues()
-  let code = codeExamples[lang]?.[endpointNum]
-  
-  if (code) {
-    // Заменяем плейсхолдеры на актуальные значения
-    code = code.replace(/YOUR_ACCESS_TOKEN/g, authValues.apiToken || 'YOUR_ACCESS_TOKEN')
-    code = code.replace(/YOUR_FINGERPRINT/g, authValues.apiFingerprint || 'YOUR_FINGERPRINT')
-    code = code.replace(/https:\/\/develop\.okd\.finance\/api/g, authValues.apiBaseUrl || 'https://develop.okd.finance/api')
-    
-    navigator.clipboard.writeText(code).then(() => {
-      // Visual feedback could be added here
-      console.log('Code copied to clipboard!')
-    }).catch(err => {
-      console.error('Failed to copy code:', err)
-    })
   }
 }
 </script>
@@ -2192,8 +1597,6 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   font-size: 0.9rem;
   font-weight: 500;
 }
-
-
 
 .clear-auth-btn {
   padding: 0.4rem 0.8rem;
@@ -2396,38 +1799,6 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   line-height: 1.4;
 }
 
-/* Code Blocks */
-.code-block {
-  background: var(--vp-code-bg);
-  color: var(--vp-code-color);
-  padding: 1.5rem;
-  border-radius: 8px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  overflow-x: auto;
-  margin: 1rem 0;
-  border: 1px solid var(--vp-c-border);
-  white-space: pre;
-  word-wrap: normal;
-  overflow-wrap: normal;
-  tab-size: 2;
-  -moz-tab-size: 2;
-}
-
-.code-block pre {
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  border: none;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
-  white-space: pre;
-  overflow: visible;
-}
-
 /* Code Examples with Tabs */
 .code-examples {
   margin: 1rem 0;
@@ -2504,54 +1875,41 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   font-weight: 600;
 }
 
-/* Response Examples */
-.response-example {
-  margin: 1.5rem 0;
-  border: 1px solid var(--vp-c-border);
+.code-block {
+  background: var(--vp-code-bg);
+  color: var(--vp-code-color);
+  padding: 1.5rem;
   border-radius: 8px;
-  overflow: hidden;
-}
-
-.response-status {
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
+  font-family: var(--vp-font-family-mono);
   font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  border: 1px solid var(--vp-c-border);
+  white-space: pre;
+  word-wrap: normal;
+  overflow-wrap: normal;
+  tab-size: 2;
+  -moz-tab-size: 2;
 }
 
-.response-status.success {
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-  color: #0369a1;
-  border-bottom: 1px solid #0369a1;
-}
-
-.response-status.success::before {
-  content: "✅";
-}
-
-.response-status.error {
-  background: linear-gradient(135deg, #fef2f2, #fecaca);
-  color: #dc2626;
-  border-bottom: 1px solid #dc2626;
-}
-
-.response-status.error::before {
-  content: "❌";
-}
-
-.response-example .code-block {
+.code-block pre {
   margin: 0;
-  border-radius: 0;
+  padding: 0;
+  background: transparent;
   border: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  white-space: pre;
+  overflow: visible;
 }
 
-/* Testing Panel */
+/* Testing Section */
 .testing-title {
-  margin: 0 0 1.5rem 0;
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
   color: var(--vp-c-brand);
-  font-size: 1.1rem;
 }
 
 .test-section {
@@ -2568,18 +1926,19 @@ const copyCodeToClipboard = (lang, endpointNum) => {
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--vp-c-text-1);
-  font-size: 0.9rem;
 }
 
 .test-input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--vp-c-border);
+  border: 2px solid var(--vp-c-border);
   border-radius: 6px;
+  font-family: monospace;
   font-size: 0.9rem;
   transition: border-color 0.2s;
+  box-sizing: border-box;
 }
 
 .test-input:focus {
@@ -2628,6 +1987,50 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   box-shadow: 0 8px 25px rgba(21, 101, 192, 0.7);
 }
 
+/* Response Examples */
+.response-example {
+  margin: 1.5rem 0;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.response-status {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.response-status.success {
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  color: #0369a1;
+  border-bottom: 1px solid #0369a1;
+}
+
+.response-status.success::before {
+  content: "✅";
+}
+
+.response-status.error {
+  background: linear-gradient(135deg, #fef2f2, #fecaca);
+  color: #dc2626;
+  border-bottom: 1px solid #dc2626;
+}
+
+.response-status.error::before {
+  content: "❌";
+}
+
+.response-example .code-block {
+  margin: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Result Container */
 .result-container {
   background: var(--vp-c-bg);
   border-radius: 6px;
@@ -2676,6 +2079,31 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   background: linear-gradient(135deg, #5a6268, #495057);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+.request-info {
+  padding: 1rem;
+  border-bottom: 1px solid var(--vp-c-border);
+}
+
+.request-info h5 {
+  margin: 0 0 0.5rem 0;
+  color: var(--vp-c-text-1);
+  font-size: 0.9rem;
+}
+
+.request-data {
+  background: var(--vp-code-bg);
+  color: var(--vp-code-color);
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  overflow-x: auto;
+  margin: 0.5rem 0;
+  border: 1px solid var(--vp-c-border);
+  white-space: pre-wrap;
 }
 
 .result-data {

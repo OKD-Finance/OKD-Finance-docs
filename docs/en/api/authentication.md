@@ -5,7 +5,7 @@ layout: page
 # Authentication API
 
 <script setup>
-import InteractiveAuthenticationAPI from '../../.vitepress/theme/components/InteractiveAuthenticationAPI.vue'
+import InteractiveAuthAPI from '../../.vitepress/theme/components/InteractiveAuthAPI.vue'
 </script>
 
-<InteractiveAuthenticationAPI />
+<InteractiveAuthAPI />

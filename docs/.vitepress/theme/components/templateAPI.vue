@@ -2016,8 +2016,10 @@ const copyCodeToClipboard = (lang, endpointNum) => {
     
     navigator.clipboard.writeText(code).then(() => {
       // Visual feedback could be added here
+      // eslint-disable-next-line no-console
       console.log('Code copied to clipboard!')
     }).catch(err => {
+      // eslint-disable-next-line no-console
       console.error('Failed to copy code:', err)
     })
   }

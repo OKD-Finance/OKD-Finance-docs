@@ -19,7 +19,7 @@ class NavigationUpdater {
         return false;
       }
 
-      const [fullMatch, beforeItems, itemsContent, afterItems] = match;
+      const [, beforeItems, itemsContent, afterItems] = match;
 
       // Remove existing entries for this API to prevent duplicates
       const existingPatterns = [
@@ -84,6 +84,22 @@ ${subItemsStr}
 
       fs.writeFileSync(this.configPath, newConfigContent, 'utf8');
       console.log(`✅ Added ${apiName} to navigation (removed duplicates)`);
+
+      // Автоматическая валидация и исправление навигации
+      try {
+        const { NavigationValidator } = require('./navigation-validator.cjs');
+        const validator = new NavigationValidator(this.configPath);
+
+        console.log('\n🔧 Running automatic navigation validation...');
+        const wasFixed = validator.fixNavigation();
+
+        if (wasFixed) {
+          console.log('✅ Navigation automatically fixed!');
+        }
+      } catch (validationError) {
+        console.log('⚠️ Navigation validation skipped:', validationError.message);
+      }
+
       return true;
 
     } catch (error) {
@@ -100,7 +116,7 @@ class UniversalAPIGenerator {
   }
 
   // Generate Vue component for any API
-  generateVueComponent(apiName, endpoints, componentName) {
+  generateVueComponent(apiName, endpoints) {
     const template = `<template>
   <!-- Fixed Authentication Header -->
   <div class="auth-header-fixed" :class="{ 'collapsed': isHeaderCollapsed }">
@@ -1506,7 +1522,7 @@ if __name__ == "__main__":
   // Main generation method
   generateAPI(apiName, endpoints, componentName) {
     // Generate Vue component
-    const componentContent = this.generateVueComponent(apiName, endpoints, componentName);
+    const componentContent = this.generateVueComponent(apiName, endpoints);
 
     // Write component file
     const componentPath = `docs/.vitepress/theme/components/${componentName}.vue`;
