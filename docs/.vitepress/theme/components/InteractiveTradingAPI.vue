@@ -2235,6 +2235,18 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   border: 2px solid #2e7d32;
 }
 
+.method-badge.put {
+  background: linear-gradient(135deg, #fff3e0, #ffcc02);
+  color: #f57c00;
+  border: 2px solid #f57c00;
+}
+
+.method-badge.patch {
+  background: linear-gradient(135deg, #f3e5f5, #ce93d8);
+  color: #7b1fa2;
+  border: 2px solid #7b1fa2;
+}
+
 .method-badge.delete {
   background: linear-gradient(135deg, #ffebee, #ffcdd2);
   color: #c62828;

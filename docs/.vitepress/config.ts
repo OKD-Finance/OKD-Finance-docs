@@ -452,7 +452,7 @@ export default defineConfig({
                             'link': '/en/api/overview'
                         },
                         {
-                            'text': 'Users',
+                            'text': 'User API',
                             'link': '/en/api/users'
                         },
                         {
