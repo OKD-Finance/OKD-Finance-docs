@@ -475,9 +475,14 @@ export default defineConfig({
                             link: '/en/api/authentication',
                             collapsed: true,
                             items: [
-                                { text: 'POST /auth/login', link: '/en/api/authentication#endpoint-1' },
-                                { text: 'POST /auth/register', link: '/en/api/authentication#endpoint-2' },
-                                { text: 'POST /auth/logout', link: '/en/api/authentication#endpoint-3' }
+                                { text: 'POST /auth/register', link: '/en/api/authentication#endpoint-1' },
+                                { text: 'POST /auth/login', link: '/en/api/authentication#endpoint-2' },
+                                { text: 'POST /auth/logout', link: '/en/api/authentication#endpoint-3' },
+                                { text: 'POST /auth/refresh', link: '/en/api/authentication#endpoint-4' },
+                                { text: 'POST /auth/forgot-password', link: '/en/api/authentication#endpoint-5' },
+                                { text: 'POST /auth/reset-password', link: '/en/api/authentication#endpoint-6' },
+                                { text: 'POST /auth/verify-email', link: '/en/api/authentication#endpoint-7' },
+                                { text: 'GET /auth/me', link: '/en/api/authentication#endpoint-8' }
                             ]
                         },
                         {
@@ -487,7 +492,9 @@ export default defineConfig({
                             items: [
                                 { text: 'GET /wallet/balance', link: '/en/api/wallet#endpoint-1' },
                                 { text: 'POST /wallet/transfer', link: '/en/api/wallet#endpoint-2' },
-                                { text: 'GET /wallet/history', link: '/en/api/wallet#endpoint-3' }
+                                { text: 'GET /wallet/history', link: '/en/api/wallet#endpoint-3' },
+                                { text: 'POST /wallet/deposit', link: '/en/api/wallet#endpoint-4' },
+                                { text: 'POST /wallet/withdraw', link: '/en/api/wallet#endpoint-5' }
                             ]
                         },
                         {
