@@ -4,30 +4,23 @@
     <div class="auth-container">
       <div class="auth-title">
         <h4>🔐 API Authentication</h4>
-        <button @click="isHeaderCollapsed = !isHeaderCollapsed" class="collapse-toggle" :title="isHeaderCollapsed ? 'Expand header' : 'Collapse header'">
+        <button @click="isHeaderCollapsed = !isHeaderCollapsed" class="collapse-toggle"
+          :title="isHeaderCollapsed ? 'Expand header' : 'Collapse header'">
           {{ isHeaderCollapsed ? '⬇️' : '⬆️' }}
         </button>
       </div>
       <div class="api-config-row">
         <div class="config-group">
           <label class="config-label">🌐 API Base URL</label>
-          <input 
-            v-model="apiBaseUrl" 
-            type="text" 
-            placeholder="https://develop.okd.finance/api" 
-            class="config-input" 
-          />
+          <input v-model="apiBaseUrl" type="text" placeholder="https://develop.okd.finance/api" class="config-input" />
         </div>
         <div class="config-group token-group">
           <label class="config-label">🔑 Access Token</label>
           <div class="token-input-group">
-            <input 
-              v-model="apiToken" 
-              :type="showToken ? 'text' : 'password'" 
-              placeholder="Paste your access token here (without 'Bearer')" 
-              class="token-input" 
-            />
-            <button @click="showToken = !showToken" class="token-toggle" :title="showToken ? 'Hide token' : 'Show token'">
+            <input v-model="apiToken" :type="showToken ? 'text' : 'password'"
+              placeholder="Paste your access token here (without 'Bearer')" class="token-input" />
+            <button @click="showToken = !showToken" class="token-toggle"
+              :title="showToken ? 'Hide token' : 'Show token'">
               {{ showToken ? '🙈' : '👁️' }}
             </button>
           </div>
@@ -52,12 +45,13 @@
               <span class="method-badge post">POST</span>
               <span class="endpoint-path">/spot/orders</span>
             </div>
-            
+
             <div class="endpoint-info">
               <h3 class="endpoint-title">📈 Place Trading Order</h3>
-              <p class="endpoint-description">Place a new trading order on the exchange with comprehensive order types and parameters.</p>
+              <p class="endpoint-description">Place a new trading order on the exchange with comprehensive order types
+                and parameters.</p>
             </div>
-            
+
             <div class="api-section">
               <h4 class="section-title">📋 Headers</h4>
               <div class="param-list">
@@ -78,7 +72,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="api-section">
               <h4 class="section-title">⚙️ Body Parameters</h4>
               <div class="param-list">
@@ -119,21 +113,18 @@
               <h4 class="section-title">📝 Example Request</h4>
               <div class="code-examples">
                 <div class="code-tabs">
-                  <button 
-                    v-for="lang in codeLangs" 
-                    :key="lang" 
-                    @click="activeCodeTab1 = lang"
-                    :class="['code-tab', { active: activeCodeTab1 === lang }]"
-                  >
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab1 = lang"
+                    :class="['code-tab', { active: activeCodeTab1 === lang }]">
                     {{ lang }}
                   </button>
                 </div>
-                
+
                 <div v-show="activeCodeTab1 === 'cURL'" class="code-block-container">
                   <button @click="copyCodeToClipboard('curl', 1)" class="copy-code-btn" title="Copy to clipboard">
                     📋
                   </button>
-                  <div class="code-block"><pre>curl -X POST "https://develop.okd.finance/api/spot/orders" \
+                  <div class="code-block">
+                    <pre>curl -X POST "https://develop.okd.finance/api/spot/orders" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -H "Fingerprint: 1358cd229b6bceb25941e99f4228997f" \
@@ -144,14 +135,16 @@
     "orderType": "Limit",
     "qty": "2",
     "price": "0.2"
-  }'</pre></div>
+  }'</pre>
+                  </div>
                 </div>
 
                 <div v-show="activeCodeTab1 === 'Go'" class="code-block-container">
                   <button @click="copyCodeToClipboard('go', 1)" class="copy-code-btn" title="Copy to clipboard">
                     📋
                   </button>
-                  <div class="code-block"><pre>package main
+                  <div class="code-block">
+                    <pre>package main
 
 import (
     "bytes"
@@ -235,14 +228,16 @@ func main() {
     fmt.Printf("Order placed successfully!\n")
     fmt.Printf("Order ID: %s\n", order.OrderID)
     fmt.Printf("Order Link ID: %s\n", order.OrderLinkID)
-}</pre></div>
+}</pre>
+                  </div>
                 </div>
 
                 <div v-show="activeCodeTab1 === 'TypeScript'" class="code-block-container">
                   <button @click="copyCodeToClipboard('typescript', 1)" class="copy-code-btn" title="Copy to clipboard">
                     📋
                   </button>
-                  <div class="code-block"><pre>interface OrderRequest {
+                  <div class="code-block">
+                    <pre>interface OrderRequest {
   category: 'spot';
   symbol: string;
   side: 'Buy' | 'Sell';
@@ -311,14 +306,16 @@ async function main(): Promise&lt;void&gt; {
   }
 }
 
-main();</pre></div>
+main();</pre>
+                  </div>
                 </div>
 
                 <div v-show="activeCodeTab1 === 'PHP'" class="code-block-container">
                   <button @click="copyCodeToClipboard('php', 1)" class="copy-code-btn" title="Copy to clipboard">
                     📋
                   </button>
-                  <div class="code-block"><pre>&lt;?php
+                  <div class="code-block">
+                    <pre>&lt;?php
 
 function placeOrder($baseUrl, $accessToken, $orderData) {
     $url = $baseUrl . '/spot/orders';
@@ -387,14 +384,16 @@ try {
     echo "Error placing order: " . $e->getMessage() . "\n";
 }
 
-?&gt;</pre></div>
+?&gt;</pre>
+                  </div>
                 </div>
 
                 <div v-show="activeCodeTab1 === 'Python'" class="code-block-container">
                   <button @click="copyCodeToClipboard('python', 1)" class="copy-code-btn" title="Copy to clipboard">
                     📋
                   </button>
-                  <div class="code-block"><pre>import requests
+                  <div class="code-block">
+                    <pre>import requests
 import json
 from typing import Dict, Optional
 
@@ -463,7 +462,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()</pre></div>
+    main()</pre>
+                  </div>
                 </div>
               </div>
             </div>
@@ -530,13 +530,15 @@ if __name__ == "__main__":
                 <input v-model="orderData.price" type="text" placeholder="0.2" class="test-input" />
               </div>
               <button @click="testPlaceOrder" class="test-btn" :disabled="!apiToken || !apiBaseUrl">
-                {{ !apiToken ? '🔒 Enter API Token First' : !apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+                {{ !apiToken ? '🔒 Enter API Token First' : !apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request'
+                }}
               </button>
               <div v-if="results.placeOrder" class="result-container">
                 <div class="result-header">
                   <span class="status-badge">{{ results.placeOrder.status }}</span>
                   <span class="timestamp">{{ results.placeOrder.timestamp }}</span>
-                  <button @click="copyToClipboard(results.placeOrder.data, $event)" class="copy-btn">📋 Copy Response</button>
+                  <button @click="copyToClipboard(results.placeOrder.data, $event)" class="copy-btn">📋 Copy
+                    Response</button>
                 </div>
                 <div v-if="results.placeOrder.requestUrl" class="request-info">
                   <h5>📤 Actual Request:</h5>
@@ -562,12 +564,13 @@ if __name__ == "__main__":
               <span class="method-badge get">GET</span>
               <span class="endpoint-path">/spot/orders/open</span>
             </div>
-            
+
             <div class="endpoint-info">
               <h3 class="endpoint-title">📋 Get Open Orders</h3>
-              <p class="endpoint-description">Retrieve all active (open) orders for the authenticated user with optional filtering capabilities.</p>
+              <p class="endpoint-description">Retrieve all active (open) orders for the authenticated user with optional
+                filtering capabilities.</p>
             </div>
-            
+
             <div class="api-section">
               <h4 class="section-title">📋 Headers</h4>
               <div class="param-list">
@@ -583,7 +586,7 @@ if __name__ == "__main__":
                 </div>
               </div>
             </div>
-            
+
             <div class="api-section">
               <h4 class="section-title">🔍 Query Parameters</h4>
               <div class="param-list">
@@ -609,30 +612,29 @@ if __name__ == "__main__":
               <h4 class="section-title">📝 Example Request</h4>
               <div class="code-examples">
                 <div class="code-tabs">
-                  <button 
-                    v-for="lang in codeLangs" 
-                    :key="lang" 
-                    @click="activeCodeTab2 = lang"
-                    :class="['code-tab', { active: activeCodeTab2 === lang }]"
-                  >
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab2 = lang"
+                    :class="['code-tab', { active: activeCodeTab2 === lang }]">
                     {{ lang }}
                   </button>
                 </div>
-                
+
                 <div v-show="activeCodeTab2 === 'cURL'" class="code-block-container">
                   <button @click="copyCodeToClipboard('curl', 2)" class="copy-code-btn" title="Copy to clipboard">
                     📋
                   </button>
-                  <div class="code-block"><pre>curl -X GET "https://develop.okd.finance/api/spot/orders/open?category=spot&symbol=BNBETH&limit=10" \
+                  <div class="code-block">
+                    <pre>curl -X GET "https://develop.okd.finance/api/spot/orders/open?category=spot&symbol=BNBETH&limit=10" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Fingerprint: 1358cd229b6bceb25941e99f4228997f"</pre></div>
+  -H "Fingerprint: 1358cd229b6bceb25941e99f4228997f"</pre>
+                  </div>
                 </div>
 
                 <div v-show="activeCodeTab2 === 'Go'" class="code-block-container">
                   <button @click="copyCodeToClipboard('go', 2)" class="copy-code-btn" title="Copy to clipboard">
                     📋
                   </button>
-                  <div class="code-block"><pre>package main
+                  <div class="code-block">
+                    <pre>package main
 
 import (
     "encoding/json"
@@ -719,14 +721,16 @@ func main() {
         fmt.Printf("Order %d: %s %s %s@%s\n", 
             i+1, order.Symbol, order.Side, order.Qty, order.Price)
     }
-}</pre></div>
+}</pre>
+                  </div>
                 </div>
 
                 <div v-show="activeCodeTab2 === 'TypeScript'" class="code-block-container">
                   <button @click="copyCodeToClipboard('typescript', 2)" class="copy-code-btn" title="Copy to clipboard">
                     📋
                   </button>
-                  <div class="code-block"><pre>interface OrdersParams {
+                  <div class="code-block">
+                    <pre>interface OrdersParams {
   category: 'spot';
   symbol?: string;
   limit?: number;
@@ -826,14 +830,16 @@ async function main(): Promise&lt;void&gt; {
   }
 }
 
-main();</pre></div>
+main();</pre>
+                  </div>
                 </div>
 
                 <div v-show="activeCodeTab2 === 'PHP'" class="code-block-container">
                   <button @click="copyCodeToClipboard('php', 2)" class="copy-code-btn" title="Copy to clipboard">
                     📋
                   </button>
-                  <div class="code-block"><pre>&lt;?php
+                  <div class="code-block">
+                    <pre>&lt;?php
 
 function getOrders($baseUrl, $accessToken, $params) {
     $queryString = http_build_query(array_filter($params));
@@ -912,14 +918,16 @@ try {
     echo "Error getting orders: " . $e->getMessage() . "\n";
 }
 
-?&gt;</pre></div>
+?&gt;</pre>
+                  </div>
                 </div>
 
                 <div v-show="activeCodeTab2 === 'Python'" class="code-block-container">
                   <button @click="copyCodeToClipboard('python', 2)" class="copy-code-btn" title="Copy to clipboard">
                     📋
                   </button>
-                  <div class="code-block"><pre>import requests
+                  <div class="code-block">
+                    <pre>import requests
 from typing import Dict, List, Optional
 
 
@@ -1005,7 +1013,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()</pre></div>
+    main()</pre>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1075,13 +1084,15 @@ if __name__ == "__main__":
                 <input v-model.number="ordersData.limit" type="number" placeholder="50" class="test-input" />
               </div>
               <button @click="testGetOrders" class="test-btn" :disabled="!apiToken || !apiBaseUrl">
-                {{ !apiToken ? '🔒 Enter API Token First' : !apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+                {{ !apiToken ? '🔒 Enter API Token First' : !apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request'
+                }}
               </button>
               <div v-if="results.orders" class="result-container">
                 <div class="result-header">
                   <span class="status-badge">{{ results.orders.status }}</span>
                   <span class="timestamp">{{ results.orders.timestamp }}</span>
-                  <button @click="copyToClipboard(results.orders.data, $event)" class="copy-btn">📋 Copy Response</button>
+                  <button @click="copyToClipboard(results.orders.data, $event)" class="copy-btn">📋 Copy
+                    Response</button>
                 </div>
                 <div v-if="results.orders.requestUrl" class="request-info">
                   <h5>📤 Actual Request:</h5>
@@ -1096,7 +1107,7 @@ if __name__ == "__main__":
           </div>
         </div>
       </section>
-      
+
     </div>
   </div>
 </template>
@@ -1111,27 +1122,60 @@ const apiBaseUrl = ref('https://develop.okd.finance/api')
 // Header collapse functionality
 const isHeaderCollapsed = ref(false)
 const lastScrollY = ref(0)
+const scrollDirection = ref('none')
+let scrollTimer = null
 
 const handleScroll = () => {
-  const currentScrollY = window.scrollY
-  
-  // Collapse header when scrolling down past 100px
-  if (currentScrollY > 100 && currentScrollY > lastScrollY.value) {
-    isHeaderCollapsed.value = true
-  } else if (currentScrollY < lastScrollY.value) {
-    // Expand header when scrolling up
-    isHeaderCollapsed.value = false
+  // Очищаем предыдущий таймер
+  if (scrollTimer) {
+    clearTimeout(scrollTimer)
   }
-  
-  lastScrollY.value = currentScrollY
+
+  // Устанавливаем новый таймер с задержкой
+  scrollTimer = setTimeout(() => {
+    const currentScrollY = window.scrollY
+    const scrollDelta = currentScrollY - lastScrollY.value
+
+    // Игнорируем мелкие изменения
+    if (Math.abs(scrollDelta) < 10) {
+      return
+    }
+
+    // Определяем направление прокрутки
+    const newDirection = scrollDelta > 0 ? 'down' : 'up'
+
+    // Логика сворачивания только при значительных изменениях
+    if (currentScrollY > 200) {
+      // Далеко от начала страницы
+      if (newDirection === 'down' && scrollDirection.value !== 'down') {
+        // Начали прокрутку вниз - сворачиваем
+        isHeaderCollapsed.value = true
+        scrollDirection.value = 'down'
+      } else if (newDirection === 'up' && scrollDirection.value !== 'up') {
+        // Начали прокрутку вверх - разворачиваем
+        isHeaderCollapsed.value = false
+        scrollDirection.value = 'up'
+      }
+    } else if (currentScrollY < 100) {
+      // Близко к началу страницы - всегда разворачиваем
+      isHeaderCollapsed.value = false
+      scrollDirection.value = 'up'
+    }
+
+    lastScrollY.value = currentScrollY
+  }, 100) // Увеличиваем задержку до 100ms для стабильности
 }
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true })
+  lastScrollY.value = window.scrollY
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  if (scrollTimer) {
+    clearTimeout(scrollTimer)
+  }
 })
 
 // Code examples tabs
@@ -1178,7 +1222,7 @@ const testPlaceOrder = async () => {
       qty: orderData.qty,
       price: orderData.price
     }
-    
+
     const fullUrl = `${apiBaseUrl.value}/spot/orders`
     const fingerprint = generateFingerprint()
     const headers = {
@@ -1187,13 +1231,13 @@ const testPlaceOrder = async () => {
       'Fingerprint': fingerprint
     }
     const bodyString = JSON.stringify(requestBody)
-    
+
     const response = await fetch(fullUrl, {
       method: 'POST',
       headers: headers,
       body: bodyString
     })
-    
+
     const data = await response.text()
     results.placeOrder = {
       status: `${response.status} ${response.statusText}`,
@@ -1219,15 +1263,15 @@ const testGetOrders = async () => {
   try {
     let endpoint = '/spot/orders/open'
     const params = new URLSearchParams()
-    
+
     if (ordersData.symbol) params.append('symbol', ordersData.symbol)
     if (ordersData.limit) params.append('limit', ordersData.limit)
     if (ordersData.category) params.append('category', ordersData.category)
-    
+
     if (params.toString()) {
       endpoint += '?' + params.toString()
     }
-    
+
     const fullUrl = `${apiBaseUrl.value}${endpoint}`
     const fingerprint = generateFingerprint()
     const headers = {
@@ -1235,12 +1279,12 @@ const testGetOrders = async () => {
       'Content-Type': 'application/json',
       'Fingerprint': fingerprint
     }
-    
+
     const response = await fetch(fullUrl, {
       method: 'GET',
       headers: headers
     })
-    
+
     const data = await response.text()
     results.orders = {
       status: `${response.status} ${response.statusText}`,
@@ -1278,7 +1322,7 @@ const copyToClipboard = (text, event) => {
     textArea.select()
     document.execCommand('copy')
     document.body.removeChild(textArea)
-    
+
     const button = event.target
     const originalText = button.textContent
     button.textContent = '✅ Copied!'
@@ -1994,7 +2038,7 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   padding: 0.65rem 0;
   margin-bottom: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  transition: padding 0.3s ease-out, box-shadow 0.3s ease-out;
   overflow: hidden;
 }
 
@@ -2010,7 +2054,7 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   opacity: 0;
   margin: 0;
   padding: 0;
-  transition: all 0.3s ease;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
 }
 
 .auth-container {
@@ -2054,7 +2098,7 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   margin-bottom: 0.65rem;
-  transition: all 0.3s ease;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
   max-height: 200px;
   opacity: 1;
 }
@@ -2125,7 +2169,7 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   gap: 1.5rem;
   align-items: center;
   margin-bottom: 0.5rem;
-  transition: all 0.3s ease;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
   max-height: 50px;
   opacity: 1;
 }
@@ -2150,7 +2194,7 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   color: var(--vp-c-text-2);
   font-size: 0.85rem;
   margin-top: 0.25rem;
-  transition: all 0.3s ease;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
   max-height: 30px;
   opacity: 1;
 }
@@ -2655,7 +2699,7 @@ const copyCodeToClipboard = (lang, endpointNum) => {
     padding-left: 0;
     padding-top: 2rem;
   }
-  
+
   .param-item {
     grid-template-columns: 1fr;
     gap: 0.5rem;
@@ -2666,26 +2710,26 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   .auth-header-fixed {
     padding: 0.75rem 0;
   }
-  
+
   .api-config-row {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .status-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
+
   .token-input-group {
     flex-direction: column;
   }
-  
+
   .interactive-api-container {
     padding: 0 0.5rem;
   }
-  
+
   .endpoint-layout {
     gap: 1.5rem;
   }
@@ -2706,4 +2750,4 @@ const copyCodeToClipboard = (lang, endpointNum) => {
     padding: 1rem;
   }
 }
-</style> 
+</style>
