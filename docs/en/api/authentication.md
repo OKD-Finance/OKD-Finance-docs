@@ -6,8 +6,8 @@ layout: page
 
 Welcome to the Authentication API documentation. This interactive documentation allows you to test API endpoints directly from this page.
 
-<InteractiveAuthAPI />
+<InteractiveAuthenticationAPI />
 
 <script setup>
-import InteractiveAuthAPI from '../../.vitepress/theme/components/InteractiveAuthAPI.vue'
+import InteractiveAuthenticationAPI from '../../.vitepress/theme/components/InteractiveAuthenticationAPI.vue'
 </script>

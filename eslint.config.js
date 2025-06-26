@@ -8,6 +8,53 @@ export default [
     // Vue 3 rules
     ...pluginVue.configs['flat/essential'],
 
+    // Node.js files configuration
+    {
+        files: ['**/*.cjs'],
+        languageOptions: {
+            ecmaVersion: 2022,
+            sourceType: 'script',
+            globals: {
+                require: 'readonly',
+                module: 'readonly',
+                process: 'readonly',
+                console: 'readonly',
+                __dirname: 'readonly',
+                __filename: 'readonly',
+                Buffer: 'readonly',
+                global: 'readonly'
+            }
+        },
+        rules: {
+            'no-console': 'off',
+            'no-unused-vars': 'warn'
+        }
+    },
+
+    // Node.js .js files configuration
+    {
+        files: ['swagger-generator.js', 'template-new-component.js'],
+        languageOptions: {
+            ecmaVersion: 2022,
+            sourceType: 'script',
+            globals: {
+                require: 'readonly',
+                module: 'readonly',
+                process: 'readonly',
+                console: 'readonly',
+                __dirname: 'readonly',
+                __filename: 'readonly',
+                Buffer: 'readonly',
+                global: 'readonly'
+            }
+        },
+        rules: {
+            'no-console': 'off',
+            'no-unused-vars': 'warn',
+            'no-undef': 'warn'
+        }
+    },
+
     {
         files: ['**/*.vue', '**/*.js', '**/*.ts'],
         languageOptions: {
@@ -60,7 +107,14 @@ export default [
             '*.min.js',
             'docs/.vitepress/config.ts',
             'docs/.vitepress/components/**/*.vue',
-            'merge_swagger.js'
+            'merge_swagger.js',
+            'swagger-generator-backup.cjs',
+            'swagger-generator.cjs',
+            'swagger-generator.js',
+            'template-new-component.js',
+            'docs/.vitepress/theme/components/Interactive*API.vue',
+            'temp_backup/**',
+            'temp_build/**'
         ]
     }
 ] 

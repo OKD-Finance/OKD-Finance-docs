@@ -1,13 +1,13 @@
+---
+layout: page
+---
+
 # KYC API
 
-Know Your Customer (KYC) API for identity verification.
+Welcome to the KYC API documentation. This interactive documentation allows you to test API endpoints directly from this page.
 
-::: tip Interactive Testing
-Test the KYC API endpoints in real-time using the interactive component below. Submit documents, check verification status, and manage your KYC process.
-:::
-
-<KycTester />
+<InteractiveKYCAPI />
 
 <script setup>
-import KycTester from '../../.vitepress/theme/components/KycTester.vue'
+import InteractiveKYCAPI from '../../.vitepress/theme/components/InteractiveKYCAPI.vue'
 </script>
