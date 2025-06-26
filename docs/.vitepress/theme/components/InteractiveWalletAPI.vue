@@ -55,13 +55,13 @@
         <div class="endpoint-layout">
           <div class="endpoint-docs">
             <div class="method-header">
-              <span class="method-badge put">PUT</span>
-              <span class="endpoint-path">/user/flags</span>
+              <span class="method-badge get">GET</span>
+              <span class="endpoint-path">/wallet/balance</span>
             </div>
 
             <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Set Profile Flags</h3>
-              <p class="endpoint-description">Update user profile flags and preferences</p>
+              <h3 class="endpoint-title">📋 Get Wallet Balance</h3>
+              <p class="endpoint-description">Retrieve current wallet balance for all currencies</p>
             </div>
 
             <div class="api-section">
@@ -89,19 +89,9 @@
               <h4 class="section-title">⚙️ Body Parameters</h4>
               <div class="param-list">
                 <div class="param-item required">
-                  <code class="param-name">notifications</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Enable/disable notifications</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">marketing</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Enable/disable marketing emails</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">privacy</code>
+                  <code class="param-name">currency</code>
                   <span class="param-type">string</span>
-                  <span class="param-desc">Privacy level (public/private)</span>
+                  <span class="param-desc">Filter by specific currency (optional)</span>
                 </div>
               </div>
             </div>
@@ -119,11 +109,11 @@
                 <div v-show="activeCodeTab1 === 'cURL'" class="code-block-container">
                   <button @click="copyCodeToClipboard('curl', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>curl -X PUT &quot;https://develop.okd.finance/api/user/flags&quot; \
+                    <pre>curl -X GET &quot;https://develop.okd.finance/api/wallet/balance&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;notifications&quot;:&quot;example&quot;,&quot;marketing&quot;:&quot;example&quot;,&quot;privacy&quot;:&quot;example&quot;}&#x27;</pre>
+  -d &#x27;{&quot;currency&quot;:&quot;example&quot;}&#x27;</pre>
                   </div>
                 </div>
 
@@ -162,22 +152,8 @@
             <h4 class="testing-title">🚀 Live Testing</h4>
             <div class="test-section">
               <div class="form-group">
-                <label>Notifications</label>
-                <select v-model="testData1.notifications" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Marketing</label>
-                <select v-model="testData1.marketing" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Privacy</label>
-                <input v-model="testData1.privacy" type="text" placeholder="example_privacy" class="test-input" />
+                <label>Currency</label>
+                <input v-model="testData1.currency" type="text" placeholder="example_currency" class="test-input" />
               </div>
               <button @click="testEndpoint1" class="test-btn"
                 :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
@@ -209,13 +185,13 @@
         <div class="endpoint-layout">
           <div class="endpoint-docs">
             <div class="method-header">
-              <span class="method-badge patch">PATCH</span>
-              <span class="endpoint-path">/user/notifications</span>
+              <span class="method-badge post">POST</span>
+              <span class="endpoint-path">/wallet/transfer</span>
             </div>
 
             <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Subscribe to Notifications</h3>
-              <p class="endpoint-description">Subscribe or unsubscribe from various notification types</p>
+              <h3 class="endpoint-title">📋 Transfer Funds</h3>
+              <p class="endpoint-description">Transfer funds between wallet accounts or to external addresses</p>
             </div>
 
             <div class="api-section">
@@ -243,19 +219,29 @@
               <h4 class="section-title">⚙️ Body Parameters</h4>
               <div class="param-list">
                 <div class="param-item required">
-                  <code class="param-name">email</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Email notifications</span>
+                  <code class="param-name">from_account</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Source wallet account ID</span>
                 </div>
                 <div class="param-item required">
-                  <code class="param-name">push</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Push notifications</span>
+                  <code class="param-name">to_account</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Destination wallet account ID</span>
                 </div>
                 <div class="param-item required">
-                  <code class="param-name">sms</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">SMS notifications</span>
+                  <code class="param-name">amount</code>
+                  <span class="param-type">number</span>
+                  <span class="param-desc">Transfer amount</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">currency</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Currency code (e.g., USD, BTC)</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">note</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Optional transfer note</span>
                 </div>
               </div>
             </div>
@@ -273,11 +259,11 @@
                 <div v-show="activeCodeTab2 === 'cURL'" class="code-block-container">
                   <button @click="copyCodeToClipboard('curl', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>curl -X PATCH &quot;https://develop.okd.finance/api/user/notifications&quot; \
+                    <pre>curl -X POST &quot;https://develop.okd.finance/api/wallet/transfer&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;email&quot;:&quot;example&quot;,&quot;push&quot;:&quot;example&quot;,&quot;sms&quot;:&quot;example&quot;}&#x27;</pre>
+  -d &#x27;{&quot;from_account&quot;:&quot;example&quot;,&quot;to_account&quot;:&quot;example&quot;,&quot;amount&quot;:&quot;example&quot;,&quot;currency&quot;:&quot;example&quot;,&quot;note&quot;:&quot;example&quot;}&#x27;</pre>
                   </div>
                 </div>
 
@@ -316,25 +302,24 @@
             <h4 class="testing-title">🚀 Live Testing</h4>
             <div class="test-section">
               <div class="form-group">
-                <label>Email</label>
-                <select v-model="testData2.email" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
+                <label>From_account</label>
+                <input v-model="testData2.from_account" type="text" placeholder="example_from_account" class="test-input" />
               </div>
               <div class="form-group">
-                <label>Push</label>
-                <select v-model="testData2.push" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
+                <label>To_account</label>
+                <input v-model="testData2.to_account" type="text" placeholder="example_to_account" class="test-input" />
               </div>
               <div class="form-group">
-                <label>Sms</label>
-                <select v-model="testData2.sms" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
+                <label>Amount</label>
+                <input v-model="testData2.amount" type="text" placeholder="example_amount" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Currency</label>
+                <input v-model="testData2.currency" type="text" placeholder="example_currency" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Note</label>
+                <input v-model="testData2.note" type="text" placeholder="example_note" class="test-input" />
               </div>
               <button @click="testEndpoint2" class="test-btn"
                 :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
@@ -366,13 +351,13 @@
         <div class="endpoint-layout">
           <div class="endpoint-docs">
             <div class="method-header">
-              <span class="method-badge patch">PATCH</span>
-              <span class="endpoint-path">/user/profile</span>
+              <span class="method-badge get">GET</span>
+              <span class="endpoint-path">/wallet/history</span>
             </div>
 
             <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Subscribe to Profile Events</h3>
-              <p class="endpoint-description">Subscribe to profile-related events and updates</p>
+              <h3 class="endpoint-title">📋 Get Transaction History</h3>
+              <p class="endpoint-description">Retrieve wallet transaction history with pagination</p>
             </div>
 
             <div class="api-section">
@@ -400,14 +385,24 @@
               <h4 class="section-title">⚙️ Body Parameters</h4>
               <div class="param-list">
                 <div class="param-item required">
-                  <code class="param-name">profileUpdates</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Profile update notifications</span>
+                  <code class="param-name">page</code>
+                  <span class="param-type">integer</span>
+                  <span class="param-desc">Page number for pagination (default: 1)</span>
                 </div>
                 <div class="param-item required">
-                  <code class="param-name">securityAlerts</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Security alert notifications</span>
+                  <code class="param-name">limit</code>
+                  <span class="param-type">integer</span>
+                  <span class="param-desc">Number of transactions per page (default: 50)</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">currency</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Filter by currency</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">type</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Filter by transaction type (deposit, withdrawal, transfer)</span>
                 </div>
               </div>
             </div>
@@ -425,11 +420,11 @@
                 <div v-show="activeCodeTab3 === 'cURL'" class="code-block-container">
                   <button @click="copyCodeToClipboard('curl', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
                   <div class="code-block">
-                    <pre>curl -X PATCH &quot;https://develop.okd.finance/api/user/profile&quot; \
+                    <pre>curl -X GET &quot;https://develop.okd.finance/api/wallet/history&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;profileUpdates&quot;:&quot;example&quot;,&quot;securityAlerts&quot;:&quot;example&quot;}&#x27;</pre>
+  -d &#x27;{&quot;page&quot;:&quot;example&quot;,&quot;limit&quot;:&quot;example&quot;,&quot;currency&quot;:&quot;example&quot;,&quot;type&quot;:&quot;example&quot;}&#x27;</pre>
                   </div>
                 </div>
 
@@ -468,18 +463,20 @@
             <h4 class="testing-title">🚀 Live Testing</h4>
             <div class="test-section">
               <div class="form-group">
-                <label>ProfileUpdates</label>
-                <select v-model="testData3.profileUpdates" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
+                <label>Page</label>
+                <input v-model="testData3.page" type="number" placeholder="example_page" class="test-input" />
               </div>
               <div class="form-group">
-                <label>SecurityAlerts</label>
-                <select v-model="testData3.securityAlerts" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
+                <label>Limit</label>
+                <input v-model="testData3.limit" type="number" placeholder="example_limit" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Currency</label>
+                <input v-model="testData3.currency" type="text" placeholder="example_currency" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Type</label>
+                <input v-model="testData3.type" type="text" placeholder="example_type" class="test-input" />
               </div>
               <button @click="testEndpoint3" class="test-btn"
                 :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
@@ -501,6 +498,311 @@
                 </div>
                 <h5>📥 Response:</h5>
                 <pre class="result-data">{{ results.endpoint3.data }}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="endpoint-4" class="endpoint-section">
+        <div class="endpoint-layout">
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge post">POST</span>
+              <span class="endpoint-path">/wallet/deposit</span>
+            </div>
+
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">📋 Generate Deposit Address</h3>
+              <p class="endpoint-description">Generate a new deposit address for specified currency</p>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📋 Headers</h4>
+              <div class="param-list">
+                <div class="param-item">
+                  <code class="param-name">Authorization</code>
+                  <span class="param-type">Bearer token</span>
+                  <span class="param-desc">JWT access token for authentication</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Fingerprint</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">32-character hex string for device identification</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">⚙️ Body Parameters</h4>
+              <div class="param-list">
+                <div class="param-item required">
+                  <code class="param-name">currency</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Currency code for deposit address</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">network</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Blockchain network (for multi-network currencies)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📝 Example Request</h4>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab4 = lang"
+                    :class="['code-tab', { active: activeCodeTab4 === lang }]">
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab4 === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>curl -X POST &quot;https://develop.okd.finance/api/wallet/deposit&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{&quot;currency&quot;:&quot;example&quot;,&quot;network&quot;:&quot;example&quot;}&#x27;</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab4 === 'Go'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('go', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.go[4] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab4 === 'TypeScript'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('typescript', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.typescript[4] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab4 === 'PHP'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('php', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.php[4] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab4 === 'Python'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('python', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.python[4] }}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="endpoint-testing">
+            <h4 class="testing-title">🚀 Live Testing</h4>
+            <div class="test-section">
+              <div class="form-group">
+                <label>Currency</label>
+                <input v-model="testData4.currency" type="text" placeholder="example_currency" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Network</label>
+                <input v-model="testData4.network" type="text" placeholder="example_network" class="test-input" />
+              </div>
+              <button @click="testEndpoint4" class="test-btn"
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+              </button>
+              <div v-if="results.endpoint4" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.endpoint4.status }}</span>
+                  <span class="timestamp">{{ results.endpoint4.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint4.data, $event)" class="copy-btn">📋 Copy Response</button>
+                </div>
+                <div v-if="results.endpoint4.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.endpoint4.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.endpoint4.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint4.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
+                <pre class="result-data">{{ results.endpoint4.data }}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="endpoint-5" class="endpoint-section">
+        <div class="endpoint-layout">
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge post">POST</span>
+              <span class="endpoint-path">/wallet/withdraw</span>
+            </div>
+
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">📋 Withdraw Funds</h3>
+              <p class="endpoint-description">Withdraw funds to an external address</p>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📋 Headers</h4>
+              <div class="param-list">
+                <div class="param-item">
+                  <code class="param-name">Authorization</code>
+                  <span class="param-type">Bearer token</span>
+                  <span class="param-desc">JWT access token for authentication</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Fingerprint</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">32-character hex string for device identification</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">⚙️ Body Parameters</h4>
+              <div class="param-list">
+                <div class="param-item required">
+                  <code class="param-name">currency</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Currency to withdraw</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">amount</code>
+                  <span class="param-type">number</span>
+                  <span class="param-desc">Withdrawal amount</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">address</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Destination address</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">network</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Blockchain network</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">tag</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Memo/Tag for currencies that require it</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📝 Example Request</h4>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab5 = lang"
+                    :class="['code-tab', { active: activeCodeTab5 === lang }]">
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab5 === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>curl -X POST &quot;https://develop.okd.finance/api/wallet/withdraw&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{&quot;currency&quot;:&quot;example&quot;,&quot;amount&quot;:&quot;example&quot;,&quot;address&quot;:&quot;example&quot;,&quot;network&quot;:&quot;example&quot;,&quot;tag&quot;:&quot;example&quot;}&#x27;</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab5 === 'Go'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('go', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.go[5] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab5 === 'TypeScript'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('typescript', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.typescript[5] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab5 === 'PHP'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('php', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.php[5] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab5 === 'Python'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('python', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.python[5] }}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="endpoint-testing">
+            <h4 class="testing-title">🚀 Live Testing</h4>
+            <div class="test-section">
+              <div class="form-group">
+                <label>Currency</label>
+                <input v-model="testData5.currency" type="text" placeholder="example_currency" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Amount</label>
+                <input v-model="testData5.amount" type="text" placeholder="example_amount" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Address</label>
+                <input v-model="testData5.address" type="text" placeholder="example_address" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Network</label>
+                <input v-model="testData5.network" type="text" placeholder="example_network" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Tag</label>
+                <input v-model="testData5.tag" type="text" placeholder="example_tag" class="test-input" />
+              </div>
+              <button @click="testEndpoint5" class="test-btn"
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+              </button>
+              <div v-if="results.endpoint5" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.endpoint5.status }}</span>
+                  <span class="timestamp">{{ results.endpoint5.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint5.data, $event)" class="copy-btn">📋 Copy Response</button>
+                </div>
+                <div v-if="results.endpoint5.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.endpoint5.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.endpoint5.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint5.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
+                <pre class="result-data">{{ results.endpoint5.data }}</pre>
               </div>
             </div>
           </div>
@@ -533,17 +835,23 @@ const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
 const activeCodeTab1 = ref('cURL')
 const activeCodeTab2 = ref('cURL')
 const activeCodeTab3 = ref('cURL')
+const activeCodeTab4 = ref('cURL')
+const activeCodeTab5 = ref('cURL')
 
-const testData1 = reactive({ notifications: true, marketing: true, privacy: 'example_privacy' })
-const testData2 = reactive({ email: true, push: true, sms: true })
-const testData3 = reactive({ profileUpdates: true, securityAlerts: true })
+const testData1 = reactive({ currency: 'example_currency' })
+const testData2 = reactive({ from_account: 'example_from_account', to_account: 'example_to_account', amount: 'example_amount', currency: 'example_currency', note: 'example_note' })
+const testData3 = reactive({ page: 123, limit: 123, currency: 'example_currency', type: 'example_type' })
+const testData4 = reactive({ currency: 'example_currency', network: 'example_network' })
+const testData5 = reactive({ currency: 'example_currency', amount: 'example_amount', address: 'example_address', network: 'example_network', tag: 'example_tag' })
 
 
 
 const results = reactive({
   endpoint1: null,
   endpoint2: null,
-  endpoint3: null
+  endpoint3: null,
+  endpoint4: null,
+  endpoint5: null
 })
 
 const testEndpoint1 = async () => {
@@ -563,12 +871,10 @@ const testEndpoint1 = async () => {
     }
 
     const requestBody = {
-      notifications: testData1.notifications,
-      marketing: testData1.marketing,
-      privacy: testData1.privacy
+      currency: testData1.currency
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/user/flags`
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/balance`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
@@ -577,7 +883,7 @@ const testEndpoint1 = async () => {
     const bodyString = JSON.stringify(requestBody)
 
     const response = await fetch(fullUrl, {
-      method: 'PUT',
+      method: 'GET',
       headers: headers,
       body: bodyString
     })
@@ -587,7 +893,7 @@ const testEndpoint1 = async () => {
       status: `${response.status} ${response.statusText}`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `PUT ${fullUrl}`,
+      requestUrl: `GET ${fullUrl}`,
       headers: JSON.stringify(headers, null, 2),
       body: bodyString
     }
@@ -620,12 +926,14 @@ const testEndpoint2 = async () => {
     }
 
     const requestBody = {
-      email: testData2.email,
-      push: testData2.push,
-      sms: testData2.sms
+      from_account: testData2.from_account,
+      to_account: testData2.to_account,
+      amount: testData2.amount,
+      currency: testData2.currency,
+      note: testData2.note
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/user/notifications`
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/transfer`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
@@ -634,7 +942,7 @@ const testEndpoint2 = async () => {
     const bodyString = JSON.stringify(requestBody)
 
     const response = await fetch(fullUrl, {
-      method: 'PATCH',
+      method: 'POST',
       headers: headers,
       body: bodyString
     })
@@ -644,7 +952,7 @@ const testEndpoint2 = async () => {
       status: `${response.status} ${response.statusText}`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `PATCH ${fullUrl}`,
+      requestUrl: `POST ${fullUrl}`,
       headers: JSON.stringify(headers, null, 2),
       body: bodyString
     }
@@ -677,11 +985,13 @@ const testEndpoint3 = async () => {
     }
 
     const requestBody = {
-      profileUpdates: testData3.profileUpdates,
-      securityAlerts: testData3.securityAlerts
+      page: testData3.page,
+      limit: testData3.limit,
+      currency: testData3.currency,
+      type: testData3.type
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/user/profile`
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/history`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
@@ -690,7 +1000,7 @@ const testEndpoint3 = async () => {
     const bodyString = JSON.stringify(requestBody)
 
     const response = await fetch(fullUrl, {
-      method: 'PATCH',
+      method: 'GET',
       headers: headers,
       body: bodyString
     })
@@ -700,12 +1010,127 @@ const testEndpoint3 = async () => {
       status: `${response.status} ${response.statusText}`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `PATCH ${fullUrl}`,
+      requestUrl: `GET ${fullUrl}`,
       headers: JSON.stringify(headers, null, 2),
       body: bodyString
     }
   } catch (error) {
     results.endpoint3 = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
+    }
+  }
+}
+
+const testEndpoint4 = async () => {
+  try {
+    const authValues = getRawValues()
+    
+    if (!isReadyToSendRequest()) {
+      results.endpoint4 = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
+      }
+      return
+    }
+
+    const requestBody = {
+      currency: testData4.currency,
+      network: testData4.network
+    }
+
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/deposit`
+    const headers = {
+      'Authorization': `Bearer ${authValues.apiToken}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: 'POST',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    results.endpoint4 = {
+      status: `${response.status} ${response.statusText}`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `POST ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
+  } catch (error) {
+    results.endpoint4 = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
+    }
+  }
+}
+
+const testEndpoint5 = async () => {
+  try {
+    const authValues = getRawValues()
+    
+    if (!isReadyToSendRequest()) {
+      results.endpoint5 = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
+      }
+      return
+    }
+
+    const requestBody = {
+      currency: testData5.currency,
+      amount: testData5.amount,
+      address: testData5.address,
+      network: testData5.network,
+      tag: testData5.tag
+    }
+
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/withdraw`
+    const headers = {
+      'Authorization': `Bearer ${authValues.apiToken}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: 'POST',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    results.endpoint5 = {
+      status: `${response.status} ${response.statusText}`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `POST ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
+  } catch (error) {
+    results.endpoint5 = {
       status: 'Network Error',
       data: error.message,
       timestamp: new Date().toLocaleTimeString(),
@@ -755,21 +1180,31 @@ const copyCodeToClipboard = (lang, endpointNum) => {
 
 const codeExamples = {
   curl: {
-    1: `curl -X PUT "https://develop.okd.finance/api/user/flags" \\
+    1: `curl -X GET "https://develop.okd.finance/api/wallet/balance" \\
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
   -H "Content-Type: application/json" \\
   -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"notifications":"example","marketing":"example","privacy":"example"}'`,
-    2: `curl -X PATCH "https://develop.okd.finance/api/user/notifications" \\
+  -d '{"currency":"example"}'`,
+    2: `curl -X POST "https://develop.okd.finance/api/wallet/transfer" \\
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
   -H "Content-Type: application/json" \\
   -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"email":"example","push":"example","sms":"example"}'`,
-    3: `curl -X PATCH "https://develop.okd.finance/api/user/profile" \\
+  -d '{"from_account":"example","to_account":"example","amount":"example","currency":"example","note":"example"}'`,
+    3: `curl -X GET "https://develop.okd.finance/api/wallet/history" \\
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
   -H "Content-Type: application/json" \\
   -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"profileUpdates":"example","securityAlerts":"example"}'`
+  -d '{"page":"example","limit":"example","currency":"example","type":"example"}'`,
+    4: `curl -X POST "https://develop.okd.finance/api/wallet/deposit" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"currency":"example","network":"example"}'`,
+    5: `curl -X POST "https://develop.okd.finance/api/wallet/withdraw" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"currency":"example","amount":"example","address":"example","network":"example","tag":"example"}'`
   },
   go: {
     1: `package main
@@ -782,15 +1217,15 @@ import (
     "net/http"
 )
 
-type SetProfileFlagsRequest struct {
-    Notifications string \`json:"notifications"\`\n    Marketing string \`json:"marketing"\`\n    Privacy string \`json:"privacy"\`
+type GetWalletBalanceRequest struct {
+    Currency string \`json:"currency"\`
 }
 
-func setprofileflags() error {
-    url := "https://develop.okd.finance/api/user/flags"
+func getwalletbalance() error {
+    url := "https://develop.okd.finance/api/wallet/balance"
     
-    requestData := SetProfileFlagsRequest{
-        Notifications: "example",\n        Marketing: "example",\n        Privacy: "example",
+    requestData := GetWalletBalanceRequest{
+        Currency: "example",
     }
     
     jsonData, err := json.Marshal(requestData)
@@ -798,7 +1233,7 @@ func setprofileflags() error {
         return err
     }
     
-    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
     if err != nil {
         return err
     }
@@ -824,7 +1259,7 @@ func setprofileflags() error {
 }
 
 func main() {
-    if err := setprofileflags(); err != nil {
+    if err := getwalletbalance(); err != nil {
         fmt.Printf("Error: %v\\n", err)
     }
 }`,
@@ -838,15 +1273,15 @@ import (
     "net/http"
 )
 
-type SubscribetoNotificationsRequest struct {
-    Email string \`json:"email"\`\n    Push string \`json:"push"\`\n    Sms string \`json:"sms"\`
+type TransferFundsRequest struct {
+    From_account string \`json:"from_account"\`\n    To_account string \`json:"to_account"\`\n    Amount string \`json:"amount"\`\n    Currency string \`json:"currency"\`\n    Note string \`json:"note"\`
 }
 
-func subscribetonotifications() error {
-    url := "https://develop.okd.finance/api/user/notifications"
+func transferfunds() error {
+    url := "https://develop.okd.finance/api/wallet/transfer"
     
-    requestData := SubscribetoNotificationsRequest{
-        Email: "example",\n        Push: "example",\n        Sms: "example",
+    requestData := TransferFundsRequest{
+        From_account: "example",\n        To_account: "example",\n        Amount: "example",\n        Currency: "example",\n        Note: "example",
     }
     
     jsonData, err := json.Marshal(requestData)
@@ -854,7 +1289,7 @@ func subscribetonotifications() error {
         return err
     }
     
-    req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(jsonData))
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
     if err != nil {
         return err
     }
@@ -880,7 +1315,7 @@ func subscribetonotifications() error {
 }
 
 func main() {
-    if err := subscribetonotifications(); err != nil {
+    if err := transferfunds(); err != nil {
         fmt.Printf("Error: %v\\n", err)
     }
 }`,
@@ -894,15 +1329,15 @@ import (
     "net/http"
 )
 
-type SubscribetoProfileEventsRequest struct {
-    ProfileUpdates string \`json:"profileUpdates"\`\n    SecurityAlerts string \`json:"securityAlerts"\`
+type GetTransactionHistoryRequest struct {
+    Page string \`json:"page"\`\n    Limit string \`json:"limit"\`\n    Currency string \`json:"currency"\`\n    Type string \`json:"type"\`
 }
 
-func subscribetoprofileevents() error {
-    url := "https://develop.okd.finance/api/user/profile"
+func gettransactionhistory() error {
+    url := "https://develop.okd.finance/api/wallet/history"
     
-    requestData := SubscribetoProfileEventsRequest{
-        ProfileUpdates: "example",\n        SecurityAlerts: "example",
+    requestData := GetTransactionHistoryRequest{
+        Page: "example",\n        Limit: "example",\n        Currency: "example",\n        Type: "example",
     }
     
     jsonData, err := json.Marshal(requestData)
@@ -910,7 +1345,7 @@ func subscribetoprofileevents() error {
         return err
     }
     
-    req, err := http.NewRequest("PATCH", url, bytes.NewBuffer(jsonData))
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
     if err != nil {
         return err
     }
@@ -936,23 +1371,135 @@ func subscribetoprofileevents() error {
 }
 
 func main() {
-    if err := subscribetoprofileevents(); err != nil {
+    if err := gettransactionhistory(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    4: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GenerateDepositAddressRequest struct {
+    Currency string \`json:"currency"\`\n    Network string \`json:"network"\`
+}
+
+func generatedepositaddress() error {
+    url := "https://develop.okd.finance/api/wallet/deposit"
+    
+    requestData := GenerateDepositAddressRequest{
+        Currency: "example",\n        Network: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := generatedepositaddress(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    5: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type WithdrawFundsRequest struct {
+    Currency string \`json:"currency"\`\n    Amount string \`json:"amount"\`\n    Address string \`json:"address"\`\n    Network string \`json:"network"\`\n    Tag string \`json:"tag"\`
+}
+
+func withdrawfunds() error {
+    url := "https://develop.okd.finance/api/wallet/withdraw"
+    
+    requestData := WithdrawFundsRequest{
+        Currency: "example",\n        Amount: "example",\n        Address: "example",\n        Network: "example",\n        Tag: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := withdrawfunds(); err != nil {
         fmt.Printf("Error: %v\\n", err)
     }
 }`
   },
   typescript: {
-    1: `interface SetProfileFlagsRequest {
-  notifications: boolean;\n  marketing: boolean;\n  privacy: string;
+    1: `interface GetWalletBalanceRequest {
+  currency: string;
 }
 
-async function setprofileflags(
+async function getwalletbalance(
   baseUrl: string,
   accessToken: string,
-  data: SetProfileFlagsRequest
+  data: GetWalletBalanceRequest
 ): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/user/flags\`, {
-    method: 'PUT',
+  const response = await fetch(\`\${baseUrl}/wallet/balance\`, {
+    method: 'GET',
     headers: {
       'Authorization': \`Bearer \${accessToken}\`,
       'Content-Type': 'application/json',
@@ -971,11 +1518,11 @@ async function setprofileflags(
 // Usage example
 async function main() {
   try {
-    const result = await setprofileflags(
+    const result = await getwalletbalance(
       'https://develop.okd.finance/api',
       'YOUR_ACCESS_TOKEN',
       {
-        notifications: true,\n        marketing: true,\n        privacy: "example",
+        currency: "example",
       }
     );
     console.log('Success:', result);
@@ -985,17 +1532,17 @@ async function main() {
 }
 
 main();`,
-    2: `interface SubscribetoNotificationsRequest {
-  email: boolean;\n  push: boolean;\n  sms: boolean;
+    2: `interface TransferFundsRequest {
+  from_account: string;\n  to_account: string;\n  amount: string;\n  currency: string;\n  note: string;
 }
 
-async function subscribetonotifications(
+async function transferfunds(
   baseUrl: string,
   accessToken: string,
-  data: SubscribetoNotificationsRequest
+  data: TransferFundsRequest
 ): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/user/notifications\`, {
-    method: 'PATCH',
+  const response = await fetch(\`\${baseUrl}/wallet/transfer\`, {
+    method: 'POST',
     headers: {
       'Authorization': \`Bearer \${accessToken}\`,
       'Content-Type': 'application/json',
@@ -1014,11 +1561,11 @@ async function subscribetonotifications(
 // Usage example
 async function main() {
   try {
-    const result = await subscribetonotifications(
+    const result = await transferfunds(
       'https://develop.okd.finance/api',
       'YOUR_ACCESS_TOKEN',
       {
-        email: true,\n        push: true,\n        sms: true,
+        from_account: "example",\n        to_account: "example",\n        amount: "example",\n        currency: "example",\n        note: "example",
       }
     );
     console.log('Success:', result);
@@ -1028,17 +1575,17 @@ async function main() {
 }
 
 main();`,
-    3: `interface SubscribetoProfileEventsRequest {
-  profileUpdates: boolean;\n  securityAlerts: boolean;
+    3: `interface GetTransactionHistoryRequest {
+  page: string;\n  limit: string;\n  currency: string;\n  type: string;
 }
 
-async function subscribetoprofileevents(
+async function gettransactionhistory(
   baseUrl: string,
   accessToken: string,
-  data: SubscribetoProfileEventsRequest
+  data: GetTransactionHistoryRequest
 ): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/user/profile\`, {
-    method: 'PATCH',
+  const response = await fetch(\`\${baseUrl}/wallet/history\`, {
+    method: 'GET',
     headers: {
       'Authorization': \`Bearer \${accessToken}\`,
       'Content-Type': 'application/json',
@@ -1057,11 +1604,97 @@ async function subscribetoprofileevents(
 // Usage example
 async function main() {
   try {
-    const result = await subscribetoprofileevents(
+    const result = await gettransactionhistory(
       'https://develop.okd.finance/api',
       'YOUR_ACCESS_TOKEN',
       {
-        profileUpdates: true,\n        securityAlerts: true,
+        page: "example",\n        limit: "example",\n        currency: "example",\n        type: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    4: `interface GenerateDepositAddressRequest {
+  currency: string;\n  network: string;
+}
+
+async function generatedepositaddress(
+  baseUrl: string,
+  accessToken: string,
+  data: GenerateDepositAddressRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/wallet/deposit\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await generatedepositaddress(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        currency: "example",\n        network: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    5: `interface WithdrawFundsRequest {
+  currency: string;\n  amount: string;\n  address: string;\n  network: string;\n  tag: string;
+}
+
+async function withdrawfunds(
+  baseUrl: string,
+  accessToken: string,
+  data: WithdrawFundsRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/wallet/withdraw\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await withdrawfunds(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        currency: "example",\n        amount: "example",\n        address: "example",\n        network: "example",\n        tag: "example",
       }
     );
     console.log('Success:', result);
@@ -1075,8 +1708,8 @@ main();`
   php: {
     1: `<?php
 
-function setprofileflags($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/user/flags';
+function getwalletbalance($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/balance';
     
     $headers = [
         'Authorization: Bearer ' . $accessToken,
@@ -1087,7 +1720,7 @@ function setprofileflags($baseUrl, $accessToken, $data) {
     $ch = curl_init();
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_CUSTOMREQUEST => 'GET',
         CURLOPT_POSTFIELDS => json_encode($data),
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_RETURNTRANSFER => true,
@@ -1119,10 +1752,10 @@ function setprofileflags($baseUrl, $accessToken, $data) {
 
 try {
     $data = [
-        'notifications' => true,\n        'marketing' => true,\n        'privacy' => 'example',
+        'currency' => 'example',
     ];
 
-    $result = setprofileflags(
+    $result = getwalletbalance(
         'https://develop.okd.finance/api',
         'YOUR_ACCESS_TOKEN',
         $data
@@ -1137,8 +1770,8 @@ try {
 ?>`,
     2: `<?php
 
-function subscribetonotifications($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/user/notifications';
+function transferfunds($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/transfer';
     
     $headers = [
         'Authorization: Bearer ' . $accessToken,
@@ -1149,7 +1782,7 @@ function subscribetonotifications($baseUrl, $accessToken, $data) {
     $ch = curl_init();
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'PATCH',
+        CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS => json_encode($data),
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_RETURNTRANSFER => true,
@@ -1181,10 +1814,10 @@ function subscribetonotifications($baseUrl, $accessToken, $data) {
 
 try {
     $data = [
-        'email' => true,\n        'push' => true,\n        'sms' => true,
+        'from_account' => 'example',\n        'to_account' => 'example',\n        'amount' => 'example',\n        'currency' => 'example',\n        'note' => 'example',
     ];
 
-    $result = subscribetonotifications(
+    $result = transferfunds(
         'https://develop.okd.finance/api',
         'YOUR_ACCESS_TOKEN',
         $data
@@ -1199,8 +1832,8 @@ try {
 ?>`,
     3: `<?php
 
-function subscribetoprofileevents($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/user/profile';
+function gettransactionhistory($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/history';
     
     $headers = [
         'Authorization: Bearer ' . $accessToken,
@@ -1211,7 +1844,7 @@ function subscribetoprofileevents($baseUrl, $accessToken, $data) {
     $ch = curl_init();
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'PATCH',
+        CURLOPT_CUSTOMREQUEST => 'GET',
         CURLOPT_POSTFIELDS => json_encode($data),
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_RETURNTRANSFER => true,
@@ -1243,10 +1876,134 @@ function subscribetoprofileevents($baseUrl, $accessToken, $data) {
 
 try {
     $data = [
-        'profileUpdates' => true,\n        'securityAlerts' => true,
+        'page' => 'example',\n        'limit' => 'example',\n        'currency' => 'example',\n        'type' => 'example',
     ];
 
-    $result = subscribetoprofileevents(
+    $result = gettransactionhistory(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    4: `<?php
+
+function generatedepositaddress($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/deposit';
+    
+    $headers = [
+        'Authorization: Bearer ' . $accessToken,
+        'Content-Type: application/json',
+        'Fingerprint: YOUR_FINGERPRINT'
+    ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'currency' => 'example',\n        'network' => 'example',
+    ];
+
+    $result = generatedepositaddress(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    5: `<?php
+
+function withdrawfunds($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/withdraw';
+    
+    $headers = [
+        'Authorization: Bearer ' . $accessToken,
+        'Content-Type: application/json',
+        'Fingerprint: YOUR_FINGERPRINT'
+    ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'currency' => 'example',\n        'amount' => 'example',\n        'address' => 'example',\n        'network' => 'example',\n        'tag' => 'example',
+    ];
+
+    $result = withdrawfunds(
         'https://develop.okd.finance/api',
         'YOUR_ACCESS_TOKEN',
         $data
@@ -1266,13 +2023,13 @@ import json
 from typing import Dict, Any
 
 
-def setprofileflags(
+def getwalletbalance(
     base_url: str,
     access_token: str,
     data: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Update user profile flags and preferences"""
-    url = f"{base_url}/user/flags"
+    """Retrieve current wallet balance for all currencies"""
+    url = f"{base_url}/wallet/balance"
     
     headers = {
         'Authorization': f'Bearer {access_token}',
@@ -1282,7 +2039,7 @@ def setprofileflags(
     
     try:
         response = requests.request(
-            'PUT',
+            'GET',
             url,
             headers=headers,
             json=data,
@@ -1298,11 +2055,11 @@ def setprofileflags(
 
 def main():
     data = {
-        'notifications': True,\n        'marketing': True,\n        'privacy': 'example',
+        'currency': 'example',
     }
     
     try:
-        result = setprofileflags(
+        result = getwalletbalance(
             'https://develop.okd.finance/api',
             'YOUR_ACCESS_TOKEN',
             data
@@ -1321,13 +2078,13 @@ import json
 from typing import Dict, Any
 
 
-def subscribetonotifications(
+def transferfunds(
     base_url: str,
     access_token: str,
     data: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Subscribe or unsubscribe from various notification types"""
-    url = f"{base_url}/user/notifications"
+    """Transfer funds between wallet accounts or to external addresses"""
+    url = f"{base_url}/wallet/transfer"
     
     headers = {
         'Authorization': f'Bearer {access_token}',
@@ -1337,7 +2094,7 @@ def subscribetonotifications(
     
     try:
         response = requests.request(
-            'PATCH',
+            'POST',
             url,
             headers=headers,
             json=data,
@@ -1353,11 +2110,11 @@ def subscribetonotifications(
 
 def main():
     data = {
-        'email': True,\n        'push': True,\n        'sms': True,
+        'from_account': 'example',\n        'to_account': 'example',\n        'amount': 'example',\n        'currency': 'example',\n        'note': 'example',
     }
     
     try:
-        result = subscribetonotifications(
+        result = transferfunds(
             'https://develop.okd.finance/api',
             'YOUR_ACCESS_TOKEN',
             data
@@ -1376,13 +2133,13 @@ import json
 from typing import Dict, Any
 
 
-def subscribetoprofileevents(
+def gettransactionhistory(
     base_url: str,
     access_token: str,
     data: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Subscribe to profile-related events and updates"""
-    url = f"{base_url}/user/profile"
+    """Retrieve wallet transaction history with pagination"""
+    url = f"{base_url}/wallet/history"
     
     headers = {
         'Authorization': f'Bearer {access_token}',
@@ -1392,7 +2149,7 @@ def subscribetoprofileevents(
     
     try:
         response = requests.request(
-            'PATCH',
+            'GET',
             url,
             headers=headers,
             json=data,
@@ -1408,11 +2165,121 @@ def subscribetoprofileevents(
 
 def main():
     data = {
-        'profileUpdates': True,\n        'securityAlerts': True,
+        'page': 'example',\n        'limit': 'example',\n        'currency': 'example',\n        'type': 'example',
     }
     
     try:
-        result = subscribetoprofileevents(
+        result = gettransactionhistory(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    4: `import requests
+import json
+from typing import Dict, Any
+
+
+def generatedepositaddress(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """Generate a new deposit address for specified currency"""
+    url = f"{base_url}/wallet/deposit"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'currency': 'example',\n        'network': 'example',
+    }
+    
+    try:
+        result = generatedepositaddress(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    5: `import requests
+import json
+from typing import Dict, Any
+
+
+def withdrawfunds(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """Withdraw funds to an external address"""
+    url = f"{base_url}/wallet/withdraw"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'currency': 'example',\n        'amount': 'example',\n        'address': 'example',\n        'network': 'example',\n        'tag': 'example',
+    }
+    
+    try:
+        result = withdrawfunds(
             'https://develop.okd.finance/api',
             'YOUR_ACCESS_TOKEN',
             data
@@ -1598,9 +2465,6 @@ if __name__ == "__main__":
   font-size: 0.9rem;
   font-weight: 500;
 }
-
-
-
 
 .clear-auth-btn {
   padding: 0.4rem 0.8rem;
@@ -2173,8 +3037,6 @@ if __name__ == "__main__":
   }
 }
 
-
-
 @media (max-width: 768px) {
   .auth-header-fixed {
     padding: 0.75rem 0;
@@ -2219,6 +3081,4 @@ if __name__ == "__main__":
     padding: 1rem;
   }
 }
-
-
 </style>
