@@ -503,43 +503,41 @@ export default defineConfig({
                         }
                     ]
                 }
+            ],
+            '/en/trading/': [
+                {
+                    text: 'Trading API',
+                    items: [
+                        { text: 'Overview', link: '/en/trading/overview' },
+                        { text: 'Market Data', link: '/en/trading/market-data' },
+                        { text: 'Orders', link: '/en/trading/orders' },
+                        { text: 'Portfolio', link: '/en/trading/portfolio' }
+                    ]
+                }
+            ],
+            '/en/bybit/': [
+                {
+                    text: 'Bybit Integration',
+                    items: [
+                        { text: 'Overview', link: '/en/bybit/overview' },
+                        { text: 'Configuration', link: '/en/bybit/configuration' },
+                        { text: 'Order Routing', link: '/en/bybit/order-routing' },
+                        { text: 'Market Data', link: '/en/bybit/market-data' }
+                    ]
+                }
+            ],
+            '/en/examples/': [
+                {
+                    text: 'Code Examples',
+                    items: [
+                        { text: 'Basic Usage', link: '/en/examples/basic-usage' },
+                        { text: 'Bybit Integration', link: '/en/examples/bybit-integration' },
+                        { text: 'Trading Flow', link: '/en/examples/trading-flow' },
+                        { text: 'Webhooks', link: '/en/examples/webhooks' }
+                    ]
+                }
             ]
         }
-        ,
-        '/en/trading/': [
-            {
-                text: 'Trading API',
-                items: [
-                    { text: 'Overview', link: '/en/trading/overview' },
-                    { text: 'Market Data', link: '/en/trading/market-data' },
-                    { text: 'Orders', link: '/en/trading/orders' },
-                    { text: 'Portfolio', link: '/en/trading/portfolio' }
-                ]
-            }
-        ],
-
-        '/en/bybit/': [
-            {
-                text: 'Bybit Integration',
-                items: [
-                    { text: 'Overview', link: '/en/bybit/overview' },
-                    { text: 'Configuration', link: '/en/bybit/configuration' },
-                    { text: 'Order Routing', link: '/en/bybit/order-routing' },
-                    { text: 'Market Data', link: '/en/bybit/market-data' }
-                ]
-            }
-        ],
-        '/en/examples/': [
-            {
-                text: 'Code Examples',
-                items: [
-                    { text: 'Basic Usage', link: '/en/examples/basic-usage' },
-                    { text: 'Bybit Integration', link: '/en/examples/bybit-integration' },
-                    { text: 'Trading Flow', link: '/en/examples/trading-flow' },
-                    { text: 'Webhooks', link: '/en/examples/webhooks' }
-                ]
-            }
-        ]
     }
 }
 )
