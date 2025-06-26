@@ -1,0 +1,15 @@
+{
+    "scripts": {
+        "generate:api": "node swagger-generator-new.cjs",
+        "generate:api:watch": "nodemon swagger-generator-new.cjs",
+        "generate:api:config": "node swagger-generator-new.cjs --config=generator-config.json",
+        "generate:api:prod": "SWAGGER_URL=https://api.okd.finance/swagger.json node swagger-generator-new.cjs",
+        "generate:api:dev": "SWAGGER_URL=https://develop.okd.finance/api/swagger/swagger.json node swagger-generator-new.cjs",
+        "docs:generate": "npm run generate:api && npm run docs:build",
+        "docs:dev:full": "npm run generate:api:dev && npm run docs:dev"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.0",
+        "dotenv": "^16.0.0"
+    }
+}

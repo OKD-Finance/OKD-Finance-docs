@@ -1,0 +1,121 @@
+{
+    "swagger": {
+        "url": "https://develop.okd.finance/api/swagger/swagger.json",
+        "baseUrl": "https://develop.okd.finance/api"
+    },
+    "output": {
+        "componentsDir": "./docs/.vitepress/theme/components",
+        "docsDir": "./docs/en/api"
+    },
+    "templates": {
+        "vueComponent": "InteractiveTradingAPI.vue",
+        "markdownPage": "spot.md"
+    },
+    "groups": {
+        "spot": {
+            "title": "Spot Trading API",
+            "description": "Place and manage spot trading orders",
+            "icon": "📈",
+            "endpoints": [
+                {
+                    "path": "/spot/orders",
+                    "method": "POST",
+                    "operationId": "placeOrder",
+                    "summary": "Place Trading Order"
+                },
+                {
+                    "path": "/spot/orders/open",
+                    "method": "GET",
+                    "operationId": "getOpenOrders",
+                    "summary": "Get Open Orders"
+                }
+            ]
+        },
+        "wallet": {
+            "title": "Wallet API",
+            "description": "Manage wallet balances and transactions",
+            "icon": "💰",
+            "endpoints": [
+                {
+                    "path": "/wallet/balance",
+                    "method": "GET",
+                    "operationId": "getBalance",
+                    "summary": "Get Wallet Balance"
+                },
+                {
+                    "path": "/wallet/transactions",
+                    "method": "GET",
+                    "operationId": "getTransactions",
+                    "summary": "Get Transaction History"
+                }
+            ]
+        },
+        "user": {
+            "title": "User Management API",
+            "description": "User account and profile management",
+            "icon": "👤",
+            "endpoints": [
+                {
+                    "path": "/user/profile",
+                    "method": "GET",
+                    "operationId": "getUserProfile",
+                    "summary": "Get User Profile"
+                },
+                {
+                    "path": "/user/profile",
+                    "method": "PUT",
+                    "operationId": "updateUserProfile",
+                    "summary": "Update User Profile"
+                }
+            ]
+        },
+        "kyc": {
+            "title": "KYC Verification API",
+            "description": "Know Your Customer verification processes",
+            "icon": "🔍",
+            "endpoints": [
+                {
+                    "path": "/kyc/status",
+                    "method": "GET",
+                    "operationId": "getKycStatus",
+                    "summary": "Get KYC Status"
+                },
+                {
+                    "path": "/kyc/documents",
+                    "method": "POST",
+                    "operationId": "uploadKycDocument",
+                    "summary": "Upload KYC Document"
+                }
+            ]
+        }
+    },
+    "codeExamples": {
+        "languages": [
+            "cURL",
+            "Go",
+            "TypeScript",
+            "PHP",
+            "Python"
+        ],
+        "default": "cURL"
+    },
+    "styling": {
+        "theme": "vitepress",
+        "authHeader": {
+            "position": "sticky",
+            "collapsible": true,
+            "defaultState": "open"
+        },
+        "testingPanel": {
+            "width": "400px",
+            "position": "right"
+        }
+    },
+    "features": {
+        "livetesting": true,
+        "codeGeneration": true,
+        "responseExamples": true,
+        "authIntegration": true,
+        "clipboard": true
+    }
+}
