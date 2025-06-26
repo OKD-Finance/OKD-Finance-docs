@@ -447,29 +447,131 @@ export default defineConfig({
                 {
                     text: 'API Reference',
                     items: [
-                        { text: 'Overview', link: '/en/api/overview' },
-                        { text: 'Authentication', link: '/en/api/authentication' },
-                        { text: 'Users', link: '/en/api/users' },
-                        { text: 'Wallets', link: '/en/api/wallets' },
-                        { text: 'KYC', link: '/en/api/kyc' },
-                        { text: 'CMC Cases', link: '/en/api/cmc-cases' },
-                        { text: 'Exchange Configuration', link: '/en/api/exchange-configuration' },
-                        { text: 'Access Management', link: '/en/api/access-management' },
-                        { text: 'Withdrawal', link: '/en/api/withdrawal' },
-                        { text: 'Exchange', link: '/en/api/exchange' },
-                        { text: 'Spot Order', link: '/en/api/spot-order' },
-                        { text: 'Trading', link: '/en/api/trading' },
-                        { text: 'Spot', link: '/en/api/spot' },
-                        { text: 'P2P', link: '/en/api/p2p' },
-                        { text: 'History', link: '/en/api/history' },
-                        { text: 'Settings', link: '/en/api/settings' },
-                        { text: 'Newsfeed', link: '/en/api/newsfeed' },
-                        { text: 'Notifications', link: '/en/api/notifications' },
-                        { text: 'Email Templates', link: '/en/api/email-templates' },
-                        { text: 'Fee Settings', link: '/en/api/fee-settings' },
-                        { text: 'Analytics', link: '/en/api/analytics' },
-                        { text: 'Audit', link: '/en/api/audit' },
-                        { text: 'Support', link: '/en/api/support' }
+                        {
+                            'text': 'Overview',
+                            'link': '/en/api/overview'
+                        },
+                        {
+                            'text': 'Users',
+                            'link': '/en/api/users'
+                        },
+                        {
+                            'text': 'Authentication API',
+                            'link': '/en/api/authentication'
+                        },
+                        {
+                            'text': 'Spot Trading API',
+                            'link': '/en/api/spot',
+                            'collapsed': true,
+                            'items': [
+                                { 'text': 'POST /spot/orders', 'link': '/en/api/spot#place-order' },
+                                { 'text': 'GET /spot/orders/open', 'link': '/en/api/spot#get-orders' }
+                            ]
+                        },
+                        {
+                            'text': 'Wallet API',
+                            'link': '/en/api/wallet'
+                        },
+                        {
+                            'text': 'KYC API',
+                            'link': '/en/api/kyc'
+                        },
+                        {
+                            'text': 'User Operations API',
+                            'link': '/en/api/user-operations'
+                        },
+                        {
+                            'text': 'Referral Program API',
+                            'link': '/en/api/referral-program'
+                        },
+                        {
+                            'text': 'Exchange Configuration API',
+                            'link': '/en/api/exchange-configuration'
+                        },
+                        {
+                            'text': 'WebSocket Subscriptions API',
+                            'link': '/en/api/websocket-subscriptions'
+                        },
+                        {
+                            'text': 'Data Source API',
+                            'link': '/en/api/datasource'
+                        },
+                        {
+                            'text': 'Bybit REST Endpoints API',
+                            'link': '/en/api/bybit-rest-endpoints'
+                        },
+                        {
+                            'text': 'Managed Services API',
+                            'link': '/en/api/managed'
+                        },
+                        {
+                            'text': 'OKD API',
+                            'link': '/en/api/okd'
+                        },
+                        {
+                            'text': 'Error Handling API',
+                            'link': '/en/api/errors'
+                        },
+                        {
+                            'text': 'CMC Cases',
+                            'link': '/en/api/cmc-cases'
+                        },
+                        {
+                            'text': 'Access Management',
+                            'link': '/en/api/access-management'
+                        },
+                        {
+                            'text': 'Withdrawal',
+                            'link': '/en/api/withdrawal'
+                        },
+                        {
+                            'text': 'Exchange',
+                            'link': '/en/api/exchange'
+                        },
+                        {
+                            'text': 'Spot Order',
+                            'link': '/en/api/spot-order'
+                        },
+                        {
+                            'text': 'P2P',
+                            'link': '/en/api/p2p'
+                        },
+                        {
+                            'text': 'History',
+                            'link': '/en/api/history'
+                        },
+                        {
+                            'text': 'Settings',
+                            'link': '/en/api/settings'
+                        },
+                        {
+                            'text': 'Newsfeed',
+                            'link': '/en/api/newsfeed'
+                        },
+                        {
+                            'text': 'Notifications',
+                            'link': '/en/api/notifications'
+                        },
+                        {
+                            'text': 'Email Templates',
+                            'link': '/en/api/email-templates'
+                        },
+                        {
+                            'text': 'Fee Settings',
+                            'link': '/en/api/fee-settings'
+                        },
+                        {
+                            'text': 'Analytics',
+                            'link': '/en/api/analytics'
+                        },
+                        {
+                            'text': 'Audit',
+                            'link': '/en/api/audit'
+                        },
+                        {
+                            'text': 'Support',
+                            'link': '/en/api/support'
+                        }
                     ]
                 }
             ],
@@ -484,19 +586,7 @@ export default defineConfig({
                     ]
                 }
             ],
-            '/en/api/trading': [
-                {
-                    text: 'Spot Trading API',
-                    collapsed: false,
-                    items: [
-                        { text: 'POST Create Order', link: '/en/api/trading#place-order' },
-                        { text: 'GET All Orders', link: '/en/api/trading#get-orders' },
-                        { text: 'GET Open Orders', link: '/en/api/trading#open-orders' },
-                        { text: 'GET Order History', link: '/en/api/trading#order-history' },
-                        { text: 'GET Trade History', link: '/en/api/trading#trade-history' }
-                    ]
-                }
-            ],
+
             '/en/bybit/': [
                 {
                     text: 'Bybit Integration',

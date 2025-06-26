@@ -1,0 +1,55 @@
+name: Update API Documentation
+
+on:
+  schedule:
+    # Run every 6 hours to check for API changes
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    # Allow manual triggering
+  push:
+    branches: [ main ]
+    paths:
+      - 'swagger-generator.cjs'
+      - 'update-api-docs.cjs'
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Generate API documentation
+      run: |
+        npm run generate-api-docs
+        npm run update-api-docs
+        
+    - name: Check for changes
+      id: changes
+      run: |
+        git diff --quiet || echo "changes=true" >> $GITHUB_OUTPUT
+        
+    - name: Commit and push changes
+      if: steps.changes.outputs.changes == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "docs: auto-update API documentation from Swagger"
+        git push
+        
+    - name: Build and deploy
+      if: steps.changes.outputs.changes == 'true'
+      run: |
+        npm run build
+        npm run deploy

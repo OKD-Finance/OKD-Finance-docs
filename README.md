@@ -25,6 +25,11 @@ cd okd-finance-docs
 # Установка зависимостей
 npm install
 
+# Создание файла переменных окружения (опционально)
+# Создайте .env файл для настройки URL API
+echo "SWAGGER_URL=https://develop.okd.finance/api/swagger/swagger.json" > .env
+echo "API_BASE_URL=https://develop.okd.finance/api" >> .env
+
 # Запуск сервера разработки
 npm run dev
 ```
@@ -108,6 +113,32 @@ okd-finance-docs/
 - Торговые потоки
 - Обработка вебхуков
 - Интеграция с Bybit
+
+## ⚙️ Переменные окружения
+
+Для настройки документации можно использовать следующие переменные окружения:
+
+| Переменная | Описание | Значение по умолчанию |
+|------------|----------|----------------------|
+| `SWAGGER_URL` | URL для получения Swagger спецификации API | `https://develop.okd.finance/api/swagger/swagger.json` |
+| `API_BASE_URL` | Базовый URL API для тестирования в интерактивных компонентах | `https://develop.okd.finance/api` |
+
+### Пример .env файла
+
+```bash
+# API Configuration
+SWAGGER_URL=https://develop.okd.finance/api/swagger/swagger.json
+API_BASE_URL=https://develop.okd.finance/api
+
+# Другие переменные для примеров в документации
+OKD_API_BASE_URL=https://develop.okd.finance/api
+FIREBASE_TOKEN=your_firebase_token
+FIREBASE_UID=your_firebase_uid
+DEVICE_FINGERPRINT=your_device_fingerprint
+RECAPTCHA_TOKEN=your_recaptcha_token
+PLATFORM_ID=your_platform_id
+WEBHOOK_SECRET=your_webhook_secret
+```
 
 ## 🛠 Технологии
 

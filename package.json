@@ -12,7 +12,11 @@
     "preview": "vitepress preview docs",
     "lint": "eslint . --ext .vue,.js,.ts",
     "lint:fix": "eslint . --ext .vue,.js,.ts --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "generate-api-docs": "node swagger-generator.cjs",
+    "update-api-docs": "node update-api-docs.cjs",
+    "build-docs": "npm run generate-api-docs && npm run update-api-docs && npm run build",
+    "dev-docs": "npm run generate-api-docs && npm run update-api-docs && npm run dev"
   },
   "keywords": [
     "crypto",
@@ -30,6 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^8.35.0",
     "@typescript-eslint/parser": "^8.35.0",
     "@vue/eslint-config-typescript": "^14.5.1",
+    "dotenv": "^16.5.0",
     "eslint": "^9.29.0",
     "eslint-plugin-vue": "^10.2.0",
     "husky": "^9.1.7",

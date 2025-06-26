@@ -9,5 +9,5 @@ Welcome to the Trading API documentation. This interactive documentation allows 
 <InteractiveTradingAPI />
 
 <script setup>
-import InteractiveSpAPI from '../../.vitepress/theme/components/InteractiveTradingAPI.vue'
+import InteractiveTradingAPI from '../../.vitepress/theme/components/InteractiveTradingAPI.vue'
 </script>
