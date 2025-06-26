@@ -4,7 +4,7 @@
     <div class="auth-container">
       <div class="auth-title">
         <h4>🔐 API Authentication</h4>
-        <button @click="isHeaderCollapsed = !isHeaderCollapsed" class="collapse-toggle" :title="isHeaderCollapsed ? 'Expand header' : 'Collapse header'">
+        <button @click="toggleHeaderCollapse" class="collapse-toggle" :title="isHeaderCollapsed ? 'Expand header' : 'Collapse header'">
           {{ isHeaderCollapsed ? '⬇️' : '⬆️' }}
         </button>
       </div>
@@ -12,7 +12,8 @@
         <div class="config-group">
           <label class="config-label">🌐 API Base URL</label>
           <input 
-            v-model="apiBaseUrl" 
+            :value="apiBaseUrl" 
+            @input="updateApiBaseUrl($event.target.value)"
             type="text" 
             placeholder="https://develop.okd.finance/api" 
             class="config-input" 
@@ -22,12 +23,13 @@
           <label class="config-label">🔑 Access Token</label>
           <div class="token-input-group">
             <input 
-              v-model="apiToken" 
+              :value="apiToken" 
+              @input="updateApiToken($event.target.value)"
               :type="showToken ? 'text' : 'password'" 
               placeholder="Paste your access token here (without 'Bearer')" 
               class="token-input" 
             />
-            <button @click="showToken = !showToken" class="token-toggle" :title="showToken ? 'Hide token' : 'Show token'">
+            <button @click="toggleTokenVisibility" class="token-toggle" :title="showToken ? 'Hide token' : 'Show token'">
               {{ showToken ? '🙈' : '👁️' }}
             </button>
           </div>
@@ -36,8 +38,16 @@
       <div class="status-row">
         <div v-if="apiBaseUrl" class="url-status">🌐 API: {{ apiBaseUrl }}</div>
         <div v-if="apiToken" class="token-status">✅ Token configured ({{ apiToken.length }} chars)</div>
+        <div v-if="apiToken" class="clear-section">
+          <button @click="clearAllData" class="clear-btn" title="Clear all API configuration">
+            🗑️ Clear All
+          </button>
+        </div>
       </div>
-      <div class="token-hint">💡 Don't include "Bearer" - it's added automatically</div>
+      <div class="token-hint">
+        💡 Don't include "Bearer" - it's added automatically
+        <span v-if="apiToken" class="auto-collapse-hint">• Configuration saved globally across all API pages</span>
+      </div>
     </div>
   </div>
 
@@ -144,14 +154,55 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { apiStore } from '../stores/apiStore.js'
 
-const apiToken = ref('')
-const showToken = ref(false)
-const apiBaseUrl = ref('https://develop.okd.finance/api')
+// Используем глобальный store вместо локальных переменных
+const apiToken = ref(apiStore.apiToken)
+const showToken = ref(apiStore.showToken)
+const apiBaseUrl = ref(apiStore.apiBaseUrl)
+const isHeaderCollapsed = ref(apiStore.isHeaderCollapsed)
 
-// Header collapse functionality - только ручное управление
-const isHeaderCollapsed = ref(false)
+// Инициализация при монтировании компонента
+onMounted(() => {
+  // Синхронизируем локальные ref с глобальным store
+  apiToken.value = apiStore.apiToken
+  showToken.value = apiStore.showToken
+  apiBaseUrl.value = apiStore.apiBaseUrl
+  isHeaderCollapsed.value = apiStore.isHeaderCollapsed
+})
+
+// Функции для работы с глобальным store
+const updateApiToken = (token) => {
+  apiToken.value = token
+  apiStore.setApiToken(token)
+  isHeaderCollapsed.value = apiStore.isHeaderCollapsed
+}
+
+const updateApiBaseUrl = (url) => {
+  apiBaseUrl.value = url
+  apiStore.setApiBaseUrl(url)
+}
+
+const toggleHeaderCollapse = () => {
+  apiStore.toggleHeaderCollapse()
+  isHeaderCollapsed.value = apiStore.isHeaderCollapsed
+}
+
+const toggleTokenVisibility = () => {
+  apiStore.toggleTokenVisibility()
+  showToken.value = apiStore.showToken
+}
+
+const clearAllData = () => {
+  if (confirm('Are you sure you want to clear all API configuration? This will remove your token and settings from all API pages.')) {
+    apiStore.clear()
+    apiToken.value = apiStore.apiToken
+    showToken.value = apiStore.showToken
+    apiBaseUrl.value = apiStore.apiBaseUrl
+    isHeaderCollapsed.value = apiStore.isHeaderCollapsed
+  }
+}
 
 // Code examples tabs
 const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
@@ -413,6 +464,27 @@ const copyCodeToClipboard = (lang, index) => {
   font-weight: 500;
 }
 
+.clear-section {
+  margin-left: auto;
+}
+
+.clear-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-btn:hover {
+  background: linear-gradient(135deg, #ff5252, #d32f2f);
+  transform: translateY(-1px);
+}
+
 .token-hint {
   color: var(--vp-c-text-2);
   font-size: 0.85rem;
@@ -420,6 +492,12 @@ const copyCodeToClipboard = (lang, index) => {
   transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
   max-height: 30px;
   opacity: 1;
+}
+
+.auto-collapse-hint {
+  color: var(--vp-c-brand);
+  font-weight: 500;
+  margin-left: 0.5rem;
 }
 
 /* Main Container */
