@@ -2,9 +2,7 @@
 layout: page
 ---
 
-# KYC API
-
-Welcome to the KYC API documentation. This interactive documentation allows you to test API endpoints directly from this page.
+Welcome to the **KYC API** documentation. This interactive documentation allows you to test API endpoints directly from this page.
 
 <InteractiveKYCAPI />
 

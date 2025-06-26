@@ -10,20 +10,20 @@ try {
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios');
 
 /**
  * Swagger API Documentation Generator
  * Automatically generates interactive Vue components from Swagger definition
+ * Based on InteractiveTradingAPI.vue template
  */
 
 const SWAGGER_URL = process.env.SWAGGER_URL || 'https://develop.okd.finance/api/swagger/swagger.json';
+const API_BASE_URL = process.env.API_BASE_URL || 'https://develop.okd.finance/api';
 const OUTPUT_DIR = './docs/.vitepress/theme/components';
 const DOCS_DIR = './docs/en/api';
 
 // Utility functions
 function toTitleCase(str) {
-  // Handle special cases for better API names
   const specialCases = {
     'referral-program': 'ReferralProgram',
     'user-operations': 'UserOperations',
@@ -34,7 +34,10 @@ function toTitleCase(str) {
     'kyc': 'KYC',
     'authentication': 'Authentication',
     'spot': 'SpotTrading',
-    'wallet': 'Wallet'
+    'wallet': 'Wallet',
+    'wallets': 'Wallets',
+    'users': 'Users',
+    'trading': 'Trading'
   };
 
   if (specialCases[str]) {
@@ -71,132 +74,45 @@ function fetchSwaggerDefinition() {
   });
 }
 
-// Generate parameter documentation
-function generateParameterDocs(parameters = [], index = 0) {
-  if (!parameters.length) return '';
-
-  return `
-#### Request Parameters {#request-parameters-${index}}
-
-| Parameter | Type | Required | Location | Description |
-|-----------|------|----------|----------|-------------|
-${parameters.map(param => {
-    const required = param.required ? 'Yes' : 'No';
-    const type = param.type || (param.schema && param.schema.type) || 'string';
-    const description = (param.description || '-')
-      .replace(/\n/g, ' ')
-      .replace(/\|/g, '\\|')
-      .replace(/\*/g, '\\*')
-      .replace(/`/g, '\\`')
-      .replace(/_/g, '\\_');
-    return `| ${param.name} | ${type} | ${required} | ${param.in} | ${description} |`;
-  }).join('\n')}
-`;
-}
-
-// Generate response documentation
-function generateResponseDocs(responses = {}, index = 0) {
-  const successResponse = responses['200'] || responses['201'];
-  if (!successResponse) return '';
-
-  return `
-#### Response Format {#response-format-${index}}
-
-**Success Response (200):**
-\`\`\`json
-${JSON.stringify(successResponse.schema?.example || {
-    "success": true,
-    "data": {},
-    "message": "Operation successful"
-  }, null, 2)}
-\`\`\`
-
-**Error Response (400/500):**
-\`\`\`json
-{
-  "success": false,
-  "error": {
-    "code": 400001,
-    "message": "Invalid request parameters"
-  }
-}
-\`\`\`
-`;
-}
-
-// Generate Vue component for API endpoint based on InteractiveTradingAPI.vue template
+// Generate Vue component based on InteractiveTradingAPI.vue template
 function generateVueComponent(apiGroup, endpoints) {
   const componentName = `Interactive${toTitleCase(apiGroup)}API`;
 
+  // Generate reactive data for each endpoint
+  const reactiveData = endpoints.map((endpoint, index) => {
+    const methodName = toCamelCase(endpoint.operationId || `${endpoint.method}_${endpoint.path.replace(/[\/{}]/g, '_')}`);
+    const parameters = endpoint.parameters || [];
+    const bodyParams = endpoint.requestBody?.content?.['application/json']?.schema?.properties || {};
+
+    // Create form data structure
+    const formFields = {};
+
+    // Add query and path parameters
+    parameters.forEach(param => {
+      if (param.in === 'query' || param.in === 'path') {
+        formFields[param.name] = param.schema?.default || '';
+      }
+    });
+
+    // Add body parameters if exists
+    if (Object.keys(bodyParams).length > 0) {
+      Object.keys(bodyParams).forEach(key => {
+        formFields[key] = bodyParams[key].default || '';
+      });
+    }
+
+    return { methodName, formFields };
+  });
+
   // Generate endpoint sections
   const endpointSections = endpoints.map((endpoint, index) => {
-    const methodName = toCamelCase(endpoint.operationId || endpoint.path.replace(/[\/{}]/g, '_'));
+    const methodName = toCamelCase(endpoint.operationId || `${endpoint.method}_${endpoint.path.replace(/[\/{}]/g, '_')}`);
     const hasBody = endpoint.method === 'post' || endpoint.method === 'put' || endpoint.method === 'patch';
     const parameters = endpoint.parameters || [];
     const bodyParams = endpoint.requestBody?.content?.['application/json']?.schema?.properties || {};
-    const responses = endpoint.responses || {};
 
-    // Generate parameter documentation
-    const parameterDocs = parameters.length ? `
-            <div class="api-section">
-              <h4 class="section-title">📝 Parameters</h4>
-              <div class="param-list">
-                ${parameters.map(param => `
-                <div class="param-item ${param.required ? 'required' : ''}">
-                  <code class="param-name">${param.name}</code>
-                  <span class="param-type">${param.schema?.type || param.type || 'string'}</span>
-                  <span class="param-desc">${(param.description || '').replace(/"/g, '\\"')}</span>
-                </div>`).join('')}
-              </div>
-            </div>` : '';
-
-    // Generate body parameter documentation
-    const bodyParamDocs = Object.keys(bodyParams).length ? `
-            <div class="api-section">
-              <h4 class="section-title">⚙️ Body Parameters</h4>
-              <div class="param-list">
-                ${Object.entries(bodyParams).map(([name, param]) => `
-                <div class="param-item ${param.required ? 'required' : ''}">
-                  <code class="param-name">${name}</code>
-                  <span class="param-type">${param.type || 'string'}</span>
-                  <span class="param-desc">${(param.description || '').replace(/"/g, '\\"')}</span>
-                </div>`).join('')}
-              </div>
-            </div>` : '';
-
-    // Generate form inputs for parameters
-    const parameterInputs = parameters.map(param => {
-      if (param.in === 'query' || param.in === 'path') {
-        return `
-              <div class="form-group">
-                <label>${param.name}${param.required ? ' *' : ''}</label>
-                <input v-model="formData_${methodName}.${param.name}" type="text" placeholder="${param.description || param.name}" class="test-input" />
-              </div>`;
-      }
-      return '';
-    }).join('');
-
-    const bodyInput = hasBody ? `
-              <div class="form-group">
-                <label>Request Body (JSON)</label>
-                <textarea v-model="formData_${methodName}.body" placeholder='{"key": "value"}' rows="4" class="test-input"></textarea>
-              </div>` : '';
-
-    return `
-      <section id="${methodName}" class="endpoint-section">
-        <div class="endpoint-layout">
-          <!-- Documentation -->
-          <div class="endpoint-docs">
-            <div class="method-header">
-              <span class="method-badge ${endpoint.method}">${endpoint.method.toUpperCase()}</span>
-              <span class="endpoint-path">${endpoint.path}</span>
-            </div>
-            
-            <div class="endpoint-info">
-              <h3 class="endpoint-title">${endpoint.summary || endpoint.operationId || 'API Endpoint'}</h3>
-              <p class="endpoint-description">${(endpoint.description || endpoint.summary || 'No description available').replace(/"/g, '\\"')}</p>
-            </div>
-            
+    // Generate headers documentation
+    const headersDocs = `
             <div class="api-section">
               <h4 class="section-title">📋 Headers</h4>
               <div class="param-list">
@@ -216,35 +132,96 @@ function generateVueComponent(apiGroup, endpoints) {
                   <span class="param-desc">32-character hex string for device identification</span>
                 </div>
               </div>
+            </div>`;
+
+    // Generate query parameters documentation
+    const queryParams = parameters.filter(p => p.in === 'query');
+    const queryParamsDocs = queryParams.length > 0 ? `
+            <div class="api-section">
+              <h4 class="section-title">🔍 Query Parameters</h4>
+              <div class="param-list">
+                ${queryParams.map(param => `
+                <div class="param-item ${param.required ? 'required' : ''}">
+                  <code class="param-name">${param.name}</code>
+                  <span class="param-type">${param.schema?.type || 'string'}</span>
+                  <span class="param-desc">${(param.description || '').replace(/"/g, '\\"')}</span>
+                </div>`).join('')}
+              </div>
+            </div>` : '';
+
+    // Generate body parameters documentation
+    const bodyParamsDocs = Object.keys(bodyParams).length > 0 ? `
+            <div class="api-section">
+              <h4 class="section-title">⚙️ Body Parameters</h4>
+              <div class="param-list">
+                ${Object.entries(bodyParams).map(([name, param]) => `
+                <div class="param-item ${param.required ? 'required' : ''}">
+                  <code class="param-name">${name}</code>
+                  <span class="param-type">${param.type || 'string'}</span>
+                  <span class="param-desc">${(param.description || '').replace(/"/g, '\\"')}</span>
+                </div>`).join('')}
+              </div>
+            </div>` : '';
+
+    // Generate form inputs for testing
+    const queryInputs = queryParams.map(param => `
+              <div class="form-group">
+                <label>${param.name}${param.required ? ' *' : ''}</label>
+                <input v-model="${methodName}Data.${param.name}" type="text" placeholder="${param.description || param.name}" class="test-input" />
+              </div>`).join('');
+
+    const bodyInputs = Object.entries(bodyParams).map(([name, param]) => `
+              <div class="form-group">
+                <label>${name}${param.required ? ' *' : ''}</label>
+                <input v-model="${methodName}Data.${name}" type="text" placeholder="${param.description || name}" class="test-input" />
+              </div>`).join('');
+
+    // Generate cURL example
+    const curlExample = `curl -X ${endpoint.method.toUpperCase()} "${API_BASE_URL}${endpoint.path}" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: 1358cd229b6bceb25941e99f4228997f"${hasBody ? ` \\
+  -d '${JSON.stringify(Object.fromEntries(Object.entries(bodyParams).map(([k, v]) => [k, v.example || 'example'])), null, 2)}'` : ''}`;
+
+    return `
+      <section id="${methodName}" class="endpoint-section">
+        <div class="endpoint-layout">
+          <!-- Documentation -->
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge ${endpoint.method}">${endpoint.method.toUpperCase()}</span>
+              <span class="endpoint-path">${endpoint.path}</span>
             </div>
             
-            ${parameterDocs}
-            ${bodyParamDocs}
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">${endpoint.summary || endpoint.operationId || 'API Endpoint'}</h3>
+              <p class="endpoint-description">${(endpoint.description || endpoint.summary || 'No description available').replace(/"/g, '\\"')}</p>
+            </div>
+            
+            ${headersDocs}
+            ${queryParamsDocs}
+            ${bodyParamsDocs}
 
             <div class="api-section">
               <h4 class="section-title">📝 Example Request</h4>
-              <pre class="code-block">${endpoint.method.toUpperCase()} ${endpoint.path}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-Content-Type: application/json
-Fingerprint: 1358cd229b6bceb25941e99f4228997f${hasBody ? '\n\n{"key": "value"}' : ''}</pre>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">✅ Response Examples</h4>
-              <div class="response-example">
-                <div class="response-status success">200 OK - Success</div>
-                <pre class="code-block">{
-  "success": true,
-  "data": {},
-  "message": "Operation successful"
-}</pre>
-              </div>
-              <div class="response-example">
-                <div class="response-status error">400 Bad Request - Error</div>
-                <pre class="code-block">{
-  "code": 400001,
-  "message": "Invalid request parameters"
-}</pre>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button 
+                    v-for="lang in codeLangs" 
+                    :key="lang" 
+                    @click="activeCodeTab${index + 1} = lang"
+                    :class="['code-tab', { active: activeCodeTab${index + 1} === lang }]"
+                  >
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab${index + 1} === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', ${index + 1})" class="copy-code-btn" title="Copy to clipboard">
+                    📋
+                  </button>
+                  <div class="code-block"><pre>${curlExample}</pre></div>
+                </div>
               </div>
             </div>
           </div>
@@ -253,8 +230,8 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f${hasBody ? '\n\n{"key": "value"}' 
           <div class="endpoint-testing">
             <h4 class="testing-title">🚀 Live Testing</h4>
             <div class="test-section">
-              ${parameterInputs}
-              ${bodyInput}
+              ${queryInputs}
+              ${bodyInputs}
               <button @click="test${methodName.charAt(0).toUpperCase() + methodName.slice(1)}" class="test-btn" :disabled="!apiToken || !apiBaseUrl">
                 {{ !apiToken ? '🔒 Enter API Token First' : !apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
@@ -279,44 +256,46 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f${hasBody ? '\n\n{"key": "value"}' 
           </div>
         </div>
       </section>`;
-  }).join('\n');
+  }).join('');
 
-  // Generate methods for each endpoint
-  const endpointMethods = endpoints.map(endpoint => {
-    const methodName = toCamelCase(endpoint.operationId || endpoint.path.replace(/[\/{}]/g, '_'));
+  // Generate reactive data declarations
+  const reactiveDataDeclarations = reactiveData.map(({ methodName, formFields }) => {
+    const fieldsString = Object.entries(formFields).map(([key, value]) => `  ${key}: '${value}'`).join(',\n');
+    return `const ${methodName}Data = reactive({\n${fieldsString}\n})`;
+  }).join('\n\n');
+
+  // Generate test functions
+  const testFunctions = endpoints.map((endpoint, index) => {
+    const methodName = toCamelCase(endpoint.operationId || `${endpoint.method}_${endpoint.path.replace(/[\/{}]/g, '_')}`);
     const hasBody = endpoint.method === 'post' || endpoint.method === 'put' || endpoint.method === 'patch';
     const parameters = endpoint.parameters || [];
+    const queryParams = parameters.filter(p => p.in === 'query');
 
-    return `const test${methodName.charAt(0).toUpperCase() + methodName.slice(1)} = async () => {
-  try {
-    let endpoint = '${endpoint.path}'
+    const buildQueryString = queryParams.length > 0 ? `
     const params = new URLSearchParams()
-    
-    // Handle path parameters
-    ${parameters.filter(p => p.in === 'path').map(p => `
-    if (formData_${methodName}.${p.name}) {
-      endpoint = endpoint.replace('{${p.name}}', formData_${methodName}.${p.name})
-    }`).join('')}
-    
-    // Handle query parameters
-    ${parameters.filter(p => p.in === 'query').map(p => `
-    if (formData_${methodName}.${p.name}) {
-      params.append('${p.name}', formData_${methodName}.${p.name})
-    }`).join('')}
-    
-    if (params.toString()) {
-      endpoint += '?' + params.toString()
+    ${queryParams.map(param => `if (${methodName}Data.${param.name}) params.append('${param.name}', ${methodName}Data.${param.name})`).join('\n    ')}
+    const queryString = params.toString() ? '?' + params.toString() : ''` : `
+    const queryString = ''`;
+
+    const buildBody = hasBody ? `
+    const requestBody = {
+      ${Object.keys(endpoint.requestBody?.content?.['application/json']?.schema?.properties || {}).map(key => `${key}: ${methodName}Data.${key}`).join(',\n      ')}
     }
+    const bodyString = JSON.stringify(requestBody)` : '';
+
+    return `
+const test${methodName.charAt(0).toUpperCase() + methodName.slice(1)} = async () => {
+  try {
+    ${buildQueryString}
+    ${buildBody}
     
-    const fullUrl = \`\${apiBaseUrl.value}\${endpoint}\`
+    const fullUrl = \`\${apiBaseUrl.value}${endpoint.path}\${queryString}\`
     const fingerprint = generateFingerprint()
     const headers = {
       'Authorization': \`Bearer \${apiToken.value}\`,
       'Content-Type': 'application/json',
       'Fingerprint': fingerprint
     }
-    
-    ${hasBody ? `const bodyString = formData_${methodName}.body || '{}'` : ''}
     
     const response = await fetch(fullUrl, {
       method: '${endpoint.method.toUpperCase()}',
@@ -340,53 +319,49 @@ Fingerprint: 1358cd229b6bceb25941e99f4228997f${hasBody ? '\n\n{"key": "value"}' 
       headers: 'N/A'${hasBody ? ',\n      body: \'N/A\'' : ''}
     }
   }
-}
+}`;
+  }).join('\n');
 
-// Generate reactive form data
-const formDataInit = endpoints.map(endpoint => {
-  const methodName = toCamelCase(endpoint.operationId || endpoint.path.replace(/[\/{}]/g, '_'));
-  const parameters = endpoint.parameters || [];
-  const hasBody = endpoint.method === 'post' || endpoint.method === 'put' || endpoint.method === 'patch';
+  // Generate results object
+  const resultsObject = endpoints.map((endpoint) => {
+    const methodName = toCamelCase(endpoint.operationId || `${endpoint.method}_${endpoint.path.replace(/[\/{}]/g, '_')}`);
+    return `  ${methodName}: null`;
+  }).join(',\n');
 
-  const paramFields = parameters.map(p => `${ p.name }: ''`).join(', ');
-  const bodyField = hasBody ? ', body: \'{}\'' : '';
+  // Generate code tab refs
+  const codeTabRefs = endpoints.map((_, index) => `const activeCodeTab${index + 1} = ref('cURL')`).join('\n');
 
-  return `formData_${ methodName }: reactive({ ${ paramFields }${ bodyField } })`;
-}).join(',\n  ');
-
-const resultsInit = endpoints.map(endpoint => {
-  const methodName = toCamelCase(endpoint.operationId || endpoint.path.replace(/[\/{}]/g, '_'));
-  return `${ methodName }: null`;
-}).join(',\n  ');
-
-return `< template >
-  < !--Fixed Authentication Header-- >
-    <div class="auth-header-fixed">
-      <div class="auth-container">
-        <div class="auth-title">
-          <h4>🔐 ${toTitleCase(apiGroup)} API Testing</h4>
-        </div>
-        <div class="api-config-row">
-          <div class="config-group">
-            <label class="config-label">🌐 API Base URL</label>
-            <input
-              v-model="apiBaseUrl"
-              type="text" 
-              :placeholder="defaultApiUrl"
+  return `<template>
+  <!-- Fixed Authentication Header -->
+  <div class="auth-header-fixed" :class="{ 'collapsed': isHeaderCollapsed }">
+    <div class="auth-container">
+      <div class="auth-title">
+        <h4>🔐 API Authentication</h4>
+        <button @click="isHeaderCollapsed = !isHeaderCollapsed" class="collapse-toggle" :title="isHeaderCollapsed ? 'Expand header' : 'Collapse header'">
+          {{ isHeaderCollapsed ? '⬇️' : '⬆️' }}
+        </button>
+      </div>
+      <div class="api-config-row">
+        <div class="config-group">
+          <label class="config-label">🌐 API Base URL</label>
+          <input 
+            v-model="apiBaseUrl" 
+            type="text" 
+            placeholder="${API_BASE_URL}" 
             class="config-input" 
-            />
-          </div>
-          <div class="config-group token-group">
-            <label class="config-label">🔑 Access Token</label>
-            <div class="token-input-group">
-              <input
-                v-model="apiToken" 
-                :type="showToken ? 'text' : 'password'"
-              placeholder="Paste your access token here (without 'Bearer')"
+          />
+        </div>
+        <div class="config-group token-group">
+          <label class="config-label">🔑 Access Token</label>
+          <div class="token-input-group">
+            <input 
+              v-model="apiToken" 
+              :type="showToken ? 'text' : 'password'" 
+              placeholder="Paste your access token here (without 'Bearer')" 
               class="token-input" 
-              />
-              <button @click="showToken = !showToken" class="token-toggle" :title="showToken ? 'Hide token' : 'Show token'">
-              {{ showToken? '🙈': '👁️' }}
+            />
+            <button @click="showToken = !showToken" class="token-toggle" :title="showToken ? 'Hide token' : 'Show token'">
+              {{ showToken ? '🙈' : '👁️' }}
             </button>
           </div>
         </div>
@@ -397,28 +372,88 @@ return `< template >
       </div>
       <div class="token-hint">💡 Don't include "Bearer" - it's added automatically</div>
     </div>
-    </div >
+  </div>
 
-    <div class="interactive-api-container">
-      <!-- Main Documentation and Testing Column -->
-      <div class="main-content">
-        ${endpointSections}
-      </div>
+  <div class="interactive-api-container">
+    <!-- Main Documentation and Testing Column -->
+    <div class="main-content">
+      ${endpointSections}
     </div>
-</template >
+  </div>
+</template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 
 const apiToken = ref('')
 const showToken = ref(false)
-const defaultApiUrl = process.env.API_BASE_URL || 'https://develop.okd.finance/api'
-const apiBaseUrl = ref(defaultApiUrl)
+const apiBaseUrl = ref('${API_BASE_URL}')
+
+// Header collapse functionality
+const isHeaderCollapsed = ref(false)
+const lastScrollY = ref(0)
+const scrollDirection = ref('none')
+let scrollTimer = null
+
+const handleScroll = () => {
+  // Очищаем предыдущий таймер
+  if (scrollTimer) {
+    clearTimeout(scrollTimer)
+  }
+  
+  // Устанавливаем новый таймер с задержкой
+  scrollTimer = setTimeout(() => {
+    const currentScrollY = window.scrollY
+    const scrollDelta = currentScrollY - lastScrollY.value
+    
+    // Игнорируем мелкие изменения
+    if (Math.abs(scrollDelta) < 10) {
+      return
+    }
+    
+    // Определяем направление прокрутки
+    const newDirection = scrollDelta > 0 ? 'down' : 'up'
+    
+    // Логика сворачивания только при значительных изменениях
+    if (currentScrollY > 200) {
+      // Далеко от начала страницы
+      if (newDirection === 'down' && scrollDirection.value !== 'down') {
+        // Начали прокрутку вниз - сворачиваем
+        isHeaderCollapsed.value = true
+        scrollDirection.value = 'down'
+      } else if (newDirection === 'up' && scrollDirection.value !== 'up') {
+        // Начали прокрутку вверх - разворачиваем
+        isHeaderCollapsed.value = false
+        scrollDirection.value = 'up'
+      }
+    } else if (currentScrollY < 100) {
+      // Близко к началу страницы - всегда разворачиваем
+      isHeaderCollapsed.value = false
+      scrollDirection.value = 'up'
+    }
+    
+    lastScrollY.value = currentScrollY
+  }, 100) // Увеличиваем задержку до 100ms для стабильности
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  lastScrollY.value = window.scrollY
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+  if (scrollTimer) {
+    clearTimeout(scrollTimer)
+  }
+})
+
+// Code examples tabs
+const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
+${codeTabRefs}
 
 // Form data for each endpoint
-const formData = {
-  ${formDataInit}
-}
+${reactiveDataDeclarations}
 
 const generateFingerprint = () => {
   const chars = '0123456789abcdef'
@@ -430,11 +465,10 @@ const generateFingerprint = () => {
 }
 
 const results = reactive({
-  ${resultsInit}
+${resultsObject}
 })
 
-// API Methods
-${endpointMethods}
+${testFunctions}
 
 const copyToClipboard = (text, event) => {
   navigator.clipboard.writeText(text).then(() => {
@@ -465,10 +499,14 @@ const copyToClipboard = (text, event) => {
     }, 2000)
   })
 }
+
+const copyCodeToClipboard = (lang, index) => {
+  // Implementation for copying code examples
+  console.log(\`Copying \${lang} code for example \${index}\`)
+}
 </script>
 
 <style scoped>
-/* Copy styles from InteractiveTradingAPI.vue */
 /* Fixed Authentication Header */
 .auth-header-fixed {
   position: sticky;
@@ -479,6 +517,23 @@ const copyToClipboard = (text, event) => {
   padding: 0.65rem 0;
   margin-bottom: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: padding 0.3s ease-out, box-shadow 0.3s ease-out;
+  overflow: hidden;
+}
+
+.auth-header-fixed.collapsed {
+  padding: 0.4rem 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.auth-header-fixed.collapsed .api-config-row,
+.auth-header-fixed.collapsed .status-row,
+.auth-header-fixed.collapsed .token-hint {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
 }
 
 .auth-container {
@@ -487,10 +542,34 @@ const copyToClipboard = (text, event) => {
   padding: 0 1rem;
 }
 
+.auth-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .auth-title h4 {
   margin: 0 0 0.65rem 0;
   color: var(--vp-c-brand);
   font-size: 1rem;
+}
+
+.collapse-toggle {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  margin-bottom: 0.65rem;
+}
+
+.collapse-toggle:hover {
+  background: var(--vp-c-brand);
+  color: white;
+  border-color: var(--vp-c-brand);
+  transform: scale(1.05);
 }
 
 .api-config-row {
@@ -498,6 +577,9 @@ const copyToClipboard = (text, event) => {
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   margin-bottom: 0.65rem;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+  max-height: 200px;
+  opacity: 1;
 }
 
 .config-group {
@@ -566,6 +648,9 @@ const copyToClipboard = (text, event) => {
   gap: 1.5rem;
   align-items: center;
   margin-bottom: 0.5rem;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+  max-height: 50px;
+  opacity: 1;
 }
 
 .url-status {
@@ -588,6 +673,9 @@ const copyToClipboard = (text, event) => {
   color: var(--vp-c-text-2);
   font-size: 0.85rem;
   margin-top: 0.25rem;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+  max-height: 30px;
+  opacity: 1;
 }
 
 /* Main Container */
@@ -597,288 +685,389 @@ const copyToClipboard = (text, event) => {
   padding: 0 1rem;
 }
 
-.auth-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 2rem;
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.main-content {
+  width: 100%;
 }
 
-.auth-header h2 {
-  margin: 0 0 1.5rem 0;
-  font-size: 1.8rem;
+.endpoint-section {
+  margin-bottom: 4rem;
+  padding-bottom: 3rem;
+  border-bottom: 2px solid var(--vp-c-border);
+}
+
+.endpoint-layout {
+  display: flex;
+  gap: 3rem;
+}
+
+.endpoint-docs {
+  flex: 1;
+  min-width: 0;
+}
+
+.endpoint-testing {
+  flex: 0 0 400px;
+  background: var(--vp-c-bg-soft);
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: sticky;
+  top: 120px;
+  height: fit-content;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.method-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.method-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: white;
+}
+
+.method-badge.get {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+}
+
+.method-badge.post {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+}
+
+.method-badge.put {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+}
+
+.method-badge.delete {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+}
+
+.endpoint-path {
+  font-family: monospace;
+  font-size: 1.1rem;
+  color: var(--vp-c-text-1);
+  font-weight: 500;
+}
+
+.endpoint-info {
+  margin-bottom: 2rem;
+}
+
+.endpoint-title {
+  margin: 0 0 0.5rem 0;
+  color: var(--vp-c-text-1);
+  font-size: 1.5rem;
+}
+
+.endpoint-description {
+  color: var(--vp-c-text-2);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.api-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  margin: 0 0 1rem 0;
+  color: var(--vp-c-text-1);
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
-.auth-controls {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
+.param-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.param-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: var(--vp-c-bg-soft);
+  border-radius: 8px;
+  border-left: 4px solid var(--vp-c-border);
+}
+
+.param-item.required {
+  border-left-color: var(--vp-c-brand);
+}
+
+.param-name {
+  background: var(--vp-c-bg-alt);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--vp-c-brand);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.param-type {
+  background: var(--vp-c-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: var(--vp-c-text-2);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.param-desc {
+  color: var(--vp-c-text-1);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.code-examples {
+  border: 1px solid var(--vp-c-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.code-tabs {
+  display: flex;
+  background: var(--vp-c-bg-soft);
+  border-bottom: 1px solid var(--vp-c-border);
+}
+
+.code-tab {
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--vp-c-text-2);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.code-tab:hover {
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+}
+
+.code-tab.active {
+  background: var(--vp-c-brand);
+  color: white;
+}
+
+.code-block-container {
+  position: relative;
+  background: var(--vp-c-bg-alt);
+}
+
+.copy-code-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.copy-code-btn:hover {
+  background: var(--vp-c-brand);
+  color: white;
+  border-color: var(--vp-c-brand);
+}
+
+.code-block {
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.code-block pre {
+  margin: 0;
+  font-family: monospace;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--vp-c-text-1);
+}
+
+.testing-title {
+  margin: 0 0 1rem 0;
+  color: var(--vp-c-text-1);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.test-section {
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
 .form-group label {
-  font-weight: 500;
-  margin-bottom: 0.5rem;
   font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--vp-c-text-1);
 }
 
-.form-group input, .form-group textarea {
+.test-input {
   padding: 0.75rem;
-  border: 1px solid #e1e5e9;
+  border: 2px solid var(--vp-c-border);
   border-radius: 6px;
   font-size: 0.9rem;
   transition: border-color 0.2s;
 }
 
-.form-group input:focus, .form-group textarea:focus {
+.test-input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--vp-c-brand);
 }
 
-.token-input {
-  position: relative;
-  display: flex;
-}
-
-.token-input input {
-  flex: 1;
-  margin-right: 0.5rem;
-}
-
-.toggle-token {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 0.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.toggle-token:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.endpoints-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.endpoint-section {
-  border: 1px solid #e1e5e9;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.endpoint-header {
-  background: #f8f9fa;
-  padding: 1.5rem;
-  border-bottom: 1px solid #e1e5e9;
-}
-
-.endpoint-header h3 {
-  margin: 0 0 0.5rem 0;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 1.3rem;
-}
-
-.method-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.method-badge.get { background: #e3f2fd; color: #1976d2; }
-.method-badge.post { background: #e8f5e8; color: #388e3c; }
-.method-badge.put { background: #fff3e0; color: #f57c00; }
-.method-badge.delete { background: #ffebee; color: #d32f2f; }
-
-.endpoint-description {
-  margin: 0;
-  color: #666;
-  font-size: 0.95rem;
-}
-
-.endpoint-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 400px;
-}
-
-.endpoint-docs {
-  padding: 1.5rem;
-  border-right: 1px solid #e1e5e9;
-  background: #fafafa;
-}
-
-.endpoint-testing {
-  padding: 1.5rem;
-  background: white;
-}
-
-.endpoint-docs h4, .endpoint-testing h4 {
-  margin: 0 0 1rem 0;
-  color: #333;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.parameter-list {
-  margin-bottom: 1.5rem;
-}
-
-.parameter-item {
-  padding: 1rem;
-  background: white;
-  border: 1px solid #e1e5e9;
-  border-radius: 6px;
-  margin-bottom: 0.5rem;
-}
-
-.parameter-item strong {
-  color: #333;
-  font-size: 0.95rem;
-}
-
-.param-type {
-  background: #e3f2fd;
-  color: #1976d2;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  margin-left: 0.5rem;
-}
-
-.param-required {
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  margin-left: 0.5rem;
-}
-
-.param-required.required {
-  background: #ffebee;
-  color: #d32f2f;
-}
-
-.param-required.optional {
-  background: #e8f5e8;
-  color: #388e3c;
-}
-
-.param-description {
-  margin: 0.5rem 0 0 0;
-  color: #666;
-  font-size: 0.85rem;
-}
-
-.code-block {
-  background: #f5f5f5;
-  border: 1px solid #e1e5e9;
-  border-radius: 6px;
-  padding: 1rem;
-  margin: 1rem 0;
-}
-
-.code-block pre {
-  margin: 0;
-  font-family: 'Monaco', 'Consolas', monospace;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  color: #333;
-}
-
-.json-editor {
-  font-family: 'Monaco', 'Consolas', monospace;
-  font-size: 0.9rem;
-  resize: vertical;
-}
-
-.test-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.test-btn {
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, var(--vp-c-brand), var(--vp-c-brand-dark));
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
   border-radius: 6px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  margin-top: 1rem;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
 }
 
-.test-button:hover:not(:disabled) {
+.test-btn:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.test-button:disabled {
-  opacity: 0.6;
+.test-btn:disabled {
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-3);
   cursor: not-allowed;
 }
 
-.error-message {
-  background: #ffebee;
-  color: #d32f2f;
-  padding: 1rem;
-  border-radius: 6px;
+.result-container {
   margin-top: 1rem;
-  border-left: 4px solid #d32f2f;
-}
-
-.response-section {
-  margin-top: 1.5rem;
-}
-
-.response-section h5 {
-  margin: 0 0 0.5rem 0;
-  color: #333;
-  font-weight: 600;
-}
-
-.response-data {
-  background: #f8f9fa;
-  border: 1px solid #e1e5e9;
-  border-radius: 6px;
   padding: 1rem;
-  max-height: 300px;
-  overflow-y: auto;
+  background: var(--vp-c-bg);
+  border-radius: 6px;
+  border: 1px solid var(--vp-c-border);
 }
 
-.response-data pre {
-  margin: 0;
-  font-family: 'Monaco', 'Consolas', monospace;
-  font-size: 0.85rem;
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--vp-c-green);
+  color: white;
+}
+
+.timestamp {
+  font-size: 0.8rem;
+  color: var(--vp-c-text-3);
+}
+
+.copy-btn {
+  padding: 0.25rem 0.5rem;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover {
+  background: var(--vp-c-brand);
+  color: white;
+  border-color: var(--vp-c-brand);
+}
+
+.request-info {
+  margin-bottom: 1rem;
+}
+
+.request-info h5 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--vp-c-text-1);
+}
+
+.request-data,
+.result-data {
+  background: var(--vp-c-bg-alt);
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.8rem;
   line-height: 1.4;
-  color: #333;
+  color: var(--vp-c-text-1);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .endpoint-layout {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .endpoint-testing {
+    flex: none;
+    position: static;
+    max-height: none;
+  }
+  
+  .api-config-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 768px) {
-  .auth-controls {
-    grid-template-columns: 1fr;
+  .interactive-api-container {
+    padding: 0 0.5rem;
   }
   
-  .endpoint-content {
-    grid-template-columns: 1fr;
+  .auth-container {
+    padding: 0 0.5rem;
   }
   
-  .endpoint-docs {
-    border-right: none;
-    border-bottom: 1px solid #e1e5e9;
+  .endpoint-testing {
+    padding: 1rem;
+  }
+  
+  .result-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 </style>`;
@@ -886,75 +1075,108 @@ const copyToClipboard = (text, event) => {
 
 // Generate markdown documentation
 function generateMarkdownDocs(apiGroup, endpoints) {
-  const componentTitle = toTitleCase(apiGroup);
+  const title = toTitleCase(apiGroup);
+  const componentName = `Interactive${title}API`;
 
-  // Better titles for markdown headers
-  const titleMap = {
+  // Generate API title based on group
+  const apiTitles = {
+    'auth': 'Authentication API',
     'kyc': 'KYC API',
-    'authentication': 'Authentication API',
-    'spot': 'Spot Trading API',
     'wallet': 'Wallet API',
-    'referral-program': 'Referral Program API',
-    'user-operations': 'User Operations API',
-    'exchange-configuration': 'Exchange Configuration API',
-    'websocket-subscriptions': 'WebSocket Subscriptions API',
-    'bybit-rest-endpoints': 'Bybit REST Endpoints API',
+    'spot': 'Trading API',
+    'user': 'User API',
+    'referral': 'Referral API',
+    'config': 'Configuration API',
     'datasource': 'Data Source API',
     'managed': 'Managed API',
     'okd': 'OKD API',
-    'errors': 'Error Handling API'
+    'operations': 'Operations API',
+    'v5': 'V5 API',
+    'symbols': 'Symbols API',
+    'external': 'External API',
+    'authorization': 'Authorization API',
+    'amlbot': 'AML Bot API',
+    'errdesc': 'Error Description API',
+    'unsubscribe': 'Unsubscribe API'
   };
 
-  const displayTitle = titleMap[apiGroup] || `${ componentTitle } API`;
+  const apiTitle = apiTitles[apiGroup] || `${title} API`;
 
-  return `-- -
-    layout: page
-  ---
+  return `---
+layout: page
+---
 
-# ${ displayTitle }
+Welcome to the **${apiTitle}** documentation. This interactive documentation allows you to test API endpoints directly from this page.
 
-Welcome to the ${ displayTitle } documentation.This interactive documentation allows you to test API endpoints directly from this page.
+<${componentName} />
 
-< Interactive${ componentTitle } API />
-
-    <script setup>
-      import Interactive${componentTitle}API from '../../.vitepress/theme/components/Interactive${componentTitle}API.vue'
-    </script>`;
+<script setup>
+import ${componentName} from '../../.vitepress/theme/components/${componentName}.vue'
+</script>
+`;
 }
 
-// Group endpoints by API category
-function groupEndpoints(swagger) {
-  const groups = {};
+// Process Swagger definition and generate components
+async function processSwaggerDefinition(swaggerDef) {
+  const paths = swaggerDef.paths || {};
+  const groupedEndpoints = {};
 
-  Object.entries(swagger.paths).forEach(([path, methods]) => {
+  // Group endpoints by first path segment
+  Object.entries(paths).forEach(([path, methods]) => {
+    const segments = path.split('/').filter(Boolean);
+    const group = segments[0] || 'general';
+
+    if (!groupedEndpoints[group]) {
+      groupedEndpoints[group] = [];
+    }
+
     Object.entries(methods).forEach(([method, endpoint]) => {
-      if (!endpoint.tags || !endpoint.tags.length) return;
-
-      const tag = endpoint.tags[0].toLowerCase().replace(/\s+/g, '-');
-
-      if (!groups[tag]) {
-        groups[tag] = [];
+      if (['get', 'post', 'put', 'delete', 'patch'].includes(method)) {
+        groupedEndpoints[group].push({
+          path,
+          method,
+          ...endpoint
+        });
       }
-
-      groups[tag].push({
-        path,
-        method,
-        ...endpoint
-      });
     });
   });
 
-  return groups;
+  // Generate components for each group
+  const generatedFiles = [];
+
+  for (const [group, endpoints] of Object.entries(groupedEndpoints)) {
+    if (endpoints.length === 0) continue;
+
+    const componentName = `Interactive${toTitleCase(group)}API`;
+    const vueComponent = generateVueComponent(group, endpoints);
+    const markdownDocs = generateMarkdownDocs(group, endpoints);
+
+    // Write Vue component
+    const componentPath = path.join(OUTPUT_DIR, `${componentName}.vue`);
+    fs.writeFileSync(componentPath, vueComponent);
+    console.log(`✅ Generated Vue component: ${componentPath}`);
+
+    // Write markdown documentation
+    const docsPath = path.join(DOCS_DIR, `${group}.md`);
+    fs.writeFileSync(docsPath, markdownDocs);
+    console.log(`✅ Generated documentation: ${docsPath}`);
+
+    generatedFiles.push({
+      component: componentPath,
+      docs: docsPath,
+      group,
+      endpoints: endpoints.length
+    });
+  }
+
+  return generatedFiles;
 }
 
 // Main execution
 async function main() {
   try {
-    console.log('🔄 Fetching Swagger definition...');
-    const swagger = await fetchSwaggerDefinition();
-
-    console.log('📊 Grouping endpoints...');
-    const groups = groupEndpoints(swagger);
+    console.log('🚀 Starting Swagger API Documentation Generator...');
+    console.log(`📡 Fetching Swagger definition from: ${SWAGGER_URL}`);
 
     // Ensure output directories exist
     if (!fs.existsSync(OUTPUT_DIR)) {
@@ -964,55 +1186,26 @@ async function main() {
       fs.mkdirSync(DOCS_DIR, { recursive: true });
     }
 
-    console.log(`📁 Found ${ Object.keys(groups).length } API groups: `);
-    Object.keys(groups).forEach(group => {
-      console.log(`   - ${ group }: ${ groups[group].length } endpoints`);
+    const swaggerDef = await fetchSwaggerDefinition();
+    console.log('✅ Swagger definition fetched successfully');
+
+    const generatedFiles = await processSwaggerDefinition(swaggerDef);
+
+    console.log('\n🎉 Generation completed successfully!');
+    console.log(`📊 Generated ${generatedFiles.length} API groups:`);
+
+    generatedFiles.forEach(file => {
+      console.log(`   • ${file.group}: ${file.endpoints} endpoints`);
     });
 
-    // Generate components and documentation for each group
-    for (const [groupName, endpoints] of Object.entries(groups)) {
-      if (endpoints.length === 0) continue;
-
-      console.log(`\n🔨 Generating ${ groupName } API...`);
-
-      // Generate Vue component
-      const componentName = `Interactive${ toTitleCase(groupName) } API.vue`;
-      const componentPath = path.join(OUTPUT_DIR, componentName);
-      const componentContent = generateVueComponent(groupName, endpoints);
-
-      fs.writeFileSync(componentPath, componentContent);
-      console.log(`   ✅ Component: ${ componentName } `);
-
-      // Generate markdown documentation
-      const docsPath = path.join(DOCS_DIR, `${ groupName }.md`);
-      const docsContent = generateMarkdownDocs(groupName, endpoints);
-
-      fs.writeFileSync(docsPath, docsContent);
-      console.log(`   ✅ Documentation: ${ groupName }.md`);
-    }
-
-    // Generate index file for components
-    const indexContent = Object.keys(groups)
-      .map(group => {
-        const componentName = `Interactive${ toTitleCase(group) } API`;
-        return `export { default as ${ componentName }
-} from './${componentName}.vue'`;
-      })
-      .join('\n');
-
-    fs.writeFileSync(path.join(OUTPUT_DIR, 'index.js'), indexContent);
-
-    console.log('\n🎉 Generation complete!');
-    console.log(`📦 Generated ${ Object.keys(groups).length } Vue components`);
-    console.log(`📚 Generated ${ Object.keys(groups).length } documentation pages`);
-    console.log('\n📝 Next steps:');
-    console.log('   1. Review generated components in docs/.vitepress/theme/components/');
-    console.log('   2. Review generated documentation in docs/en/api/');
-    console.log('   3. Update VitePress navigation if needed');
-    console.log('   4. Test the interactive API documentation');
+    console.log('\n📝 Files generated:');
+    generatedFiles.forEach(file => {
+      console.log(`   • Vue: ${file.component}`);
+      console.log(`   • Docs: ${file.docs}`);
+    });
 
   } catch (error) {
-    console.error('❌ Error:', error.message);
+    console.error('❌ Error generating API documentation:', error);
     process.exit(1);
   }
 }
@@ -1023,8 +1216,8 @@ if (require.main === module) {
 }
 
 module.exports = {
-  fetchSwaggerDefinition,
   generateVueComponent,
   generateMarkdownDocs,
-  groupEndpoints
+  processSwaggerDefinition,
+  main
 }; 

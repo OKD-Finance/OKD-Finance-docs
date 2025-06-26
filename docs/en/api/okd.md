@@ -2,9 +2,7 @@
 layout: page
 ---
 
-# OKD API
-
-Welcome to the OKD API documentation. This interactive documentation allows you to test API endpoints directly from this page.
+Welcome to the **OKD API** documentation. This interactive documentation allows you to test API endpoints directly from this page.
 
 <InteractiveOkAPI />
 

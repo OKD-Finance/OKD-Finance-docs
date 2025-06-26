@@ -2,9 +2,7 @@
 layout: page
 ---
 
-# Managed API
-
-Welcome to the Managed API documentation. This interactive documentation allows you to test API endpoints directly from this page.
+Welcome to the **Managed API** documentation. This interactive documentation allows you to test API endpoints directly from this page.
 
 <InteractiveMaAPI />
 
