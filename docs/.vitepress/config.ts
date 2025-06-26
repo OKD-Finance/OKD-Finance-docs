@@ -461,7 +461,12 @@ export default defineConfig({
                         },
                         {
                             'text': 'Spot Trading API',
-                            'link': '/en/api/spot'
+                            'link': '/en/api/spot',
+                            'collapsed': false,
+                            'items': [
+                                { 'text': 'POST /spot/orders', 'link': '/en/api/spot#place-trading-order' },
+                                { 'text': 'GET /spot/orders/open', 'link': '/en/api/spot#get-open-orders' }
+                            ]
                         },
                         {
                             'text': 'Wallet API',
