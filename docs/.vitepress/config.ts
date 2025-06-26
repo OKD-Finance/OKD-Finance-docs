@@ -448,149 +448,53 @@ export default defineConfig({
                     text: 'API Reference',
                     items: [
                         {
-                            'text': 'Overview',
-                            'link': '/en/api/overview'
+                            text: 'Overview',
+                            link: '/en/api/overview'
                         },
                         {
-                            'text': 'User API',
-                            'link': '/en/api/users',
-                            'collapsed': true,
-                            'items': [
-                                { 'text': 'PUT /user/flags', 'link': '/en/api/users#endpoint-1' },
-                                { 'text': 'PATCH /user/notifications', 'link': '/en/api/users#endpoint-2' },
-                                { 'text': 'PATCH /user/profile', 'link': '/en/api/users#endpoint-3' }
+                            text: 'User API',
+                            link: '/en/api/users',
+                            collapsed: true,
+                            items: [
+                                { text: 'PUT /user/flags', link: '/en/api/users#endpoint-1' },
+                                { text: 'PATCH /user/notifications', link: '/en/api/users#endpoint-2' },
+                                { text: 'PATCH /user/profile', link: '/en/api/users#endpoint-3' }
                             ]
+                        },
+                        {
+                            text: 'Spot Trading API',
+                            link: '/en/api/spot',
+                            collapsed: true,
+                            items: [
+                                { text: 'POST /spot/orders', link: '/en/api/spot#place-order' },
+                                { text: 'GET /spot/orders/open', link: '/en/api/spot#get-orders' }
+                            ]
+                        },
+                        {
+                            text: 'Authentication API',
+                            link: '/en/api/authentication',
+                            collapsed: true,
+                            items: [
+                                { text: 'POST /auth/login', link: '/en/api/authentication#endpoint-1' },
+                                { text: 'POST /auth/register', link: '/en/api/authentication#endpoint-2' },
+                                { text: 'POST /auth/logout', link: '/en/api/authentication#endpoint-3' }
+                            ]
+                        },
+                        {
+                            text: 'Wallet API',
+                            link: '/en/api/wallet',
+                            collapsed: true,
+                            items: [
+                                { text: 'GET /wallet/balance', link: '/en/api/wallet#endpoint-1' },
+                                { text: 'POST /wallet/transfer', link: '/en/api/wallet#endpoint-2' },
+                                { text: 'GET /wallet/history', link: '/en/api/wallet#endpoint-3' }
+                            ]
+                        },
+                        {
+                            text: 'KYC API',
+                            link: '/en/api/kyc'
                         }
                     ]
-                },
-                {
-                    'text': 'Spot Trading API',
-                    'link': '/en/api/spot',
-                    'collapsed': true,
-                    'items': [
-                        { 'text': 'POST /spot/orders', 'link': '/en/api/spot#place-order' },
-                        { 'text': 'GET /spot/orders/open', 'link': '/en/api/spot#get-orders' }
-                    ]
-                },
-                {
-                    'text': 'Authentication API',
-                    'link': '/en/api/authentication',
-                    'collapsed': true,
-                    'items': [
-                        { 'text': 'POST /auth/login', 'link': '/en/api/authentication#endpoint-1' },
-                        { 'text': 'POST /auth/register', 'link': '/en/api/authentication#endpoint-2' },
-                        { 'text': 'POST /auth/logout', 'link': '/en/api/authentication#endpoint-3' }
-                    ]
-                },
-                {
-                    'text': 'Wallet API',
-                    'link': '/en/api/wallet',
-                    'collapsed': true,
-                    'items': [
-                        { 'text': 'GET /wallet/balance', 'link': '/en/api/wallet#endpoint-1' },
-                        { 'text': 'POST /wallet/transfer', 'link': '/en/api/wallet#endpoint-2' },
-                        { 'text': 'GET /wallet/history', 'link': '/en/api/wallet#endpoint-3' }
-                    ]
-                },
-                {
-                    'text': 'KYC API',
-                    'link': '/en/api/kyc'
-                },
-                {
-                    'text': 'User Operations API',
-                    'link': '/en/api/user-operations'
-                },
-                {
-                    'text': 'Referral Program API',
-                    'link': '/en/api/referral-program'
-                },
-                {
-                    'text': 'Exchange Configuration API',
-                    'link': '/en/api/exchange-configuration'
-                },
-                {
-                    'text': 'WebSocket Subscriptions API',
-                    'link': '/en/api/websocket-subscriptions'
-                },
-                {
-                    'text': 'Data Source API',
-                    'link': '/en/api/datasource'
-                },
-                {
-                    'text': 'Bybit REST Endpoints API',
-                    'link': '/en/api/bybit-rest-endpoints'
-                },
-                {
-                    'text': 'Managed Services API',
-                    'link': '/en/api/managed'
-                },
-                {
-                    'text': 'OKD API',
-                    'link': '/en/api/okd'
-                },
-                {
-                    'text': 'Error Handling API',
-                    'link': '/en/api/errors'
-                },
-                {
-                    'text': 'CMC Cases',
-                    'link': '/en/api/cmc-cases'
-                },
-                {
-                    'text': 'Access Management',
-                    'link': '/en/api/access-management'
-                },
-                {
-                    'text': 'Withdrawal',
-                    'link': '/en/api/withdrawal'
-                },
-                {
-                    'text': 'Exchange',
-                    'link': '/en/api/exchange'
-                },
-                {
-                    'text': 'Spot Order',
-                    'link': '/en/api/spot-order'
-                },
-                {
-                    'text': 'P2P',
-                    'link': '/en/api/p2p'
-                },
-                {
-                    'text': 'History',
-                    'link': '/en/api/history'
-                },
-                {
-                    'text': 'Settings',
-                    'link': '/en/api/settings'
-                },
-                {
-                    'text': 'Newsfeed',
-                    'link': '/en/api/newsfeed'
-                },
-                {
-                    'text': 'Notifications',
-                    'link': '/en/api/notifications'
-                },
-                {
-                    'text': 'Email Templates',
-                    'link': '/en/api/email-templates'
-                },
-                {
-                    'text': 'Fee Settings',
-                    'link': '/en/api/fee-settings'
-                },
-                {
-                    'text': 'Analytics',
-                    'link': '/en/api/analytics'
-                },
-                {
-                    'text': 'Audit',
-                    'link': '/en/api/audit'
-                },
-                {
-                    'text': 'Support',
-                    'link': '/en/api/support'
                 }
             ]
         }

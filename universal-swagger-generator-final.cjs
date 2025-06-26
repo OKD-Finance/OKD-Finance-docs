@@ -23,6 +23,9 @@ class NavigationUpdater {
 
       // Remove existing entries for this API to prevent duplicates
       const existingPatterns = [
+        new RegExp(`\\s*\\{[^}]*text:\\s*'${apiName}'[^}]*\\}[,]?\\s*`, 'g'),
+        new RegExp(`\\s*\\{[^}]*text:\\s*'${apiName.replace(' API', '')}'[^}]*\\}[,]?\\s*`, 'g'),
+        new RegExp(`\\s*\\{[^}]*text:\\s*'${apiName.replace(' API', '')} API'[^}]*\\}[,]?\\s*`, 'g'),
         new RegExp(`\\s*\\{[^}]*'text':\\s*'${apiName}'[^}]*\\}[,]?\\s*`, 'g'),
         new RegExp(`\\s*\\{[^}]*'text':\\s*'${apiName.replace(' API', '')}'[^}]*\\}[,]?\\s*`, 'g'),
         new RegExp(`\\s*\\{[^}]*'text':\\s*'${apiName.replace(' API', '')} API'[^}]*\\}[,]?\\s*`, 'g')
@@ -37,31 +40,33 @@ class NavigationUpdater {
       let newApiEntry;
       if (subItems.length > 0) {
         const subItemsStr = subItems.map(item =>
-          `                                { 'text': '${item.text}', 'link': '${item.link}' }`
+          `                                { text: '${item.text}', link: '${item.link}' }`
         ).join(',\n');
 
         newApiEntry = `                        {
-                            'text': '${apiName}',
-                            'link': '${apiLink}',
-                            'collapsed': true,
-                            'items': [
+                            text: '${apiName}',
+                            link: '${apiLink}',
+                            collapsed: true,
+                            items: [
 ${subItemsStr}
                             ]
                         },`;
       } else {
         newApiEntry = `                        {
-                            'text': '${apiName}',
-                            'link': '${apiLink}'
+                            text: '${apiName}',
+                            link: '${apiLink}'
                         },`;
       }
 
       // Insert after Overview but before other APIs
       let updatedItemsContent = cleanedItemsContent;
-      const overviewIndex = cleanedItemsContent.indexOf("'text': 'Overview'");
+      const overviewIndex = cleanedItemsContent.indexOf("text: 'Overview'");
+      const overviewIndexOld = cleanedItemsContent.indexOf("'text': 'Overview'");
 
-      if (overviewIndex !== -1) {
+      if (overviewIndex !== -1 || overviewIndexOld !== -1) {
         // Find the end of Overview entry
-        const overviewEnd = cleanedItemsContent.indexOf('},', overviewIndex) + 2;
+        const useIndex = overviewIndex !== -1 ? overviewIndex : overviewIndexOld;
+        const overviewEnd = cleanedItemsContent.indexOf('},', useIndex) + 2;
         const beforeOverviewEnd = cleanedItemsContent.substring(0, overviewEnd);
         const afterOverviewEnd = cleanedItemsContent.substring(overviewEnd);
 
