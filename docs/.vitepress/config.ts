@@ -462,7 +462,7 @@ export default defineConfig({
                         {
                             'text': 'Spot Trading API',
                             'link': '/en/api/spot',
-                            'collapsed': false,
+                            'collapsed': true,
                             'items': [
                                 { 'text': 'POST /spot/orders', 'link': '/en/api/spot#place-order' },
                                 { 'text': 'GET /spot/orders/open', 'link': '/en/api/spot#get-orders' }

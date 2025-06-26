@@ -1,9 +1,12 @@
 <template>
   <!-- Fixed Authentication Header -->
-  <div class="auth-header-fixed">
+  <div class="auth-header-fixed" :class="{ 'collapsed': isHeaderCollapsed }">
     <div class="auth-container">
       <div class="auth-title">
         <h4>🔐 API Authentication</h4>
+        <button @click="isHeaderCollapsed = !isHeaderCollapsed" class="collapse-toggle" :title="isHeaderCollapsed ? 'Expand header' : 'Collapse header'">
+          {{ isHeaderCollapsed ? '⬇️' : '⬆️' }}
+        </button>
       </div>
       <div class="api-config-row">
         <div class="config-group">
@@ -1099,11 +1102,37 @@ if __name__ == "__main__":
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 
 const apiToken = ref('')
 const showToken = ref(false)
 const apiBaseUrl = ref('https://develop.okd.finance/api')
+
+// Header collapse functionality
+const isHeaderCollapsed = ref(false)
+const lastScrollY = ref(0)
+
+const handleScroll = () => {
+  const currentScrollY = window.scrollY
+  
+  // Collapse header when scrolling down past 100px
+  if (currentScrollY > 100 && currentScrollY > lastScrollY.value) {
+    isHeaderCollapsed.value = true
+  } else if (currentScrollY < lastScrollY.value) {
+    // Expand header when scrolling up
+    isHeaderCollapsed.value = false
+  }
+  
+  lastScrollY.value = currentScrollY
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 
 // Code examples tabs
 const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
@@ -1965,6 +1994,23 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   padding: 0.65rem 0;
   margin-bottom: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.auth-header-fixed.collapsed {
+  padding: 0.4rem 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.auth-header-fixed.collapsed .api-config-row,
+.auth-header-fixed.collapsed .status-row,
+.auth-header-fixed.collapsed .token-hint {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s ease;
 }
 
 .auth-container {
@@ -1973,10 +2019,34 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   padding: 0 1rem;
 }
 
+.auth-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .auth-title h4 {
   margin: 0 0 0.65rem 0;
   color: var(--vp-c-brand);
   font-size: 1rem;
+}
+
+.collapse-toggle {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  margin-bottom: 0.65rem;
+}
+
+.collapse-toggle:hover {
+  background: var(--vp-c-brand);
+  color: white;
+  border-color: var(--vp-c-brand);
+  transform: scale(1.05);
 }
 
 .api-config-row {
@@ -1984,6 +2054,9 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   margin-bottom: 0.65rem;
+  transition: all 0.3s ease;
+  max-height: 200px;
+  opacity: 1;
 }
 
 .config-group {
@@ -2052,6 +2125,9 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   gap: 1.5rem;
   align-items: center;
   margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  max-height: 50px;
+  opacity: 1;
 }
 
 .url-status {
@@ -2074,6 +2150,9 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   color: var(--vp-c-text-2);
   font-size: 0.85rem;
   margin-top: 0.25rem;
+  transition: all 0.3s ease;
+  max-height: 30px;
+  opacity: 1;
 }
 
 /* Main Container */
