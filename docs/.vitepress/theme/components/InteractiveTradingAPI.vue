@@ -25,12 +25,25 @@
             </button>
           </div>
         </div>
+        <div class="config-group fingerprint-group">
+          <label class="config-label">🔐 Fingerprint</label>
+          <div class="token-input-group">
+            <input v-model="apiFingerprint" :type="showFingerprint ? 'text' : 'password'"
+              placeholder="Enter 32-character hex fingerprint" class="token-input" />
+            <button @click="showFingerprint = !showFingerprint" class="token-toggle"
+              :title="showFingerprint ? 'Hide fingerprint' : 'Show fingerprint'">
+              {{ showFingerprint ? '🙈' : '👁️' }}
+            </button>
+          </div>
+        </div>
       </div>
       <div class="status-row">
         <div v-if="getRawValues().apiBaseUrl" class="url-status">🌐 API: {{ getRawValues().apiBaseUrl }}</div>
         <div v-if="getRawValues().apiToken" class="token-status">✅ Token configured ({{ getRawValues().apiToken.length
           }} chars)</div>
-        <button v-if="getRawValues().apiToken" @click="clearAuth" class="clear-auth-btn"
+        <div v-if="getRawValues().apiFingerprint" class="fingerprint-status">🔐 Fingerprint configured ({{ getRawValues().apiFingerprint.length
+          }} chars)</div>
+        <button v-if="getRawValues().apiToken || getRawValues().apiFingerprint" @click="clearAuth" class="clear-auth-btn"
           title="Clear authentication data">
           🗑️ Clear Auth
         </button>
@@ -132,7 +145,7 @@
                     <pre>curl -X POST "https://develop.okd.finance/api/spot/orders" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
-  -H "Fingerprint: 1358cd229b6bceb25941e99f4228997f" \
+  -H "Fingerprint: YOUR_FINGERPRINT" \
   -d '{
   "category": "spot",
   "symbol": "BNBETH",
@@ -197,7 +210,7 @@ func placeOrder() (*OrderResponse, error) {
     
     req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
     req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "1358cd229b6bceb25941e99f4228997f")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
     
     client := &http.Client{}
     resp, err := client.Do(req)
@@ -271,7 +284,7 @@ async function placeOrder(
     headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
-      'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+      'Fingerprint': 'YOUR_FINGERPRINT'
     },
     body: JSON.stringify(orderData)
   });
@@ -328,7 +341,7 @@ function placeOrder($baseUrl, $accessToken, $orderData) {
     $headers = [
         'Authorization: Bearer ' . $accessToken,
         'Content-Type: application/json',
-        'Fingerprint: 1358cd229b6bceb25941e99f4228997f'
+        'Fingerprint: YOUR_FINGERPRINT'
     ];
 
     $ch = curl_init();
@@ -417,7 +430,7 @@ def place_order(base_url: str, access_token: str, order_data: Dict) -> Dict:
     headers = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json',
-        'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+        'Fingerprint': 'YOUR_FINGERPRINT'
     }
     
     try:
@@ -535,8 +548,8 @@ if __name__ == "__main__":
                 <input v-model="orderData.price" type="text" placeholder="0.2" class="test-input" />
               </div>
               <button @click="testPlaceOrder" class="test-btn"
-                :disabled="!getRawValues().apiToken || !getRawValues().apiBaseUrl">
-                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
               <div v-if="results.placeOrder" class="result-container">
                 <div class="result-header">
@@ -630,7 +643,7 @@ if __name__ == "__main__":
                   <div class="code-block">
                     <pre>curl -X GET "https://develop.okd.finance/api/spot/orders/open?category=spot&symbol=BNBETH&limit=10" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Fingerprint: 1358cd229b6bceb25941e99f4228997f"</pre>
+  -H "Fingerprint: YOUR_FINGERPRINT"</pre>
                   </div>
                 </div>
 
@@ -688,7 +701,7 @@ func getOrders(category, symbol string, limit int) (*OrdersResponse, error) {
     }
     
     req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Fingerprint", "1358cd229b6bceb25941e99f4228997f")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
     
     client := &http.Client{}
     resp, err := client.Do(req)
@@ -794,7 +807,7 @@ async function getOrders(
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${accessToken}`,
-      'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+      'Fingerprint': 'YOUR_FINGERPRINT'
     }
   });
 
@@ -852,7 +865,7 @@ function getOrders($baseUrl, $accessToken, $params) {
     
     $headers = [
         'Authorization: Bearer ' . $accessToken,
-        'Fingerprint: 1358cd229b6bceb25941e99f4228997f'
+        'Fingerprint: YOUR_FINGERPRINT'
     ];
 
     $ch = curl_init();
@@ -955,7 +968,7 @@ def get_orders(
     
     headers = {
         'Authorization': f'Bearer {access_token}',
-        'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+        'Fingerprint': 'YOUR_FINGERPRINT'
     }
     
     params = {'category': category}
@@ -1089,8 +1102,8 @@ if __name__ == "__main__":
                 <input v-model.number="ordersData.limit" type="number" placeholder="50" class="test-input" />
               </div>
               <button @click="testGetOrders" class="test-btn"
-                :disabled="!getRawValues().apiToken || !getRawValues().apiBaseUrl">
-                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
               <div v-if="results.orders" class="result-container">
                 <div class="result-header">
@@ -1125,11 +1138,14 @@ import { useAuth } from '../composables/useAuth.js'
 const {
   apiToken,
   apiBaseUrl,
+  apiFingerprint,
   showToken,
+  showFingerprint,
   isHeaderCollapsed,
   toggleHeader,
   clearAuth,
-  getRawValues
+  getRawValues,
+  isReadyToSendRequest
 } = useAuth()
 
 // Code examples tabs
@@ -1152,14 +1168,7 @@ const ordersData = reactive({
   category: 'spot'
 })
 
-const generateFingerprint = () => {
-  const chars = '0123456789abcdef'
-  let result = ''
-  for (let i = 0; i < 32; i++) {
-    result += chars[Math.floor(Math.random() * chars.length)]
-  }
-  return result
-}
+
 
 const results = reactive({
   placeOrder: null,
@@ -1169,6 +1178,20 @@ const results = reactive({
 const testPlaceOrder = async () => {
   try {
     const authValues = getRawValues()
+    
+    // Проверяем готовность к отправке запроса
+    if (!isReadyToSendRequest()) {
+      results.placeOrder = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
+      }
+      return
+    }
+
     const requestBody = {
       category: orderData.category,
       symbol: orderData.symbol,
@@ -1179,11 +1202,10 @@ const testPlaceOrder = async () => {
     }
 
     const fullUrl = `${authValues.apiBaseUrl}/spot/orders`
-    const fingerprint = generateFingerprint()
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
-      'Fingerprint': fingerprint
+      'Fingerprint': authValues.apiFingerprint
     }
     const bodyString = JSON.stringify(requestBody)
 
@@ -1217,6 +1239,19 @@ const testPlaceOrder = async () => {
 const testGetOrders = async () => {
   try {
     const authValues = getRawValues()
+    
+    // Проверяем готовность к отправке запроса
+    if (!isReadyToSendRequest()) {
+      results.orders = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A'
+      }
+      return
+    }
+
     let endpoint = '/spot/orders/open'
     const params = new URLSearchParams()
 
@@ -1229,11 +1264,10 @@ const testGetOrders = async () => {
     }
 
     const fullUrl = `${authValues.apiBaseUrl}${endpoint}`
-    const fingerprint = generateFingerprint()
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
-      'Fingerprint': fingerprint
+      'Fingerprint': authValues.apiFingerprint
     }
 
     const response = await fetch(fullUrl, {
@@ -1296,7 +1330,7 @@ const codeExamples = {
     1: `curl -X POST "https://develop.okd.finance/api/spot/orders" \\
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
   -H "Content-Type: application/json" \\
-  -H "Fingerprint: 1358cd229b6bceb25941e99f4228997f" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
   -d '{
     "category": "spot",
     "symbol": "BNBETH",
@@ -1307,7 +1341,7 @@ const codeExamples = {
   }'`,
     2: `curl -X GET "https://develop.okd.finance/api/spot/orders/open?category=spot&symbol=BNBETH&limit=10" \\
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Fingerprint: 1358cd229b6bceb25941e99f4228997f"`
+  -H "Fingerprint: YOUR_FINGERPRINT"`
   },
   go: {
     1: `package main
@@ -1358,7 +1392,7 @@ func placeOrder() (*OrderResponse, error) {
     
     req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
     req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "1358cd229b6bceb25941e99f4228997f")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
     
     client := &http.Client{}
     resp, err := client.Do(req)
@@ -1444,7 +1478,7 @@ func getOrders(category, symbol string, limit int) (*OrdersResponse, error) {
     }
     
     req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Fingerprint", "1358cd229b6bceb25941e99f4228997f")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
     
     client := &http.Client{}
     resp, err := client.Do(req)
@@ -1514,7 +1548,7 @@ async function placeOrder(
     headers: {
       'Authorization': \`Bearer \${accessToken}\`,
       'Content-Type': 'application/json',
-      'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+      'Fingerprint': 'YOUR_FINGERPRINT'
     },
     body: JSON.stringify(orderData)
   });
@@ -1614,7 +1648,7 @@ async function getOrders(
     method: 'GET',
     headers: {
       'Authorization': \`Bearer \${accessToken}\`,
-      'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+      'Fingerprint': 'YOUR_FINGERPRINT'
     }
   });
 
@@ -1666,7 +1700,7 @@ function placeOrder($baseUrl, $accessToken, $orderData) {
     $headers = [
         'Authorization: Bearer ' . $accessToken,
         'Content-Type: application/json',
-        'Fingerprint: 1358cd229b6bceb25941e99f4228997f'
+        'Fingerprint: YOUR_FINGERPRINT'
     ];
 
     $ch = curl_init();
@@ -1736,7 +1770,7 @@ function getOrders($baseUrl, $accessToken, $params) {
     
     $headers = [
         'Authorization: Bearer ' . $accessToken,
-        'Fingerprint: 1358cd229b6bceb25941e99f4228997f'
+        'Fingerprint: YOUR_FINGERPRINT'
     ];
 
     $ch = curl_init();
@@ -1829,7 +1863,7 @@ def place_order(base_url: str, access_token: str, order_data: Dict) -> Dict:
     headers = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json',
-        'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+        'Fingerprint': 'YOUR_FINGERPRINT'
     }
     
     try:
@@ -1903,7 +1937,7 @@ def get_orders(
     
     headers = {
         'Authorization': f'Bearer {access_token}',
-        'Fingerprint': '1358cd229b6bceb25941e99f4228997f'
+        'Fingerprint': 'YOUR_FINGERPRINT'
     }
     
     params = {'category': category}
@@ -1971,8 +2005,15 @@ if __name__ == "__main__":
 }
 
 const copyCodeToClipboard = (lang, endpointNum) => {
-  const code = codeExamples[lang]?.[endpointNum]
+  const authValues = getRawValues()
+  let code = codeExamples[lang]?.[endpointNum]
+  
   if (code) {
+    // Заменяем плейсхолдеры на актуальные значения
+    code = code.replace(/YOUR_ACCESS_TOKEN/g, authValues.apiToken || 'YOUR_ACCESS_TOKEN')
+    code = code.replace(/YOUR_FINGERPRINT/g, authValues.apiFingerprint || 'YOUR_FINGERPRINT')
+    code = code.replace(/https:\/\/develop\.okd\.finance\/api/g, authValues.apiBaseUrl || 'https://develop.okd.finance/api')
+    
     navigator.clipboard.writeText(code).then(() => {
       // Visual feedback could be added here
       console.log('Code copied to clipboard!')
@@ -2051,7 +2092,7 @@ const copyCodeToClipboard = (lang, endpointNum) => {
 
 .api-config-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1.5rem;
   margin-bottom: 0.65rem;
   transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
@@ -2146,6 +2187,14 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   font-weight: 500;
 }
 
+.fingerprint-status {
+  color: var(--vp-c-purple);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+
+
 .clear-auth-btn {
   padding: 0.4rem 0.8rem;
   border: 1px solid var(--vp-c-red);
@@ -2201,7 +2250,7 @@ const copyCodeToClipboard = (lang, endpointNum) => {
 }
 
 .endpoint-testing {
-  flex: 0 0 400px;
+  flex: 0 0 450px;
   border-left: 2px solid var(--vp-c-border);
   padding-left: 2rem;
 }

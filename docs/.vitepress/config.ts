@@ -453,11 +453,13 @@ export default defineConfig({
                         },
                         {
                             'text': 'User API',
-                            'link': '/en/api/users'
-                        },
-                        {
-                            'text': 'Authentication API',
-                            'link': '/en/api/authentication'
+                            'link': '/en/api/users',
+                            'collapsed': true,
+                            'items': [
+                                { 'text': 'PUT /user/flags', 'link': '/en/api/users#endpoint-1' },
+                                { 'text': 'PATCH /user/notifications', 'link': '/en/api/users#endpoint-2' },
+                                { 'text': 'PATCH /user/profile', 'link': '/en/api/users#endpoint-3' }
+                            ]
                         },
                         {
                             'text': 'Spot Trading API',
@@ -469,8 +471,34 @@ export default defineConfig({
                             ]
                         },
                         {
+                            'text': 'Authentication API',
+                            'link': '/en/api/authentication',
+                            'collapsed': true,
+                            'items': [
+                                { 'text': 'POST /auth/login', 'link': '/en/api/authentication#endpoint-1' },
+                                { 'text': 'POST /auth/register', 'link': '/en/api/authentication#endpoint-2' },
+                                { 'text': 'POST /auth/logout', 'link': '/en/api/authentication#endpoint-3' }
+                            ]
+                        },
+                        {
+                            'text': 'User API',
+                            'link': '/en/api/users',
+                            'collapsed': true,
+                            'items': [
+                                { 'text': 'PUT /user/flags', 'link': '/en/api/users#endpoint-1' },
+                                { 'text': 'PATCH /user/notifications', 'link': '/en/api/users#endpoint-2' },
+                                { 'text': 'PATCH /user/profile', 'link': '/en/api/users#endpoint-3' }
+                            ]
+                        },
+                        {
                             'text': 'Wallet API',
-                            'link': '/en/api/wallet'
+                            'link': '/en/api/wallet',
+                            'collapsed': true,
+                            'items': [
+                                { 'text': 'GET /wallet/balance', 'link': '/en/api/wallet#endpoint-1' },
+                                { 'text': 'POST /wallet/transfer', 'link': '/en/api/wallet#endpoint-2' },
+                                { 'text': 'GET /wallet/history', 'link': '/en/api/wallet#endpoint-3' }
+                            ]
                         },
                         {
                             'text': 'KYC API',
