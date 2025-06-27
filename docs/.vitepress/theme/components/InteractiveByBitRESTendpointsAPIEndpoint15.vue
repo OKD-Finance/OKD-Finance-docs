@@ -27,16 +27,209 @@
                 {{ lang }}
               </button>
             </div>
-            <div v-show="activeCodeTab === 'cURL'" class="code-block">
+                        <div v-show="activeCodeTab === 'cURL'" class="code-block">
               <pre>curl -X GET "https://develop.okd.finance/api/v5/market/index-price-kline" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -H "Fingerprint: YOUR_FINGERPRINT"</pre>
             </div>
+            <div v-show="activeCodeTab === 'Go'" class="code-block">
+              <pre>package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    url := "https://develop.okd.finance/api/v5/market/index-price-kline"
+    
+         req, _ := http.NewRequest("GET", url, nil)
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    defer resp.Body.Close()
+    
+    fmt.Printf("Status: %s\n", resp.Status)
+}</pre>
+            </div>
+            <div v-show="activeCodeTab === 'TypeScript'" class="code-block">
+              <pre>import axios from 'axios';
+
+const apiClient = axios.create({
+  baseURL: 'https://develop.okd.finance/api',
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json',
+    'Fingerprint': 'YOUR_FINGERPRINT'
+  }
+});
+
+ async function v5marketindexpriceklineRequest() {
+  try {
+         const response = await apiClient.get('/v5/market/index-price-kline');
+    
+    console.log('Response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+ // Usage
+ v5marketindexpriceklineRequest();</pre>
+            </div>
+            <div v-show="activeCodeTab === 'PHP'" class="code-block">
+              <pre><?php
+
+$url = 'https://develop.okd.finance/api/v5/market/index-price-kline';
+$headers = [
+    'Authorization: Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type: application/json',
+    'Fingerprint: YOUR_FINGERPRINT'
+];
+
+ $ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$error = curl_error($ch);
+curl_close($ch);
+
+if ($error) {
+    echo "cURL Error: " . $error;
+} else {
+    echo "HTTP Code: " . $httpCode . "\n";
+    echo "Response: " . $response . "\n";
+}
+
+?></pre>
+            </div>
+            <div v-show="activeCodeTab === 'Python'" class="code-block">
+              <pre>import requests
+import json
+
+url = 'https://develop.okd.finance/api/v5/market/index-price-kline'
+headers = {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json',
+    'Fingerprint': 'YOUR_FINGERPRINT'
+}
+
+ try:
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    
+    print(f"Status Code: {response.status_code}")
+    print(f"Response: {response.json()}")
+    
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    if hasattr(e, 'response') and e.response is not None:
+        print(f"Response: {e.response.text}")
+</pre>
+            </div>
           </div>
         </div>
 
-        
+        <div class="api-section">
+          <h4 class="section-title">📋 Response Examples</h4>
+          <div class="response-examples">
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status success">200</span>
+                <span class="response-description">Successful operation</span>
+              </div>
+              <div class="code-block">
+                <pre>{
+  "success": true,
+  "message": "Operation completed successfully",
+  "data": {
+    "operationId": "op_1234567890",
+    "timestamp": "2024-01-01T12:00:00Z",
+    "status": "completed"
+  }
+}</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400</span>
+                <span class="response-description">Bad request</span>
+              </div>
+              <div class="code-block">
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Bad request",
+    "details": [
+      {
+        "field": "email",
+        "message": "Invalid email format"
+      },
+      {
+        "field": "password",
+        "message": "Password must be at least 8 characters"
+      }
+    ]
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401</span>
+                <span class="response-description">Unauthorized</span>
+              </div>
+              <div class="code-block">
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "Unauthorized",
+    "details": "Access token is missing or invalid"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">500</span>
+                <span class="response-description">Internal server error</span>
+              </div>
+              <div class="code-block">
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "Internal server error",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="endpoint-testing">

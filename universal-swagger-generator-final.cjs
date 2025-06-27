@@ -154,6 +154,32 @@ class SwaggerAutoLoader {
           }
         }
 
+        // Проверяем другие content types
+        if (!example.example && response.content) {
+          for (const [contentType, content] of Object.entries(response.content)) {
+            if (content.example) {
+              example.example = typeof content.example === 'string'
+                ? content.example
+                : JSON.stringify(content.example, null, 2);
+              break;
+            }
+            if (content.examples) {
+              const firstExampleKey = Object.keys(content.examples)[0];
+              if (firstExampleKey && content.examples[firstExampleKey].value) {
+                const exampleValue = content.examples[firstExampleKey].value;
+                example.example = typeof exampleValue === 'string'
+                  ? exampleValue
+                  : JSON.stringify(exampleValue, null, 2);
+                break;
+              }
+            }
+            if (content.schema) {
+              example.example = this.generateExampleFromSchema(content.schema);
+              break;
+            }
+          }
+        }
+
         // Если нет JSON контента, но есть описание - создаем реалистичный пример
         if (!example.example && response.description) {
           example.example = this.generateRealisticExample(statusCode, response.description);
@@ -161,6 +187,32 @@ class SwaggerAutoLoader {
 
         responseExamples.push(example);
       }
+    }
+
+    // Если нет примеров ответов в Swagger, добавляем стандартные
+    if (responseExamples.length === 0) {
+      responseExamples.push(
+        {
+          statusCode: '200',
+          description: 'Successful operation',
+          example: this.generateRealisticExample('200', 'Successful operation')
+        },
+        {
+          statusCode: '400',
+          description: 'Bad request',
+          example: this.generateRealisticExample('400', 'Bad request')
+        },
+        {
+          statusCode: '401',
+          description: 'Unauthorized',
+          example: this.generateRealisticExample('401', 'Unauthorized')
+        },
+        {
+          statusCode: '500',
+          description: 'Internal server error',
+          example: this.generateRealisticExample('500', 'Internal server error')
+        }
+      );
     }
 
     return responseExamples;
@@ -2113,25 +2165,172 @@ ${endpoints.map(endpoint => `  { text: '${escapeForJS(endpoint.title)}', anchor:
     console.log(`🎉 ${apiName} generation completed!`);
   }
 
+  // Generate code examples for all languages
+  generateCodeExamples(endpoint) {
+    const baseUrl = 'https://develop.okd.finance/api';
+    const hasBody = endpoint.parameters && endpoint.parameters.length > 0;
+    const bodyParams = (endpoint.parameters || []).map(p => `"${p.name}": "example_${p.name}"`).join(',\n    ');
+
+    return {
+      cURL: `curl -X ${(endpoint.method || 'GET').toUpperCase()} "${baseUrl}${endpoint.path}" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT"${hasBody ? ` \\
+  -d '{
+    ${bodyParams}
+  }'` : ''}`,
+
+      Go: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    url := "${baseUrl}${endpoint.path}"
+    
+         ${hasBody ? `payload := map[string]interface{}{
+         ${(endpoint.parameters || []).map(p => `"${p.name}": "example_${p.name}",`).join('\n        ')}
+     }
+    
+    jsonData, _ := json.Marshal(payload)
+         req, _ := http.NewRequest("${(endpoint.method || 'GET').toUpperCase()}", url, bytes.NewBuffer(jsonData))` : `req, _ := http.NewRequest("${(endpoint.method || 'GET').toUpperCase()}", url, nil)`}
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    defer resp.Body.Close()
+    
+    fmt.Printf("Status: %s\\n", resp.Status)
+}`,
+
+      TypeScript: `import axios from 'axios';
+
+const apiClient = axios.create({
+  baseURL: '${baseUrl}',
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json',
+    'Fingerprint': 'YOUR_FINGERPRINT'
+  }
+});
+
+ async function ${(endpoint.path || '').replace(/[^a-zA-Z0-9]/g, '') || 'api'}Request() {
+  try {
+         ${hasBody ? `const data = {
+       ${(endpoint.parameters || []).map(p => `${p.name}: 'example_${p.name}',`).join('\n      ')}
+     };
+    
+         const response = await apiClient.${(endpoint.method || 'get').toLowerCase()}('${endpoint.path}', data);` : `const response = await apiClient.${(endpoint.method || 'get').toLowerCase()}('${endpoint.path}');`}
+    
+    console.log('Response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+ // Usage
+ ${(endpoint.path || '').replace(/[^a-zA-Z0-9]/g, '') || 'api'}Request();`,
+
+      PHP: `<?php
+
+$url = '${baseUrl}${endpoint.path}';
+$headers = [
+    'Authorization: Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type: application/json',
+    'Fingerprint: YOUR_FINGERPRINT'
+];
+
+ ${hasBody ? `$data = [
+     ${(endpoint.parameters || []).map(p => `'${p.name}' => 'example_${p.name}',`).join('\n    ')}
+ ];
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, '${(endpoint.method || 'GET').toUpperCase()}');
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));` : `$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, '${(endpoint.method || 'GET').toUpperCase()}');`}
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$error = curl_error($ch);
+curl_close($ch);
+
+if ($error) {
+    echo "cURL Error: " . $error;
+} else {
+    echo "HTTP Code: " . $httpCode . "\\n";
+    echo "Response: " . $response . "\\n";
+}
+
+?>`,
+
+      Python: `import requests
+import json
+
+url = '${baseUrl}${endpoint.path}'
+headers = {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json',
+    'Fingerprint': 'YOUR_FINGERPRINT'
+}
+
+ ${hasBody ? `data = {
+     ${(endpoint.parameters || []).map(p => `'${p.name}': 'example_${p.name}',`).join('\n    ')}
+ }
+
+try:
+    response = requests.${(endpoint.method || 'get').toLowerCase()}(url, headers=headers, json=data)` : `try:
+    response = requests.${(endpoint.method || 'get').toLowerCase()}(url, headers=headers)`}
+    response.raise_for_status()
+    
+    print(f"Status Code: {response.status_code}")
+    print(f"Response: {response.json()}")
+    
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    if hasattr(e, 'response') and e.response is not None:
+        print(f"Response: {e.response.text}")
+`
+    };
+  }
+
   // Generate single endpoint component
   generateSingleEndpointComponent(endpoint, _index, _componentName) {
+    const codeExamples = this.generateCodeExamples(endpoint);
+
     return `<template>
   <div class="single-endpoint">
     <div class="endpoint-layout">
       <div class="endpoint-docs">
         <div class="method-header">
-          <span class="method-badge ${endpoint.method.toLowerCase()}">${endpoint.method.toUpperCase()}</span>
-          <span class="endpoint-path">${endpoint.path}</span>
+          <span class="method-badge ${(endpoint.method || 'get').toLowerCase()}">${(endpoint.method || 'GET').toUpperCase()}</span>
+          <span class="endpoint-path">${endpoint.path || ''}</span>
         </div>
 
         <div class="endpoint-info">
-          <p class="endpoint-description">${endpoint.description}</p>
+          <p class="endpoint-description">${endpoint.description || ''}</p>
         </div>
 
         <div class="api-section" v-if="hasParameters">
           <h4 class="section-title">⚙️ Parameters</h4>
           <div class="param-list">
-            ${endpoint.parameters.map(param => `<div class="param-item required">
+            ${(endpoint.parameters || []).map(param => `<div class="param-item required">
               <code class="param-name">${param.name}</code>
               <span class="param-type">${param.type}</span>
               <span class="param-desc">${param.description}</span>
@@ -2148,13 +2347,11 @@ ${endpoints.map(endpoint => `  { text: '${escapeForJS(endpoint.title)}', anchor:
                 {{ lang }}
               </button>
             </div>
-            <div v-show="activeCodeTab === 'cURL'" class="code-block">
-              <pre>curl -X ${endpoint.method.toUpperCase()} "https://develop.okd.finance/api${endpoint.path}" \\
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -H "Fingerprint: YOUR_FINGERPRINT"${endpoint.parameters.length > 0 ? ` \\
-  -d '{"${endpoint.parameters.map(p => `${p.name}":"example"`).join('","')}"}'` : ''}</pre>
-            </div>
+                        ${Object.entries(codeExamples).map(([lang, code]) =>
+      `<div v-show="activeCodeTab === '${lang}'" class="code-block">
+              <pre>${code}</pre>
+            </div>`
+    ).join('\n            ')}
           </div>
         </div>
 
@@ -2177,7 +2374,7 @@ ${endpoints.map(endpoint => `  { text: '${escapeForJS(endpoint.title)}', anchor:
       <div class="endpoint-testing">
         <h4 class="testing-title">🚀 Live Testing</h4>
         <div class="test-section">
-          ${endpoint.parameters.map(param => this.generateFormField(param, '')).join('\n          ')}
+          ${(endpoint.parameters || []).map(param => this.generateFormField(param, '')).join('\n          ')}
           <button @click="testEndpoint" class="test-btn"
             :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
             {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
@@ -2226,10 +2423,10 @@ const {
 const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
 const activeCodeTab = ref('cURL')
 
-const hasParameters = ${endpoint.parameters.length > 0}
+const hasParameters = ${(endpoint.parameters || []).length > 0}
 
 const testData = reactive({
-  ${endpoint.parameters.map(param => {
+  ${(endpoint.parameters || []).map(param => {
       if (param.type === 'boolean') return `${param.name}: true`;
       if (param.type === 'integer') return `${param.name}: 123`;
       return `${param.name}: 'example_${param.name}'`;
@@ -2255,7 +2452,7 @@ const testEndpoint = async () => {
     }
 
     const requestBody = {
-      ${endpoint.parameters.map(param => `${param.name}: testData.${param.name}`).join(',\n      ')}
+      ${(endpoint.parameters || []).map(param => `${param.name}: testData.${param.name}`).join(',\n      ')}
     }
 
     const fullUrl = \`\${authValues.apiBaseUrl}${endpoint.path}\`
@@ -2267,7 +2464,7 @@ const testEndpoint = async () => {
     const bodyString = JSON.stringify(requestBody)
 
     const response = await fetch(fullUrl, {
-      method: '${endpoint.method.toUpperCase()}',
+      method: '${(endpoint.method || 'GET').toUpperCase()}',
       headers: headers,
       body: bodyString
     })
@@ -2277,7 +2474,7 @@ const testEndpoint = async () => {
       status: \`\${response.status} \${response.statusText}\`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
-      requestUrl: \`${endpoint.method.toUpperCase()} \${fullUrl}\`,
+      requestUrl: \`${(endpoint.method || 'GET').toUpperCase()} \${fullUrl}\`,
       headers: JSON.stringify(headers, null, 2),
       body: bodyString
     }

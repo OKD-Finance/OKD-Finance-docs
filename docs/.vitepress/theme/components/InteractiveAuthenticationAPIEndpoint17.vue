@@ -31,12 +31,143 @@
                 {{ lang }}
               </button>
             </div>
-            <div v-show="activeCodeTab === 'cURL'" class="code-block">
+                        <div v-show="activeCodeTab === 'cURL'" class="code-block">
               <pre>curl -X GET "https://develop.okd.finance/api/auth/password/restore/{code}" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -H "Fingerprint: YOUR_FINGERPRINT" \
-  -d '{"code":"example""}'</pre>
+  -d '{
+    "code": "example_code"
+  }'</pre>
+            </div>
+            <div v-show="activeCodeTab === 'Go'" class="code-block">
+              <pre>package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    url := "https://develop.okd.finance/api/auth/password/restore/{code}"
+    
+         payload := map[string]interface{}{
+         "code": "example_code",
+     }
+    
+    jsonData, _ := json.Marshal(payload)
+         req, _ := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    defer resp.Body.Close()
+    
+    fmt.Printf("Status: %s\n", resp.Status)
+}</pre>
+            </div>
+            <div v-show="activeCodeTab === 'TypeScript'" class="code-block">
+              <pre>import axios from 'axios';
+
+const apiClient = axios.create({
+  baseURL: 'https://develop.okd.finance/api',
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json',
+    'Fingerprint': 'YOUR_FINGERPRINT'
+  }
+});
+
+ async function authpasswordrestorecodeRequest() {
+  try {
+         const data = {
+       code: 'example_code',
+     };
+    
+         const response = await apiClient.get('/auth/password/restore/{code}', data);
+    
+    console.log('Response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+ // Usage
+ authpasswordrestorecodeRequest();</pre>
+            </div>
+            <div v-show="activeCodeTab === 'PHP'" class="code-block">
+              <pre><?php
+
+$url = 'https://develop.okd.finance/api/auth/password/restore/{code}';
+$headers = [
+    'Authorization: Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type: application/json',
+    'Fingerprint: YOUR_FINGERPRINT'
+];
+
+ $data = [
+     'code' => 'example_code',
+ ];
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$error = curl_error($ch);
+curl_close($ch);
+
+if ($error) {
+    echo "cURL Error: " . $error;
+} else {
+    echo "HTTP Code: " . $httpCode . "\n";
+    echo "Response: " . $response . "\n";
+}
+
+?></pre>
+            </div>
+            <div v-show="activeCodeTab === 'Python'" class="code-block">
+              <pre>import requests
+import json
+
+url = 'https://develop.okd.finance/api/auth/password/restore/{code}'
+headers = {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json',
+    'Fingerprint': 'YOUR_FINGERPRINT'
+}
+
+ data = {
+     'code': 'example_code',
+ }
+
+try:
+    response = requests.get(url, headers=headers, json=data)
+    response.raise_for_status()
+    
+    print(f"Status Code: {response.status_code}")
+    print(f"Response: {response.json()}")
+    
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    if hasattr(e, 'response') and e.response is not None:
+        print(f"Response: {e.response.text}")
+</pre>
             </div>
           </div>
         </div>

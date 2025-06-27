@@ -38,12 +38,148 @@
                 {{ lang }}
               </button>
             </div>
-            <div v-show="activeCodeTab === 'cURL'" class="code-block">
+                        <div v-show="activeCodeTab === 'cURL'" class="code-block">
               <pre>curl -X GET "https://develop.okd.finance/api/datasource/coin-info" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -H "Fingerprint: YOUR_FINGERPRINT" \
-  -d '{"asset_id":"example"","source_id":"example""}'</pre>
+  -d '{
+    "asset_id": "example_asset_id",
+    "source_id": "example_source_id"
+  }'</pre>
+            </div>
+            <div v-show="activeCodeTab === 'Go'" class="code-block">
+              <pre>package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    url := "https://develop.okd.finance/api/datasource/coin-info"
+    
+         payload := map[string]interface{}{
+         "asset_id": "example_asset_id",
+        "source_id": "example_source_id",
+     }
+    
+    jsonData, _ := json.Marshal(payload)
+         req, _ := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+    defer resp.Body.Close()
+    
+    fmt.Printf("Status: %s\n", resp.Status)
+}</pre>
+            </div>
+            <div v-show="activeCodeTab === 'TypeScript'" class="code-block">
+              <pre>import axios from 'axios';
+
+const apiClient = axios.create({
+  baseURL: 'https://develop.okd.finance/api',
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json',
+    'Fingerprint': 'YOUR_FINGERPRINT'
+  }
+});
+
+ async function datasourcecoininfoRequest() {
+  try {
+         const data = {
+       asset_id: 'example_asset_id',
+      source_id: 'example_source_id',
+     };
+    
+         const response = await apiClient.get('/datasource/coin-info', data);
+    
+    console.log('Response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+ // Usage
+ datasourcecoininfoRequest();</pre>
+            </div>
+            <div v-show="activeCodeTab === 'PHP'" class="code-block">
+              <pre><?php
+
+$url = 'https://develop.okd.finance/api/datasource/coin-info';
+$headers = [
+    'Authorization: Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type: application/json',
+    'Fingerprint: YOUR_FINGERPRINT'
+];
+
+ $data = [
+     'asset_id' => 'example_asset_id',
+    'source_id' => 'example_source_id',
+ ];
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$error = curl_error($ch);
+curl_close($ch);
+
+if ($error) {
+    echo "cURL Error: " . $error;
+} else {
+    echo "HTTP Code: " . $httpCode . "\n";
+    echo "Response: " . $response . "\n";
+}
+
+?></pre>
+            </div>
+            <div v-show="activeCodeTab === 'Python'" class="code-block">
+              <pre>import requests
+import json
+
+url = 'https://develop.okd.finance/api/datasource/coin-info'
+headers = {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json',
+    'Fingerprint': 'YOUR_FINGERPRINT'
+}
+
+ data = {
+     'asset_id': 'example_asset_id',
+    'source_id': 'example_source_id',
+ }
+
+try:
+    response = requests.get(url, headers=headers, json=data)
+    response.raise_for_status()
+    
+    print(f"Status Code: {response.status_code}")
+    print(f"Response: {response.json()}")
+    
+except requests.exceptions.RequestException as e:
+    print(f"Error: {e}")
+    if hasattr(e, 'response') and e.response is not None:
+        print(f"Response: {e.response.text}")
+</pre>
             </div>
           </div>
         </div>
