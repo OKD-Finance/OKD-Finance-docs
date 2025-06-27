@@ -1,7 +1,3 @@
----
-layout: page
----
-
 # API Overview
 
 Welcome to the OKD Finance API documentation. Our comprehensive API allows you to integrate with all aspects of our trading platform.

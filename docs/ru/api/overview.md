@@ -1,80 +1,76 @@
----
-layout: page
----
+# 📚 Обзор API
 
-# API Overview
+Добро пожаловать в документацию API OKD Finance. Наш комплексный API позволяет интегрироваться со всеми аспектами нашей торговой платформы.
 
-Welcome to the OKD Finance API documentation. Our comprehensive API allows you to integrate with all aspects of our trading platform.
+## 🚀 Доступные API
 
-## Available APIs
+### 🔐 **Аутентификация**
+Управление аутентификацией пользователей, токенами и безопасностью.
+- [📖 Посмотреть API Аутентификации](/api/authentication)
 
-### 🔐 Authentication
-Manage user authentication, tokens, and security.
-- [View Authentication API](/api/authentication)
+### 💰 **Спотовая Торговля**
+Выполнение операций спотовой торговли.
+- [📖 Посмотреть Spot API](/api/spot)
 
-### 💰 Spot Trading
-Execute spot trading operations.
-- [View Spot API](/api/spot)
+### 💼 **Управление Кошельками**
+Управление пользовательскими кошельками и балансами.
+- [📖 Посмотреть API Кошелька](/api/wallet)
 
-### 💼 Wallet Management
-Manage user wallets and balances.
-- [View Wallet API](/api/wallet)
+### 👤 **Операции Пользователя**
+Обработка операций пользовательских аккаунтов.
+- [📖 Посмотреть API Операций Пользователя](/api/user-operations)
 
-### 👤 User Operations
-Handle user account operations.
-- [View User Operations API](/api/user-operations)
+### 🏦 **KYC Верификация**
+Процессы верификации "Знай своего клиента".
+- [📖 Посмотреть KYC API](/api/kyc)
 
-### 🏦 KYC
-Know Your Customer verification processes.
-- [View KYC API](/api/kyc)
+### 🔄 **Конфигурация Биржи**
+Настройка параметров и конфигурации биржи.
+- [📖 Посмотреть API Конфигурации Биржи](/api/exchange-configuration)
 
-### 🔄 Exchange Configuration
-Configure exchange settings and parameters.
-- [View Exchange Configuration API](/api/exchange-configuration)
+### 📊 **Источники Данных**
+Доступ к рыночным данным и аналитике.
+- [📖 Посмотреть API Источника Данных](/api/datasource)
 
-### 📊 Data Sources
-Access market data and analytics.
-- [View Datasource API](/api/datasource)
+### 🎁 **Реферальная Программа**
+Управление реферальными программами и вознаграждениями.
+- [📖 Посмотреть API Реферальной Программы](/api/referral-program)
 
-### 🎁 Referral Program
-Manage referral programs and rewards.
-- [View Referral Program API](/api/referral-program)
+### 🏢 **Управляемые Сервисы**
+Корпоративные функции и управляемые аккаунты.
+- [📖 Посмотреть Управляемый API](/api/managed)
 
-### 🏢 Managed Services
-Enterprise and managed account features.
-- [View Managed API](/api/managed)
+### 🌐 **WebSocket Подписки**
+Подписки на данные в реальном времени.
+- [📖 Посмотреть WebSocket API](/api/websocket-subscriptions)
 
-### 🌐 WebSocket Subscriptions
-Real-time data subscriptions.
-- [View WebSocket API](/api/websocket-subscriptions)
+### 🔗 **Интеграция с ByBit**
+Эндпоинты интеграции с биржей ByBit.
+- [📖 Посмотреть ByBit REST API](/api/bybit-rest-endpoints)
+- [📖 Посмотреть ByBit Proxy API](/api/bybit-proxy)
 
-### 🔗 ByBit Integration
-ByBit exchange integration endpoints.
-- [View ByBit REST API](/api/bybit-rest-endpoints)
-- [View ByBit Proxy API](/api/bybit-proxy)
+### 🏗️ **Платформа OKD**
+Основная функциональность платформы OKD.
+- [📖 Посмотреть OKD API](/api/okd)
 
-### 🏗️ OKD Platform
-Core OKD platform functionality.
-- [View OKD API](/api/okd)
+### ❌ **Обработка Ошибок**
+Коды ошибок и их обработка.
+- [📖 Посмотреть API Ошибок](/api/errors)
 
-### ❌ Error Handling
-Error codes and handling.
-- [View Errors API](/api/errors)
+## 🎯 Начало Работы
 
-## Getting Started
+1. **🔑 Аутентификация**: Начните с [API Аутентификации](/api/authentication) для получения токенов доступа
+2. **🔍 Изучение**: Просмотрите конкретные разделы API выше
+3. **🧪 Тестирование**: Используйте интерактивные функции тестирования на каждой странице API
 
-1. **Authentication**: Start with the [Authentication API](/api/authentication) to get your access tokens
-2. **Explore**: Browse the specific API sections above
-3. **Test**: Use the interactive testing features on each API page
+## ✨ Возможности
 
-## Features
+- 🔒 **Безопасная Аутентификация** с JWT токенами
+- 🧪 **Интерактивное Тестирование** на каждом эндпоинте
+- 📝 **Примеры Кода** на нескольких языках программирования
+- 📊 **Реальные Примеры Ответов** из живого API
+- 🌍 **Глобальное Управление Токенами** для всех эндпоинтов
 
-- 🔒 **Secure Authentication** with JWT tokens
-- 🧪 **Interactive Testing** on every endpoint
-- 📝 **Code Examples** in multiple languages
-- 📊 **Real Response Examples** from live API
-- 🌍 **Global Token Management** across all endpoints
+## 💬 Поддержка
 
-## Support
-
-For API support and questions, please refer to our documentation or contact our support team. 
+По вопросам поддержки API обращайтесь к нашей документации или свяжитесь с нашей службой поддержки. 
