@@ -1,0 +1,95 @@
+{
+    "swagger": {
+        "url": "https://develop.okd.finance/api/swagger/swagger.json",
+        "timeout": 30000,
+        "retries": 3,
+        "userAgent": "OKD-Finance-Docs-Generator/1.0.0"
+    },
+    "api": {
+        "baseUrl": "https://develop.okd.finance/api",
+        "environments": {
+            "development": "https://develop.okd.finance/api",
+            "staging": "https://staging.okd.finance/api",
+            "production": "https://api.okd.finance"
+        }
+    },
+    "output": {
+        "componentsDir": "./docs/.vitepress/theme/components",
+        "docsDir": "./docs/en/api",
+        "cacheFile": ".swagger-cache.json",
+        "configPath": "docs/.vitepress/config.ts"
+    },
+    "generation": {
+        "generateCodeExamples": true,
+        "generateTestingForms": true,
+        "includeAuthHeader": true,
+        "languages": [
+            "cURL",
+            "Go",
+            "TypeScript",
+            "PHP",
+            "Python"
+        ],
+        "includeResponseExamples": true,
+        "generateNavigation": true,
+        "autoValidation": true
+    },
+    "authentication": {
+        "requireToken": true,
+        "requireFingerprint": true,
+        "tokenHeader": "Authorization",
+        "fingerprintHeader": "X-Fingerprint",
+        "tokenPrefix": "Bearer"
+    },
+    "ui": {
+        "theme": "modern",
+        "showMethodBadges": true,
+        "collapsibleSections": true,
+        "codeHighlighting": true,
+        "responsiveDesign": true,
+        "darkMode": false
+    },
+    "performance": {
+        "enableCaching": true,
+        "cacheExpiry": 3600,
+        "parallelGeneration": true,
+        "incrementalUpdates": true,
+        "compressionLevel": 6
+    },
+    "validation": {
+        "validateNavigation": true,
+        "autoFixErrors": true,
+        "checkFileExistence": true,
+        "validateSyntax": true,
+        "removeDuplicates": true
+    },
+    "logging": {
+        "level": "info",
+        "verbose": false,
+        "debug": false,
+        "logFile": null,
+        "timestampFormat": "ISO"
+    },
+    "security": {
+        "sanitizeInput": true,
+        "validateUrls": true,
+        "maxFileSize": "10MB",
+        "allowedDomains": [
+            "develop.okd.finance",
+            "staging.okd.finance",
+            "api.okd.finance"
+        ]
+    },
+    "hooks": {
+        "beforeGeneration": null,
+        "afterGeneration": null,
+        "onError": null,
+        "onSuccess": null
+    },
+    "experimental": {
+        "webhookSupport": false,
+        "realTimeUpdates": false,
+        "aiDescriptions": false,
+        "autoTesting": false
+    }
+}

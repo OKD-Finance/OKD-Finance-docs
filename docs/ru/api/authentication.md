@@ -1,338 +1,227 @@
-# API Аутентификации
+---
+layout: page
+---
 
-Документация по API endpoints для аутентификации и авторизации пользователей.
+# Authentication API
 
-## Базовая информация
+<InteractiveAuthenticationAPI />
 
-**Base URL:** `https://develop.okd.finance/api`  
-**Требуется аутентификация:** Firebase Token для большинства endpoints
+## Check account existence by firebase token.
+No description available
 
-## Endpoints
+<InteractiveAuthenticationAPIEndpoint1 />
 
-### POST /api/auth/register
-Регистрация нового пользователя
+## Send confirmation code to email.
+No description available
 
-#### Headers
-```
-Authorization: Bearer <firebase_token>
-Content-Type: application/json
-```
+<InteractiveAuthenticationAPIEndpoint2 />
 
-#### Request Body
-```json
-{
-  "email": "user@example.com",
-  "firstName": "John",
-  "lastName": "Doe",
-  "phone": "+1234567890"
-}
-```
+## Inits operation to create user fcm.
+! Need access token in bearer token authorization
 
-#### Response
-```json
-{
-  "success": true,
-  "data": {
-    "user": {
-      "id": "usr_123456",
-      "email": "user@example.com",
-      "firstName": "John",
-      "lastName": "Doe",
-      "isVerified": false,
-      "createdAt": "2024-01-01T00:00:00Z"
-    },
-    "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "refreshToken": "rt_abcdef123456"
-  }
-}
-```
+<InteractiveAuthenticationAPIEndpoint3 />
 
-### POST /api/auth/login
-Авторизация пользователя
+## Inits operation to delete user fcm by device id and fcm.
+! Need access token in bearer token authorization
 
-#### Headers
-```
-Authorization: Bearer <firebase_token>
-Content-Type: application/json
-```
+<InteractiveAuthenticationAPIEndpoint4 />
 
-#### Response
-```json
-{
-  "success": true,
-  "data": {
-    "user": {
-      "id": "usr_123456",
-      "email": "user@example.com",
-      "firstName": "John",
-      "lastName": "Doe",
-      "isVerified": true,
-      "roles": ["trader", "verified"],
-      "lastLoginAt": "2024-01-01T00:00:00Z"
-    },
-    "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "refreshToken": "rt_abcdef123456"
-  }
-}
-```
+## Get Google link for lgoin/register.
+No description available
 
-### POST /api/auth/refresh
-Обновление JWT токена
+<InteractiveAuthenticationAPIEndpoint5 />
 
-#### Headers
-```
-Authorization: Bearer <firebase_token>
-Content-Type: application/json
-```
+## Regenerate a pair of authenticate tokens if refresh token is valid
+! Need refresh token in bearer token authorization
 
-#### Response
-```json
-{
-  "success": true,
-  "data": {
-    "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "expiresIn": 3600
-  }
-}
-```
+<InteractiveAuthenticationAPIEndpoint6 />
 
-### POST /api/auth/logout
-Выход из системы
+## Inits operation to change current user locale.
+! Need access token in bearer token authorization
 
-#### Headers
-```
-Authorization: Bearer <jwt_token>
-Content-Type: application/json
-```
+<InteractiveAuthenticationAPIEndpoint7 />
 
-#### Response
-```json
-{
-  "success": true,
-  "message": "Successfully logged out"
-}
-```
+## Get notifications for user
+! Need access token in bearer token authorization
 
-### GET /api/auth/me
-Получение информации о текущем пользователе
+<InteractiveAuthenticationAPIEndpoint8 />
 
-#### Headers
-```
-Authorization: Bearer <jwt_token>
-```
+## Mark all/group of notifications as viewed. Body is optional.
+! Need access token in bearer token authorization
 
-#### Response
-```json
-{
-  "success": true,
-  "data": {
-    "user": {
-      "id": "usr_123456", 
-      "email": "user@example.com",
-      "firstName": "John",
-      "lastName": "Doe",
-      "phone": "+1234567890",
-      "isVerified": true,
-      "kycStatus": "approved",
-      "roles": ["trader", "verified"],
-      "settings": {
-        "timezone": "UTC",
-        "language": "en",
-        "notifications": {
-          "email": true,
-          "push": false
-        }
-      },
-      "createdAt": "2024-01-01T00:00:00Z",
-      "lastLoginAt": "2024-01-01T12:00:00Z"
-    }
-  }
-}
-```
+<InteractiveAuthenticationAPIEndpoint9 />
 
-### PUT /api/auth/profile
-Обновление профиля пользователя
+## Delete all/group of notifications. Body is optional.
+! Need access token in bearer token authorization
 
-#### Headers
-```
-Authorization: Bearer <jwt_token>
-Content-Type: application/json
-```
+<InteractiveAuthenticationAPIEndpoint10 />
 
-#### Request Body
-```json
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "phone": "+1234567890",
-  "settings": {
-    "timezone": "America/New_York",
-    "language": "ru",
-    "notifications": {
-      "email": true,
-      "push": true
-    }
-  }
-}
-```
+## Mark notification as viewed.
+! Need access token in bearer token authorization
 
-#### Response
-```json
-{
-  "success": true,
-  "data": {
-    "user": {
-      "id": "usr_123456",
-      "email": "user@example.com",
-      "firstName": "John",
-      "lastName": "Smith",
-      "phone": "+1234567890",
-      "settings": {
-        "timezone": "America/New_York",
-        "language": "ru",
-        "notifications": {
-          "email": true,
-          "push": true
-        }
-      },
-      "updatedAt": "2024-01-01T12:30:00Z"
-    }
-  }
-}
-```
+<InteractiveAuthenticationAPIEndpoint11 />
 
-## Коды ошибок
+## Inits operation to turn OTP on (one time password) for current user.
+! Need access token in bearer token authorization
 
-### 400 Bad Request
-```json
-{
-  "success": false,
-  "error": {
-    "code": "INVALID_REQUEST",
-    "message": "Invalid request data",
-    "details": {
-      "email": "Email is required"
-    }
-  }
-}
-```
+<InteractiveAuthenticationAPIEndpoint12 />
 
-### 401 Unauthorized
-```json
-{
-  "success": false,
-  "error": {
-    "code": "UNAUTHORIZED",
-    "message": "Invalid or expired token"
-  }
-}
-```
+## Inits operation to turn OTP off (one time password 2FA) for current user by using email and OTP.
+! Need access token in bearer token authorization
 
-### 403 Forbidden
-```json
-{
-  "success": false,
-  "error": {
-    "code": "FORBIDDEN",
-    "message": "Insufficient permissions"
-  }
-}
-```
+<InteractiveAuthenticationAPIEndpoint13 />
 
-### 409 Conflict
-```json
-{
-  "success": false,
-  "error": {
-    "code": "USER_EXISTS",
-    "message": "User with this email already exists"
-  }
-}
-```
+## Inits operation to change current user password.
+Operation is valid only for regular and firebase accounts.
+It's no need to set old/new password for firebase account.
+! Need access token in bearer token authorization
 
-### 429 Too Many Requests
-```json
-{
-  "success": false,
-  "error": {
-    "code": "RATE_LIMIT",
-    "message": "Too many requests, please try again later",
-    "retryAfter": 60
-  }
-}
-```
+<InteractiveAuthenticationAPIEndpoint14 />
 
-## Rate Limiting
+## Finishes restoration of current user password.
+No description available
 
-| Endpoint | Лимит | Период |
-|----------|-------|--------|
-| POST /auth/register | 5 requests | 1 hour |
-| POST /auth/login | 10 requests | 5 minutes |
-| POST /auth/refresh | 100 requests | 1 hour |
-| Other endpoints | 1000 requests | 1 hour |
+<InteractiveAuthenticationAPIEndpoint15 />
 
-## Примеры использования
+## Inits restoration of current user password.
+No description available
 
-### JavaScript (Fetch API)
-```javascript
-// Регистрация
-const registerUser = async (firebaseToken, userData) => {
-  const response = await fetch('https://develop.okd.finance/api/auth/register', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${firebaseToken}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(userData)
-  });
-  
-  const result = await response.json();
-  return result;
-};
+<InteractiveAuthenticationAPIEndpoint16 />
 
-// Авторизация
-const loginUser = async (firebaseToken) => {
-  const response = await fetch('https://develop.okd.finance/api/auth/login', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${firebaseToken}`,
-      'Content-Type': 'application/json'
-    }
-  });
-  
-  const result = await response.json();
-  return result;
-};
-```
+## Check restoration code.
+No description available
 
-### Python (requests)
-```python
-import requests
+<InteractiveAuthenticationAPIEndpoint17 />
 
-def register_user(firebase_token, user_data):
-    headers = {
-        'Authorization': f'Bearer {firebase_token}',
-        'Content-Type': 'application/json'
-    }
-    
-    response = requests.post(
-        'https://develop.okd.finance/api/auth/register',
-        headers=headers,
-        json=user_data
-    )
-    
-    return response.json()
+## GetProfile returns information about current user.
+! Need access token in bearer token authorization
 
-def login_user(firebase_token):
-    headers = {
-        'Authorization': f'Bearer {firebase_token}',
-        'Content-Type': 'application/json'
-    }
-    
-    response = requests.post(
-        'https://develop.okd.finance/api/auth/login',
-        headers=headers
-    )
-    
-    return response.json()
-``` 
+<InteractiveAuthenticationAPIEndpoint18 />
+
+## SetProfile sets some fields in profile of current user. All fields are optional.
+! Need access token in bearer token authorization
+
+<InteractiveAuthenticationAPIEndpoint19 />
+
+## Check possibility to remove account.
+! Need access token in bearer token authorization
+
+<InteractiveAuthenticationAPIEndpoint20 />
+
+## Inits operation to remove account. Reason maximum length is 200.
+! Need access token in bearer token authorization
+
+<InteractiveAuthenticationAPIEndpoint21 />
+
+## Confirm login operation.
+No description available
+
+<InteractiveAuthenticationAPIEndpoint22 />
+
+## Logins user and return pair of tokens or login operation with hints.
+No description available
+
+<InteractiveAuthenticationAPIEndpoint23 />
+
+## Sign in by firebase request.
+No description available
+
+<InteractiveAuthenticationAPIEndpoint24 />
+
+## Sign in by Google OAuth2 request.
+No description available
+
+<InteractiveAuthenticationAPIEndpoint25 />
+
+## Resend email/phone codes for sign-in process.
+Only one of flags should be set.
+
+<InteractiveAuthenticationAPIEndpoint26 />
+
+## Logout remove user sessions and makes the token invalid.
+! Need access token in bearer token authorization
+
+<InteractiveAuthenticationAPIEndpoint27 />
+
+## Registration save user in database and send verification url to email.
+No description available
+
+<InteractiveAuthenticationAPIEndpoint28 />
+
+## Sign up by Google OAuth2 request.
+No description available
+
+<InteractiveAuthenticationAPIEndpoint29 />
+
+## SetProfile sets profile flags of current user.
+! Need access token in bearer token authorization
+
+<InteractiveAuthenticationAPIEndpoint30 />
+
+<script setup>
+import InteractiveAuthenticationAPI from '../../.vitepress/theme/components/InteractiveAuthenticationAPI.vue'
+import InteractiveAuthenticationAPIEndpoint1 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint1.vue'
+import InteractiveAuthenticationAPIEndpoint2 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint2.vue'
+import InteractiveAuthenticationAPIEndpoint3 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint3.vue'
+import InteractiveAuthenticationAPIEndpoint4 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint4.vue'
+import InteractiveAuthenticationAPIEndpoint5 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint5.vue'
+import InteractiveAuthenticationAPIEndpoint6 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint6.vue'
+import InteractiveAuthenticationAPIEndpoint7 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint7.vue'
+import InteractiveAuthenticationAPIEndpoint8 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint8.vue'
+import InteractiveAuthenticationAPIEndpoint9 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint9.vue'
+import InteractiveAuthenticationAPIEndpoint10 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint10.vue'
+import InteractiveAuthenticationAPIEndpoint11 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint11.vue'
+import InteractiveAuthenticationAPIEndpoint12 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint12.vue'
+import InteractiveAuthenticationAPIEndpoint13 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint13.vue'
+import InteractiveAuthenticationAPIEndpoint14 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint14.vue'
+import InteractiveAuthenticationAPIEndpoint15 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint15.vue'
+import InteractiveAuthenticationAPIEndpoint16 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint16.vue'
+import InteractiveAuthenticationAPIEndpoint17 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint17.vue'
+import InteractiveAuthenticationAPIEndpoint18 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint18.vue'
+import InteractiveAuthenticationAPIEndpoint19 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint19.vue'
+import InteractiveAuthenticationAPIEndpoint20 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint20.vue'
+import InteractiveAuthenticationAPIEndpoint21 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint21.vue'
+import InteractiveAuthenticationAPIEndpoint22 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint22.vue'
+import InteractiveAuthenticationAPIEndpoint23 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint23.vue'
+import InteractiveAuthenticationAPIEndpoint24 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint24.vue'
+import InteractiveAuthenticationAPIEndpoint25 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint25.vue'
+import InteractiveAuthenticationAPIEndpoint26 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint26.vue'
+import InteractiveAuthenticationAPIEndpoint27 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint27.vue'
+import InteractiveAuthenticationAPIEndpoint28 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint28.vue'
+import InteractiveAuthenticationAPIEndpoint29 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint29.vue'
+import InteractiveAuthenticationAPIEndpoint30 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint30.vue'
+import SimpleOutline from '../../.vitepress/theme/components/SimpleOutline.vue'
+</script>
+
+<SimpleOutline :items="[
+  { text: 'Check account existence by firebase token.', anchor: '#check-account-existence-by-firebase-token' },
+  { text: 'Send confirmation code to email.', anchor: '#send-confirmation-code-to-email' },
+  { text: 'Inits operation to create user fcm.', anchor: '#inits-operation-to-create-user-fcm' },
+  { text: 'Inits operation to delete user fcm by device id and fcm.', anchor: '#inits-operation-to-delete-user-fcm-by-device-id-and-fcm' },
+  { text: 'Get Google link for lgoin/register.', anchor: '#get-google-link-for-lgoinregister' },
+  { text: 'Regenerate a pair of authenticate tokens if refresh token is valid', anchor: '#regenerate-a-pair-of-authenticate-tokens-if-refresh-token-is-valid' },
+  { text: 'Inits operation to change current user locale.', anchor: '#inits-operation-to-change-current-user-locale' },
+  { text: 'Get notifications for user', anchor: '#get-notifications-for-user' },
+  { text: 'Mark all/group of notifications as viewed. Body is optional.', anchor: '#mark-allgroup-of-notifications-as-viewed-body-is-optional' },
+  { text: 'Delete all/group of notifications. Body is optional.', anchor: '#delete-allgroup-of-notifications-body-is-optional' },
+  { text: 'Mark notification as viewed.', anchor: '#mark-notification-as-viewed' },
+  { text: 'Inits operation to turn OTP on (one time password) for current user.', anchor: '#inits-operation-to-turn-otp-on-one-time-password-for-current-user' },
+  { text: 'Inits operation to turn OTP off (one time password 2FA) for current user by using email and OTP.', anchor: '#inits-operation-to-turn-otp-off-one-time-password-2fa-for-current-user-by-using-email-and-otp' },
+  { text: 'Inits operation to change current user password. Operation is valid only for regular and firebase accounts. It\'s no need to set old/new password for firebase account.', anchor: '#inits-operation-to-change-current-user-password-operation-is-valid-only-for-regular-and-firebase-accounts-its-no-need-to-set-oldnew-password-for-firebase-account' },
+  { text: 'Finishes restoration of current user password.', anchor: '#finishes-restoration-of-current-user-password' },
+  { text: 'Inits restoration of current user password.', anchor: '#inits-restoration-of-current-user-password' },
+  { text: 'Check restoration code.', anchor: '#check-restoration-code' },
+  { text: 'GetProfile returns information about current user.', anchor: '#getprofile-returns-information-about-current-user' },
+  { text: 'SetProfile sets some fields in profile of current user. All fields are optional.', anchor: '#setprofile-sets-some-fields-in-profile-of-current-user-all-fields-are-optional' },
+  { text: 'Check possibility to remove account.', anchor: '#check-possibility-to-remove-account' },
+  { text: 'Inits operation to remove account. Reason maximum length is 200.', anchor: '#inits-operation-to-remove-account-reason-maximum-length-is-200' },
+  { text: 'Confirm login operation.', anchor: '#confirm-login-operation' },
+  { text: 'Logins user and return pair of tokens or login operation with hints.', anchor: '#logins-user-and-return-pair-of-tokens-or-login-operation-with-hints' },
+  { text: 'Sign in by firebase request.', anchor: '#sign-in-by-firebase-request' },
+  { text: 'Sign in by Google OAuth2 request.', anchor: '#sign-in-by-google-oauth2-request' },
+  { text: 'Resend email/phone codes for sign-in process.', anchor: '#resend-emailphone-codes-for-signin-process' },
+  { text: 'Logout remove user sessions and makes the token invalid.', anchor: '#logout-remove-user-sessions-and-makes-the-token-invalid' },
+  { text: 'Registration save user in database and send verification url to email.', anchor: '#registration-save-user-in-database-and-send-verification-url-to-email' },
+  { text: 'Sign up by Google OAuth2 request.', anchor: '#sign-up-by-google-oauth2-request' },
+  { text: 'SetProfile sets profile flags of current user.', anchor: '#setprofile-sets-profile-flags-of-current-user' }
+]" />

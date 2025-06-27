@@ -237,6 +237,96 @@ ${apiItems}
                     }`;
     }
 
+    // Добавляем API в навигацию
+    addApiToNavigation(apiName, apiLink, subItems = []) {
+        try {
+            let configContent = this.readConfig();
+            if (!configContent) return false;
+
+            // Найти секцию '/en/api/' в sidebar
+            const apiSectionRegex = /(\s+)'\/en\/api\/': \[\s*\n([\s\S]*?)\n(\s+)\],/;
+            const match = configContent.match(apiSectionRegex);
+
+            if (!match) {
+                console.log('❌ Could not find /en/api/ section in sidebar');
+                return false;
+            }
+
+            const [fullMatch, indent, sectionContent, endIndent] = match;
+
+            // Парсим существующие API элементы из секции
+            const existingApis = new Set();
+            const apiItemRegex = /text:\s*['"](.*?)['"],/g;
+            let itemMatch;
+
+            while ((itemMatch = apiItemRegex.exec(sectionContent)) !== null) {
+                if (itemMatch[1] !== 'API Reference' && itemMatch[1] !== 'Overview') {
+                    existingApis.add(itemMatch[1]);
+                }
+            }
+
+            // Если API уже существует, не добавляем дубликат
+            if (existingApis.has(apiName)) {
+                console.log(`✅ ${apiName} already exists in navigation`);
+                return true;
+            }
+
+            // Создаем новую запись API
+            let newApiItem;
+            if (subItems.length > 0) {
+                const subItemsStr = subItems.map(item =>
+                    `${indent}                    { text: '${item.text}', link: '${item.link}' }`
+                ).join(',\n');
+
+                newApiItem = `,
+${indent}            {
+${indent}                text: '${apiName}',
+${indent}                link: '${apiLink}',
+${indent}                collapsed: true,
+${indent}                items: [
+${subItemsStr}
+${indent}                ]
+${indent}            }`;
+            } else {
+                newApiItem = `,
+${indent}            {
+${indent}                text: '${apiName}',
+${indent}                link: '${apiLink}'
+${indent}            }`;
+            }
+
+            // Найти место для вставки (после Overview)
+            const overviewRegex = /(\s+text:\s*'Overview',\s*\n\s+link:\s*'\/en\/api\/overview'\s*\n\s+\})/;
+            const overviewMatch = sectionContent.match(overviewRegex);
+
+            let newSectionContent;
+            if (overviewMatch) {
+                // Вставляем после Overview
+                newSectionContent = sectionContent.replace(overviewRegex, `$1${newApiItem}`);
+            } else {
+                // Если Overview не найден, добавляем в конец items
+                const itemsEndRegex = /(\s+\]\s*\n\s+\})/;
+                newSectionContent = sectionContent.replace(itemsEndRegex, `${newApiItem}$1`);
+            }
+
+            // Создаем новую секцию API
+            const newApiSection = `${indent}'/en/api/': [
+${newSectionContent}
+${endIndent}],`;
+
+            // Заменяем в конфиге
+            const newConfigContent = configContent.replace(fullMatch, newApiSection);
+            fs.writeFileSync(this.configPath, newConfigContent, 'utf8');
+
+            console.log(`✅ Added ${apiName} to navigation (removed duplicates)`);
+            return true;
+
+        } catch (error) {
+            console.error('❌ Error updating navigation:', error.message);
+            return false;
+        }
+    }
+
     // Автоматически исправляем навигацию
     fixNavigation() {
         console.log('🔧 Starting navigation validation and fix...\n');

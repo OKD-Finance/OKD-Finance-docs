@@ -97,5 +97,5 @@ ws.send(JSON.stringify({
 
 1. [身份验证](/zh/api/authentication)
 2. [用户管理](/zh/api/users)
-3. [钱包操作](/zh/api/wallets)
+3. [钱包操作](/zh/api/wallet)
 4. [交易功能](/zh/trading/overview) 

@@ -13,10 +13,17 @@
     "lint": "eslint . --ext .vue,.js,.ts",
     "lint:fix": "eslint . --ext .vue,.js,.ts --fix",
     "prepare": "husky",
-    "generate-api-docs": "node swagger-generator.cjs",
-    "update-api-docs": "node update-api-docs.cjs",
-    "build-docs": "npm run generate-api-docs && npm run update-api-docs && npm run build",
-    "dev-docs": "npm run generate-api-docs && npm run update-api-docs && npm run dev"
+    "swagger:generate": "node universal-swagger-generator-final.cjs swagger",
+    "swagger:update": "node universal-swagger-generator-final.cjs swagger",
+    "swagger:auto": "node universal-swagger-generator-final.cjs auto",
+    "swagger:all": "node universal-swagger-generator-final.cjs all",
+    "docs:dev-with-update": "npm run swagger:update && npm run docs:dev",
+    "docs:full-build": "npm run swagger:update && npm run docs:build",
+    "validate:navigation": "node navigation-validator.cjs validate",
+    "fix:navigation": "node navigation-validator.cjs fix",
+    "translate:api": "node api-translator.cjs translate",
+    "translate:stats": "node api-translator.cjs stats",
+    "translate:config": "node api-translator.cjs config"
   },
   "keywords": [
     "crypto",
@@ -56,8 +63,11 @@
     }
   },
   "lint-staged": {
-    "*.{vue,js,ts}": [
+    "*.{vue,js,ts,cjs}": [
       "eslint --fix"
     ]
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
   }
 }

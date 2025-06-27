@@ -3,7 +3,7 @@
   <div class="auth-header-fixed" :class="{ 'collapsed': isHeaderCollapsed }">
     <div class="auth-container">
       <div class="auth-title">
-        <h4>🔐 API Authentication</h4>
+        <h4>🔐 API Auth</h4>
         <button @click="toggleHeader" class="collapse-toggle"
           :title="isHeaderCollapsed ? 'Expand header' : 'Collapse header'">
           {{ isHeaderCollapsed ? '⬇️' : '⬆️' }}
@@ -1078,11 +1078,11 @@ main();`
 function setprofileflags($baseUrl, $accessToken, $data) {
     $url = $baseUrl . '/user/flags';
     
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
 
     $ch = curl_init();
     curl_setopt_array($ch, [
@@ -1140,11 +1140,11 @@ try {
 function subscribetonotifications($baseUrl, $accessToken, $data) {
     $url = $baseUrl . '/user/notifications';
     
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
 
     $ch = curl_init();
     curl_setopt_array($ch, [
@@ -1202,11 +1202,11 @@ try {
 function subscribetoprofileevents($baseUrl, $accessToken, $data) {
     $url = $baseUrl . '/user/profile';
     
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
 
     $ch = curl_init();
     curl_setopt_array($ch, [
@@ -1436,18 +1436,21 @@ if __name__ == "__main__":
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--vp-c-bg);
-  border-bottom: 2px solid var(--vp-c-brand);
-  padding: 0.65rem 0;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: padding 0.3s ease-out, box-shadow 0.3s ease-out;
+  background: linear-gradient(135deg, var(--vp-c-bg) 0%, var(--vp-c-bg-soft) 100%);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
 .auth-header-fixed.collapsed {
-  padding: 0.4rem 0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
 }
 
 .auth-header-fixed.collapsed .api-config-row,
@@ -1473,37 +1476,78 @@ if __name__ == "__main__":
 }
 
 .auth-title h4 {
-  margin: 0 0 0.65rem 0;
-  color: var(--vp-c-brand);
-  font-size: 1rem;
+  margin: 0 0 0.8rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  /* Primary color for maximum visibility */
+  color: var(--vp-c-brand) !important;
+  /* Remove gradient effects that may cause invisibility */
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  background-clip: unset !important;
+  /* Ensure text doesn't wrap and fits */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .auth-title h4 {
+    font-size: 0.95rem;
+    gap: 0.3rem;
+  }
 }
 
 .collapse-toggle {
-  background: var(--vp-c-bg-soft);
+  background: linear-gradient(135deg, var(--vp-c-bg-soft) 0%, var(--vp-c-bg-alt) 100%);
   border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
-  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-  margin-bottom: 0.65rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .collapse-toggle:hover {
-  background: var(--vp-c-brand);
+  background: linear-gradient(135deg, var(--vp-c-brand) 0%, var(--vp-c-brand-dark) 100%);
   color: white;
   border-color: var(--vp-c-brand);
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(var(--vp-c-brand-rgb), 0.3);
 }
 
 .api-config-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.5rem;
+  gap: 1rem;
   margin-bottom: 0.65rem;
   transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
   max-height: 200px;
   opacity: 1;
+}
+
+/* Responsive grid for smaller screens */
+@media (max-width: 1024px) {
+  .api-config-row {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .api-config-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
 }
 
 .config-group {
@@ -1519,17 +1563,21 @@ if __name__ == "__main__":
 }
 
 .config-input {
-  padding: 0.75rem;
+  padding: 0.875rem 1rem;
   border: 2px solid var(--vp-c-border);
-  border-radius: 8px;
-  font-family: monospace;
+  border-radius: 12px;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   font-size: 0.9rem;
-  transition: border-color 0.2s;
+  background: var(--vp-c-bg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .config-input:focus {
   outline: none;
   border-color: var(--vp-c-brand);
+  box-shadow: 0 0 0 3px rgba(var(--vp-c-brand-rgb), 0.1), 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
 }
 
 .token-input-group {
@@ -1989,46 +2037,101 @@ if __name__ == "__main__":
 }
 
 /* Response Examples */
+.response-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .response-example {
-  margin: 1.5rem 0;
   border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
+  background: var(--vp-c-bg-soft);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.response-example:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.response-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--vp-c-bg);
+  border-bottom: 1px solid var(--vp-c-border);
 }
 
 .response-status {
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  font-size: 0.9rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: white;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+  min-width: 60px;
+  justify-content: center;
 }
 
 .response-status.success {
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-  color: #0369a1;
-  border-bottom: 1px solid #0369a1;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
 .response-status.success::before {
-  content: "✅";
+  content: '✅ ';
+  margin-right: 0.25rem;
 }
 
 .response-status.error {
-  background: linear-gradient(135deg, #fef2f2, #fecaca);
-  color: #dc2626;
-  border-bottom: 1px solid #dc2626;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
 .response-status.error::before {
-  content: "❌";
+  content: '❌ ';
+  margin-right: 0.25rem;
+}
+
+.response-description {
+  flex: 1;
+  color: var(--vp-c-text-1);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .response-example .code-block {
   margin: 0;
   border-radius: 0;
-  border: none;
+  background: var(--vp-c-bg-alt);
+}
+
+.response-example .code-block pre {
+  margin: 0;
+  padding: 1rem;
+  background: transparent;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .response-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .response-status {
+    align-self: flex-start;
+  }
 }
 
 /* Result Container */

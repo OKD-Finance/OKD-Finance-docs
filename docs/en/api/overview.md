@@ -15,31 +15,30 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 ## API Categories
 
-### Core APIs
-- **Authentication** - User registration, login, token management
-- **Users** - Profile management, settings, activity
-- **Wallets** - Balance, deposits, addresses
-- **Trading** - Orders, trades, positions
-- **KYC** - Identity verification
+<APINavigation />
 
-### Administrative APIs
-- **Access Management** - Role-based access control
-- **Analytics** - Platform analytics and reporting
-- **Audit** - System audit logs
-- **Support** - Customer support tickets
-- **Settings** - Platform configuration
+## Core APIs
+
+### User Management
+- **Authentication API** - User login, registration, and token management
+- **User Operations API** - Profile management and user settings
+- **KYC API** - Know Your Customer verification processes
 
 ### Trading APIs
-- **Spot Trading** - Spot market operations
-- **Exchange** - Market data and symbols
-- **P2P** - Peer-to-peer trading
-- **History** - Transaction history
+- **Spot API** - Spot trading operations and order management
+- **ByBit REST endpoints API** - Integration with ByBit exchange
+- **Referral program API** - Referral system and rewards management
+
+### Administrative APIs
+- **Exchange configuration API** - Exchange settings and configuration
+- **Managed API** - Managed services and operations
+- **OKD API** - Core platform operations
 
 ### Specialized APIs
-- **Notifications** - Push notifications
-- **Email Templates** - Email management
-- **Fee Settings** - Trading fees configuration
-- **Withdrawal** - Withdrawal operations
+- **Wallet API** - Wallet management and cryptocurrency operations
+- **Datasource API** - Data source management and configuration
+- **Websocket subscriptions API** - Real-time data subscriptions
+- **Errors API** - Error handling and reporting
 
 ## Rate Limits
 - Public endpoints: 100 requests per minute
@@ -52,7 +51,8 @@ All API responses follow this format:
 {
   "success": true,
   "data": { ... },
-  "error": null
+  "message": "Operation completed successfully",
+  "timestamp": "2025-01-20T10:30:00Z"
 }
 ```
 
@@ -62,14 +62,21 @@ Error responses include detailed information:
 {
   "success": false,
   "error": {
-    "code": "ERROR_CODE",
-    "message": "Error description"
-  }
+    "code": "INVALID_CREDENTIALS",
+    "message": "Invalid username or password",
+    "details": {
+      "field": "password",
+      "reason": "Password does not meet requirements"
+    }
+  },
+  "timestamp": "2025-01-20T10:30:00Z"
 }
 ```
 
 ## Getting Started
-1. Register an account via the Authentication API
-2. Complete KYC verification
-3. Generate API keys in your account settings
-4. Start trading using the Trading API
+1. **Authentication** - Start by registering and obtaining an API token
+2. **Explore APIs** - Browse the available API categories above
+3. **Test Endpoints** - Use the interactive API explorer on each endpoint page
+4. **Integration** - Implement the APIs in your application
+
+Choose an API category above to explore detailed endpoint documentation with interactive testing capabilities.
