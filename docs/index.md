@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /en/guide/introduction
+      link: /guide/introduction
     - theme: alt
       text: View on GitHub
       link: https://github.com/OKD-Finance/Backend
@@ -60,7 +60,7 @@ OKD Finance provides multiple API services:
 
 ### Get Started
 
-1. [Read the Introduction](/en/guide/introduction)
-2. [Explore the API Reference](/en/api/overview)
-3. [See Code Examples](/en/examples/basic-usage)
-4. [Learn Bybit Integration](/en/bybit/overview) 
+1. [Read the Introduction](/guide/introduction)
+2. [Explore the API Reference](/api/overview)
+3. [See Code Examples](/examples/basic-usage)
+4. [Learn Bybit Integration](/bybit/overview) 
