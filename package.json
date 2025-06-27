@@ -13,15 +13,11 @@
     "lint": "eslint . --ext .vue,.js,.ts",
     "lint:fix": "eslint . --ext .vue,.js,.ts --fix",
     "prepare": "husky",
-    "swagger:tags": "echo '📋 Available Swagger Commands:' && echo '' && echo '🔧 Generation Commands:' && echo '• npm run swagger:generate:user - Generate User API' && echo '• npm run swagger:generate:wallet - Generate Wallet API' && echo '• npm run swagger:generate:auth - Generate Authentication API' && echo '• npm run swagger:generate:trading - Generate Trading API' && echo '• npm run swagger:generate-all - Generate all APIs' && echo '' && echo '🔄 Update Commands:' && echo '• npm run swagger:update - Update all documentation' && echo '• npm run swagger:force-update - Force update all APIs' && echo '' && echo '📖 Documentation Commands:' && echo '• npm run docs:dev-with-update - Start dev server with updates' && echo '• npm run docs:full-build - Update + build documentation' && echo '' && echo '🔧 Maintenance Commands:' && echo '• npm run validate:navigation - Validate navigation structure' && echo '• npm run fix:navigation - Fix navigation issues'",
-    "swagger:generate": "node universal-swagger-generator-final.cjs",
-    "swagger:generate:user": "node universal-swagger-generator-final.cjs user",
-    "swagger:generate:wallet": "node universal-swagger-generator-final.cjs wallet",
-    "swagger:generate:auth": "node universal-swagger-generator-final.cjs auth",
-    "swagger:generate:trading": "node universal-swagger-generator-final.cjs trading",
-    "swagger:generate-all": "node universal-swagger-generator-final.cjs all",
-    "swagger:update": "node universal-swagger-generator-final.cjs all",
-    "swagger:force-update": "node universal-swagger-generator-final.cjs all",
+    "swagger:tags": "node auto-swagger-updater.cjs tags",
+    "swagger:generate": "node auto-swagger-updater.cjs generate",
+    "swagger:generate-all": "node auto-swagger-updater.cjs generate-all",
+    "swagger:update": "node auto-swagger-updater.cjs update",
+    "swagger:force-update": "node auto-swagger-updater.cjs update --force",
     "docs:dev-with-update": "npm run swagger:update && npm run docs:dev",
     "docs:full-build": "npm run swagger:update && npm run docs:build",
     "validate:navigation": "node navigation-validator.cjs validate",
@@ -68,5 +64,8 @@
     "*.{vue,js,ts,cjs}": [
       "eslint --fix"
     ]
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
   }
 }

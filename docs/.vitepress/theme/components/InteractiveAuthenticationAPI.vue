@@ -34,6 +34,9 @@
               :title="showFingerprint ? 'Hide fingerprint' : 'Show fingerprint'">
               {{ showFingerprint ? '🙈' : '👁️' }}
             </button>
+            <button @click="generateRandomFingerprint" class="generate-btn" title="Generate random fingerprint">
+              🎲
+            </button>
           </div>
         </div>
       </div>
@@ -51,1138 +54,2124 @@
 
   <div class="interactive-api-container">
     <div class="main-content">
-      <section id="endpoint-1" class="endpoint-section">
-        <div class="endpoint-layout">
-          <div class="endpoint-docs">
-            <div class="method-header">
-              <span class="method-badge post">POST</span>
-              <span class="endpoint-path">/auth/register</span>
-            </div>
-
-            <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 User Registration</h3>
-              <p class="endpoint-description">Register a new user account with email and password</p>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📋 Headers</h4>
-              <div class="param-list">
-                <div class="param-item">
-                  <code class="param-name">Authorization</code>
-                  <span class="param-type">Bearer token</span>
-                  <span class="param-desc">JWT access token for authentication</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Content-Type</code>
-                  <span class="param-type">application/json</span>
-                  <span class="param-desc">Request content type</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Fingerprint</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">32-character hex string for device identification</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">⚙️ Body Parameters</h4>
-              <div class="param-list">
-                <div class="param-item required">
-                  <code class="param-name">email</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">User email address (must be valid email format)</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">password</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">User password (minimum 8 characters)</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">first_name</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">User first name</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">last_name</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">User last name</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">phone</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Phone number (optional)</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">referral_code</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Referral code (optional)</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📝 Example Request</h4>
-              <div class="code-examples">
-                <div class="code-tabs">
-                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab1 = lang"
-                    :class="['code-tab', { active: activeCodeTab1 === lang }]">
-                    {{ lang }}
-                  </button>
-                </div>
-                
-                <div v-show="activeCodeTab1 === 'cURL'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('curl', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/register&quot; \
-  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;email&quot;:&quot;example&quot;,&quot;password&quot;:&quot;example&quot;,&quot;first_name&quot;:&quot;example&quot;,&quot;last_name&quot;:&quot;example&quot;,&quot;phone&quot;:&quot;example&quot;,&quot;referral_code&quot;:&quot;example&quot;}&#x27;</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab1 === 'Go'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('go', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.go[1] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab1 === 'TypeScript'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('typescript', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.typescript[1] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab1 === 'PHP'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('php', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.php[1] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab1 === 'Python'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('python', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.python[1] }}</pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="endpoint-testing">
-            <h4 class="testing-title">🚀 Live Testing</h4>
-            <div class="test-section">
-              <div class="form-group">
-                <label>Email</label>
-                <input v-model="testData1.email" type="text" placeholder="example_email" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>Password</label>
-                <input v-model="testData1.password" type="text" placeholder="example_password" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>First_name</label>
-                <input v-model="testData1.first_name" type="text" placeholder="example_first_name" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>Last_name</label>
-                <input v-model="testData1.last_name" type="text" placeholder="example_last_name" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>Phone</label>
-                <input v-model="testData1.phone" type="text" placeholder="example_phone" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>Referral_code</label>
-                <input v-model="testData1.referral_code" type="text" placeholder="example_referral_code" class="test-input" />
-              </div>
-              <button @click="testEndpoint1" class="test-btn"
-                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
-                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
-              </button>
-              <div v-if="results.endpoint1" class="result-container">
-                <div class="result-header">
-                  <span class="status-badge">{{ results.endpoint1.status }}</span>
-                  <span class="timestamp">{{ results.endpoint1.timestamp }}</span>
-                  <button @click="copyToClipboard(results.endpoint1.data, $event)" class="copy-btn">📋 Copy Response</button>
-                </div>
-                <div v-if="results.endpoint1.requestUrl" class="request-info">
-                  <h5>📤 Actual Request:</h5>
-                  <pre class="request-data">{{ results.endpoint1.requestUrl }}</pre>
-                  <h5>📋 Headers:</h5>
-                  <pre class="request-data">{{ results.endpoint1.headers }}</pre>
-                  <h5>📦 Body:</h5>
-                  <pre class="request-data">{{ results.endpoint1.body }}</pre>
-                </div>
-                <h5>📥 Response:</h5>
-                <pre class="result-data">{{ results.endpoint1.data }}</pre>
-              </div>
-            </div>
-          </div>
+      <!-- Endpoint 1: POST /auth/check/firebase -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/check/firebase</span>
+          <h3>Check account existence by firebase token.</h3>
         </div>
-      </section>
-
-      <section id="endpoint-2" class="endpoint-section">
-        <div class="endpoint-layout">
-          <div class="endpoint-docs">
-            <div class="method-header">
-              <span class="method-badge post">POST</span>
-              <span class="endpoint-path">/auth/login</span>
-            </div>
-
-            <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 User Login</h3>
-              <p class="endpoint-description">Authenticate user with email and password, returns JWT tokens</p>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📋 Headers</h4>
-              <div class="param-list">
-                <div class="param-item">
-                  <code class="param-name">Authorization</code>
-                  <span class="param-type">Bearer token</span>
-                  <span class="param-desc">JWT access token for authentication</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Content-Type</code>
-                  <span class="param-type">application/json</span>
-                  <span class="param-desc">Request content type</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Fingerprint</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">32-character hex string for device identification</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">⚙️ Body Parameters</h4>
-              <div class="param-list">
-                <div class="param-item required">
-                  <code class="param-name">email</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">User email address</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">password</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">User password</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">remember_me</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Keep user logged in for extended period</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">device_name</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Device name for tracking</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📝 Example Request</h4>
-              <div class="code-examples">
-                <div class="code-tabs">
-                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab2 = lang"
-                    :class="['code-tab', { active: activeCodeTab2 === lang }]">
-                    {{ lang }}
-                  </button>
-                </div>
-                
-                <div v-show="activeCodeTab2 === 'cURL'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('curl', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/login&quot; \
-  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;email&quot;:&quot;example&quot;,&quot;password&quot;:&quot;example&quot;,&quot;remember_me&quot;:&quot;example&quot;,&quot;device_name&quot;:&quot;example&quot;}&#x27;</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab2 === 'Go'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('go', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.go[2] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab2 === 'TypeScript'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('typescript', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.typescript[2] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab2 === 'PHP'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('php', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.php[2] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab2 === 'Python'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('python', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.python[2] }}</pre>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
           </div>
-
-          <div class="endpoint-testing">
-            <h4 class="testing-title">🚀 Live Testing</h4>
-            <div class="test-section">
-              <div class="form-group">
-                <label>Email</label>
-                <input v-model="testData2.email" type="text" placeholder="example_email" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>Password</label>
-                <input v-model="testData2.password" type="text" placeholder="example_password" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>Remember_me</label>
-                <select v-model="testData2.remember_me" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Device_name</label>
-                <input v-model="testData2.device_name" type="text" placeholder="example_device_name" class="test-input" />
-              </div>
-              <button @click="testEndpoint2" class="test-btn"
-                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
-                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData1.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData1.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData1.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData1.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint1" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
               </button>
-              <div v-if="results.endpoint2" class="result-container">
-                <div class="result-header">
-                  <span class="status-badge">{{ results.endpoint2.status }}</span>
-                  <span class="timestamp">{{ results.endpoint2.timestamp }}</span>
-                  <button @click="copyToClipboard(results.endpoint2.data, $event)" class="copy-btn">📋 Copy Response</button>
-                </div>
-                <div v-if="results.endpoint2.requestUrl" class="request-info">
-                  <h5>📤 Actual Request:</h5>
-                  <pre class="request-data">{{ results.endpoint2.requestUrl }}</pre>
-                  <h5>📋 Headers:</h5>
-                  <pre class="request-data">{{ results.endpoint2.headers }}</pre>
-                  <h5>📦 Body:</h5>
-                  <pre class="request-data">{{ results.endpoint2.body }}</pre>
-                </div>
-                <h5>📥 Response:</h5>
-                <pre class="result-data">{{ results.endpoint2.data }}</pre>
-              </div>
+              <div v-if="loading1" class="loading">⏳ Testing...</div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="endpoint-3" class="endpoint-section">
-        <div class="endpoint-layout">
-          <div class="endpoint-docs">
-            <div class="method-header">
-              <span class="method-badge post">POST</span>
-              <span class="endpoint-path">/auth/logout</span>
-            </div>
-
-            <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 User Logout</h3>
-              <p class="endpoint-description">Logout user and invalidate current session tokens</p>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📋 Headers</h4>
-              <div class="param-list">
-                <div class="param-item">
-                  <code class="param-name">Authorization</code>
-                  <span class="param-type">Bearer token</span>
-                  <span class="param-desc">JWT access token for authentication</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Content-Type</code>
-                  <span class="param-type">application/json</span>
-                  <span class="param-desc">Request content type</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Fingerprint</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">32-character hex string for device identification</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">⚙️ Body Parameters</h4>
-              <div class="param-list">
-                <div class="param-item required">
-                  <code class="param-name">logout_all_devices</code>
-                  <span class="param-type">boolean</span>
-                  <span class="param-desc">Logout from all devices (default: false)</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📝 Example Request</h4>
-              <div class="code-examples">
-                <div class="code-tabs">
-                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab3 = lang"
-                    :class="['code-tab', { active: activeCodeTab3 === lang }]">
-                    {{ lang }}
-                  </button>
-                </div>
-                
-                <div v-show="activeCodeTab3 === 'cURL'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('curl', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/logout&quot; \
-  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;logout_all_devices&quot;:&quot;example&quot;}&#x27;</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab3 === 'Go'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('go', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.go[3] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab3 === 'TypeScript'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('typescript', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.typescript[3] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab3 === 'PHP'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('php', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.php[3] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab3 === 'Python'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('python', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.python[3] }}</pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="endpoint-testing">
-            <h4 class="testing-title">🚀 Live Testing</h4>
-            <div class="test-section">
-              <div class="form-group">
-                <label>Logout_all_devices</label>
-                <select v-model="testData3.logout_all_devices" class="test-input">
-                  <option :value="true">True</option>
-                  <option :value="false">False</option>
-                </select>
-              </div>
-              <button @click="testEndpoint3" class="test-btn"
-                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
-                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
-              </button>
-              <div v-if="results.endpoint3" class="result-container">
-                <div class="result-header">
-                  <span class="status-badge">{{ results.endpoint3.status }}</span>
-                  <span class="timestamp">{{ results.endpoint3.timestamp }}</span>
-                  <button @click="copyToClipboard(results.endpoint3.data, $event)" class="copy-btn">📋 Copy Response</button>
-                </div>
-                <div v-if="results.endpoint3.requestUrl" class="request-info">
-                  <h5>📤 Actual Request:</h5>
-                  <pre class="request-data">{{ results.endpoint3.requestUrl }}</pre>
-                  <h5>📋 Headers:</h5>
-                  <pre class="request-data">{{ results.endpoint3.headers }}</pre>
-                  <h5>📦 Body:</h5>
-                  <pre class="request-data">{{ results.endpoint3.body }}</pre>
-                </div>
-                <h5>📥 Response:</h5>
-                <pre class="result-data">{{ results.endpoint3.data }}</pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="endpoint-4" class="endpoint-section">
-        <div class="endpoint-layout">
-          <div class="endpoint-docs">
-            <div class="method-header">
-              <span class="method-badge post">POST</span>
-              <span class="endpoint-path">/auth/refresh</span>
-            </div>
-
-            <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Refresh Access Token</h3>
-              <p class="endpoint-description">Refresh expired access token using refresh token</p>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📋 Headers</h4>
-              <div class="param-list">
-                <div class="param-item">
-                  <code class="param-name">Authorization</code>
-                  <span class="param-type">Bearer token</span>
-                  <span class="param-desc">JWT access token for authentication</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Content-Type</code>
-                  <span class="param-type">application/json</span>
-                  <span class="param-desc">Request content type</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Fingerprint</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">32-character hex string for device identification</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">⚙️ Body Parameters</h4>
-              <div class="param-list">
-                <div class="param-item required">
-                  <code class="param-name">refresh_token</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Valid refresh token</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📝 Example Request</h4>
-              <div class="code-examples">
-                <div class="code-tabs">
-                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab4 = lang"
-                    :class="['code-tab', { active: activeCodeTab4 === lang }]">
-                    {{ lang }}
-                  </button>
-                </div>
-                
-                <div v-show="activeCodeTab4 === 'cURL'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('curl', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/refresh&quot; \
-  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;refresh_token&quot;:&quot;example&quot;}&#x27;</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab4 === 'Go'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('go', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.go[4] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab4 === 'TypeScript'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('typescript', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.typescript[4] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab4 === 'PHP'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('php', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.php[4] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab4 === 'Python'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('python', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.python[4] }}</pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="endpoint-testing">
-            <h4 class="testing-title">🚀 Live Testing</h4>
-            <div class="test-section">
-              <div class="form-group">
-                <label>Refresh_token</label>
-                <input v-model="testData4.refresh_token" type="text" placeholder="example_refresh_token" class="test-input" />
-              </div>
-              <button @click="testEndpoint4" class="test-btn"
-                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
-                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
-              </button>
-              <div v-if="results.endpoint4" class="result-container">
-                <div class="result-header">
-                  <span class="status-badge">{{ results.endpoint4.status }}</span>
-                  <span class="timestamp">{{ results.endpoint4.timestamp }}</span>
-                  <button @click="copyToClipboard(results.endpoint4.data, $event)" class="copy-btn">📋 Copy Response</button>
-                </div>
-                <div v-if="results.endpoint4.requestUrl" class="request-info">
-                  <h5>📤 Actual Request:</h5>
-                  <pre class="request-data">{{ results.endpoint4.requestUrl }}</pre>
-                  <h5>📋 Headers:</h5>
-                  <pre class="request-data">{{ results.endpoint4.headers }}</pre>
-                  <h5>📦 Body:</h5>
-                  <pre class="request-data">{{ results.endpoint4.body }}</pre>
-                </div>
-                <h5>📥 Response:</h5>
-                <pre class="result-data">{{ results.endpoint4.data }}</pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="endpoint-5" class="endpoint-section">
-        <div class="endpoint-layout">
-          <div class="endpoint-docs">
-            <div class="method-header">
-              <span class="method-badge post">POST</span>
-              <span class="endpoint-path">/auth/forgot-password</span>
-            </div>
-
-            <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Forgot Password</h3>
-              <p class="endpoint-description">Request password reset email for user account</p>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📋 Headers</h4>
-              <div class="param-list">
-                <div class="param-item">
-                  <code class="param-name">Authorization</code>
-                  <span class="param-type">Bearer token</span>
-                  <span class="param-desc">JWT access token for authentication</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Content-Type</code>
-                  <span class="param-type">application/json</span>
-                  <span class="param-desc">Request content type</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Fingerprint</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">32-character hex string for device identification</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">⚙️ Body Parameters</h4>
-              <div class="param-list">
-                <div class="param-item required">
-                  <code class="param-name">email</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Email address to send reset link to</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📝 Example Request</h4>
-              <div class="code-examples">
-                <div class="code-tabs">
-                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab5 = lang"
-                    :class="['code-tab', { active: activeCodeTab5 === lang }]">
-                    {{ lang }}
-                  </button>
-                </div>
-                
-                <div v-show="activeCodeTab5 === 'cURL'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('curl', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/forgot-password&quot; \
-  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;email&quot;:&quot;example&quot;}&#x27;</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab5 === 'Go'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('go', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.go[5] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab5 === 'TypeScript'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('typescript', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.typescript[5] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab5 === 'PHP'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('php', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.php[5] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab5 === 'Python'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('python', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.python[5] }}</pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="endpoint-testing">
-            <h4 class="testing-title">🚀 Live Testing</h4>
-            <div class="test-section">
-              <div class="form-group">
-                <label>Email</label>
-                <input v-model="testData5.email" type="text" placeholder="example_email" class="test-input" />
-              </div>
-              <button @click="testEndpoint5" class="test-btn"
-                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
-                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
-              </button>
-              <div v-if="results.endpoint5" class="result-container">
-                <div class="result-header">
-                  <span class="status-badge">{{ results.endpoint5.status }}</span>
-                  <span class="timestamp">{{ results.endpoint5.timestamp }}</span>
-                  <button @click="copyToClipboard(results.endpoint5.data, $event)" class="copy-btn">📋 Copy Response</button>
-                </div>
-                <div v-if="results.endpoint5.requestUrl" class="request-info">
-                  <h5>📤 Actual Request:</h5>
-                  <pre class="request-data">{{ results.endpoint5.requestUrl }}</pre>
-                  <h5>📋 Headers:</h5>
-                  <pre class="request-data">{{ results.endpoint5.headers }}</pre>
-                  <h5>📦 Body:</h5>
-                  <pre class="request-data">{{ results.endpoint5.body }}</pre>
-                </div>
-                <h5>📥 Response:</h5>
-                <pre class="result-data">{{ results.endpoint5.data }}</pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="endpoint-6" class="endpoint-section">
-        <div class="endpoint-layout">
-          <div class="endpoint-docs">
-            <div class="method-header">
-              <span class="method-badge post">POST</span>
-              <span class="endpoint-path">/auth/reset-password</span>
-            </div>
-
-            <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Reset Password</h3>
-              <p class="endpoint-description">Reset user password using reset token from email</p>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📋 Headers</h4>
-              <div class="param-list">
-                <div class="param-item">
-                  <code class="param-name">Authorization</code>
-                  <span class="param-type">Bearer token</span>
-                  <span class="param-desc">JWT access token for authentication</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Content-Type</code>
-                  <span class="param-type">application/json</span>
-                  <span class="param-desc">Request content type</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Fingerprint</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">32-character hex string for device identification</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">⚙️ Body Parameters</h4>
-              <div class="param-list">
-                <div class="param-item required">
-                  <code class="param-name">token</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Password reset token from email</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">password</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">New password (minimum 8 characters)</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">password_confirmation</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Confirm new password</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📝 Example Request</h4>
-              <div class="code-examples">
-                <div class="code-tabs">
-                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab6 = lang"
-                    :class="['code-tab', { active: activeCodeTab6 === lang }]">
-                    {{ lang }}
-                  </button>
-                </div>
-                
-                <div v-show="activeCodeTab6 === 'cURL'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('curl', 6)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/reset-password&quot; \
-  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;token&quot;:&quot;example&quot;,&quot;password&quot;:&quot;example&quot;,&quot;password_confirmation&quot;:&quot;example&quot;}&#x27;</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab6 === 'Go'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('go', 6)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.go[6] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab6 === 'TypeScript'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('typescript', 6)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.typescript[6] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab6 === 'PHP'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('php', 6)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.php[6] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab6 === 'Python'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('python', 6)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.python[6] }}</pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="endpoint-testing">
-            <h4 class="testing-title">🚀 Live Testing</h4>
-            <div class="test-section">
-              <div class="form-group">
-                <label>Token</label>
-                <input v-model="testData6.token" type="text" placeholder="example_token" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>Password</label>
-                <input v-model="testData6.password" type="text" placeholder="example_password" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>Password_confirmation</label>
-                <input v-model="testData6.password_confirmation" type="text" placeholder="example_password_confirmation" class="test-input" />
-              </div>
-              <button @click="testEndpoint6" class="test-btn"
-                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
-                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
-              </button>
-              <div v-if="results.endpoint6" class="result-container">
-                <div class="result-header">
-                  <span class="status-badge">{{ results.endpoint6.status }}</span>
-                  <span class="timestamp">{{ results.endpoint6.timestamp }}</span>
-                  <button @click="copyToClipboard(results.endpoint6.data, $event)" class="copy-btn">📋 Copy Response</button>
-                </div>
-                <div v-if="results.endpoint6.requestUrl" class="request-info">
-                  <h5>📤 Actual Request:</h5>
-                  <pre class="request-data">{{ results.endpoint6.requestUrl }}</pre>
-                  <h5>📋 Headers:</h5>
-                  <pre class="request-data">{{ results.endpoint6.headers }}</pre>
-                  <h5>📦 Body:</h5>
-                  <pre class="request-data">{{ results.endpoint6.body }}</pre>
-                </div>
-                <h5>📥 Response:</h5>
-                <pre class="result-data">{{ results.endpoint6.data }}</pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="endpoint-7" class="endpoint-section">
-        <div class="endpoint-layout">
-          <div class="endpoint-docs">
-            <div class="method-header">
-              <span class="method-badge post">POST</span>
-              <span class="endpoint-path">/auth/verify-email</span>
-            </div>
-
-            <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Verify Email</h3>
-              <p class="endpoint-description">Verify user email address using verification token</p>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📋 Headers</h4>
-              <div class="param-list">
-                <div class="param-item">
-                  <code class="param-name">Authorization</code>
-                  <span class="param-type">Bearer token</span>
-                  <span class="param-desc">JWT access token for authentication</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Content-Type</code>
-                  <span class="param-type">application/json</span>
-                  <span class="param-desc">Request content type</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Fingerprint</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">32-character hex string for device identification</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">⚙️ Body Parameters</h4>
-              <div class="param-list">
-                <div class="param-item required">
-                  <code class="param-name">token</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Email verification token</span>
-                </div>
-                <div class="param-item required">
-                  <code class="param-name">email</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">Email address to verify</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📝 Example Request</h4>
-              <div class="code-examples">
-                <div class="code-tabs">
-                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab7 = lang"
-                    :class="['code-tab', { active: activeCodeTab7 === lang }]">
-                    {{ lang }}
-                  </button>
-                </div>
-                
-                <div v-show="activeCodeTab7 === 'cURL'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('curl', 7)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/verify-email&quot; \
-  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{&quot;token&quot;:&quot;example&quot;,&quot;email&quot;:&quot;example&quot;}&#x27;</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab7 === 'Go'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('go', 7)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.go[7] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab7 === 'TypeScript'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('typescript', 7)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.typescript[7] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab7 === 'PHP'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('php', 7)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.php[7] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab7 === 'Python'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('python', 7)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.python[7] }}</pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="endpoint-testing">
-            <h4 class="testing-title">🚀 Live Testing</h4>
-            <div class="test-section">
-              <div class="form-group">
-                <label>Token</label>
-                <input v-model="testData7.token" type="text" placeholder="example_token" class="test-input" />
-              </div>
-              <div class="form-group">
-                <label>Email</label>
-                <input v-model="testData7.email" type="text" placeholder="example_email" class="test-input" />
-              </div>
-              <button @click="testEndpoint7" class="test-btn"
-                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
-                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
-              </button>
-              <div v-if="results.endpoint7" class="result-container">
-                <div class="result-header">
-                  <span class="status-badge">{{ results.endpoint7.status }}</span>
-                  <span class="timestamp">{{ results.endpoint7.timestamp }}</span>
-                  <button @click="copyToClipboard(results.endpoint7.data, $event)" class="copy-btn">📋 Copy Response</button>
-                </div>
-                <div v-if="results.endpoint7.requestUrl" class="request-info">
-                  <h5>📤 Actual Request:</h5>
-                  <pre class="request-data">{{ results.endpoint7.requestUrl }}</pre>
-                  <h5>📋 Headers:</h5>
-                  <pre class="request-data">{{ results.endpoint7.headers }}</pre>
-                  <h5>📦 Body:</h5>
-                  <pre class="request-data">{{ results.endpoint7.body }}</pre>
-                </div>
-                <h5>📥 Response:</h5>
-                <pre class="result-data">{{ results.endpoint7.data }}</pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="endpoint-8" class="endpoint-section">
-        <div class="endpoint-layout">
-          <div class="endpoint-docs">
-            <div class="method-header">
-              <span class="method-badge get">GET</span>
-              <span class="endpoint-path">/auth/me</span>
-            </div>
-
-            <div class="endpoint-info">
-              <h3 class="endpoint-title">📋 Get Current User</h3>
-              <p class="endpoint-description">Get current authenticated user information</p>
-            </div>
-
-            <div class="api-section">
-              <h4 class="section-title">📋 Headers</h4>
-              <div class="param-list">
-                <div class="param-item">
-                  <code class="param-name">Authorization</code>
-                  <span class="param-type">Bearer token</span>
-                  <span class="param-desc">JWT access token for authentication</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Content-Type</code>
-                  <span class="param-type">application/json</span>
-                  <span class="param-desc">Request content type</span>
-                </div>
-                <div class="param-item">
-                  <code class="param-name">Fingerprint</code>
-                  <span class="param-type">string</span>
-                  <span class="param-desc">32-character hex string for device identification</span>
-                </div>
-              </div>
-            </div>
-
             
-
-            <div class="api-section">
-              <h4 class="section-title">📝 Example Request</h4>
-              <div class="code-examples">
-                <div class="code-tabs">
-                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab8 = lang"
-                    :class="['code-tab', { active: activeCodeTab8 === lang }]">
-                    {{ lang }}
-                  </button>
-                </div>
-                
-                <div v-show="activeCodeTab8 === 'cURL'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('curl', 8)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>curl -X GET &quot;https://develop.okd.finance/api/auth/me&quot; \
-  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#x27;{}&#x27;</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab8 === 'Go'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('go', 8)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.go[8] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab8 === 'TypeScript'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('typescript', 8)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.typescript[8] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab8 === 'PHP'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('php', 8)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.php[8] }}</pre>
-                  </div>
-                </div>
-
-                <div v-show="activeCodeTab8 === 'Python'" class="code-block-container">
-                  <button @click="copyCodeToClipboard('python', 8)" class="copy-code-btn" title="Copy to clipboard">📋</button>
-                  <div class="code-block">
-                    <pre>{{ codeExamples.python[8] }}</pre>
-                  </div>
-                </div>
-              </div>
+            <div v-if="response1" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response1 }}</pre>
             </div>
           </div>
-
-          <div class="endpoint-testing">
-            <h4 class="testing-title">🚀 Live Testing</h4>
-            <div class="test-section">
-              
-              <button @click="testEndpoint8" class="test-btn"
-                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
-                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab1 = lang"
+                :class="['code-tab', { active: activeCodeTab1 === lang }]">
+                {{ lang }}
               </button>
-              <div v-if="results.endpoint8" class="result-container">
-                <div class="result-header">
-                  <span class="status-badge">{{ results.endpoint8.status }}</span>
-                  <span class="timestamp">{{ results.endpoint8.timestamp }}</span>
-                  <button @click="copyToClipboard(results.endpoint8.data, $event)" class="copy-btn">📋 Copy Response</button>
-                </div>
-                <div v-if="results.endpoint8.requestUrl" class="request-info">
-                  <h5>📤 Actual Request:</h5>
-                  <pre class="request-data">{{ results.endpoint8.requestUrl }}</pre>
-                  <h5>📋 Headers:</h5>
-                  <pre class="request-data">{{ results.endpoint8.headers }}</pre>
-                  <h5>📦 Body:</h5>
-                  <pre class="request-data">{{ results.endpoint8.body }}</pre>
-                </div>
-                <h5>📥 Response:</h5>
-                <pre class="result-data">{{ results.endpoint8.data }}</pre>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab1 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample1(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample1(lang) }}</code></pre>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+
+      <!-- Endpoint 2: POST /auth/confirm -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/confirm</span>
+          <h3>Send confirmation code to email.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData2.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData2.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData2.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData2.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint2" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading2" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response2" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response2 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab2 = lang"
+                :class="['code-tab', { active: activeCodeTab2 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab2 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample2(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample2(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 3: POST /auth/fcm -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/fcm</span>
+          <h3>Inits operation to create user fcm.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData3.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData3.Body" 
+                type="text" 
+                placeholder="user device id, platform and fcm"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint3" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading3" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response3" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response3 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab3 = lang"
+                :class="['code-tab', { active: activeCodeTab3 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab3 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample3(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample3(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 4: DELETE /auth/fcm -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-delete">DELETE</span>
+          <span class="endpoint-path">/auth/fcm</span>
+          <h3>Inits operation to delete user fcm by device id and fcm.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData4.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData4.Body" 
+                type="text" 
+                placeholder="user device id, platform and fcm"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint4" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading4" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response4" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response4 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab4 = lang"
+                :class="['code-tab', { active: activeCodeTab4 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab4 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample4(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample4(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 5: GET /auth/google -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-get">GET</span>
+          <span class="endpoint-path">/auth/google</span>
+          <h3>Get Google link for lgoin/register.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData5.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData5.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData5.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint5" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading5" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response5" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response5 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab5 = lang"
+                :class="['code-tab', { active: activeCodeTab5 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab5 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample5(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample5(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 6: POST /auth/jwt/refresh -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/jwt/refresh</span>
+          <h3>Regenerate a pair of authenticate tokens if refresh token is valid</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need refresh token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData6.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint6" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading6" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response6" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response6 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab6 = lang"
+                :class="['code-tab', { active: activeCodeTab6 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab6 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample6(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample6(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 7: PUT /auth/locale -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-put">PUT</span>
+          <span class="endpoint-path">/auth/locale</span>
+          <h3>Inits operation to change current user locale.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData7.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData7.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint7" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading7" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response7" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response7 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab7 = lang"
+                :class="['code-tab', { active: activeCodeTab7 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab7 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample7(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample7(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 8: GET /auth/notifications -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-get">GET</span>
+          <span class="endpoint-path">/auth/notifications</span>
+          <h3>Get notifications for user</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData8.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">group_id (query)</label>
+              <input v-model="testData8.group_id" 
+                type="text" 
+                placeholder="Group of notifications. Omitted or 0 mean all.
+"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">hide_read (query)</label>
+              <input v-model="testData8.hide_read" 
+                type="text" 
+                placeholder="Hide read notifications. Bool value: true or false.
+"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">limit (query)</label>
+              <input v-model="testData8.limit" 
+                type="text" 
+                placeholder="Limit of records in request
+"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">offset (query)</label>
+              <input v-model="testData8.offset" 
+                type="text" 
+                placeholder="Offset of records in request
+"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint8" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading8" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response8" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response8 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab8 = lang"
+                :class="['code-tab', { active: activeCodeTab8 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab8 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample8(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample8(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 9: PUT /auth/notifications -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-put">PUT</span>
+          <span class="endpoint-path">/auth/notifications</span>
+          <h3>Mark all/group of notifications as viewed. Body is optional.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData9.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData9.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint9" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading9" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response9" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response9 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab9 = lang"
+                :class="['code-tab', { active: activeCodeTab9 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab9 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample9(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample9(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 10: DELETE /auth/notifications -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-delete">DELETE</span>
+          <span class="endpoint-path">/auth/notifications</span>
+          <h3>Delete all/group of notifications. Body is optional.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData10.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData10.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint10" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading10" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response10" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response10 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab10 = lang"
+                :class="['code-tab', { active: activeCodeTab10 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab10 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample10(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample10(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 11: PUT /auth/notifications/{id} -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-put">PUT</span>
+          <span class="endpoint-path">/auth/notifications/{id}</span>
+          <h3>Mark notification as viewed.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData11.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">id (path)</label>
+              <input v-model="testData11.id" 
+                type="text" 
+                placeholder="ID of notifications.
+"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint11" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading11" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response11" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response11 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab11 = lang"
+                :class="['code-tab', { active: activeCodeTab11 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab11 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample11(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample11(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 12: POST /auth/otp -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/otp</span>
+          <h3>Inits operation to turn OTP on (one time password) for current user.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData12.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint12" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading12" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response12" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response12 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab12 = lang"
+                :class="['code-tab', { active: activeCodeTab12 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab12 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample12(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample12(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 13: DELETE /auth/otp -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-delete">DELETE</span>
+          <span class="endpoint-path">/auth/otp</span>
+          <h3>Inits operation to turn OTP off (one time password 2FA) for current user by using email and OTP.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData13.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">email (query)</label>
+              <input v-model="testData13.email" 
+                type="text" 
+                placeholder="Flag indicates to use only email to turn off 2FA
+"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint13" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading13" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response13" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response13 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab13 = lang"
+                :class="['code-tab', { active: activeCodeTab13 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab13 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample13(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample13(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 14: PUT /auth/password -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-put">PUT</span>
+          <span class="endpoint-path">/auth/password</span>
+          <h3>Inits operation to change current user password.
+Operation is valid only for regular and firebase accounts.
+It's no need to set old/new password for firebase account.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData14.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData14.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint14" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading14" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response14" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response14 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab14 = lang"
+                :class="['code-tab', { active: activeCodeTab14 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab14 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample14(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample14(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 15: PUT /auth/password/restore -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-put">PUT</span>
+          <span class="endpoint-path">/auth/password/restore</span>
+          <h3>Finishes restoration of current user password.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData15.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData15.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData15.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData15.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint15" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading15" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response15" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response15 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab15 = lang"
+                :class="['code-tab', { active: activeCodeTab15 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab15 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample15(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample15(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 16: POST /auth/password/restore -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/password/restore</span>
+          <h3>Inits restoration of current user password.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData16.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData16.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData16.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData16.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint16" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading16" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response16" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response16 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab16 = lang"
+                :class="['code-tab', { active: activeCodeTab16 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab16 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample16(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample16(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 17: GET /auth/password/restore/{code} -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-get">GET</span>
+          <span class="endpoint-path">/auth/password/restore/{code}</span>
+          <h3>Check restoration code.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData17.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData17.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData17.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">code (path)</label>
+              <input v-model="testData17.code" 
+                type="text" 
+                placeholder="code from email"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint17" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading17" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response17" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response17 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab17 = lang"
+                :class="['code-tab', { active: activeCodeTab17 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab17 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample17(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample17(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 18: GET /auth/profile -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-get">GET</span>
+          <span class="endpoint-path">/auth/profile</span>
+          <h3>GetProfile returns information about current user.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData18.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint18" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading18" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response18" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response18 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab18 = lang"
+                :class="['code-tab', { active: activeCodeTab18 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab18 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample18(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample18(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 19: PUT /auth/profile -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-put">PUT</span>
+          <span class="endpoint-path">/auth/profile</span>
+          <h3>SetProfile sets some fields in profile of current user. All fields are optional.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData19.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData19.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint19" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading19" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response19" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response19 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab19 = lang"
+                :class="['code-tab', { active: activeCodeTab19 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab19 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample19(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample19(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 20: GET /auth/remove -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-get">GET</span>
+          <span class="endpoint-path">/auth/remove</span>
+          <h3>Check possibility to remove account.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData20.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint20" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading20" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response20" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response20 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab20 = lang"
+                :class="['code-tab', { active: activeCodeTab20 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab20 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample20(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample20(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 21: PUT /auth/remove -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-put">PUT</span>
+          <span class="endpoint-path">/auth/remove</span>
+          <h3>Inits operation to remove account. Reason maximum length is 200.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData21.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData21.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint21" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading21" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response21" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response21 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab21 = lang"
+                :class="['code-tab', { active: activeCodeTab21 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab21 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample21(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample21(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 22: PUT /auth/sign-in -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-put">PUT</span>
+          <span class="endpoint-path">/auth/sign-in</span>
+          <h3>Confirm login operation.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData22.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData22.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData22.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData22.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint22" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading22" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response22" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response22 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab22 = lang"
+                :class="['code-tab', { active: activeCodeTab22 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab22 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample22(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample22(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 23: POST /auth/sign-in -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/sign-in</span>
+          <h3>Logins user and return pair of tokens or login operation with hints.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData23.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData23.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData23.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData23.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint23" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading23" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response23" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response23 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab23 = lang"
+                :class="['code-tab', { active: activeCodeTab23 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab23 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample23(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample23(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 24: POST /auth/sign-in/firebase -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/sign-in/firebase</span>
+          <h3>Sign in by firebase request.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData24.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData24.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData24.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData24.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint24" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading24" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response24" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response24 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab24 = lang"
+                :class="['code-tab', { active: activeCodeTab24 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab24 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample24(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample24(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 25: POST /auth/sign-in/google -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/sign-in/google</span>
+          <h3>Sign in by Google OAuth2 request.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData25.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData25.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData25.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData25.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint25" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading25" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response25" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response25 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab25 = lang"
+                :class="['code-tab', { active: activeCodeTab25 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab25 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample25(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample25(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 26: PUT /auth/sign-in/resend -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-put">PUT</span>
+          <span class="endpoint-path">/auth/sign-in/resend</span>
+          <h3>Resend email/phone codes for sign-in process.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>Only one of flags should be set.</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData26.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData26.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData26.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData26.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint26" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading26" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response26" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response26 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab26 = lang"
+                :class="['code-tab', { active: activeCodeTab26 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab26 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample26(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample26(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 27: POST /auth/sign-out -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/sign-out</span>
+          <h3>Logout remove user sessions and makes the token invalid.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData27.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint27" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading27" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response27" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response27 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab27 = lang"
+                :class="['code-tab', { active: activeCodeTab27 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab27 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample27(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample27(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 28: POST /auth/sign-up -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/sign-up</span>
+          <h3>Registration save user in database and send verification url to email.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData28.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData28.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData28.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData28.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint28" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading28" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response28" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response28 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab28 = lang"
+                :class="['code-tab', { active: activeCodeTab28 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab28 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample28(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample28(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 29: POST /auth/sign-up/google -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/auth/sign-up/google</span>
+          <h3>Sign up by Google OAuth2 request.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>No description available</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData29.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-RECAPTCHA * (header)</label>
+              <input v-model="testData29.X-RECAPTCHA" 
+                type="text" 
+                placeholder="RECAPTCHA token"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">X-PLATFORM-ID * (header)</label>
+              <input v-model="testData29.X-PLATFORM-ID" 
+                type="text" 
+                placeholder="recaptcha platform id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData29.Body" 
+                type="text" 
+                placeholder="Body"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint29" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading29" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response29" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response29 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab29 = lang"
+                :class="['code-tab', { active: activeCodeTab29 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab29 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample29(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample29(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Endpoint 30: PUT /user/flags -->
+      <div class="endpoint-section">
+        <div class="endpoint-header">
+          <span class="method-badge method-put">PUT</span>
+          <span class="endpoint-path">/user/flags</span>
+          <h3>SetProfile sets profile flags of current user.</h3>
+        </div>
+        <div class="endpoint-content">
+          <div class="endpoint-description">
+            <p>! Need access token in bearer token authorization</p>
+          </div>
+          
+                    <div class="parameters-section">
+            <h4>Parameters:</h4>
+            <div class="parameter-group">
+              <label class="parameter-label">Fingerprint * (header)</label>
+              <input v-model="testData30.Fingerprint" 
+                type="text" 
+                placeholder="user device unique id"
+                class="parameter-input" />
+            </div>
+            <div class="parameter-group">
+              <label class="parameter-label">Body (body)</label>
+              <input v-model="testData30.Body" 
+                type="text" 
+                placeholder="profile flag. Can be *futures_order_confirmation* , *futures_visited*, *first_order_after_one_click_trading*"
+                class="parameter-input" />
+            </div>          </div>
+          
+          <div class="test-section">
+            <div class="test-controls">
+              <button @click="testEndpoint30" 
+                :disabled="!isReadyToSendRequest()"
+                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
+                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+              </button>
+              <div v-if="loading30" class="loading">⏳ Testing...</div>
+            </div>
+            
+            <div v-if="response30" class="response-section">
+              <h4>Response:</h4>
+              <pre class="response-content">{{ response30 }}</pre>
+            </div>
+          </div>
+          
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang"
+                @click="activeCodeTab30 = lang"
+                :class="['code-tab', { active: activeCodeTab30 === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div class="code-content">
+              <div v-for="lang in codeLangs" :key="lang"
+                v-show="activeCodeTab30 === lang"
+                class="code-block">
+                <button @click="copyCode(getCodeExample30(lang))" class="copy-btn">📋 Copy</button>
+                <pre><code>{{ getCodeExample30(lang) }}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -1202,7 +2191,8 @@ const {
   toggleHeader,
   clearAuth,
   getRawValues,
-  isReadyToSendRequest
+  isReadyToSendRequest,
+  generateRandomFingerprint
 } = useAuth()
 
 // Code examples tabs
@@ -1215,2296 +2205,4261 @@ const activeCodeTab5 = ref('cURL')
 const activeCodeTab6 = ref('cURL')
 const activeCodeTab7 = ref('cURL')
 const activeCodeTab8 = ref('cURL')
+const activeCodeTab9 = ref('cURL')
+const activeCodeTab10 = ref('cURL')
+const activeCodeTab11 = ref('cURL')
+const activeCodeTab12 = ref('cURL')
+const activeCodeTab13 = ref('cURL')
+const activeCodeTab14 = ref('cURL')
+const activeCodeTab15 = ref('cURL')
+const activeCodeTab16 = ref('cURL')
+const activeCodeTab17 = ref('cURL')
+const activeCodeTab18 = ref('cURL')
+const activeCodeTab19 = ref('cURL')
+const activeCodeTab20 = ref('cURL')
+const activeCodeTab21 = ref('cURL')
+const activeCodeTab22 = ref('cURL')
+const activeCodeTab23 = ref('cURL')
+const activeCodeTab24 = ref('cURL')
+const activeCodeTab25 = ref('cURL')
+const activeCodeTab26 = ref('cURL')
+const activeCodeTab27 = ref('cURL')
+const activeCodeTab28 = ref('cURL')
+const activeCodeTab29 = ref('cURL')
+const activeCodeTab30 = ref('cURL')
 
-const testData1 = reactive({ email: 'example_email', password: 'example_password', first_name: 'example_first_name', last_name: 'example_last_name', phone: 'example_phone', referral_code: 'example_referral_code' })
-const testData2 = reactive({ email: 'example_email', password: 'example_password', remember_me: true, device_name: 'example_device_name' })
-const testData3 = reactive({ logout_all_devices: true })
-const testData4 = reactive({ refresh_token: 'example_refresh_token' })
-const testData5 = reactive({ email: 'example_email' })
-const testData6 = reactive({ token: 'example_token', password: 'example_password', password_confirmation: 'example_password_confirmation' })
-const testData7 = reactive({ token: 'example_token', email: 'example_email' })
-const testData8 = reactive({  })
-
-
-
-const results = reactive({
-  endpoint1: null,
-  endpoint2: null,
-  endpoint3: null,
-  endpoint4: null,
-  endpoint5: null,
-  endpoint6: null,
-  endpoint7: null,
-  endpoint8: null
+const testData1 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "Body": ""
 })
+const loading1 = ref(false)
+const response1 = ref(null)
+const testData2 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "Body": ""
+})
+const loading2 = ref(false)
+const response2 = ref(null)
+const testData3 = reactive({
+  "Fingerprint": "",
+  "Body": ""
+})
+const loading3 = ref(false)
+const response3 = ref(null)
+const testData4 = reactive({
+  "Fingerprint": "",
+  "Body": ""
+})
+const loading4 = ref(false)
+const response4 = ref(null)
+const testData5 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": ""
+})
+const loading5 = ref(false)
+const response5 = ref(null)
+const testData6 = reactive({
+  "Fingerprint": ""
+})
+const loading6 = ref(false)
+const response6 = ref(null)
+const testData7 = reactive({
+  "Fingerprint": "",
+  "Body": ""
+})
+const loading7 = ref(false)
+const response7 = ref(null)
+const testData8 = reactive({
+  "Fingerprint": "",
+  "group_id": "",
+  "hide_read": "",
+  "limit": "",
+  "offset": ""
+})
+const loading8 = ref(false)
+const response8 = ref(null)
+const testData9 = reactive({
+  "Fingerprint": "",
+  "Body": ""
+})
+const loading9 = ref(false)
+const response9 = ref(null)
+const testData10 = reactive({
+  "Fingerprint": "",
+  "Body": ""
+})
+const loading10 = ref(false)
+const response10 = ref(null)
+const testData11 = reactive({
+  "Fingerprint": "",
+  "id": ""
+})
+const loading11 = ref(false)
+const response11 = ref(null)
+const testData12 = reactive({
+  "Fingerprint": ""
+})
+const loading12 = ref(false)
+const response12 = ref(null)
+const testData13 = reactive({
+  "Fingerprint": "",
+  "email": ""
+})
+const loading13 = ref(false)
+const response13 = ref(null)
+const testData14 = reactive({
+  "Fingerprint": "",
+  "Body": ""
+})
+const loading14 = ref(false)
+const response14 = ref(null)
+const testData15 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "Body": ""
+})
+const loading15 = ref(false)
+const response15 = ref(null)
+const testData16 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "Body": ""
+})
+const loading16 = ref(false)
+const response16 = ref(null)
+const testData17 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "code": ""
+})
+const loading17 = ref(false)
+const response17 = ref(null)
+const testData18 = reactive({
+  "Fingerprint": ""
+})
+const loading18 = ref(false)
+const response18 = ref(null)
+const testData19 = reactive({
+  "Fingerprint": "",
+  "Body": ""
+})
+const loading19 = ref(false)
+const response19 = ref(null)
+const testData20 = reactive({
+  "Fingerprint": ""
+})
+const loading20 = ref(false)
+const response20 = ref(null)
+const testData21 = reactive({
+  "Fingerprint": "",
+  "Body": ""
+})
+const loading21 = ref(false)
+const response21 = ref(null)
+const testData22 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "Body": ""
+})
+const loading22 = ref(false)
+const response22 = ref(null)
+const testData23 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "Body": ""
+})
+const loading23 = ref(false)
+const response23 = ref(null)
+const testData24 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "Body": ""
+})
+const loading24 = ref(false)
+const response24 = ref(null)
+const testData25 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "Body": ""
+})
+const loading25 = ref(false)
+const response25 = ref(null)
+const testData26 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "Body": ""
+})
+const loading26 = ref(false)
+const response26 = ref(null)
+const testData27 = reactive({
+  "Fingerprint": ""
+})
+const loading27 = ref(false)
+const response27 = ref(null)
+const testData28 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "Body": ""
+})
+const loading28 = ref(false)
+const response28 = ref(null)
+const testData29 = reactive({
+  "Fingerprint": "",
+  "X-RECAPTCHA": "",
+  "X-PLATFORM-ID": "",
+  "Body": ""
+})
+const loading29 = ref(false)
+const response29 = ref(null)
+const testData30 = reactive({
+  "Fingerprint": "",
+  "Body": ""
+})
+const loading30 = ref(false)
+const response30 = ref(null)
 
 const testEndpoint1 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading1.value = true
+  response1.value = null
+  
   try {
-    const authValues = getRawValues()
+    let url = getRawValues().apiBaseUrl + '/auth/check/firebase'
     
-    if (!isReadyToSendRequest()) {
-      results.endpoint1 = {
-        status: 'Authentication Error',
-        data: 'Both Access Token and Fingerprint are required',
-        timestamp: new Date().toLocaleTimeString(),
-        requestUrl: 'Request not sent',
-        headers: 'N/A',
-        body: 'N/A'
-      }
-      return
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
     }
-
-    const requestBody = {
-      email: testData1.email,
-      password: testData1.password,
-      first_name: testData1.first_name,
-      last_name: testData1.last_name,
-      phone: testData1.phone,
-      referral_code: testData1.referral_code
-    }
-
-    const fullUrl = `${authValues.apiBaseUrl}/auth/register`
-    const headers = {
-      'Authorization': `Bearer ${authValues.apiToken}`,
-      'Content-Type': 'application/json',
-      'Fingerprint': authValues.apiFingerprint
-    }
-    const bodyString = JSON.stringify(requestBody)
-
-    const response = await fetch(fullUrl, {
+    
+    const options = {
       method: 'POST',
-      headers: headers,
-      body: bodyString
-    })
-
-    const data = await response.text()
-    results.endpoint1 = {
-      status: `${response.status} ${response.statusText}`,
-      data: data,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `POST ${fullUrl}`,
-      headers: JSON.stringify(headers, null, 2),
-      body: bodyString
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
     }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response1.value = JSON.stringify(data, null, 2)
   } catch (error) {
-    results.endpoint1 = {
-      status: 'Network Error',
-      data: error.message,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: 'Request failed',
-      headers: 'N/A',
-      body: 'N/A'
-    }
+    response1.value = 'Error: ' + error.message
+  } finally {
+    loading1.value = false
   }
 }
 
 const testEndpoint2 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading2.value = true
+  response2.value = null
+  
   try {
-    const authValues = getRawValues()
+    let url = getRawValues().apiBaseUrl + '/auth/confirm'
     
-    if (!isReadyToSendRequest()) {
-      results.endpoint2 = {
-        status: 'Authentication Error',
-        data: 'Both Access Token and Fingerprint are required',
-        timestamp: new Date().toLocaleTimeString(),
-        requestUrl: 'Request not sent',
-        headers: 'N/A',
-        body: 'N/A'
-      }
-      return
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
     }
-
-    const requestBody = {
-      email: testData2.email,
-      password: testData2.password,
-      remember_me: testData2.remember_me,
-      device_name: testData2.device_name
-    }
-
-    const fullUrl = `${authValues.apiBaseUrl}/auth/login`
-    const headers = {
-      'Authorization': `Bearer ${authValues.apiToken}`,
-      'Content-Type': 'application/json',
-      'Fingerprint': authValues.apiFingerprint
-    }
-    const bodyString = JSON.stringify(requestBody)
-
-    const response = await fetch(fullUrl, {
+    
+    const options = {
       method: 'POST',
-      headers: headers,
-      body: bodyString
-    })
-
-    const data = await response.text()
-    results.endpoint2 = {
-      status: `${response.status} ${response.statusText}`,
-      data: data,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `POST ${fullUrl}`,
-      headers: JSON.stringify(headers, null, 2),
-      body: bodyString
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
     }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response2.value = JSON.stringify(data, null, 2)
   } catch (error) {
-    results.endpoint2 = {
-      status: 'Network Error',
-      data: error.message,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: 'Request failed',
-      headers: 'N/A',
-      body: 'N/A'
-    }
+    response2.value = 'Error: ' + error.message
+  } finally {
+    loading2.value = false
   }
 }
 
 const testEndpoint3 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading3.value = true
+  response3.value = null
+  
   try {
-    const authValues = getRawValues()
+    let url = getRawValues().apiBaseUrl + '/auth/fcm'
     
-    if (!isReadyToSendRequest()) {
-      results.endpoint3 = {
-        status: 'Authentication Error',
-        data: 'Both Access Token and Fingerprint are required',
-        timestamp: new Date().toLocaleTimeString(),
-        requestUrl: 'Request not sent',
-        headers: 'N/A',
-        body: 'N/A'
-      }
-      return
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
     }
-
-    const requestBody = {
-      logout_all_devices: testData3.logout_all_devices
-    }
-
-    const fullUrl = `${authValues.apiBaseUrl}/auth/logout`
-    const headers = {
-      'Authorization': `Bearer ${authValues.apiToken}`,
-      'Content-Type': 'application/json',
-      'Fingerprint': authValues.apiFingerprint
-    }
-    const bodyString = JSON.stringify(requestBody)
-
-    const response = await fetch(fullUrl, {
+    
+    const options = {
       method: 'POST',
-      headers: headers,
-      body: bodyString
-    })
-
-    const data = await response.text()
-    results.endpoint3 = {
-      status: `${response.status} ${response.statusText}`,
-      data: data,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `POST ${fullUrl}`,
-      headers: JSON.stringify(headers, null, 2),
-      body: bodyString
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
     }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response3.value = JSON.stringify(data, null, 2)
   } catch (error) {
-    results.endpoint3 = {
-      status: 'Network Error',
-      data: error.message,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: 'Request failed',
-      headers: 'N/A',
-      body: 'N/A'
-    }
+    response3.value = 'Error: ' + error.message
+  } finally {
+    loading3.value = false
   }
 }
 
 const testEndpoint4 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading4.value = true
+  response4.value = null
+  
   try {
-    const authValues = getRawValues()
+    let url = getRawValues().apiBaseUrl + '/auth/fcm'
     
-    if (!isReadyToSendRequest()) {
-      results.endpoint4 = {
-        status: 'Authentication Error',
-        data: 'Both Access Token and Fingerprint are required',
-        timestamp: new Date().toLocaleTimeString(),
-        requestUrl: 'Request not sent',
-        headers: 'N/A',
-        body: 'N/A'
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
       }
-      return
     }
-
-    const requestBody = {
-      refresh_token: testData4.refresh_token
-    }
-
-    const fullUrl = `${authValues.apiBaseUrl}/auth/refresh`
-    const headers = {
-      'Authorization': `Bearer ${authValues.apiToken}`,
-      'Content-Type': 'application/json',
-      'Fingerprint': authValues.apiFingerprint
-    }
-    const bodyString = JSON.stringify(requestBody)
-
-    const response = await fetch(fullUrl, {
-      method: 'POST',
-      headers: headers,
-      body: bodyString
-    })
-
-    const data = await response.text()
-    results.endpoint4 = {
-      status: `${response.status} ${response.statusText}`,
-      data: data,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `POST ${fullUrl}`,
-      headers: JSON.stringify(headers, null, 2),
-      body: bodyString
-    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response4.value = JSON.stringify(data, null, 2)
   } catch (error) {
-    results.endpoint4 = {
-      status: 'Network Error',
-      data: error.message,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: 'Request failed',
-      headers: 'N/A',
-      body: 'N/A'
-    }
+    response4.value = 'Error: ' + error.message
+  } finally {
+    loading4.value = false
   }
 }
 
 const testEndpoint5 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading5.value = true
+  response5.value = null
+  
   try {
-    const authValues = getRawValues()
+    let url = getRawValues().apiBaseUrl + '/auth/google'
     
-    if (!isReadyToSendRequest()) {
-      results.endpoint5 = {
-        status: 'Authentication Error',
-        data: 'Both Access Token and Fingerprint are required',
-        timestamp: new Date().toLocaleTimeString(),
-        requestUrl: 'Request not sent',
-        headers: 'N/A',
-        body: 'N/A'
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
       }
-      return
     }
-
-    const requestBody = {
-      email: testData5.email
-    }
-
-    const fullUrl = `${authValues.apiBaseUrl}/auth/forgot-password`
-    const headers = {
-      'Authorization': `Bearer ${authValues.apiToken}`,
-      'Content-Type': 'application/json',
-      'Fingerprint': authValues.apiFingerprint
-    }
-    const bodyString = JSON.stringify(requestBody)
-
-    const response = await fetch(fullUrl, {
-      method: 'POST',
-      headers: headers,
-      body: bodyString
-    })
-
-    const data = await response.text()
-    results.endpoint5 = {
-      status: `${response.status} ${response.statusText}`,
-      data: data,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `POST ${fullUrl}`,
-      headers: JSON.stringify(headers, null, 2),
-      body: bodyString
-    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response5.value = JSON.stringify(data, null, 2)
   } catch (error) {
-    results.endpoint5 = {
-      status: 'Network Error',
-      data: error.message,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: 'Request failed',
-      headers: 'N/A',
-      body: 'N/A'
-    }
+    response5.value = 'Error: ' + error.message
+  } finally {
+    loading5.value = false
   }
 }
 
 const testEndpoint6 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading6.value = true
+  response6.value = null
+  
   try {
-    const authValues = getRawValues()
+    let url = getRawValues().apiBaseUrl + '/auth/jwt/refresh'
     
-    if (!isReadyToSendRequest()) {
-      results.endpoint6 = {
-        status: 'Authentication Error',
-        data: 'Both Access Token and Fingerprint are required',
-        timestamp: new Date().toLocaleTimeString(),
-        requestUrl: 'Request not sent',
-        headers: 'N/A',
-        body: 'N/A'
-      }
-      return
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
     }
-
-    const requestBody = {
-      token: testData6.token,
-      password: testData6.password,
-      password_confirmation: testData6.password_confirmation
-    }
-
-    const fullUrl = `${authValues.apiBaseUrl}/auth/reset-password`
-    const headers = {
-      'Authorization': `Bearer ${authValues.apiToken}`,
-      'Content-Type': 'application/json',
-      'Fingerprint': authValues.apiFingerprint
-    }
-    const bodyString = JSON.stringify(requestBody)
-
-    const response = await fetch(fullUrl, {
+    
+    const options = {
       method: 'POST',
-      headers: headers,
-      body: bodyString
-    })
-
-    const data = await response.text()
-    results.endpoint6 = {
-      status: `${response.status} ${response.statusText}`,
-      data: data,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `POST ${fullUrl}`,
-      headers: JSON.stringify(headers, null, 2),
-      body: bodyString
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
     }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response6.value = JSON.stringify(data, null, 2)
   } catch (error) {
-    results.endpoint6 = {
-      status: 'Network Error',
-      data: error.message,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: 'Request failed',
-      headers: 'N/A',
-      body: 'N/A'
-    }
+    response6.value = 'Error: ' + error.message
+  } finally {
+    loading6.value = false
   }
 }
 
 const testEndpoint7 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading7.value = true
+  response7.value = null
+  
   try {
-    const authValues = getRawValues()
+    let url = getRawValues().apiBaseUrl + '/auth/locale'
     
-    if (!isReadyToSendRequest()) {
-      results.endpoint7 = {
-        status: 'Authentication Error',
-        data: 'Both Access Token and Fingerprint are required',
-        timestamp: new Date().toLocaleTimeString(),
-        requestUrl: 'Request not sent',
-        headers: 'N/A',
-        body: 'N/A'
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
       }
-      return
     }
-
-    const requestBody = {
-      token: testData7.token,
-      email: testData7.email
-    }
-
-    const fullUrl = `${authValues.apiBaseUrl}/auth/verify-email`
-    const headers = {
-      'Authorization': `Bearer ${authValues.apiToken}`,
-      'Content-Type': 'application/json',
-      'Fingerprint': authValues.apiFingerprint
-    }
-    const bodyString = JSON.stringify(requestBody)
-
-    const response = await fetch(fullUrl, {
-      method: 'POST',
-      headers: headers,
-      body: bodyString
-    })
-
-    const data = await response.text()
-    results.endpoint7 = {
-      status: `${response.status} ${response.statusText}`,
-      data: data,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `POST ${fullUrl}`,
-      headers: JSON.stringify(headers, null, 2),
-      body: bodyString
-    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response7.value = JSON.stringify(data, null, 2)
   } catch (error) {
-    results.endpoint7 = {
-      status: 'Network Error',
-      data: error.message,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: 'Request failed',
-      headers: 'N/A',
-      body: 'N/A'
-    }
+    response7.value = 'Error: ' + error.message
+  } finally {
+    loading7.value = false
   }
 }
 
 const testEndpoint8 = async () => {
-  try {
-    const authValues = getRawValues()
-    
-    if (!isReadyToSendRequest()) {
-      results.endpoint8 = {
-        status: 'Authentication Error',
-        data: 'Both Access Token and Fingerprint are required',
-        timestamp: new Date().toLocaleTimeString(),
-        requestUrl: 'Request not sent',
-        headers: 'N/A',
-        body: 'N/A'
-      }
-      return
-    }
-
-    const requestBody = {
-      
-    }
-
-    const fullUrl = `${authValues.apiBaseUrl}/auth/me`
-    const headers = {
-      'Authorization': `Bearer ${authValues.apiToken}`,
-      'Content-Type': 'application/json',
-      'Fingerprint': authValues.apiFingerprint
-    }
-    const bodyString = JSON.stringify(requestBody)
-
-    const response = await fetch(fullUrl, {
-      method: 'GET',
-      headers: headers,
-      body: bodyString
-    })
-
-    const data = await response.text()
-    results.endpoint8 = {
-      status: `${response.status} ${response.statusText}`,
-      data: data,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `GET ${fullUrl}`,
-      headers: JSON.stringify(headers, null, 2),
-      body: bodyString
-    }
-  } catch (error) {
-    results.endpoint8 = {
-      status: 'Network Error',
-      data: error.message,
-      timestamp: new Date().toLocaleTimeString(),
-      requestUrl: 'Request failed',
-      headers: 'N/A',
-      body: 'N/A'
-    }
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
   }
-}
-
-const copyToClipboard = (text, event) => {
-  navigator.clipboard.writeText(text).then(() => {
-    const button = event.target
-    const originalText = button.textContent
-    button.textContent = '✅ Copied!'
-    button.style.background = 'linear-gradient(135deg, #4caf50, #45a049)'
-    setTimeout(() => {
-      button.textContent = originalText
-      button.style.background = ''
-    }, 2000)
-  }).catch(() => {
-    const textArea = document.createElement('textarea')
-    textArea.value = text
-    document.body.appendChild(textArea)
-    textArea.select()
-    document.execCommand('copy')
-    document.body.removeChild(textArea)
-  })
-}
-
-const copyCodeToClipboard = (lang, endpointNum) => {
-  const authValues = getRawValues()
-  let code = codeExamples[lang]?.[endpointNum]
   
-  if (code) {
-    code = code.replace(/YOUR_ACCESS_TOKEN/g, authValues.apiToken || 'YOUR_ACCESS_TOKEN')
-    code = code.replace(/YOUR_FINGERPRINT/g, authValues.apiFingerprint || 'YOUR_FINGERPRINT')
-    code = code.replace(/https:\/\/develop\.okd\.finance\/api/g, authValues.apiBaseUrl || 'https://develop.okd.finance/api')
+  loading8.value = true
+  response8.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/notifications'
     
-    navigator.clipboard.writeText(code).then(() => {
-      console.log('Code copied to clipboard!')
-    }).catch(err => {
-      console.error('Failed to copy code:', err)
-    })
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    if (testData8.group_id) queryParams.append('group_id', testData8.group_id)
+    if (testData8.hide_read) queryParams.append('hide_read', testData8.hide_read)
+    if (testData8.limit) queryParams.append('limit', testData8.limit)
+    if (testData8.offset) queryParams.append('offset', testData8.offset)
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response8.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response8.value = 'Error: ' + error.message
+  } finally {
+    loading8.value = false
   }
 }
 
-const codeExamples = {
-  curl: {
-    1: `curl -X POST "https://develop.okd.finance/api/auth/register" \\
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"email":"example","password":"example","first_name":"example","last_name":"example","phone":"example","referral_code":"example"}'`,
-    2: `curl -X POST "https://develop.okd.finance/api/auth/login" \\
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"email":"example","password":"example","remember_me":"example","device_name":"example"}'`,
-    3: `curl -X POST "https://develop.okd.finance/api/auth/logout" \\
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"logout_all_devices":"example"}'`,
-    4: `curl -X POST "https://develop.okd.finance/api/auth/refresh" \\
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"refresh_token":"example"}'`,
-    5: `curl -X POST "https://develop.okd.finance/api/auth/forgot-password" \\
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"email":"example"}'`,
-    6: `curl -X POST "https://develop.okd.finance/api/auth/reset-password" \\
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"token":"example","password":"example","password_confirmation":"example"}'`,
-    7: `curl -X POST "https://develop.okd.finance/api/auth/verify-email" \\
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{"token":"example","email":"example"}'`,
-    8: `curl -X GET "https://develop.okd.finance/api/auth/me" \\
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -H "Fingerprint: YOUR_FINGERPRINT" \\
-  -d '{}'`
-  },
-  go: {
-    1: `package main
+const testEndpoint9 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading9.value = true
+  response9.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/notifications'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response9.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response9.value = 'Error: ' + error.message
+  } finally {
+    loading9.value = false
+  }
+}
+
+const testEndpoint10 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading10.value = true
+  response10.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/notifications'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response10.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response10.value = 'Error: ' + error.message
+  } finally {
+    loading10.value = false
+  }
+}
+
+const testEndpoint11 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading11.value = true
+  response11.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/notifications/{id}'
+    
+    // Replace path parameters
+    url = url.replace('{id}', testData11.id || 'example')
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response11.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response11.value = 'Error: ' + error.message
+  } finally {
+    loading11.value = false
+  }
+}
+
+const testEndpoint12 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading12.value = true
+  response12.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/otp'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response12.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response12.value = 'Error: ' + error.message
+  } finally {
+    loading12.value = false
+  }
+}
+
+const testEndpoint13 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading13.value = true
+  response13.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/otp'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    if (testData13.email) queryParams.append('email', testData13.email)
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response13.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response13.value = 'Error: ' + error.message
+  } finally {
+    loading13.value = false
+  }
+}
+
+const testEndpoint14 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading14.value = true
+  response14.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/password'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response14.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response14.value = 'Error: ' + error.message
+  } finally {
+    loading14.value = false
+  }
+}
+
+const testEndpoint15 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading15.value = true
+  response15.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/password/restore'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response15.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response15.value = 'Error: ' + error.message
+  } finally {
+    loading15.value = false
+  }
+}
+
+const testEndpoint16 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading16.value = true
+  response16.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/password/restore'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response16.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response16.value = 'Error: ' + error.message
+  } finally {
+    loading16.value = false
+  }
+}
+
+const testEndpoint17 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading17.value = true
+  response17.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/password/restore/{code}'
+    
+    // Replace path parameters
+    url = url.replace('{code}', testData17.code || 'example')
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response17.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response17.value = 'Error: ' + error.message
+  } finally {
+    loading17.value = false
+  }
+}
+
+const testEndpoint18 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading18.value = true
+  response18.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/profile'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response18.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response18.value = 'Error: ' + error.message
+  } finally {
+    loading18.value = false
+  }
+}
+
+const testEndpoint19 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading19.value = true
+  response19.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/profile'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response19.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response19.value = 'Error: ' + error.message
+  } finally {
+    loading19.value = false
+  }
+}
+
+const testEndpoint20 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading20.value = true
+  response20.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/remove'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response20.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response20.value = 'Error: ' + error.message
+  } finally {
+    loading20.value = false
+  }
+}
+
+const testEndpoint21 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading21.value = true
+  response21.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/remove'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response21.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response21.value = 'Error: ' + error.message
+  } finally {
+    loading21.value = false
+  }
+}
+
+const testEndpoint22 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading22.value = true
+  response22.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/sign-in'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response22.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response22.value = 'Error: ' + error.message
+  } finally {
+    loading22.value = false
+  }
+}
+
+const testEndpoint23 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading23.value = true
+  response23.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/sign-in'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response23.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response23.value = 'Error: ' + error.message
+  } finally {
+    loading23.value = false
+  }
+}
+
+const testEndpoint24 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading24.value = true
+  response24.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/sign-in/firebase'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response24.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response24.value = 'Error: ' + error.message
+  } finally {
+    loading24.value = false
+  }
+}
+
+const testEndpoint25 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading25.value = true
+  response25.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/sign-in/google'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response25.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response25.value = 'Error: ' + error.message
+  } finally {
+    loading25.value = false
+  }
+}
+
+const testEndpoint26 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading26.value = true
+  response26.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/sign-in/resend'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response26.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response26.value = 'Error: ' + error.message
+  } finally {
+    loading26.value = false
+  }
+}
+
+const testEndpoint27 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading27.value = true
+  response27.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/sign-out'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response27.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response27.value = 'Error: ' + error.message
+  } finally {
+    loading27.value = false
+  }
+}
+
+const testEndpoint28 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading28.value = true
+  response28.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/sign-up'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response28.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response28.value = 'Error: ' + error.message
+  } finally {
+    loading28.value = false
+  }
+}
+
+const testEndpoint29 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading29.value = true
+  response29.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/auth/sign-up/google'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response29.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response29.value = 'Error: ' + error.message
+  } finally {
+    loading29.value = false
+  }
+}
+
+const testEndpoint30 = async () => {
+  if (!isReadyToSendRequest()) {
+    alert('Please configure both API Token and Fingerprint first')
+    return
+  }
+  
+  loading30.value = true
+  response30.value = null
+  
+  try {
+    let url = getRawValues().apiBaseUrl + '/user/flags'
+    
+    // Replace path parameters
+    
+    
+    // Add query parameters
+    const queryParams = new URLSearchParams()
+    
+    
+    if (queryParams.toString()) {
+      url += '?' + queryParams.toString()
+    }
+    
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getRawValues().apiToken,
+        'X-Fingerprint': getRawValues().apiFingerprint
+      }
+    }
+    
+    
+    
+    const response = await fetch(url, options)
+    const data = await response.json()
+    
+    response30.value = JSON.stringify(data, null, 2)
+  } catch (error) {
+    response30.value = 'Error: ' + error.message
+  } finally {
+    loading30.value = false
+  }
+}
+
+const getCodeExample1 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/check/firebase'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
 
 import (
-    "bytes"
-    "encoding/json"
     "fmt"
-    "io"
     "net/http"
+    "strings"
 )
 
-type UserRegistrationRequest struct {
-    Email string \`json:"email"\`\n    Password string \`json:"password"\`\n    First_name string \`json:"first_name"\`\n    Last_name string \`json:"last_name"\`\n    Phone string \`json:"phone"\`\n    Referral_code string \`json:"referral_code"\`
-}
-
-func userregistration() error {
-    url := "https://develop.okd.finance/api/auth/register"
-    
-    requestData := UserRegistrationRequest{
-        Email: "example",\n        Password: "example",\n        First_name: "example",\n        Last_name: "example",\n        Phone: "example",\n        Referral_code: "example",
-    }
-    
-    jsonData, err := json.Marshal(requestData)
-    if err != nil {
-        return err
-    }
-    
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    if err != nil {
-        return err
-    }
-    
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
-    
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        return err
-    }
-    defer resp.Body.Close()
-    
-    body, err := io.ReadAll(resp.Body)
-    if err != nil {
-        return err
-    }
-    
-    fmt.Printf("Response: %s\\n", string(body))
-    return nil
-}
-
 func main() {
-    if err := userregistration(); err != nil {
-        fmt.Printf("Error: %v\\n", err)
-    }
-}`,
-    2: `package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "io"
-    "net/http"
-)
-
-type UserLoginRequest struct {
-    Email string \`json:"email"\`\n    Password string \`json:"password"\`\n    Remember_me string \`json:"remember_me"\`\n    Device_name string \`json:"device_name"\`
-}
-
-func userlogin() error {
-    url := "https://develop.okd.finance/api/auth/login"
-    
-    requestData := UserLoginRequest{
-        Email: "example",\n        Password: "example",\n        Remember_me: "example",\n        Device_name: "example",
-    }
-    
-    jsonData, err := json.Marshal(requestData)
-    if err != nil {
-        return err
-    }
-    
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    if err != nil {
-        return err
-    }
-    
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
-    
     client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        return err
-    }
-    defer resp.Body.Close()
+    req, _ := http.NewRequest("POST", "${url}", nil)
     
-    body, err := io.ReadAll(resp.Body)
-    if err != nil {
-        return err
-    }
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
     
-    fmt.Printf("Response: %s\\n", string(body))
-    return nil
-}
-
-func main() {
-    if err := userlogin(); err != nil {
-        fmt.Printf("Error: %v\\n", err)
-    }
-}`,
-    3: `package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "io"
-    "net/http"
-)
-
-type UserLogoutRequest struct {
-    Logout_all_devices string \`json:"logout_all_devices"\`
-}
-
-func userlogout() error {
-    url := "https://develop.okd.finance/api/auth/logout"
-    
-    requestData := UserLogoutRequest{
-        Logout_all_devices: "example",
-    }
-    
-    jsonData, err := json.Marshal(requestData)
-    if err != nil {
-        return err
-    }
-    
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    if err != nil {
-        return err
-    }
-    
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
-    
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        return err
-    }
-    defer resp.Body.Close()
-    
-    body, err := io.ReadAll(resp.Body)
-    if err != nil {
-        return err
-    }
-    
-    fmt.Printf("Response: %s\\n", string(body))
-    return nil
-}
-
-func main() {
-    if err := userlogout(); err != nil {
-        fmt.Printf("Error: %v\\n", err)
-    }
-}`,
-    4: `package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "io"
-    "net/http"
-)
-
-type RefreshAccessTokenRequest struct {
-    Refresh_token string \`json:"refresh_token"\`
-}
-
-func refreshaccesstoken() error {
-    url := "https://develop.okd.finance/api/auth/refresh"
-    
-    requestData := RefreshAccessTokenRequest{
-        Refresh_token: "example",
-    }
-    
-    jsonData, err := json.Marshal(requestData)
-    if err != nil {
-        return err
-    }
-    
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    if err != nil {
-        return err
-    }
-    
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
-    
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        return err
-    }
-    defer resp.Body.Close()
-    
-    body, err := io.ReadAll(resp.Body)
-    if err != nil {
-        return err
-    }
-    
-    fmt.Printf("Response: %s\\n", string(body))
-    return nil
-}
-
-func main() {
-    if err := refreshaccesstoken(); err != nil {
-        fmt.Printf("Error: %v\\n", err)
-    }
-}`,
-    5: `package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "io"
-    "net/http"
-)
-
-type ForgotPasswordRequest struct {
-    Email string \`json:"email"\`
-}
-
-func forgotpassword() error {
-    url := "https://develop.okd.finance/api/auth/forgot-password"
-    
-    requestData := ForgotPasswordRequest{
-        Email: "example",
-    }
-    
-    jsonData, err := json.Marshal(requestData)
-    if err != nil {
-        return err
-    }
-    
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    if err != nil {
-        return err
-    }
-    
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
-    
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        return err
-    }
-    defer resp.Body.Close()
-    
-    body, err := io.ReadAll(resp.Body)
-    if err != nil {
-        return err
-    }
-    
-    fmt.Printf("Response: %s\\n", string(body))
-    return nil
-}
-
-func main() {
-    if err := forgotpassword(); err != nil {
-        fmt.Printf("Error: %v\\n", err)
-    }
-}`,
-    6: `package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "io"
-    "net/http"
-)
-
-type ResetPasswordRequest struct {
-    Token string \`json:"token"\`\n    Password string \`json:"password"\`\n    Password_confirmation string \`json:"password_confirmation"\`
-}
-
-func resetpassword() error {
-    url := "https://develop.okd.finance/api/auth/reset-password"
-    
-    requestData := ResetPasswordRequest{
-        Token: "example",\n        Password: "example",\n        Password_confirmation: "example",
-    }
-    
-    jsonData, err := json.Marshal(requestData)
-    if err != nil {
-        return err
-    }
-    
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    if err != nil {
-        return err
-    }
-    
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
-    
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        return err
-    }
-    defer resp.Body.Close()
-    
-    body, err := io.ReadAll(resp.Body)
-    if err != nil {
-        return err
-    }
-    
-    fmt.Printf("Response: %s\\n", string(body))
-    return nil
-}
-
-func main() {
-    if err := resetpassword(); err != nil {
-        fmt.Printf("Error: %v\\n", err)
-    }
-}`,
-    7: `package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "io"
-    "net/http"
-)
-
-type VerifyEmailRequest struct {
-    Token string \`json:"token"\`\n    Email string \`json:"email"\`
-}
-
-func verifyemail() error {
-    url := "https://develop.okd.finance/api/auth/verify-email"
-    
-    requestData := VerifyEmailRequest{
-        Token: "example",\n        Email: "example",
-    }
-    
-    jsonData, err := json.Marshal(requestData)
-    if err != nil {
-        return err
-    }
-    
-    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    if err != nil {
-        return err
-    }
-    
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
-    
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        return err
-    }
-    defer resp.Body.Close()
-    
-    body, err := io.ReadAll(resp.Body)
-    if err != nil {
-        return err
-    }
-    
-    fmt.Printf("Response: %s\\n", string(body))
-    return nil
-}
-
-func main() {
-    if err := verifyemail(); err != nil {
-        fmt.Printf("Error: %v\\n", err)
-    }
-}`,
-    8: `package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "io"
-    "net/http"
-)
-
-type GetCurrentUserRequest struct {
-
-}
-
-func getcurrentuser() error {
-    url := "https://develop.okd.finance/api/auth/me"
-    
-    requestData := GetCurrentUserRequest{
-
-    }
-    
-    jsonData, err := json.Marshal(requestData)
-    if err != nil {
-        return err
-    }
-    
-    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
-    if err != nil {
-        return err
-    }
-    
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
-    
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        return err
-    }
-    defer resp.Body.Close()
-    
-    body, err := io.ReadAll(resp.Body)
-    if err != nil {
-        return err
-    }
-    
-    fmt.Printf("Response: %s\\n", string(body))
-    return nil
-}
-
-func main() {
-    if err := getcurrentuser(); err != nil {
-        fmt.Printf("Error: %v\\n", err)
-    }
+    res, _ := client.Do(req)
+    defer res.Body.Close()
 }`
-  },
-  typescript: {
-    1: `interface UserRegistrationRequest {
-  email: string;\n  password: string;\n  first_name: string;\n  last_name: string;\n  phone: string;\n  referral_code: string;
-}
-
-async function userregistration(
-  baseUrl: string,
-  accessToken: string,
-  data: UserRegistrationRequest
-): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/auth/register\`, {
-    method: 'POST',
-    headers: {
-      'Authorization': \`Bearer \${accessToken}\`,
-      'Content-Type': 'application/json',
-      'Fingerprint': 'YOUR_FINGERPRINT'
-    },
-    body: JSON.stringify(data)
-  });
-
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
-  }
-
-  return await response.json();
-}
-
-// Usage example
-async function main() {
-  try {
-    const result = await userregistration(
-      'https://develop.okd.finance/api',
-      'YOUR_ACCESS_TOKEN',
-      {
-        email: "example",\n        password: "example",\n        first_name: "example",\n        last_name: "example",\n        phone: "example",\n        referral_code: "example",
-      }
-    );
-    console.log('Success:', result);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-main();`,
-    2: `interface UserLoginRequest {
-  email: string;\n  password: string;\n  remember_me: boolean;\n  device_name: string;
-}
-
-async function userlogin(
-  baseUrl: string,
-  accessToken: string,
-  data: UserLoginRequest
-): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/auth/login\`, {
-    method: 'POST',
-    headers: {
-      'Authorization': \`Bearer \${accessToken}\`,
-      'Content-Type': 'application/json',
-      'Fingerprint': 'YOUR_FINGERPRINT'
-    },
-    body: JSON.stringify(data)
-  });
-
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
-  }
-
-  return await response.json();
-}
-
-// Usage example
-async function main() {
-  try {
-    const result = await userlogin(
-      'https://develop.okd.finance/api',
-      'YOUR_ACCESS_TOKEN',
-      {
-        email: "example",\n        password: "example",\n        remember_me: true,\n        device_name: "example",
-      }
-    );
-    console.log('Success:', result);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-main();`,
-    3: `interface UserLogoutRequest {
-  logout_all_devices: boolean;
-}
-
-async function userlogout(
-  baseUrl: string,
-  accessToken: string,
-  data: UserLogoutRequest
-): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/auth/logout\`, {
-    method: 'POST',
-    headers: {
-      'Authorization': \`Bearer \${accessToken}\`,
-      'Content-Type': 'application/json',
-      'Fingerprint': 'YOUR_FINGERPRINT'
-    },
-    body: JSON.stringify(data)
-  });
-
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
-  }
-
-  return await response.json();
-}
-
-// Usage example
-async function main() {
-  try {
-    const result = await userlogout(
-      'https://develop.okd.finance/api',
-      'YOUR_ACCESS_TOKEN',
-      {
-        logout_all_devices: true,
-      }
-    );
-    console.log('Success:', result);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-main();`,
-    4: `interface RefreshAccessTokenRequest {
-  refresh_token: string;
-}
-
-async function refreshaccesstoken(
-  baseUrl: string,
-  accessToken: string,
-  data: RefreshAccessTokenRequest
-): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/auth/refresh\`, {
-    method: 'POST',
-    headers: {
-      'Authorization': \`Bearer \${accessToken}\`,
-      'Content-Type': 'application/json',
-      'Fingerprint': 'YOUR_FINGERPRINT'
-    },
-    body: JSON.stringify(data)
-  });
-
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
-  }
-
-  return await response.json();
-}
-
-// Usage example
-async function main() {
-  try {
-    const result = await refreshaccesstoken(
-      'https://develop.okd.finance/api',
-      'YOUR_ACCESS_TOKEN',
-      {
-        refresh_token: "example",
-      }
-    );
-    console.log('Success:', result);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-main();`,
-    5: `interface ForgotPasswordRequest {
-  email: string;
-}
-
-async function forgotpassword(
-  baseUrl: string,
-  accessToken: string,
-  data: ForgotPasswordRequest
-): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/auth/forgot-password\`, {
-    method: 'POST',
-    headers: {
-      'Authorization': \`Bearer \${accessToken}\`,
-      'Content-Type': 'application/json',
-      'Fingerprint': 'YOUR_FINGERPRINT'
-    },
-    body: JSON.stringify(data)
-  });
-
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
-  }
-
-  return await response.json();
-}
-
-// Usage example
-async function main() {
-  try {
-    const result = await forgotpassword(
-      'https://develop.okd.finance/api',
-      'YOUR_ACCESS_TOKEN',
-      {
-        email: "example",
-      }
-    );
-    console.log('Success:', result);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-main();`,
-    6: `interface ResetPasswordRequest {
-  token: string;\n  password: string;\n  password_confirmation: string;
-}
-
-async function resetpassword(
-  baseUrl: string,
-  accessToken: string,
-  data: ResetPasswordRequest
-): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/auth/reset-password\`, {
-    method: 'POST',
-    headers: {
-      'Authorization': \`Bearer \${accessToken}\`,
-      'Content-Type': 'application/json',
-      'Fingerprint': 'YOUR_FINGERPRINT'
-    },
-    body: JSON.stringify(data)
-  });
-
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
-  }
-
-  return await response.json();
-}
-
-// Usage example
-async function main() {
-  try {
-    const result = await resetpassword(
-      'https://develop.okd.finance/api',
-      'YOUR_ACCESS_TOKEN',
-      {
-        token: "example",\n        password: "example",\n        password_confirmation: "example",
-      }
-    );
-    console.log('Success:', result);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-main();`,
-    7: `interface VerifyEmailRequest {
-  token: string;\n  email: string;
-}
-
-async function verifyemail(
-  baseUrl: string,
-  accessToken: string,
-  data: VerifyEmailRequest
-): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/auth/verify-email\`, {
-    method: 'POST',
-    headers: {
-      'Authorization': \`Bearer \${accessToken}\`,
-      'Content-Type': 'application/json',
-      'Fingerprint': 'YOUR_FINGERPRINT'
-    },
-    body: JSON.stringify(data)
-  });
-
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
-  }
-
-  return await response.json();
-}
-
-// Usage example
-async function main() {
-  try {
-    const result = await verifyemail(
-      'https://develop.okd.finance/api',
-      'YOUR_ACCESS_TOKEN',
-      {
-        token: "example",\n        email: "example",
-      }
-    );
-    console.log('Success:', result);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-main();`,
-    8: `interface GetCurrentUserRequest {
-
-}
-
-async function getcurrentuser(
-  baseUrl: string,
-  accessToken: string,
-  data: GetCurrentUserRequest
-): Promise<any> {
-  const response = await fetch(\`\${baseUrl}/auth/me\`, {
-    method: 'GET',
-    headers: {
-      'Authorization': \`Bearer \${accessToken}\`,
-      'Content-Type': 'application/json',
-      'Fingerprint': 'YOUR_FINGERPRINT'
-    },
-    body: JSON.stringify(data)
-  });
-
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
-  }
-
-  return await response.json();
-}
-
-// Usage example
-async function main() {
-  try {
-    const result = await getcurrentuser(
-      'https://develop.okd.finance/api',
-      'YOUR_ACCESS_TOKEN',
-      {
-
-      }
-    );
-    console.log('Success:', result);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-main();`
-  },
-  php: {
-    1: `<?php
-
-function userregistration($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/auth/register';
     
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
 
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => json_encode($data),
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYPEER => true
-    ]);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false || !empty($error)) {
-        throw new Exception("cURL Error: " . $error);
-    }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception("Invalid JSON response");
-    }
-
-    if ($httpCode !== 200) {
-        $message = $data['message'] ?? 'Unknown API error';
-        throw new Exception("API Error: " . $message);
-    }
-
-    return $data;
-}
-
-try {
-    $data = [
-        'email' => 'example',\n        'password' => 'example',\n        'first_name' => 'example',\n        'last_name' => 'example',\n        'phone' => 'example',\n        'referral_code' => 'example',
-    ];
-
-    $result = userregistration(
-        'https://develop.okd.finance/api',
-        'YOUR_ACCESS_TOKEN',
-        $data
-    );
-
-    echo "Success: " . json_encode($result) . "\\n";
-
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage() . "\\n";
-}
-
-?>`,
-    2: `<?php
-
-function userlogin($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/auth/login';
+const data = await response.json();
+console.log(data);`
     
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => json_encode($data),
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYPEER => true
-    ]);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false || !empty($error)) {
-        throw new Exception("cURL Error: " . $error);
-    }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception("Invalid JSON response");
-    }
-
-    if ($httpCode !== 200) {
-        $message = $data['message'] ?? 'Unknown API error';
-        throw new Exception("API Error: " . $message);
-    }
-
-    return $data;
-}
-
-try {
-    $data = [
-        'email' => 'example',\n        'password' => 'example',\n        'remember_me' => true,\n        'device_name' => 'example',
-    ];
-
-    $result = userlogin(
-        'https://develop.okd.finance/api',
-        'YOUR_ACCESS_TOKEN',
-        $data
-    );
-
-    echo "Success: " . json_encode($result) . "\\n";
-
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage() . "\\n";
-}
-
-?>`,
-    3: `<?php
-
-function userlogout($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/auth/logout';
-    
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => json_encode($data),
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYPEER => true
-    ]);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false || !empty($error)) {
-        throw new Exception("cURL Error: " . $error);
-    }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception("Invalid JSON response");
-    }
-
-    if ($httpCode !== 200) {
-        $message = $data['message'] ?? 'Unknown API error';
-        throw new Exception("API Error: " . $message);
-    }
-
-    return $data;
-}
-
-try {
-    $data = [
-        'logout_all_devices' => true,
-    ];
-
-    $result = userlogout(
-        'https://develop.okd.finance/api',
-        'YOUR_ACCESS_TOKEN',
-        $data
-    );
-
-    echo "Success: " . json_encode($result) . "\\n";
-
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage() . "\\n";
-}
-
-?>`,
-    4: `<?php
-
-function refreshaccesstoken($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/auth/refresh';
-    
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => json_encode($data),
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYPEER => true
-    ]);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false || !empty($error)) {
-        throw new Exception("cURL Error: " . $error);
-    }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception("Invalid JSON response");
-    }
-
-    if ($httpCode !== 200) {
-        $message = $data['message'] ?? 'Unknown API error';
-        throw new Exception("API Error: " . $message);
-    }
-
-    return $data;
-}
-
-try {
-    $data = [
-        'refresh_token' => 'example',
-    ];
-
-    $result = refreshaccesstoken(
-        'https://develop.okd.finance/api',
-        'YOUR_ACCESS_TOKEN',
-        $data
-    );
-
-    echo "Success: " . json_encode($result) . "\\n";
-
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage() . "\\n";
-}
-
-?>`,
-    5: `<?php
-
-function forgotpassword($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/auth/forgot-password';
-    
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => json_encode($data),
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYPEER => true
-    ]);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false || !empty($error)) {
-        throw new Exception("cURL Error: " . $error);
-    }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception("Invalid JSON response");
-    }
-
-    if ($httpCode !== 200) {
-        $message = $data['message'] ?? 'Unknown API error';
-        throw new Exception("API Error: " . $message);
-    }
-
-    return $data;
-}
-
-try {
-    $data = [
-        'email' => 'example',
-    ];
-
-    $result = forgotpassword(
-        'https://develop.okd.finance/api',
-        'YOUR_ACCESS_TOKEN',
-        $data
-    );
-
-    echo "Success: " . json_encode($result) . "\\n";
-
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage() . "\\n";
-}
-
-?>`,
-    6: `<?php
-
-function resetpassword($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/auth/reset-password';
-    
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => json_encode($data),
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYPEER => true
-    ]);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false || !empty($error)) {
-        throw new Exception("cURL Error: " . $error);
-    }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception("Invalid JSON response");
-    }
-
-    if ($httpCode !== 200) {
-        $message = $data['message'] ?? 'Unknown API error';
-        throw new Exception("API Error: " . $message);
-    }
-
-    return $data;
-}
-
-try {
-    $data = [
-        'token' => 'example',\n        'password' => 'example',\n        'password_confirmation' => 'example',
-    ];
-
-    $result = resetpassword(
-        'https://develop.okd.finance/api',
-        'YOUR_ACCESS_TOKEN',
-        $data
-    );
-
-    echo "Success: " . json_encode($result) . "\\n";
-
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage() . "\\n";
-}
-
-?>`,
-    7: `<?php
-
-function verifyemail($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/auth/verify-email';
-    
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => json_encode($data),
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYPEER => true
-    ]);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false || !empty($error)) {
-        throw new Exception("cURL Error: " . $error);
-    }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception("Invalid JSON response");
-    }
-
-    if ($httpCode !== 200) {
-        $message = $data['message'] ?? 'Unknown API error';
-        throw new Exception("API Error: " . $message);
-    }
-
-    return $data;
-}
-
-try {
-    $data = [
-        'token' => 'example',\n        'email' => 'example',
-    ];
-
-    $result = verifyemail(
-        'https://develop.okd.finance/api',
-        'YOUR_ACCESS_TOKEN',
-        $data
-    );
-
-    echo "Success: " . json_encode($result) . "\\n";
-
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage() . "\\n";
-}
-
-?>`,
-    8: `<?php
-
-function getcurrentuser($baseUrl, $accessToken, $data) {
-    $url = $baseUrl . '/auth/me';
-    
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        CURLOPT_POSTFIELDS => json_encode($data),
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYPEER => true
-    ]);
-
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
-    curl_close($ch);
-
-    if ($response === false || !empty($error)) {
-        throw new Exception("cURL Error: " . $error);
-    }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception("Invalid JSON response");
-    }
-
-    if ($httpCode !== 200) {
-        $message = $data['message'] ?? 'Unknown API error';
-        throw new Exception("API Error: " . $message);
-    }
-
-    return $data;
-}
-
-try {
-    $data = [
-
-    ];
-
-    $result = getcurrentuser(
-        'https://develop.okd.finance/api',
-        'YOUR_ACCESS_TOKEN',
-        $data
-    );
-
-    echo "Success: " . json_encode($result) . "\\n";
-
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage() . "\\n";
-}
-
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
 ?>`
-  },
-  python: {
-    1: `import requests
-import json
-from typing import Dict, Any
-
-
-def userregistration(
-    base_url: str,
-    access_token: str,
-    data: Dict[str, Any]
-) -> Dict[str, Any]:
-    """Register a new user account with email and password"""
-    url = f"{base_url}/auth/register"
     
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json',
-        'Fingerprint': 'YOUR_FINGERPRINT'
-    }
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
     
-    try:
-        response = requests.request(
-            'POST',
-            url,
-            headers=headers,
-            json=data,
-            timeout=30
-        )
-        
-        response.raise_for_status()
-        return response.json()
-        
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Request failed: {e}")
-
-
-def main():
-    data = {
-        'email': 'example',\n        'password': 'example',\n        'first_name': 'example',\n        'last_name': 'example',\n        'phone': 'example',\n        'referral_code': 'example',
-    }
-    
-    try:
-        result = userregistration(
-            'https://develop.okd.finance/api',
-            'YOUR_ACCESS_TOKEN',
-            data
-        )
-        
-        print("Success:", json.dumps(result, indent=2))
-        
-    except Exception as e:
-        print(f"Error: {e}")
-
-
-if __name__ == "__main__":
-    main()`,
-    2: `import requests
-import json
-from typing import Dict, Any
-
-
-def userlogin(
-    base_url: str,
-    access_token: str,
-    data: Dict[str, Any]
-) -> Dict[str, Any]:
-    """Authenticate user with email and password, returns JWT tokens"""
-    url = f"{base_url}/auth/login"
-    
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json',
-        'Fingerprint': 'YOUR_FINGERPRINT'
-    }
-    
-    try:
-        response = requests.request(
-            'POST',
-            url,
-            headers=headers,
-            json=data,
-            timeout=30
-        )
-        
-        response.raise_for_status()
-        return response.json()
-        
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Request failed: {e}")
-
-
-def main():
-    data = {
-        'email': 'example',\n        'password': 'example',\n        'remember_me': True,\n        'device_name': 'example',
-    }
-    
-    try:
-        result = userlogin(
-            'https://develop.okd.finance/api',
-            'YOUR_ACCESS_TOKEN',
-            data
-        )
-        
-        print("Success:", json.dumps(result, indent=2))
-        
-    except Exception as e:
-        print(f"Error: {e}")
-
-
-if __name__ == "__main__":
-    main()`,
-    3: `import requests
-import json
-from typing import Dict, Any
-
-
-def userlogout(
-    base_url: str,
-    access_token: str,
-    data: Dict[str, Any]
-) -> Dict[str, Any]:
-    """Logout user and invalidate current session tokens"""
-    url = f"{base_url}/auth/logout"
-    
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json',
-        'Fingerprint': 'YOUR_FINGERPRINT'
-    }
-    
-    try:
-        response = requests.request(
-            'POST',
-            url,
-            headers=headers,
-            json=data,
-            timeout=30
-        )
-        
-        response.raise_for_status()
-        return response.json()
-        
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Request failed: {e}")
-
-
-def main():
-    data = {
-        'logout_all_devices': True,
-    }
-    
-    try:
-        result = userlogout(
-            'https://develop.okd.finance/api',
-            'YOUR_ACCESS_TOKEN',
-            data
-        )
-        
-        print("Success:", json.dumps(result, indent=2))
-        
-    except Exception as e:
-        print(f"Error: {e}")
-
-
-if __name__ == "__main__":
-    main()`,
-    4: `import requests
-import json
-from typing import Dict, Any
-
-
-def refreshaccesstoken(
-    base_url: str,
-    access_token: str,
-    data: Dict[str, Any]
-) -> Dict[str, Any]:
-    """Refresh expired access token using refresh token"""
-    url = f"{base_url}/auth/refresh"
-    
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json',
-        'Fingerprint': 'YOUR_FINGERPRINT'
-    }
-    
-    try:
-        response = requests.request(
-            'POST',
-            url,
-            headers=headers,
-            json=data,
-            timeout=30
-        )
-        
-        response.raise_for_status()
-        return response.json()
-        
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Request failed: {e}")
-
-
-def main():
-    data = {
-        'refresh_token': 'example',
-    }
-    
-    try:
-        result = refreshaccesstoken(
-            'https://develop.okd.finance/api',
-            'YOUR_ACCESS_TOKEN',
-            data
-        )
-        
-        print("Success:", json.dumps(result, indent=2))
-        
-    except Exception as e:
-        print(f"Error: {e}")
-
-
-if __name__ == "__main__":
-    main()`,
-    5: `import requests
-import json
-from typing import Dict, Any
-
-
-def forgotpassword(
-    base_url: str,
-    access_token: str,
-    data: Dict[str, Any]
-) -> Dict[str, Any]:
-    """Request password reset email for user account"""
-    url = f"{base_url}/auth/forgot-password"
-    
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json',
-        'Fingerprint': 'YOUR_FINGERPRINT'
-    }
-    
-    try:
-        response = requests.request(
-            'POST',
-            url,
-            headers=headers,
-            json=data,
-            timeout=30
-        )
-        
-        response.raise_for_status()
-        return response.json()
-        
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Request failed: {e}")
-
-
-def main():
-    data = {
-        'email': 'example',
-    }
-    
-    try:
-        result = forgotpassword(
-            'https://develop.okd.finance/api',
-            'YOUR_ACCESS_TOKEN',
-            data
-        )
-        
-        print("Success:", json.dumps(result, indent=2))
-        
-    except Exception as e:
-        print(f"Error: {e}")
-
-
-if __name__ == "__main__":
-    main()`,
-    6: `import requests
-import json
-from typing import Dict, Any
-
-
-def resetpassword(
-    base_url: str,
-    access_token: str,
-    data: Dict[str, Any]
-) -> Dict[str, Any]:
-    """Reset user password using reset token from email"""
-    url = f"{base_url}/auth/reset-password"
-    
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json',
-        'Fingerprint': 'YOUR_FINGERPRINT'
-    }
-    
-    try:
-        response = requests.request(
-            'POST',
-            url,
-            headers=headers,
-            json=data,
-            timeout=30
-        )
-        
-        response.raise_for_status()
-        return response.json()
-        
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Request failed: {e}")
-
-
-def main():
-    data = {
-        'token': 'example',\n        'password': 'example',\n        'password_confirmation': 'example',
-    }
-    
-    try:
-        result = resetpassword(
-            'https://develop.okd.finance/api',
-            'YOUR_ACCESS_TOKEN',
-            data
-        )
-        
-        print("Success:", json.dumps(result, indent=2))
-        
-    except Exception as e:
-        print(f"Error: {e}")
-
-
-if __name__ == "__main__":
-    main()`,
-    7: `import requests
-import json
-from typing import Dict, Any
-
-
-def verifyemail(
-    base_url: str,
-    access_token: str,
-    data: Dict[str, Any]
-) -> Dict[str, Any]:
-    """Verify user email address using verification token"""
-    url = f"{base_url}/auth/verify-email"
-    
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json',
-        'Fingerprint': 'YOUR_FINGERPRINT'
-    }
-    
-    try:
-        response = requests.request(
-            'POST',
-            url,
-            headers=headers,
-            json=data,
-            timeout=30
-        )
-        
-        response.raise_for_status()
-        return response.json()
-        
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Request failed: {e}")
-
-
-def main():
-    data = {
-        'token': 'example',\n        'email': 'example',
-    }
-    
-    try:
-        result = verifyemail(
-            'https://develop.okd.finance/api',
-            'YOUR_ACCESS_TOKEN',
-            data
-        )
-        
-        print("Success:", json.dumps(result, indent=2))
-        
-    except Exception as e:
-        print(f"Error: {e}")
-
-
-if __name__ == "__main__":
-    main()`,
-    8: `import requests
-import json
-from typing import Dict, Any
-
-
-def getcurrentuser(
-    base_url: str,
-    access_token: str,
-    data: Dict[str, Any]
-) -> Dict[str, Any]:
-    """Get current authenticated user information"""
-    url = f"{base_url}/auth/me"
-    
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json',
-        'Fingerprint': 'YOUR_FINGERPRINT'
-    }
-    
-    try:
-        response = requests.request(
-            'GET',
-            url,
-            headers=headers,
-            json=data,
-            timeout=30
-        )
-        
-        response.raise_for_status()
-        return response.json()
-        
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Request failed: {e}")
-
-
-def main():
-    data = {
-
-    }
-    
-    try:
-        result = getcurrentuser(
-            'https://develop.okd.finance/api',
-            'YOUR_ACCESS_TOKEN',
-            data
-        )
-        
-        print("Success:", json.dumps(result, indent=2))
-        
-    except Exception as e:
-        print(f"Error: {e}")
-
-
-if __name__ == "__main__":
-    main()`
+    default:
+      return 'Language not supported'
   }
+}
+
+const getCodeExample2 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/confirm'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample3 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/fcm'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample4 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/fcm'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X DELETE "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("DELETE", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'DELETE',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'DELETE',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.delete(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample5 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/google'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X GET "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("GET", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample6 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/jwt/refresh'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample7 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/locale'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X PUT "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("PUT", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'PUT',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.put(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample8 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/notifications'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X GET "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("GET", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample9 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/notifications'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X PUT "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("PUT", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'PUT',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.put(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample10 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/notifications'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X DELETE "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("DELETE", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'DELETE',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'DELETE',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.delete(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample11 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/notifications/{id}'
+  
+  // Replace path parameters with example values
+  url = url.replace('{id}', testData11.id || 'example')
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X PUT "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("PUT", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'PUT',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.put(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample12 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/otp'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample13 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/otp'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X DELETE "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("DELETE", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'DELETE',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'DELETE',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.delete(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample14 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/password'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X PUT "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("PUT", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'PUT',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.put(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample15 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/password/restore'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X PUT "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("PUT", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'PUT',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.put(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample16 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/password/restore'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample17 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/password/restore/{code}'
+  
+  // Replace path parameters with example values
+  url = url.replace('{code}', testData17.code || 'example')
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X GET "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("GET", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample18 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/profile'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X GET "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("GET", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample19 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/profile'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X PUT "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("PUT", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'PUT',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.put(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample20 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/remove'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X GET "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("GET", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample21 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/remove'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X PUT "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("PUT", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'PUT',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.put(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample22 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/sign-in'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X PUT "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("PUT", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'PUT',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.put(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample23 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/sign-in'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample24 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/sign-in/firebase'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample25 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/sign-in/google'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample26 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/sign-in/resend'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X PUT "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("PUT", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'PUT',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.put(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample27 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/sign-out'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample28 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/sign-up'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample29 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/auth/sign-up/google'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X POST "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+const getCodeExample30 = (lang) => {
+  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
+  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
+  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
+  
+  let url = baseUrl + '/user/flags'
+  
+  // Replace path parameters with example values
+  
+  
+  switch (lang) {
+    case 'cURL':
+      return `curl -X PUT "${url}" \\
+  -H "Authorization: Bearer ${token}" \\
+  -H "X-Fingerprint: ${fingerprint}" \\
+  -H "Content-Type: application/json"${''}`
+    
+    case 'Go':
+      return `package main
+
+import (
+    "fmt"
+    "net/http"
+    "strings"
+)
+
+func main() {
+    client := &http.Client{}
+    req, _ := http.NewRequest("PUT", "${url}", nil)
+    
+    req.Header.Add("Authorization", "Bearer ${token}")
+    req.Header.Add("X-Fingerprint", "${fingerprint}")
+    req.Header.Add("Content-Type", "application/json")
+    
+    res, _ := client.Do(req)
+    defer res.Body.Close()
+}`
+    
+    case 'TypeScript':
+      return `const response = await fetch('${url}', {
+  method: 'PUT',
+  headers: {
+    'Authorization': 'Bearer ${token}',
+    'X-Fingerprint': '${fingerprint}',
+    'Content-Type': 'application/json'
+  }
+});
+
+const data = await response.json();
+console.log(data);`
+    
+    case 'PHP':
+      return `<?php
+\$curl = curl_init();
+
+curl_setopt_array(\$curl, array(
+  CURLOPT_URL => '${url}',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer ${token}',
+    'X-Fingerprint: ${fingerprint}',
+    'Content-Type: application/json'
+  )
+));
+
+\$response = curl_exec(\$curl);
+curl_close(\$curl);
+echo \$response;
+?>`
+    
+    case 'Python':
+      return `import requests
+
+url = "${url}"
+headers = {
+    "Authorization": "Bearer ${token}",
+    "X-Fingerprint": "${fingerprint}",
+    "Content-Type": "application/json"
+}
+
+response = requests.put(url, headers=headers)
+print(response.json())`
+    
+    default:
+      return 'Language not supported'
+  }
+}
+
+// Copy code to clipboard
+const copyCode = (code) => {
+  navigator.clipboard.writeText(code).then(() => {
+    console.log('Code copied to clipboard!')
+  })
 }
 </script>
 
@@ -3514,74 +6469,54 @@ if __name__ == "__main__":
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--vp-c-bg);
-  border-bottom: 2px solid var(--vp-c-brand);
-  padding: 0.65rem 0;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: padding 0.3s ease-out, box-shadow 0.3s ease-out;
-  overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-.auth-header-fixed.collapsed {
-  padding: 0.4rem 0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-}
-
-.auth-header-fixed.collapsed .api-config-row,
-.auth-header-fixed.collapsed .status-row,
-.auth-header-fixed.collapsed .token-hint {
-  max-height: 0;
-  opacity: 0;
-  margin: 0;
-  padding: 0;
-  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+.auth-header-fixed.collapsed .auth-container > *:not(.auth-title) {
+  display: none;
 }
 
 .auth-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  padding: 1.5rem;
+  color: white;
 }
 
 .auth-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
 .auth-title h4 {
-  margin: 0 0 0.65rem 0;
-  color: var(--vp-c-brand);
-  font-size: 1rem;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .collapse-toggle {
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
-  padding: 0.3rem 0.6rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-  margin-bottom: 0.65rem;
+  transition: background 0.2s;
 }
 
 .collapse-toggle:hover {
-  background: var(--vp-c-brand);
-  color: white;
-  border-color: var(--vp-c-brand);
-  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .api-config-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.5rem;
-  margin-bottom: 0.65rem;
-  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
-  max-height: 200px;
-  opacity: 1;
+  grid-template-columns: 1fr 2fr 2fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .config-group {
@@ -3591,705 +6526,358 @@ if __name__ == "__main__":
 
 .config-label {
   font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
   margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
-.config-input {
+.config-input, .token-input {
   padding: 0.75rem;
-  border: 2px solid var(--vp-c-border);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
-  font-family: monospace;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
   font-size: 0.9rem;
-  transition: border-color 0.2s;
 }
 
-.config-input:focus {
-  outline: none;
-  border-color: var(--vp-c-brand);
+.config-input::placeholder, .token-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .token-input-group {
+  position: relative;
   display: flex;
-  gap: 0.5rem;
 }
 
 .token-input {
   flex: 1;
-  padding: 0.75rem;
-  border: 2px solid var(--vp-c-border);
-  border-radius: 8px;
-  font-family: monospace;
-  font-size: 0.9rem;
-  transition: border-color 0.2s;
+  border-radius: 8px 0 0 8px;
 }
 
-.token-input:focus {
-  outline: none;
-  border-color: var(--vp-c-brand);
+.token-toggle, .generate-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-left: none;
+  color: white;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .token-toggle {
-  padding: 0.75rem;
-  border: 2px solid var(--vp-c-border);
-  border-radius: 8px;
-  background: var(--vp-c-bg-soft);
-  cursor: pointer;
-  transition: all 0.2s;
+  border-radius: 0 8px 8px 0;
 }
 
-.token-toggle:hover {
-  background: var(--vp-c-brand);
-  color: white;
-  border-color: var(--vp-c-brand);
+.generate-btn {
+  border-radius: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.generate-btn:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.token-toggle:hover, .generate-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .status-row {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
   align-items: center;
-  margin-bottom: 0.5rem;
-  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
-  max-height: 50px;
-  opacity: 1;
-}
-
-.url-status {
-  color: var(--vp-c-brand);
   font-size: 0.85rem;
-  font-weight: 500;
-  font-family: monospace;
-  background: var(--vp-c-bg-soft);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
+  margin-bottom: 0.5rem;
 }
 
-.token-status {
-  color: var(--vp-c-green);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.fingerprint-status {
-  color: var(--vp-c-purple);
-  font-size: 0.9rem;
-  font-weight: 500;
+.url-status, .token-status, .fingerprint-status {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
 }
 
 .clear-auth-btn {
-  padding: 0.4rem 0.8rem;
-  border: 1px solid var(--vp-c-red);
-  border-radius: 6px;
-  background: var(--vp-c-bg);
-  color: var(--vp-c-red);
+  background: rgba(255, 0, 0, 0.3);
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
   cursor: pointer;
   font-size: 0.8rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  transition: background 0.2s;
 }
 
 .clear-auth-btn:hover {
-  background: var(--vp-c-red);
-  color: white;
-  transform: scale(1.05);
+  background: rgba(255, 0, 0, 0.5);
 }
 
 .token-hint {
-  color: var(--vp-c-text-2);
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
-  max-height: 30px;
-  opacity: 1;
+  font-size: 0.8rem;
+  opacity: 0.8;
+  font-style: italic;
 }
 
-/* Main Container */
+/* Main Content */
 .interactive-api-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.main-content {
-  width: 100%;
 }
 
 .endpoint-section {
-  margin-bottom: 4rem;
-  padding-bottom: 3rem;
-  border-bottom: 2px solid var(--vp-c-border);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
 }
 
-.endpoint-layout {
-  display: flex;
-  gap: 3rem;
-}
-
-.endpoint-docs {
-  flex: 1;
-  min-width: 0;
-}
-
-.endpoint-testing {
-  flex: 0 0 450px;
-  border-left: 2px solid var(--vp-c-border);
-  padding-left: 2rem;
-}
-
-/* Method Header */
-.method-header {
+.endpoint-header {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.5rem;
 }
 
 .method-badge {
   padding: 0.5rem 1rem;
   border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.method-badge.get {
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-  color: #1976d2;
-  border: 2px solid #1976d2;
-}
-
-.method-badge.post {
-  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
-  color: #2e7d32;
-  border: 2px solid #2e7d32;
-}
-
-.method-badge.put {
-  background: linear-gradient(135deg, #fff3e0, #ffcc02);
-  color: #f57c00;
-  border: 2px solid #f57c00;
-}
-
-.method-badge.patch {
-  background: linear-gradient(135deg, #f3e5f5, #ce93d8);
-  color: #7b1fa2;
-  border: 2px solid #7b1fa2;
-}
-
-.method-badge.delete {
-  background: linear-gradient(135deg, #ffebee, #ffcdd2);
-  color: #c62828;
-  border: 2px solid #c62828;
-}
+.method-get { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
+.method-post { background: linear-gradient(135deg, #10b981, #047857); color: white; }
+.method-put { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+.method-patch { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
+.method-delete { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
 
 .endpoint-path {
-  font-family: var(--vp-font-family-mono);
-  font-weight: bold;
-  font-size: 1.1rem;
-  color: var(--vp-c-text-1);
-  background: var(--vp-c-bg-soft);
+  font-family: 'Monaco', 'Menlo', monospace;
+  background: rgba(0, 0, 0, 0.05);
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #374151;
 }
 
-/* Endpoint Info */
-.endpoint-info {
-  margin-bottom: 2rem;
+.endpoint-header h3 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.25rem;
 }
 
-.endpoint-title {
-  font-size: 1.5rem;
-  margin: 0 0 0.5rem 0;
-  color: var(--vp-c-text-1);
+.endpoint-content {
+  padding: 2rem;
 }
 
 .endpoint-description {
-  color: var(--vp-c-text-2);
-  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: #6b7280;
   line-height: 1.6;
-  margin: 0;
 }
 
-/* API Sections */
-.api-section {
+.parameters-section {
   margin-bottom: 2rem;
 }
 
-.section-title {
+.parameters-section h4 {
+  color: #374151;
+  margin-bottom: 1rem;
   font-size: 1.1rem;
-  margin: 0 0 1rem 0;
-  color: var(--vp-c-brand);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
-.param-list {
-  background: var(--vp-c-bg-soft);
-  border-radius: 8px;
-  padding: 1rem;
-  border: 1px solid var(--vp-c-border);
-}
-
-.param-item {
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  gap: 1rem;
-  align-items: center;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--vp-c-border-soft);
-}
-
-.param-item:last-child {
-  border-bottom: none;
-}
-
-.param-item.required .param-name::after {
-  content: " *";
-  color: #ff4444;
-  font-weight: bold;
-}
-
-.param-name {
-  font-family: var(--vp-font-family-mono);
-  font-weight: bold;
-  color: var(--vp-c-brand);
-  background: var(--vp-c-bg);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-}
-
-.param-type {
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.8rem;
-  color: var(--vp-c-text-2);
-  background: var(--vp-c-bg);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  border: 1px solid var(--vp-c-border);
-}
-
-.param-desc {
-  color: var(--vp-c-text-2);
-  font-size: 0.9rem;
-  line-height: 1.4;
-}
-
-/* Code Examples with Tabs */
-.code-examples {
-  margin: 1rem 0;
-}
-
-/* Code Block Container with Copy Button */
-.code-block-container {
-  position: relative;
-  margin: 1rem 0;
-}
-
-.copy-code-btn {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
-  padding: 0.5rem;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  z-index: 10;
-  opacity: 0.8;
-}
-
-.copy-code-btn:hover {
-  background: var(--vp-c-bg);
-  opacity: 1;
-  transform: scale(1.1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.copy-code-btn:active {
-  transform: scale(0.95);
-}
-
-.code-block-container .code-block {
-  margin: 0;
-}
-
-.code-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  margin-bottom: 0;
-  border-bottom: 2px solid var(--vp-c-border);
-  padding-bottom: 0.5rem;
-}
-
-.code-tab {
-  padding: 0.5rem 1rem;
-  border: none;
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-2);
-  cursor: pointer;
-  border-radius: 6px 6px 0 0;
-  font-size: 0.85rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border: 1px solid var(--vp-c-border);
-  border-bottom: none;
-}
-
-.code-tab:hover {
-  background: var(--vp-c-bg-mute);
-  color: var(--vp-c-text-1);
-}
-
-.code-tab.active {
-  background: var(--vp-c-bg);
-  color: var(--vp-c-brand-1);
-  border-color: var(--vp-c-brand-1);
-  font-weight: 600;
-}
-
-.code-block {
-  background: var(--vp-code-bg);
-  color: var(--vp-code-color);
-  padding: 1.5rem;
-  border-radius: 8px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  overflow-x: auto;
-  border: 1px solid var(--vp-c-border);
-  white-space: pre;
-  word-wrap: normal;
-  overflow-wrap: normal;
-  tab-size: 2;
-  -moz-tab-size: 2;
-}
-
-.code-block pre {
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  border: none;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
-  white-space: pre;
-  overflow: visible;
-}
-
-/* Testing Section */
-.testing-title {
-  font-size: 1.2rem;
-  margin: 0 0 1rem 0;
-  color: var(--vp-c-brand);
-}
-
-.test-section {
-  background: var(--vp-c-bg-soft);
-  border-radius: 8px;
-  padding: 1.5rem;
-  border: 1px solid var(--vp-c-border);
-}
-
-.form-group {
+.parameter-group {
   margin-bottom: 1rem;
 }
 
-.form-group label {
+.parameter-label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.9rem;
 }
 
-.test-input {
+.parameter-input, .parameter-textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid var(--vp-c-border);
-  border-radius: 6px;
-  font-family: monospace;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
   font-size: 0.9rem;
   transition: border-color 0.2s;
-  box-sizing: border-box;
 }
 
-.test-input:focus {
+.parameter-input:focus, .parameter-textarea:focus {
   outline: none;
-  border-color: var(--vp-c-brand);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.test-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.test-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .test-btn {
-  width: 100%;
-  padding: 1rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  background: linear-gradient(135deg, #1976d2, #1565c0);
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
   color: white;
-  margin-top: 1rem;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.test-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #0d47a1, #1565c0);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(13, 71, 161, 0.6);
+.test-btn:hover:not(.disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-.test-btn:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(13, 71, 161, 0.4);
-}
-
-.test-btn:disabled {
-  background: var(--vp-c-text-3);
+.test-btn.disabled {
+  background: #9ca3af;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
 }
 
-/* Dark theme button adjustments */
-.dark .test-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1565c0, #1976d2);
-  box-shadow: 0 8px 25px rgba(21, 101, 192, 0.7);
+.loading {
+  color: #f59e0b;
+  font-weight: 500;
 }
 
-/* Response Examples */
-.response-example {
-  margin: 1.5rem 0;
-  border: 1px solid var(--vp-c-border);
+.response-section {
+  margin-top: 1rem;
+}
+
+.response-section h4 {
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.response-content {
+  background: #1f2937;
+  color: #f3f4f6;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.code-examples {
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   overflow: hidden;
 }
 
-.response-status {
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  font-size: 0.9rem;
+.code-tabs {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  background: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.response-status.success {
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-  color: #0369a1;
-  border-bottom: 1px solid #0369a1;
-}
-
-.response-status.success::before {
-  content: "✅";
-}
-
-.response-status.error {
-  background: linear-gradient(135deg, #fef2f2, #fecaca);
-  color: #dc2626;
-  border-bottom: 1px solid #dc2626;
-}
-
-.response-status.error::before {
-  content: "❌";
-}
-
-.response-example .code-block {
-  margin: 0;
-  border-radius: 0;
+.code-tab {
+  padding: 0.75rem 1rem;
   border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 500;
+  color: #6b7280;
+  transition: all 0.2s;
 }
 
-/* Result Container */
-.result-container {
-  background: var(--vp-c-bg);
-  border-radius: 6px;
-  padding: 1rem;
-  margin-top: 1rem;
-  border: 1px solid var(--vp-c-border);
+.code-tab.active {
+  background: white;
+  color: #3b82f6;
+  border-bottom: 2px solid #3b82f6;
 }
 
-.result-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-  gap: 1rem;
+.code-tab:hover:not(.active) {
+  background: #e5e7eb;
 }
 
-.status-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  background: var(--vp-c-green-soft);
-  color: var(--vp-c-green);
+.code-content {
+  position: relative;
 }
 
-.timestamp {
-  color: var(--vp-c-text-3);
-  font-size: 0.8rem;
-  font-family: var(--vp-font-family-mono);
+.code-block {
+  position: relative;
 }
 
 .copy-btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  background: linear-gradient(135deg, #6c757d, #5a6268);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.7);
   color: white;
-  font-size: 0.8rem;
-  font-weight: 500;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  font-size: 0.8rem;
+  z-index: 10;
+  transition: background 0.2s;
 }
 
 .copy-btn:hover {
-  background: linear-gradient(135deg, #5a6268, #495057);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+  background: rgba(0, 0, 0, 0.9);
 }
 
-.request-info {
-  padding: 1rem;
-  border-bottom: 1px solid var(--vp-c-border);
-}
-
-.request-info h5 {
-  margin: 0 0 0.5rem 0;
-  color: var(--vp-c-text-1);
-  font-size: 0.9rem;
-}
-
-.request-data {
-  background: var(--vp-code-bg);
-  color: var(--vp-code-color);
-  padding: 1rem;
-  border-radius: 6px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.8rem;
-  line-height: 1.4;
-  overflow-x: auto;
-  margin: 0.5rem 0;
-  border: 1px solid var(--vp-c-border);
-  white-space: pre-wrap;
-}
-
-.result-data {
-  background: var(--vp-code-bg);
-  padding: 1rem;
-  border-radius: 6px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.85rem;
-  white-space: pre-wrap;
-  word-break: break-all;
+.code-block pre {
   margin: 0;
-  color: var(--vp-code-color);
-  max-height: 300px;
-  overflow-y: auto;
+  padding: 1.5rem;
+  background: #1f2937;
+  color: #f3f4f6;
+  overflow-x: auto;
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
-.request-info {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  background: var(--vp-c-bg-soft);
-  border-radius: 6px;
-  border-left: 4px solid var(--vp-c-brand);
-}
-
-.request-info h5 {
-  margin: 0 0 0.5rem 0;
-  color: var(--vp-c-text-1);
-  font-size: 0.9rem;
-}
-
-.request-data {
-  background: var(--vp-code-bg);
-  padding: 0.75rem;
-  border-radius: 4px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.8rem;
-  white-space: pre-wrap;
-  word-break: break-all;
-  margin: 0 0 1rem 0;
-  color: var(--vp-code-color);
-  max-height: 150px;
-  overflow-y: auto;
+.code-block code {
+  background: none;
+  padding: 0;
+  font-family: inherit;
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
-  .endpoint-layout {
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .endpoint-testing {
-    flex: none;
-    border-left: none;
-    border-top: 2px solid var(--vp-c-border);
-    padding-left: 0;
-    padding-top: 2rem;
-  }
-
-  .param-item {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-}
-
 @media (max-width: 768px) {
-  .auth-header-fixed {
-    padding: 0.75rem 0;
-  }
-
   .api-config-row {
     grid-template-columns: 1fr;
-    gap: 1rem;
   }
-
-  .status-row {
+  
+  .endpoint-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-
-  .token-input-group {
+  
+  .status-row {
     flex-direction: column;
+    align-items: flex-start;
   }
-
-  .interactive-api-container {
-    padding: 0 0.5rem;
-  }
-
-  .endpoint-layout {
-    gap: 1.5rem;
-  }
-
+  
   .code-tabs {
-    gap: 0.125rem;
     flex-wrap: wrap;
   }
-
+  
   .code-tab {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.8rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .code-block {
-    font-size: 0.85rem;
-    padding: 1rem;
+    min-width: 80px;
+    text-align: center;
   }
 }
 </style>

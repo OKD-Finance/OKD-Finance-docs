@@ -237,6 +237,98 @@ ${apiItems}
                     }`;
     }
 
+    // Добавляем API в навигацию
+    addApiToNavigation(apiName, apiLink, subItems = []) {
+        try {
+            let configContent = this.readConfig();
+            if (!configContent) return false;
+
+            // Find the API Reference section
+            const apiSectionRegex = /(\s+text: 'API Reference',\s+items: \[\s*)([\s\S]*?)(\s+\]\s+\})/;
+            const match = configContent.match(apiSectionRegex);
+
+            if (!match) {
+                console.log('❌ Could not find API Reference section in config');
+                return false;
+            }
+
+            const [, beforeItems, itemsContent, afterItems] = match;
+
+            // Remove existing entries for this API to prevent duplicates
+            const existingPatterns = [
+                new RegExp(`\\s*\\{[^}]*text:\\s*'${apiName}'[^}]*\\}[,]?\\s*`, 'g'),
+                new RegExp(`\\s*\\{[^}]*text:\\s*'${apiName.replace(' API', '')}'[^}]*\\}[,]?\\s*`, 'g'),
+                new RegExp(`\\s*\\{[^}]*text:\\s*'${apiName.replace(' API', '')} API'[^}]*\\}[,]?\\s*`, 'g')
+            ];
+
+            let cleanedItemsContent = itemsContent;
+            existingPatterns.forEach(pattern => {
+                cleanedItemsContent = cleanedItemsContent.replace(pattern, '');
+            });
+
+            // Create new API entry
+            let newApiEntry;
+            if (subItems.length > 0) {
+                const subItemsStr = subItems.map(item =>
+                    `                                { text: '${item.text}', link: '${item.link}' }`
+                ).join(',\n');
+
+                newApiEntry = `                        {
+                            text: '${apiName}',
+                            link: '${apiLink}',
+                            collapsed: true,
+                            items: [
+${subItemsStr}
+                            ]
+                        },`;
+            } else {
+                newApiEntry = `                        {
+                            text: '${apiName}',
+                            link: '${apiLink}'
+                        },`;
+            }
+
+            // Insert after Overview but before other APIs
+            let updatedItemsContent = cleanedItemsContent;
+            const overviewIndex = cleanedItemsContent.indexOf("text: 'Overview'");
+
+            if (overviewIndex !== -1) {
+                // Find the end of Overview entry
+                const overviewEnd = cleanedItemsContent.indexOf('},', overviewIndex) + 2;
+                const beforeOverviewEnd = cleanedItemsContent.substring(0, overviewEnd);
+                const afterOverviewEnd = cleanedItemsContent.substring(overviewEnd);
+
+                updatedItemsContent = beforeOverviewEnd + '\n' + newApiEntry + afterOverviewEnd;
+            } else {
+                // If no Overview, add at the beginning
+                updatedItemsContent = newApiEntry + '\n' + cleanedItemsContent;
+            }
+
+            // Replace the content
+            const newConfigContent = configContent.replace(
+                apiSectionRegex,
+                beforeItems + updatedItemsContent + afterItems
+            );
+
+            fs.writeFileSync(this.configPath, newConfigContent, 'utf8');
+            console.log(`✅ Added ${apiName} to navigation (removed duplicates)`);
+
+            // Auto-fix navigation after adding
+            console.log('\n🔧 Running automatic navigation validation...');
+            const wasFixed = this.fixNavigation();
+
+            if (wasFixed) {
+                console.log('✅ Navigation automatically fixed!');
+            }
+
+            return true;
+
+        } catch (error) {
+            console.error('❌ Error updating navigation:', error.message);
+            return false;
+        }
+    }
+
     // Автоматически исправляем навигацию
     fixNavigation() {
         console.log('🔧 Starting navigation validation and fix...\n');

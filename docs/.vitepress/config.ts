@@ -444,21 +444,49 @@ export default defineConfig({
                 }
             ],
             '/en/api/': [
-                {
-                    text: 'API Reference',
-                    items: [
+                {                    {                    {                    {                    {                    {
+                        text: 'API Reference',
+                        items: [
                         {
                             text: 'Overview',
                             link: '/en/api/overview'
                         },
-
+                        {
+                            text: 'Authentication API',
+                            link: '/en/api/authentication'
+                        },
+                        {
+                            text: 'Wallet API',
+                            link: '/en/api/wallet'
+                        },
+                        {
+                            text: 'User Operations API',
+                            link: '/en/api/user-operations'
+                        },
+                        {
+                            text: 'POST /wallet/transfer',
+                            link: '/en/api/wallet#endpoint-2'
+                        },
+                        {
+                            text: 'GET /wallet/history',
+                            link: '/en/api/wallet#endpoint-3'
+                        }
+                        ]
+                    },
                         {
                             text: 'User API',
-                            link: '/en/api/users',
-                            collapsed: true,
-                            items: [
-                                { text: 'PUT /user/flags', link: '/en/api/users#endpoint-1' },
-                                { text: 'PATCH /user/notifications', link: '/en/api/users#endpoint-2' },
+                            link: '/en/api/users'
+                        },
+                        {
+                            text: 'PATCH /user/notifications',
+                            link: '/en/api/users#endpoint-2'
+                        },
+                        {
+                            text: 'PATCH /user/profile',
+                            link: '/en/api/users#endpoint-3'
+                        }
+                        ]
+                    },{ text: 'PATCH /user/notifications', link: '/en/api/users#endpoint-2' },
                                 { text: 'PATCH /user/profile', link: '/en/api/users#endpoint-3' }
                             ]
                         },
