@@ -25,7 +25,7 @@ export default defineConfig({
                 nav: [
                     { text: 'Главная', link: '/ru/' },
                     { text: 'Руководство', link: '/ru/guide/introduction' },
-                    { text: 'Справочник API', link: '/ru/api/overview' },
+                    { text: 'Справочник API', link: '/api/overview' },
                     { text: 'Примеры', link: '/ru/examples/basic-usage' }
                 ]
             }
@@ -37,7 +37,7 @@ export default defineConfig({
                 nav: [
                     { text: '首页', link: '/zh/' },
                     { text: '指南', link: '/zh/guide/introduction' },
-                    { text: 'API 参考', link: '/zh/api/overview' },
+                    { text: 'API 参考', link: '/api/overview' },
                     { text: '示例', link: '/zh/examples/basic-usage' }
                 ]
             }
@@ -155,7 +155,7 @@ export default defineConfig({
                     text: 'Справочник API',
                     collapsed: false,
                     items: [
-                        { text: 'Обзор', link: '/ru/api/overview' },
+                        { text: 'Обзор', link: '/api/overview' },
                         { text: 'KYC API', link: '/ru/api/kyc' },
                         { text: 'API Аутентификации', link: '/ru/api/authentication' },
                         { text: 'WebSocket Подписки', link: '/ru/api/websocket-subscriptions' },
@@ -237,7 +237,7 @@ export default defineConfig({
                     text: 'API 参考',
                     collapsed: false,
                     items: [
-                        { text: '概述', link: '/zh/api/overview' },
+                        { text: '概述', link: '/api/overview' },
                         { text: 'KYC API', link: '/zh/api/kyc' },
                         { text: '身份验证 API', link: '/zh/api/authentication' },
                         { text: 'WebSocket 订阅', link: '/zh/api/websocket-subscriptions' },

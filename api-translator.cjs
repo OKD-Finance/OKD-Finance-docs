@@ -120,8 +120,7 @@ class APITranslator {
     }
 
     const sourceFiles = fs.readdirSync(this.config.sourceDir)
-      .filter(file => file.endsWith('.md'))
-      .filter(file => file !== 'overview.md');
+      .filter(file => file.endsWith('.md'));
 
     console.log(`📋 Found ${sourceFiles.length} files to translate`);
 
@@ -150,6 +149,7 @@ class APITranslator {
 
     if (this.translations[lang]) {
       for (const [original, translation] of Object.entries(this.translations[lang])) {
+        // Translate headers
         translatedContent = translatedContent.replace(
           new RegExp(`^# ${original}$`, 'gm'),
           `# ${translation}`
@@ -162,8 +162,17 @@ class APITranslator {
           new RegExp(`^### ${original}$`, 'gm'),
           `### ${translation}`
         );
+
+        // Translate text in links
+        translatedContent = translatedContent.replace(
+          new RegExp(`\\[${original}\\]`, 'g'),
+          `[${translation}]`
+        );
       }
     }
+
+    // Update API links to point to centralized API directory (keep /api/ structure)
+    // No need to change links since they already point to /api/
 
     return translatedContent;
   }
