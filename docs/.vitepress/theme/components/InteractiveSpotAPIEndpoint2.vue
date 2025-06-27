@@ -222,12 +222,12 @@ const copyToClipboard = (text, event) => {
 }
 
 .auth-title h4 {
-  margin: 0 0 1rem 0;
-  font-size: 1.25rem;
-  font-weight: 700;
+  margin: 0 0 0.8rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   /* Primary color for maximum visibility */
   color: var(--vp-c-brand) !important;
   /* Remove gradient effects that may cause invisibility */
@@ -235,6 +235,19 @@ const copyToClipboard = (text, event) => {
   -webkit-background-clip: unset !important;
   -webkit-text-fill-color: unset !important;
   background-clip: unset !important;
+  /* Ensure text doesn't wrap and fits */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .auth-title h4 {
+    font-size: 0.95rem;
+    gap: 0.3rem;
+  }
 }
 
 .collapse-toggle {
@@ -261,11 +274,26 @@ const copyToClipboard = (text, event) => {
 .api-config-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.5rem;
+  gap: 1rem;
   margin-bottom: 0.65rem;
   transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
   max-height: 200px;
   opacity: 1;
+}
+
+/* Responsive grid for smaller screens */
+@media (max-width: 1024px) {
+  .api-config-row {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .api-config-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
 }
 
 .config-group {
