@@ -193,3 +193,28 @@
         padding: 24px !important;
     }
 }
+
+/* Языковое меню поверх всех модалок */
+.VPNavBarMenuGroup,
+.VPNavBarMenuLink,
+.VPFlyout,
+.VPMenu,
+.VPMenuGroup,
+.VPMenuLink,
+.VPLocalNav,
+.VPNavBarTitle,
+.VPNavBarTranslations {
+    z-index: 9999 !important;
+}
+
+/* Языковая модалка */
+.VPNavBarTranslations .VPFlyout,
+.VPNavBarTranslations .VPMenu {
+    z-index: 10000 !important;
+}
+
+/* Overlay для языкового меню */
+.VPNavBarTranslations .VPFlyout .flyout-button,
+.VPNavBarTranslations .VPMenu .menu {
+    z-index: 10001 !important;
+}
