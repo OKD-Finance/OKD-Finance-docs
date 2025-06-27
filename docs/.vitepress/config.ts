@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-    title: 'OKD Finance API Documentation',
+    title: 'API Documentation',
     description: 'Complete API documentation for OKD Finance platform',
 
     locales: {

@@ -35,6 +35,1470 @@
             </div>
           </div>
         </div>
+
+        <div class="api-section">
+          <h4 class="section-title">📋 Response Examples</h4>
+          <div class="response-examples">
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400103</span>
+                <span class="response-description">unknown asset</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown asset</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400104</span>
+                <span class="response-description">balance is not enough</span>
+              </div>
+              <div class="code-block">
+                <pre>// balance is not enough</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400105</span>
+                <span class="response-description">withdrawal is processed</span>
+              </div>
+              <div class="code-block">
+                <pre>// withdrawal is processed</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400106</span>
+                <span class="response-description">empty source id or asset id in body</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty source id or asset id in body</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400107</span>
+                <span class="response-description">recipient not found</span>
+              </div>
+              <div class="code-block">
+                <pre>// recipient not found</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400108</span>
+                <span class="response-description">transfer is processed</span>
+              </div>
+              <div class="code-block">
+                <pre>// transfer is processed</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400109</span>
+                <span class="response-description">same account for transfer</span>
+              </div>
+              <div class="code-block">
+                <pre>// same account for transfer</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400110</span>
+                <span class="response-description">precents sum is over 100</span>
+              </div>
+              <div class="code-block">
+                <pre>// precents sum is over 100</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400111</span>
+                <span class="response-description">dublicated external id</span>
+              </div>
+              <div class="code-block">
+                <pre>// dublicated external id</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400112</span>
+                <span class="response-description">unknown wallet type</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown wallet type</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400113</span>
+                <span class="response-description">transfer is failed</span>
+              </div>
+              <div class="code-block">
+                <pre>// transfer is failed</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400114</span>
+                <span class="response-description">same wallet for transfer</span>
+              </div>
+              <div class="code-block">
+                <pre>// same wallet for transfer</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400115</span>
+                <span class="response-description">transaction is not found</span>
+              </div>
+              <div class="code-block">
+                <pre>// transaction is not found</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400134</span>
+                <span class="response-description">empty admin id</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty admin id</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400201</span>
+                <span class="response-description">this login already exists</span>
+              </div>
+              <div class="code-block">
+                <pre>// this login already exists</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400202</span>
+                <span class="response-description">no rights for role</span>
+              </div>
+              <div class="code-block">
+                <pre>// no rights for role</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400203</span>
+                <span class="response-description">request validation fails</span>
+              </div>
+              <div class="code-block">
+                <pre>// request validation fails</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400204</span>
+                <span class="response-description">no rights for endpoint</span>
+              </div>
+              <div class="code-block">
+                <pre>// no rights for endpoint</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400205</span>
+                <span class="response-description">no rights for notification</span>
+              </div>
+              <div class="code-block">
+                <pre>// no rights for notification</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400206</span>
+                <span class="response-description">role exists</span>
+              </div>
+              <div class="code-block">
+                <pre>// role exists</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400207</span>
+                <span class="response-description">role is not exist</span>
+              </div>
+              <div class="code-block">
+                <pre>// role is not exist</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400208</span>
+                <span class="response-description">you can't edit admin</span>
+              </div>
+              <div class="code-block">
+                <pre>// you can't edit admin</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400209</span>
+                <span class="response-description">wrong role</span>
+              </div>
+              <div class="code-block">
+                <pre>// wrong role</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400210</span>
+                <span class="response-description">you can't edit yourself</span>
+              </div>
+              <div class="code-block">
+                <pre>// you can't edit yourself</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400211</span>
+                <span class="response-description">you can't delete yourself</span>
+              </div>
+              <div class="code-block">
+                <pre>// you can't delete yourself</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400212</span>
+                <span class="response-description">department isn't empty</span>
+              </div>
+              <div class="code-block">
+                <pre>// department isn't empty</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400213</span>
+                <span class="response-description">unknown request type</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown request type</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400214</span>
+                <span class="response-description">can't approve your own action</span>
+              </div>
+              <div class="code-block">
+                <pre>// can't approve your own action</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400215</span>
+                <span class="response-description">action is processed</span>
+              </div>
+              <div class="code-block">
+                <pre>// action is processed</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400216</span>
+                <span class="response-description">different supervisors</span>
+              </div>
+              <div class="code-block">
+                <pre>// different supervisors</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400217</span>
+                <span class="response-description">no approvers</span>
+              </div>
+              <div class="code-block">
+                <pre>// no approvers</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400218</span>
+                <span class="response-description">invalid access account permissions</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid access account permissions</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400300</span>
+                <span class="response-description">webhook payload is empty</span>
+              </div>
+              <div class="code-block">
+                <pre>// webhook payload is empty</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400301</span>
+                <span class="response-description">invalid KYC webhook message</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid KYC webhook message</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400302</span>
+                <span class="response-description">invalid KYC limit</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid KYC limit</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400303</span>
+                <span class="response-description">unknown risk factor</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown risk factor</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400304</span>
+                <span class="response-description">risk level is not high</span>
+              </div>
+              <div class="code-block">
+                <pre>// risk level is not high</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400400</span>
+                <span class="response-description">unsupported KYC provider</span>
+              </div>
+              <div class="code-block">
+                <pre>// unsupported KYC provider</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400401</span>
+                <span class="response-description">invalid email</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid email</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400404</span>
+                <span class="response-description">KYC provider not found</span>
+              </div>
+              <div class="code-block">
+                <pre>// KYC provider not found</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400410</span>
+                <span class="response-description">no files attached</span>
+              </div>
+              <div class="code-block">
+                <pre>// no files attached</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400411</span>
+                <span class="response-description">the number of files exceeds the limit</span>
+              </div>
+              <div class="code-block">
+                <pre>// the number of files exceeds the limit</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400412</span>
+                <span class="response-description">upload file size exceeds the limit</span>
+              </div>
+              <div class="code-block">
+                <pre>// upload file size exceeds the limit</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400413</span>
+                <span class="response-description">incorrect upload files type</span>
+              </div>
+              <div class="code-block">
+                <pre>// incorrect upload files type</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400501</span>
+                <span class="response-description">this email already exists</span>
+              </div>
+              <div class="code-block">
+                <pre>// this email already exists</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400502</span>
+                <span class="response-description">unknown global flag</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown global flag</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400503</span>
+                <span class="response-description">invalid verification code</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid verification code</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400505</span>
+                <span class="response-description">invalid refresh token</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid refresh token</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400506</span>
+                <span class="response-description">session does not exit</span>
+              </div>
+              <div class="code-block">
+                <pre>// session does not exit</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400507</span>
+                <span class="response-description">invalid input data</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid input data</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400510</span>
+                <span class="response-description">initiator does not exists</span>
+              </div>
+              <div class="code-block">
+                <pre>// initiator does not exists</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400511</span>
+                <span class="response-description">you can't invite admin for this role</span>
+              </div>
+              <div class="code-block">
+                <pre>// you can't invite admin for this role</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400512</span>
+                <span class="response-description">unknown invitation</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown invitation</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400513</span>
+                <span class="response-description">empty role</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty role</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400514</span>
+                <span class="response-description">empty name</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty name</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400516</span>
+                <span class="response-description">empty reason</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty reason</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400517</span>
+                <span class="response-description">admin does not exists</span>
+              </div>
+              <div class="code-block">
+                <pre>// admin does not exists</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400518</span>
+                <span class="response-description">you can't lock admin with this role</span>
+              </div>
+              <div class="code-block">
+                <pre>// you can't lock admin with this role</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400519</span>
+                <span class="response-description">empty email</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty email</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400525</span>
+                <span class="response-description">user does not exist</span>
+              </div>
+              <div class="code-block">
+                <pre>// user does not exist</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400526</span>
+                <span class="response-description">invalid password</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid password</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400527</span>
+                <span class="response-description">operation isn't exist</span>
+              </div>
+              <div class="code-block">
+                <pre>// operation isn't exist</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400528</span>
+                <span class="response-description">too early to resend code</span>
+              </div>
+              <div class="code-block">
+                <pre>// too early to resend code</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400529</span>
+                <span class="response-description">invalid confirmation code</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid confirmation code</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400530</span>
+                <span class="response-description">unknown operation type</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown operation type</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400531</span>
+                <span class="response-description">OTP is already turned on</span>
+              </div>
+              <div class="code-block">
+                <pre>// OTP is already turned on</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400532</span>
+                <span class="response-description">OTP is already turned off</span>
+              </div>
+              <div class="code-block">
+                <pre>// OTP is already turned off</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400533</span>
+                <span class="response-description">this email isn't exist</span>
+              </div>
+              <div class="code-block">
+                <pre>// this email isn't exist</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400535</span>
+                <span class="response-description">API key isn't exist</span>
+              </div>
+              <div class="code-block">
+                <pre>// API key isn't exist</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400536</span>
+                <span class="response-description">invalid user name</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid user name</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400537</span>
+                <span class="response-description">empty recipient</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty recipient</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400538</span>
+                <span class="response-description">withdrawal is disabled</span>
+              </div>
+              <div class="code-block">
+                <pre>// withdrawal is disabled</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400539</span>
+                <span class="response-description">empty account id</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty account id</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400540</span>
+                <span class="response-description">invitation with this email already exists</span>
+              </div>
+              <div class="code-block">
+                <pre>// invitation with this email already exists</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400543</span>
+                <span class="response-description">unknown selection mode</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown selection mode</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400544</span>
+                <span class="response-description">unknown status of logs</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown status of logs</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400545</span>
+                <span class="response-description">trading is locked</span>
+              </div>
+              <div class="code-block">
+                <pre>// trading is locked</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400546</span>
+                <span class="response-description">empty flag name</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty flag name</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400547</span>
+                <span class="response-description">flag is already set</span>
+              </div>
+              <div class="code-block">
+                <pre>// flag is already set</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400548</span>
+                <span class="response-description">unknown flag</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown flag</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400553</span>
+                <span class="response-description">withdraw is blocked for this user</span>
+              </div>
+              <div class="code-block">
+                <pre>// withdraw is blocked for this user</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400554</span>
+                <span class="response-description">withdraw amount exceeded</span>
+              </div>
+              <div class="code-block">
+                <pre>// withdraw amount exceeded</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400556</span>
+                <span class="response-description">confirmation code is expired</span>
+              </div>
+              <div class="code-block">
+                <pre>// confirmation code is expired</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400557</span>
+                <span class="response-description">confirmation code is invalid</span>
+              </div>
+              <div class="code-block">
+                <pre>// confirmation code is invalid</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400558</span>
+                <span class="response-description">code is already sent</span>
+              </div>
+              <div class="code-block">
+                <pre>// code is already sent</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400559</span>
+                <span class="response-description">referral program is diabled for user</span>
+              </div>
+              <div class="code-block">
+                <pre>// referral program is diabled for user</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400560</span>
+                <span class="response-description">max count of referral links is reached</span>
+              </div>
+              <div class="code-block">
+                <pre>// max count of referral links is reached</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400561</span>
+                <span class="response-description">referral link is not found</span>
+              </div>
+              <div class="code-block">
+                <pre>// referral link is not found</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400562</span>
+                <span class="response-description">empty referral link</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty referral link</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400563</span>
+                <span class="response-description">invalid referral percent</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid referral percent</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400568</span>
+                <span class="response-description">email code is invalid</span>
+              </div>
+              <div class="code-block">
+                <pre>// email code is invalid</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400569</span>
+                <span class="response-description">unknown KYC flow</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown KYC flow</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400570</span>
+                <span class="response-description">user is unverified</span>
+              </div>
+              <div class="code-block">
+                <pre>// user is unverified</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400571</span>
+                <span class="response-description">deposits are disabled</span>
+              </div>
+              <div class="code-block">
+                <pre>// deposits are disabled</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400572</span>
+                <span class="response-description">KYC level 1 is required</span>
+              </div>
+              <div class="code-block">
+                <pre>// KYC level 1 is required</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400573</span>
+                <span class="response-description">unknown country</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown country</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400574</span>
+                <span class="response-description">need to specify reason</span>
+              </div>
+              <div class="code-block">
+                <pre>// need to specify reason</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400576</span>
+                <span class="response-description">unknown direction</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown direction</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400577</span>
+                <span class="response-description">socket is not configured</span>
+              </div>
+              <div class="code-block">
+                <pre>// socket is not configured</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400578</span>
+                <span class="response-description">user is in removing process</span>
+              </div>
+              <div class="code-block">
+                <pre>// user is in removing process</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400579</span>
+                <span class="response-description">user is active</span>
+              </div>
+              <div class="code-block">
+                <pre>// user is active</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400580</span>
+                <span class="response-description">too long reason</span>
+              </div>
+              <div class="code-block">
+                <pre>// too long reason</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400581</span>
+                <span class="response-description">unknown locale</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown locale</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400582</span>
+                <span class="response-description">fcm is empty</span>
+              </div>
+              <div class="code-block">
+                <pre>// fcm is empty</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400583</span>
+                <span class="response-description">device platform is empty</span>
+              </div>
+              <div class="code-block">
+                <pre>// device platform is empty</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400584</span>
+                <span class="response-description">device id is empty</span>
+              </div>
+              <div class="code-block">
+                <pre>// device id is empty</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400585</span>
+                <span class="response-description">source id is empty</span>
+              </div>
+              <div class="code-block">
+                <pre>// source id is empty</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400586</span>
+                <span class="response-description">datasource graphic period is invalid</span>
+              </div>
+              <div class="code-block">
+                <pre>// datasource graphic period is invalid</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400587</span>
+                <span class="response-description">datasource asset pair not found</span>
+              </div>
+              <div class="code-block">
+                <pre>// datasource asset pair not found</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400588</span>
+                <span class="response-description">empty datasource</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty datasource</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400589</span>
+                <span class="response-description">empty config</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty config</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400590</span>
+                <span class="response-description">empty prices</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty prices</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400591</span>
+                <span class="response-description">unknown category</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown category</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400592</span>
+                <span class="response-description">wrong category</span>
+              </div>
+              <div class="code-block">
+                <pre>// wrong category</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400593</span>
+                <span class="response-description">zero coin price</span>
+              </div>
+              <div class="code-block">
+                <pre>// zero coin price</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400596</span>
+                <span class="response-description">unknown order params</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown order params</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400597</span>
+                <span class="response-description">empty external id</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty external id</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400598</span>
+                <span class="response-description">symbol not found</span>
+              </div>
+              <div class="code-block">
+                <pre>// symbol not found</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400599</span>
+                <span class="response-description">empty issue date</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty issue date</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400601</span>
+                <span class="response-description">symbol is disabled</span>
+              </div>
+              <div class="code-block">
+                <pre>// symbol is disabled</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400602</span>
+                <span class="response-description">coin is disabled</span>
+              </div>
+              <div class="code-block">
+                <pre>// coin is disabled</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400603</span>
+                <span class="response-description">function is disabled</span>
+              </div>
+              <div class="code-block">
+                <pre>// function is disabled</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400604</span>
+                <span class="response-description">empty order id</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty order id</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400900</span>
+                <span class="response-description">invalid number</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid number</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400901</span>
+                <span class="response-description">invalid bool</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid bool</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400999</span>
+                <span class="response-description">not implemented</span>
+              </div>
+              <div class="code-block">
+                <pre>// not implemented</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401100</span>
+                <span class="response-description">unknown API key</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown API key</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401101</span>
+                <span class="response-description">invalid timestamp</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid timestamp</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401102</span>
+                <span class="response-description">invalid signature</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid signature</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401103</span>
+                <span class="response-description">empty password</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty password</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401104</span>
+                <span class="response-description">invalid login</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid login</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401501</span>
+                <span class="response-description">empty token</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty token</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401502</span>
+                <span class="response-description">empty fingerprint</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty fingerprint</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401503</span>
+                <span class="response-description">not bearer token</span>
+              </div>
+              <div class="code-block">
+                <pre>// not bearer token</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401504</span>
+                <span class="response-description">invalid access token</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid access token</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401506</span>
+                <span class="response-description">token expired</span>
+              </div>
+              <div class="code-block">
+                <pre>// token expired</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401507</span>
+                <span class="response-description">invalid login or password</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid login or password</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401509</span>
+                <span class="response-description">admin locked</span>
+              </div>
+              <div class="code-block">
+                <pre>// admin locked</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401510</span>
+                <span class="response-description">invalid one time password</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid one time password</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401511</span>
+                <span class="response-description">admin deleted</span>
+              </div>
+              <div class="code-block">
+                <pre>// admin deleted</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401514</span>
+                <span class="response-description">empty OTP</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty OTP</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401515</span>
+                <span class="response-description">admin is unlocked</span>
+              </div>
+              <div class="code-block">
+                <pre>// admin is unlocked</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401516</span>
+                <span class="response-description">invalid state value</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid state value</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401517</span>
+                <span class="response-description">empty Google code</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty Google code</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401518</span>
+                <span class="response-description">account is blocked</span>
+              </div>
+              <div class="code-block">
+                <pre>// account is blocked</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401519</span>
+                <span class="response-description">unsuccessful validation</span>
+              </div>
+              <div class="code-block">
+                <pre>// unsuccessful validation</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401520</span>
+                <span class="response-description">empty reCaptchaToken</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty reCaptchaToken</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401522</span>
+                <span class="response-description">user configuration error</span>
+              </div>
+              <div class="code-block">
+                <pre>// user configuration error</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401523</span>
+                <span class="response-description">empty recaptcha platform id</span>
+              </div>
+              <div class="code-block">
+                <pre>// empty recaptcha platform id</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401524</span>
+                <span class="response-description">unknown platform</span>
+              </div>
+              <div class="code-block">
+                <pre>// unknown platform</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401525</span>
+                <span class="response-description">incorrect UID</span>
+              </div>
+              <div class="code-block">
+                <pre>// incorrect UID</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401526</span>
+                <span class="response-description">user is disabled</span>
+              </div>
+              <div class="code-block">
+                <pre>// user is disabled</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401527</span>
+                <span class="response-description">user's email is not verified</span>
+              </div>
+              <div class="code-block">
+                <pre>// user's email is not verified</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401528</span>
+                <span class="response-description">operation isn't allowed</span>
+              </div>
+              <div class="code-block">
+                <pre>// operation isn't allowed</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401529</span>
+                <span class="response-description">too many login attempts</span>
+              </div>
+              <div class="code-block">
+                <pre>// too many login attempts</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401530</span>
+                <span class="response-description">too many different geolocations</span>
+              </div>
+              <div class="code-block">
+                <pre>// too many different geolocations</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401531</span>
+                <span class="response-description">too many different emails for one device in a row</span>
+              </div>
+              <div class="code-block">
+                <pre>// too many different emails for one device in a row</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401532</span>
+                <span class="response-description">too many failed login attempts in a row</span>
+              </div>
+              <div class="code-block">
+                <pre>// too many failed login attempts in a row</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401533</span>
+                <span class="response-description">too many failed login attempts</span>
+              </div>
+              <div class="code-block">
+                <pre>// too many failed login attempts</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401534</span>
+                <span class="response-description">failed firebase validation</span>
+              </div>
+              <div class="code-block">
+                <pre>// failed firebase validation</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401535</span>
+                <span class="response-description">invalid balance type</span>
+              </div>
+              <div class="code-block">
+                <pre>// invalid balance type</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">403101</span>
+                <span class="response-description">access denied</span>
+              </div>
+              <div class="code-block">
+                <pre>// access denied</pre>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="endpoint-testing">
@@ -780,46 +2244,101 @@ const copyToClipboard = (text, event) => {
 }
 
 /* Response Examples */
+.response-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .response-example {
-  margin: 1.5rem 0;
   border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
+  background: var(--vp-c-bg-soft);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.response-example:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.response-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--vp-c-bg);
+  border-bottom: 1px solid var(--vp-c-border);
 }
 
 .response-status {
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  font-size: 0.9rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: white;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+  min-width: 60px;
+  justify-content: center;
 }
 
 .response-status.success {
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-  color: #0369a1;
-  border-bottom: 1px solid #0369a1;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
 .response-status.success::before {
-  content: "✅";
+  content: '✅ ';
+  margin-right: 0.25rem;
 }
 
 .response-status.error {
-  background: linear-gradient(135deg, #fef2f2, #fecaca);
-  color: #dc2626;
-  border-bottom: 1px solid #dc2626;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
 .response-status.error::before {
-  content: "❌";
+  content: '❌ ';
+  margin-right: 0.25rem;
+}
+
+.response-description {
+  flex: 1;
+  color: var(--vp-c-text-1);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .response-example .code-block {
   margin: 0;
   border-radius: 0;
-  border: none;
+  background: var(--vp-c-bg-alt);
+}
+
+.response-example .code-block pre {
+  margin: 0;
+  padding: 1rem;
+  background: transparent;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .response-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .response-status {
+    align-self: flex-start;
+  }
 }
 
 /* Result Container */

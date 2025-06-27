@@ -35,6 +35,48 @@
             </div>
           </div>
         </div>
+
+        <div class="api-section">
+          <h4 class="section-title">📋 Response Examples</h4>
+          <div class="response-examples">
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status success">200</span>
+                <span class="response-description">pair of tokens response or operation response</span>
+              </div>
+              <div class="code-block">
+                <pre>// pair of tokens response or operation response</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status success">203</span>
+                <span class="response-description">we need additional confirmation codes</span>
+              </div>
+              <div class="code-block">
+                <pre>// we need additional confirmation codes</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400</span>
+                <span class="response-description">some logical error in request</span>
+              </div>
+              <div class="code-block">
+                <pre>// some logical error in request</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">500</span>
+                <span class="response-description">some error in internal server</span>
+              </div>
+              <div class="code-block">
+                <pre>// some error in internal server</pre>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="endpoint-testing">
@@ -780,46 +822,101 @@ const copyToClipboard = (text, event) => {
 }
 
 /* Response Examples */
+.response-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .response-example {
-  margin: 1.5rem 0;
   border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
+  background: var(--vp-c-bg-soft);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.response-example:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.response-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--vp-c-bg);
+  border-bottom: 1px solid var(--vp-c-border);
 }
 
 .response-status {
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  font-size: 0.9rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: white;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+  min-width: 60px;
+  justify-content: center;
 }
 
 .response-status.success {
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-  color: #0369a1;
-  border-bottom: 1px solid #0369a1;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
 .response-status.success::before {
-  content: "✅";
+  content: '✅ ';
+  margin-right: 0.25rem;
 }
 
 .response-status.error {
-  background: linear-gradient(135deg, #fef2f2, #fecaca);
-  color: #dc2626;
-  border-bottom: 1px solid #dc2626;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
 .response-status.error::before {
-  content: "❌";
+  content: '❌ ';
+  margin-right: 0.25rem;
+}
+
+.response-description {
+  flex: 1;
+  color: var(--vp-c-text-1);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .response-example .code-block {
   margin: 0;
   border-radius: 0;
-  border: none;
+  background: var(--vp-c-bg-alt);
+}
+
+.response-example .code-block pre {
+  margin: 0;
+  padding: 1rem;
+  background: transparent;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .response-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .response-status {
+    align-self: flex-start;
+  }
 }
 
 /* Result Container */

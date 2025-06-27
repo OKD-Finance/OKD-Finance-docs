@@ -76,7 +76,8 @@ class SwaggerAutoLoader {
           title: endpoint.summary || `${method.toUpperCase()} ${path}`,
           description: endpoint.description || 'No description available',
           parameters: this.extractParameters(endpoint),
-          responses: endpoint.responses || {}
+          responses: endpoint.responses || {},
+          responseExamples: this.extractResponseExamples(endpoint)
         });
       }
     }
@@ -118,6 +119,105 @@ class SwaggerAutoLoader {
     }
 
     return parameters;
+  }
+
+  // Извлечение примеров ответов из endpoint'а
+  extractResponseExamples(endpoint) {
+    const responseExamples = [];
+
+    if (endpoint.responses) {
+      for (const [statusCode, response] of Object.entries(endpoint.responses)) {
+        const example = {
+          statusCode: statusCode,
+          description: response.description || '',
+          example: null
+        };
+
+        // Ищем примеры в разных местах
+        if (response.content?.['application/json']) {
+          const jsonContent = response.content['application/json'];
+
+          // Прямой пример
+          if (jsonContent.example) {
+            example.example = JSON.stringify(jsonContent.example, null, 2);
+          }
+          // Примеры в examples
+          else if (jsonContent.examples) {
+            const firstExampleKey = Object.keys(jsonContent.examples)[0];
+            if (firstExampleKey && jsonContent.examples[firstExampleKey].value) {
+              example.example = JSON.stringify(jsonContent.examples[firstExampleKey].value, null, 2);
+            }
+          }
+          // Генерируем пример из схемы
+          else if (jsonContent.schema) {
+            example.example = this.generateExampleFromSchema(jsonContent.schema);
+          }
+        }
+
+        // Если нет JSON контента, но есть описание
+        if (!example.example && response.description) {
+          example.example = `// ${response.description}`;
+        }
+
+        responseExamples.push(example);
+      }
+    }
+
+    return responseExamples;
+  }
+
+  // Генерация примера из JSON схемы
+  generateExampleFromSchema(schema) {
+    if (!schema) return '{}';
+
+    const generateValue = (prop) => {
+      switch (prop.type) {
+        case 'string':
+          if (prop.format === 'date-time') return '"2024-01-01T12:00:00Z"';
+          if (prop.format === 'date') return '"2024-01-01"';
+          if (prop.format === 'email') return '"user@example.com"';
+          if (prop.enum) return `"${prop.enum[0]}"`;
+          return `"${prop.example || 'string_value'}"`;
+        case 'integer':
+        case 'number':
+          return prop.example || 123;
+        case 'boolean':
+          return prop.example !== undefined ? prop.example : true;
+        case 'array':
+          if (prop.items) {
+            return `[${generateValue(prop.items)}]`;
+          }
+          return '[]';
+        case 'object':
+          if (prop.properties) {
+            const objProps = [];
+            for (const [key, value] of Object.entries(prop.properties)) {
+              objProps.push(`  "${key}": ${generateValue(value)}`);
+            }
+            return `{\n${objProps.join(',\n')}\n}`;
+          }
+          return '{}';
+        default:
+          return prop.example ? JSON.stringify(prop.example) : 'null';
+      }
+    };
+
+    try {
+      if (schema.type === 'object' && schema.properties) {
+        const props = [];
+        for (const [key, prop] of Object.entries(schema.properties)) {
+          props.push(`  "${key}": ${generateValue(prop)}`);
+        }
+        return `{\n${props.join(',\n')}\n}`;
+      } else if (schema.type === 'array' && schema.items) {
+        return `[${generateValue(schema.items)}]`;
+      } else {
+        return JSON.stringify(generateValue(schema), null, 2);
+      }
+    } catch (error) {
+      console.warn('Error generating example from schema:', error);
+      return '{}';
+    }
   }
 
   // Генерация всех API из Swagger
@@ -1501,46 +1601,101 @@ if __name__ == "__main__":
 }
 
 /* Response Examples */
+.response-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .response-example {
-  margin: 1.5rem 0;
   border: 1px solid var(--vp-c-border);
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
+  background: var(--vp-c-bg-soft);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.response-example:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.response-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--vp-c-bg);
+  border-bottom: 1px solid var(--vp-c-border);
 }
 
 .response-status {
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  font-size: 0.9rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: white;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+  min-width: 60px;
+  justify-content: center;
 }
 
 .response-status.success {
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-  color: #0369a1;
-  border-bottom: 1px solid #0369a1;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
 }
 
 .response-status.success::before {
-  content: "✅";
+  content: '✅ ';
+  margin-right: 0.25rem;
 }
 
 .response-status.error {
-  background: linear-gradient(135deg, #fef2f2, #fecaca);
-  color: #dc2626;
-  border-bottom: 1px solid #dc2626;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
 .response-status.error::before {
-  content: "❌";
+  content: '❌ ';
+  margin-right: 0.25rem;
+}
+
+.response-description {
+  flex: 1;
+  color: var(--vp-c-text-1);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .response-example .code-block {
   margin: 0;
   border-radius: 0;
-  border: none;
+  background: var(--vp-c-bg-alt);
+}
+
+.response-example .code-block pre {
+  margin: 0;
+  padding: 1rem;
+  background: transparent;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .response-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .response-status {
+    align-self: flex-start;
+  }
 }
 
 /* Result Container */
@@ -1854,6 +2009,21 @@ ${endpoints.map(endpoint => `  { text: '${escapeForJS(endpoint.title)}', anchor:
             </div>
           </div>
         </div>
+
+        ${endpoint.responseExamples && endpoint.responseExamples.length > 0 ? `<div class="api-section">
+          <h4 class="section-title">📋 Response Examples</h4>
+          <div class="response-examples">
+            ${endpoint.responseExamples.map(example => `<div class="response-example">
+              <div class="response-header">
+                <span class="response-status ${example.statusCode.startsWith('2') ? 'success' : 'error'}">${example.statusCode}</span>
+                <span class="response-description">${example.description}</span>
+              </div>
+              ${example.example ? `<div class="code-block">
+                <pre>${example.example}</pre>
+              </div>` : ''}
+            </div>`).join('\n            ')}
+          </div>
+        </div>` : ''}
       </div>
 
       <div class="endpoint-testing">
