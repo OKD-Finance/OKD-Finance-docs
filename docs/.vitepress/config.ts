@@ -57,19 +57,6 @@ export default defineConfig({
                     collapsed: false,
                     items: [
                         { text: 'Overview', link: '/en/api/overview' },
-                        { text: 'Authentication API', link: '/en/api/authentication' },
-                        { text: 'User Operations API', link: '/en/api/user-operations' },
-                        { text: 'Wallet API', link: '/en/api/wallet' },
-                        { text: 'Spot API', link: '/en/api/spot' },
-                        { text: 'ByBit REST Endpoints', link: '/en/api/bybit-rest-endpoints' },
-                        { text: 'Websocket Subscriptions', link: '/en/api/websocket-subscriptions' },
-                        { text: 'Exchange Configuration', link: '/en/api/exchange-configuration' },
-                        { text: 'Datasource API', link: '/en/api/datasource' },
-                        { text: 'Referral Program API', link: '/en/api/referral-program' },
-                        { text: 'Managed API', link: '/en/api/managed' },
-                        { text: 'OKD API', link: '/en/api/okd' },
-                        { text: 'KYC API', link: '/en/api/kyc' },
-                        { text: 'Errors API', link: '/en/api/errors' }
                     ]
                 }
             ],
