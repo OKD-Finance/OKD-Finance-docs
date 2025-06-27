@@ -45,7 +45,11 @@
                 <span class="response-description">symbol event</span>
               </div>
               <div class="code-block">
-                <pre>// symbol event</pre>
+                <pre>{
+  "success": true,
+  "message": "symbol event",
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
           </div>

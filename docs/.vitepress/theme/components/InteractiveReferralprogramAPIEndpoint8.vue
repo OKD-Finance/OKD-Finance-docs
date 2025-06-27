@@ -63,7 +63,11 @@
                 <span class="response-description">Link details</span>
               </div>
               <div class="code-block">
-                <pre>// Link details</pre>
+                <pre>{
+  "success": true,
+  "message": "Link details",
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -72,7 +76,24 @@
                 <span class="response-description">some logical error in request</span>
               </div>
               <div class="code-block">
-                <pre>// some logical error in request</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "some logical error in request",
+    "details": [
+      {
+        "field": "email",
+        "message": "Invalid email format"
+      },
+      {
+        "field": "password",
+        "message": "Password must be at least 8 characters"
+      }
+    ]
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -81,7 +102,15 @@
                 <span class="response-description">unauthorized error</span>
               </div>
               <div class="code-block">
-                <pre>// unauthorized error</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "unauthorized error",
+    "details": "Access token is missing or invalid"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -90,7 +119,16 @@
                 <span class="response-description">some error in internal server</span>
               </div>
               <div class="code-block">
-                <pre>// some error in internal server</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "some error in internal server",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
           </div>

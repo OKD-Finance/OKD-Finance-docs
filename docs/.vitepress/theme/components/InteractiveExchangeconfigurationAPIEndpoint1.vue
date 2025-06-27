@@ -70,7 +70,11 @@
                 <span class="response-description">create spot order</span>
               </div>
               <div class="code-block">
-                <pre>// create spot order</pre>
+                <pre>{
+  "success": true,
+  "message": "create spot order",
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -79,7 +83,16 @@
                 <span class="response-description">some error in internal server</span>
               </div>
               <div class="code-block">
-                <pre>// some error in internal server</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "some error in internal server",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
           </div>

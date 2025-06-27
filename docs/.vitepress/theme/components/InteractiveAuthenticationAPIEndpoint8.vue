@@ -69,7 +69,11 @@
                 <span class="response-description">list of notifications</span>
               </div>
               <div class="code-block">
-                <pre>// list of notifications</pre>
+                <pre>{
+  "success": true,
+  "message": "list of notifications",
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -78,7 +82,16 @@
                 <span class="response-description">internal server error</span>
               </div>
               <div class="code-block">
-                <pre>// internal server error</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "internal server error",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
           </div>

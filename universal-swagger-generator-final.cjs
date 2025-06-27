@@ -154,9 +154,9 @@ class SwaggerAutoLoader {
           }
         }
 
-        // Если нет JSON контента, но есть описание
+        // Если нет JSON контента, но есть описание - создаем реалистичный пример
         if (!example.example && response.description) {
-          example.example = `// ${response.description}`;
+          example.example = this.generateRealisticExample(statusCode, response.description);
         }
 
         responseExamples.push(example);
@@ -164,6 +164,154 @@ class SwaggerAutoLoader {
     }
 
     return responseExamples;
+  }
+
+  // Генерация реалистичного примера на основе статус кода и описания
+  generateRealisticExample(statusCode, description) {
+    const code = parseInt(statusCode);
+
+    // Успешные ответы (2xx)
+    if (code >= 200 && code < 300) {
+      if (description.toLowerCase().includes('operation completed') ||
+        description.toLowerCase().includes('success')) {
+        return JSON.stringify({
+          "success": true,
+          "message": "Operation completed successfully",
+          "data": {
+            "operationId": "op_1234567890",
+            "timestamp": "2024-01-01T12:00:00Z",
+            "status": "completed"
+          }
+        }, null, 2);
+      }
+
+      if (description.toLowerCase().includes('user') ||
+        description.toLowerCase().includes('profile')) {
+        return JSON.stringify({
+          "success": true,
+          "data": {
+            "userId": "user_123456",
+            "email": "user@example.com",
+            "profile": {
+              "firstName": "John",
+              "lastName": "Doe",
+              "createdAt": "2024-01-01T12:00:00Z"
+            }
+          }
+        }, null, 2);
+      }
+
+      if (description.toLowerCase().includes('auth') ||
+        description.toLowerCase().includes('token')) {
+        return JSON.stringify({
+          "success": true,
+          "data": {
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            "refreshToken": "rt_1234567890abcdef",
+            "expiresIn": 3600,
+            "tokenType": "Bearer"
+          }
+        }, null, 2);
+      }
+
+      // Общий успешный ответ
+      return JSON.stringify({
+        "success": true,
+        "message": description,
+        "timestamp": "2024-01-01T12:00:00Z"
+      }, null, 2);
+    }
+
+    // Ошибки клиента (4xx)
+    if (code >= 400 && code < 500) {
+      if (code === 400) {
+        return JSON.stringify({
+          "success": false,
+          "error": {
+            "code": "VALIDATION_ERROR",
+            "message": description,
+            "details": [
+              {
+                "field": "email",
+                "message": "Invalid email format"
+              },
+              {
+                "field": "password",
+                "message": "Password must be at least 8 characters"
+              }
+            ]
+          },
+          "timestamp": "2024-01-01T12:00:00Z"
+        }, null, 2);
+      }
+
+      if (code === 401) {
+        return JSON.stringify({
+          "success": false,
+          "error": {
+            "code": "UNAUTHORIZED",
+            "message": description,
+            "details": "Access token is missing or invalid"
+          },
+          "timestamp": "2024-01-01T12:00:00Z"
+        }, null, 2);
+      }
+
+      if (code === 403) {
+        return JSON.stringify({
+          "success": false,
+          "error": {
+            "code": "FORBIDDEN",
+            "message": description,
+            "details": "Insufficient permissions to access this resource"
+          },
+          "timestamp": "2024-01-01T12:00:00Z"
+        }, null, 2);
+      }
+
+      if (code === 404) {
+        return JSON.stringify({
+          "success": false,
+          "error": {
+            "code": "NOT_FOUND",
+            "message": description,
+            "details": "The requested resource was not found"
+          },
+          "timestamp": "2024-01-01T12:00:00Z"
+        }, null, 2);
+      }
+
+      // Общая ошибка клиента
+      return JSON.stringify({
+        "success": false,
+        "error": {
+          "code": "CLIENT_ERROR",
+          "message": description
+        },
+        "timestamp": "2024-01-01T12:00:00Z"
+      }, null, 2);
+    }
+
+    // Ошибки сервера (5xx)
+    if (code >= 500) {
+      return JSON.stringify({
+        "success": false,
+        "error": {
+          "code": "INTERNAL_SERVER_ERROR",
+          "message": description,
+          "details": "An unexpected error occurred on the server",
+          "requestId": "req_1234567890"
+        },
+        "timestamp": "2024-01-01T12:00:00Z"
+      }, null, 2);
+    }
+
+    // Fallback для других кодов
+    return JSON.stringify({
+      "message": description,
+      "statusCode": code,
+      "timestamp": "2024-01-01T12:00:00Z"
+    }, null, 2);
   }
 
   // Генерация примера из JSON схемы

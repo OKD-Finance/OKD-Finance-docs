@@ -45,7 +45,16 @@
                 <span class="response-description">unknown asset</span>
               </div>
               <div class="code-block">
-                <pre>// unknown asset</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown asset",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -54,7 +63,16 @@
                 <span class="response-description">balance is not enough</span>
               </div>
               <div class="code-block">
-                <pre>// balance is not enough</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "balance is not enough",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -63,7 +81,16 @@
                 <span class="response-description">withdrawal is processed</span>
               </div>
               <div class="code-block">
-                <pre>// withdrawal is processed</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "withdrawal is processed",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -72,7 +99,16 @@
                 <span class="response-description">empty source id or asset id in body</span>
               </div>
               <div class="code-block">
-                <pre>// empty source id or asset id in body</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty source id or asset id in body",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -81,7 +117,16 @@
                 <span class="response-description">recipient not found</span>
               </div>
               <div class="code-block">
-                <pre>// recipient not found</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "recipient not found",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -90,7 +135,16 @@
                 <span class="response-description">transfer is processed</span>
               </div>
               <div class="code-block">
-                <pre>// transfer is processed</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "transfer is processed",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -99,7 +153,16 @@
                 <span class="response-description">same account for transfer</span>
               </div>
               <div class="code-block">
-                <pre>// same account for transfer</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "same account for transfer",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -108,7 +171,16 @@
                 <span class="response-description">precents sum is over 100</span>
               </div>
               <div class="code-block">
-                <pre>// precents sum is over 100</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "precents sum is over 100",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -117,7 +189,16 @@
                 <span class="response-description">dublicated external id</span>
               </div>
               <div class="code-block">
-                <pre>// dublicated external id</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "dublicated external id",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -126,7 +207,16 @@
                 <span class="response-description">unknown wallet type</span>
               </div>
               <div class="code-block">
-                <pre>// unknown wallet type</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown wallet type",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -135,7 +225,16 @@
                 <span class="response-description">transfer is failed</span>
               </div>
               <div class="code-block">
-                <pre>// transfer is failed</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "transfer is failed",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -144,7 +243,16 @@
                 <span class="response-description">same wallet for transfer</span>
               </div>
               <div class="code-block">
-                <pre>// same wallet for transfer</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "same wallet for transfer",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -153,7 +261,16 @@
                 <span class="response-description">transaction is not found</span>
               </div>
               <div class="code-block">
-                <pre>// transaction is not found</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "transaction is not found",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -162,7 +279,16 @@
                 <span class="response-description">empty admin id</span>
               </div>
               <div class="code-block">
-                <pre>// empty admin id</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty admin id",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -171,7 +297,16 @@
                 <span class="response-description">this login already exists</span>
               </div>
               <div class="code-block">
-                <pre>// this login already exists</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "this login already exists",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -180,7 +315,16 @@
                 <span class="response-description">no rights for role</span>
               </div>
               <div class="code-block">
-                <pre>// no rights for role</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "no rights for role",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -189,7 +333,16 @@
                 <span class="response-description">request validation fails</span>
               </div>
               <div class="code-block">
-                <pre>// request validation fails</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "request validation fails",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -198,7 +351,16 @@
                 <span class="response-description">no rights for endpoint</span>
               </div>
               <div class="code-block">
-                <pre>// no rights for endpoint</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "no rights for endpoint",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -207,7 +369,16 @@
                 <span class="response-description">no rights for notification</span>
               </div>
               <div class="code-block">
-                <pre>// no rights for notification</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "no rights for notification",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -216,7 +387,16 @@
                 <span class="response-description">role exists</span>
               </div>
               <div class="code-block">
-                <pre>// role exists</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "role exists",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -225,7 +405,16 @@
                 <span class="response-description">role is not exist</span>
               </div>
               <div class="code-block">
-                <pre>// role is not exist</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "role is not exist",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -234,7 +423,16 @@
                 <span class="response-description">you can't edit admin</span>
               </div>
               <div class="code-block">
-                <pre>// you can't edit admin</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "you can't edit admin",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -243,7 +441,16 @@
                 <span class="response-description">wrong role</span>
               </div>
               <div class="code-block">
-                <pre>// wrong role</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "wrong role",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -252,7 +459,16 @@
                 <span class="response-description">you can't edit yourself</span>
               </div>
               <div class="code-block">
-                <pre>// you can't edit yourself</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "you can't edit yourself",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -261,7 +477,16 @@
                 <span class="response-description">you can't delete yourself</span>
               </div>
               <div class="code-block">
-                <pre>// you can't delete yourself</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "you can't delete yourself",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -270,7 +495,16 @@
                 <span class="response-description">department isn't empty</span>
               </div>
               <div class="code-block">
-                <pre>// department isn't empty</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "department isn't empty",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -279,7 +513,16 @@
                 <span class="response-description">unknown request type</span>
               </div>
               <div class="code-block">
-                <pre>// unknown request type</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown request type",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -288,7 +531,16 @@
                 <span class="response-description">can't approve your own action</span>
               </div>
               <div class="code-block">
-                <pre>// can't approve your own action</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "can't approve your own action",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -297,7 +549,16 @@
                 <span class="response-description">action is processed</span>
               </div>
               <div class="code-block">
-                <pre>// action is processed</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "action is processed",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -306,7 +567,16 @@
                 <span class="response-description">different supervisors</span>
               </div>
               <div class="code-block">
-                <pre>// different supervisors</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "different supervisors",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -315,7 +585,16 @@
                 <span class="response-description">no approvers</span>
               </div>
               <div class="code-block">
-                <pre>// no approvers</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "no approvers",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -324,7 +603,16 @@
                 <span class="response-description">invalid access account permissions</span>
               </div>
               <div class="code-block">
-                <pre>// invalid access account permissions</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid access account permissions",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -333,7 +621,16 @@
                 <span class="response-description">webhook payload is empty</span>
               </div>
               <div class="code-block">
-                <pre>// webhook payload is empty</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "webhook payload is empty",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -342,7 +639,16 @@
                 <span class="response-description">invalid KYC webhook message</span>
               </div>
               <div class="code-block">
-                <pre>// invalid KYC webhook message</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid KYC webhook message",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -351,7 +657,16 @@
                 <span class="response-description">invalid KYC limit</span>
               </div>
               <div class="code-block">
-                <pre>// invalid KYC limit</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid KYC limit",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -360,7 +675,16 @@
                 <span class="response-description">unknown risk factor</span>
               </div>
               <div class="code-block">
-                <pre>// unknown risk factor</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown risk factor",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -369,7 +693,16 @@
                 <span class="response-description">risk level is not high</span>
               </div>
               <div class="code-block">
-                <pre>// risk level is not high</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "risk level is not high",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -378,7 +711,16 @@
                 <span class="response-description">unsupported KYC provider</span>
               </div>
               <div class="code-block">
-                <pre>// unsupported KYC provider</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unsupported KYC provider",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -387,7 +729,16 @@
                 <span class="response-description">invalid email</span>
               </div>
               <div class="code-block">
-                <pre>// invalid email</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid email",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -396,7 +747,16 @@
                 <span class="response-description">KYC provider not found</span>
               </div>
               <div class="code-block">
-                <pre>// KYC provider not found</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "KYC provider not found",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -405,7 +765,16 @@
                 <span class="response-description">no files attached</span>
               </div>
               <div class="code-block">
-                <pre>// no files attached</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "no files attached",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -414,7 +783,16 @@
                 <span class="response-description">the number of files exceeds the limit</span>
               </div>
               <div class="code-block">
-                <pre>// the number of files exceeds the limit</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "the number of files exceeds the limit",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -423,7 +801,16 @@
                 <span class="response-description">upload file size exceeds the limit</span>
               </div>
               <div class="code-block">
-                <pre>// upload file size exceeds the limit</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "upload file size exceeds the limit",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -432,7 +819,16 @@
                 <span class="response-description">incorrect upload files type</span>
               </div>
               <div class="code-block">
-                <pre>// incorrect upload files type</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "incorrect upload files type",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -441,7 +837,16 @@
                 <span class="response-description">this email already exists</span>
               </div>
               <div class="code-block">
-                <pre>// this email already exists</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "this email already exists",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -450,7 +855,16 @@
                 <span class="response-description">unknown global flag</span>
               </div>
               <div class="code-block">
-                <pre>// unknown global flag</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown global flag",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -459,7 +873,16 @@
                 <span class="response-description">invalid verification code</span>
               </div>
               <div class="code-block">
-                <pre>// invalid verification code</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid verification code",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -468,7 +891,16 @@
                 <span class="response-description">invalid refresh token</span>
               </div>
               <div class="code-block">
-                <pre>// invalid refresh token</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid refresh token",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -477,7 +909,16 @@
                 <span class="response-description">session does not exit</span>
               </div>
               <div class="code-block">
-                <pre>// session does not exit</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "session does not exit",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -486,7 +927,16 @@
                 <span class="response-description">invalid input data</span>
               </div>
               <div class="code-block">
-                <pre>// invalid input data</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid input data",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -495,7 +945,16 @@
                 <span class="response-description">initiator does not exists</span>
               </div>
               <div class="code-block">
-                <pre>// initiator does not exists</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "initiator does not exists",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -504,7 +963,16 @@
                 <span class="response-description">you can't invite admin for this role</span>
               </div>
               <div class="code-block">
-                <pre>// you can't invite admin for this role</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "you can't invite admin for this role",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -513,7 +981,16 @@
                 <span class="response-description">unknown invitation</span>
               </div>
               <div class="code-block">
-                <pre>// unknown invitation</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown invitation",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -522,7 +999,16 @@
                 <span class="response-description">empty role</span>
               </div>
               <div class="code-block">
-                <pre>// empty role</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty role",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -531,7 +1017,16 @@
                 <span class="response-description">empty name</span>
               </div>
               <div class="code-block">
-                <pre>// empty name</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty name",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -540,7 +1035,16 @@
                 <span class="response-description">empty reason</span>
               </div>
               <div class="code-block">
-                <pre>// empty reason</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty reason",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -549,7 +1053,16 @@
                 <span class="response-description">admin does not exists</span>
               </div>
               <div class="code-block">
-                <pre>// admin does not exists</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "admin does not exists",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -558,7 +1071,16 @@
                 <span class="response-description">you can't lock admin with this role</span>
               </div>
               <div class="code-block">
-                <pre>// you can't lock admin with this role</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "you can't lock admin with this role",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -567,7 +1089,16 @@
                 <span class="response-description">empty email</span>
               </div>
               <div class="code-block">
-                <pre>// empty email</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty email",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -576,7 +1107,16 @@
                 <span class="response-description">user does not exist</span>
               </div>
               <div class="code-block">
-                <pre>// user does not exist</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "user does not exist",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -585,7 +1125,16 @@
                 <span class="response-description">invalid password</span>
               </div>
               <div class="code-block">
-                <pre>// invalid password</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid password",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -594,7 +1143,16 @@
                 <span class="response-description">operation isn't exist</span>
               </div>
               <div class="code-block">
-                <pre>// operation isn't exist</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "operation isn't exist",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -603,7 +1161,16 @@
                 <span class="response-description">too early to resend code</span>
               </div>
               <div class="code-block">
-                <pre>// too early to resend code</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "too early to resend code",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -612,7 +1179,16 @@
                 <span class="response-description">invalid confirmation code</span>
               </div>
               <div class="code-block">
-                <pre>// invalid confirmation code</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid confirmation code",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -621,7 +1197,16 @@
                 <span class="response-description">unknown operation type</span>
               </div>
               <div class="code-block">
-                <pre>// unknown operation type</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown operation type",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -630,7 +1215,16 @@
                 <span class="response-description">OTP is already turned on</span>
               </div>
               <div class="code-block">
-                <pre>// OTP is already turned on</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "OTP is already turned on",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -639,7 +1233,16 @@
                 <span class="response-description">OTP is already turned off</span>
               </div>
               <div class="code-block">
-                <pre>// OTP is already turned off</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "OTP is already turned off",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -648,7 +1251,16 @@
                 <span class="response-description">this email isn't exist</span>
               </div>
               <div class="code-block">
-                <pre>// this email isn't exist</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "this email isn't exist",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -657,7 +1269,16 @@
                 <span class="response-description">API key isn't exist</span>
               </div>
               <div class="code-block">
-                <pre>// API key isn't exist</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "API key isn't exist",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -666,7 +1287,16 @@
                 <span class="response-description">invalid user name</span>
               </div>
               <div class="code-block">
-                <pre>// invalid user name</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid user name",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -675,7 +1305,16 @@
                 <span class="response-description">empty recipient</span>
               </div>
               <div class="code-block">
-                <pre>// empty recipient</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty recipient",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -684,7 +1323,16 @@
                 <span class="response-description">withdrawal is disabled</span>
               </div>
               <div class="code-block">
-                <pre>// withdrawal is disabled</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "withdrawal is disabled",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -693,7 +1341,16 @@
                 <span class="response-description">empty account id</span>
               </div>
               <div class="code-block">
-                <pre>// empty account id</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty account id",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -702,7 +1359,16 @@
                 <span class="response-description">invitation with this email already exists</span>
               </div>
               <div class="code-block">
-                <pre>// invitation with this email already exists</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invitation with this email already exists",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -711,7 +1377,16 @@
                 <span class="response-description">unknown selection mode</span>
               </div>
               <div class="code-block">
-                <pre>// unknown selection mode</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown selection mode",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -720,7 +1395,16 @@
                 <span class="response-description">unknown status of logs</span>
               </div>
               <div class="code-block">
-                <pre>// unknown status of logs</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown status of logs",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -729,7 +1413,16 @@
                 <span class="response-description">trading is locked</span>
               </div>
               <div class="code-block">
-                <pre>// trading is locked</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "trading is locked",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -738,7 +1431,16 @@
                 <span class="response-description">empty flag name</span>
               </div>
               <div class="code-block">
-                <pre>// empty flag name</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty flag name",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -747,7 +1449,16 @@
                 <span class="response-description">flag is already set</span>
               </div>
               <div class="code-block">
-                <pre>// flag is already set</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "flag is already set",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -756,7 +1467,16 @@
                 <span class="response-description">unknown flag</span>
               </div>
               <div class="code-block">
-                <pre>// unknown flag</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown flag",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -765,7 +1485,16 @@
                 <span class="response-description">withdraw is blocked for this user</span>
               </div>
               <div class="code-block">
-                <pre>// withdraw is blocked for this user</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "withdraw is blocked for this user",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -774,7 +1503,16 @@
                 <span class="response-description">withdraw amount exceeded</span>
               </div>
               <div class="code-block">
-                <pre>// withdraw amount exceeded</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "withdraw amount exceeded",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -783,7 +1521,16 @@
                 <span class="response-description">confirmation code is expired</span>
               </div>
               <div class="code-block">
-                <pre>// confirmation code is expired</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "confirmation code is expired",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -792,7 +1539,16 @@
                 <span class="response-description">confirmation code is invalid</span>
               </div>
               <div class="code-block">
-                <pre>// confirmation code is invalid</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "confirmation code is invalid",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -801,7 +1557,16 @@
                 <span class="response-description">code is already sent</span>
               </div>
               <div class="code-block">
-                <pre>// code is already sent</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "code is already sent",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -810,7 +1575,16 @@
                 <span class="response-description">referral program is diabled for user</span>
               </div>
               <div class="code-block">
-                <pre>// referral program is diabled for user</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "referral program is diabled for user",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -819,7 +1593,16 @@
                 <span class="response-description">max count of referral links is reached</span>
               </div>
               <div class="code-block">
-                <pre>// max count of referral links is reached</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "max count of referral links is reached",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -828,7 +1611,16 @@
                 <span class="response-description">referral link is not found</span>
               </div>
               <div class="code-block">
-                <pre>// referral link is not found</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "referral link is not found",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -837,7 +1629,16 @@
                 <span class="response-description">empty referral link</span>
               </div>
               <div class="code-block">
-                <pre>// empty referral link</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty referral link",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -846,7 +1647,16 @@
                 <span class="response-description">invalid referral percent</span>
               </div>
               <div class="code-block">
-                <pre>// invalid referral percent</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid referral percent",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -855,7 +1665,16 @@
                 <span class="response-description">email code is invalid</span>
               </div>
               <div class="code-block">
-                <pre>// email code is invalid</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "email code is invalid",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -864,7 +1683,16 @@
                 <span class="response-description">unknown KYC flow</span>
               </div>
               <div class="code-block">
-                <pre>// unknown KYC flow</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown KYC flow",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -873,7 +1701,16 @@
                 <span class="response-description">user is unverified</span>
               </div>
               <div class="code-block">
-                <pre>// user is unverified</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "user is unverified",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -882,7 +1719,16 @@
                 <span class="response-description">deposits are disabled</span>
               </div>
               <div class="code-block">
-                <pre>// deposits are disabled</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "deposits are disabled",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -891,7 +1737,16 @@
                 <span class="response-description">KYC level 1 is required</span>
               </div>
               <div class="code-block">
-                <pre>// KYC level 1 is required</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "KYC level 1 is required",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -900,7 +1755,16 @@
                 <span class="response-description">unknown country</span>
               </div>
               <div class="code-block">
-                <pre>// unknown country</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown country",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -909,7 +1773,16 @@
                 <span class="response-description">need to specify reason</span>
               </div>
               <div class="code-block">
-                <pre>// need to specify reason</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "need to specify reason",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -918,7 +1791,16 @@
                 <span class="response-description">unknown direction</span>
               </div>
               <div class="code-block">
-                <pre>// unknown direction</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown direction",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -927,7 +1809,16 @@
                 <span class="response-description">socket is not configured</span>
               </div>
               <div class="code-block">
-                <pre>// socket is not configured</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "socket is not configured",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -936,7 +1827,16 @@
                 <span class="response-description">user is in removing process</span>
               </div>
               <div class="code-block">
-                <pre>// user is in removing process</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "user is in removing process",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -945,7 +1845,16 @@
                 <span class="response-description">user is active</span>
               </div>
               <div class="code-block">
-                <pre>// user is active</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "user is active",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -954,7 +1863,16 @@
                 <span class="response-description">too long reason</span>
               </div>
               <div class="code-block">
-                <pre>// too long reason</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "too long reason",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -963,7 +1881,16 @@
                 <span class="response-description">unknown locale</span>
               </div>
               <div class="code-block">
-                <pre>// unknown locale</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown locale",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -972,7 +1899,16 @@
                 <span class="response-description">fcm is empty</span>
               </div>
               <div class="code-block">
-                <pre>// fcm is empty</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "fcm is empty",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -981,7 +1917,16 @@
                 <span class="response-description">device platform is empty</span>
               </div>
               <div class="code-block">
-                <pre>// device platform is empty</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "device platform is empty",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -990,7 +1935,16 @@
                 <span class="response-description">device id is empty</span>
               </div>
               <div class="code-block">
-                <pre>// device id is empty</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "device id is empty",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -999,7 +1953,16 @@
                 <span class="response-description">source id is empty</span>
               </div>
               <div class="code-block">
-                <pre>// source id is empty</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "source id is empty",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1008,7 +1971,16 @@
                 <span class="response-description">datasource graphic period is invalid</span>
               </div>
               <div class="code-block">
-                <pre>// datasource graphic period is invalid</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "datasource graphic period is invalid",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1017,7 +1989,16 @@
                 <span class="response-description">datasource asset pair not found</span>
               </div>
               <div class="code-block">
-                <pre>// datasource asset pair not found</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "datasource asset pair not found",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1026,7 +2007,16 @@
                 <span class="response-description">empty datasource</span>
               </div>
               <div class="code-block">
-                <pre>// empty datasource</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty datasource",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1035,7 +2025,16 @@
                 <span class="response-description">empty config</span>
               </div>
               <div class="code-block">
-                <pre>// empty config</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty config",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1044,7 +2043,16 @@
                 <span class="response-description">empty prices</span>
               </div>
               <div class="code-block">
-                <pre>// empty prices</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty prices",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1053,7 +2061,16 @@
                 <span class="response-description">unknown category</span>
               </div>
               <div class="code-block">
-                <pre>// unknown category</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown category",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1062,7 +2079,16 @@
                 <span class="response-description">wrong category</span>
               </div>
               <div class="code-block">
-                <pre>// wrong category</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "wrong category",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1071,7 +2097,16 @@
                 <span class="response-description">zero coin price</span>
               </div>
               <div class="code-block">
-                <pre>// zero coin price</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "zero coin price",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1080,7 +2115,16 @@
                 <span class="response-description">unknown order params</span>
               </div>
               <div class="code-block">
-                <pre>// unknown order params</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown order params",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1089,7 +2133,16 @@
                 <span class="response-description">empty external id</span>
               </div>
               <div class="code-block">
-                <pre>// empty external id</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty external id",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1098,7 +2151,16 @@
                 <span class="response-description">symbol not found</span>
               </div>
               <div class="code-block">
-                <pre>// symbol not found</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "symbol not found",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1107,7 +2169,16 @@
                 <span class="response-description">empty issue date</span>
               </div>
               <div class="code-block">
-                <pre>// empty issue date</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty issue date",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1116,7 +2187,16 @@
                 <span class="response-description">symbol is disabled</span>
               </div>
               <div class="code-block">
-                <pre>// symbol is disabled</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "symbol is disabled",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1125,7 +2205,16 @@
                 <span class="response-description">coin is disabled</span>
               </div>
               <div class="code-block">
-                <pre>// coin is disabled</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "coin is disabled",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1134,7 +2223,16 @@
                 <span class="response-description">function is disabled</span>
               </div>
               <div class="code-block">
-                <pre>// function is disabled</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "function is disabled",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1143,7 +2241,16 @@
                 <span class="response-description">empty order id</span>
               </div>
               <div class="code-block">
-                <pre>// empty order id</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty order id",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1152,7 +2259,16 @@
                 <span class="response-description">invalid number</span>
               </div>
               <div class="code-block">
-                <pre>// invalid number</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid number",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1161,7 +2277,16 @@
                 <span class="response-description">invalid bool</span>
               </div>
               <div class="code-block">
-                <pre>// invalid bool</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid bool",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1170,7 +2295,16 @@
                 <span class="response-description">not implemented</span>
               </div>
               <div class="code-block">
-                <pre>// not implemented</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "not implemented",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1179,7 +2313,16 @@
                 <span class="response-description">unknown API key</span>
               </div>
               <div class="code-block">
-                <pre>// unknown API key</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown API key",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1188,7 +2331,16 @@
                 <span class="response-description">invalid timestamp</span>
               </div>
               <div class="code-block">
-                <pre>// invalid timestamp</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid timestamp",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1197,7 +2349,16 @@
                 <span class="response-description">invalid signature</span>
               </div>
               <div class="code-block">
-                <pre>// invalid signature</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid signature",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1206,7 +2367,16 @@
                 <span class="response-description">empty password</span>
               </div>
               <div class="code-block">
-                <pre>// empty password</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty password",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1215,7 +2385,16 @@
                 <span class="response-description">invalid login</span>
               </div>
               <div class="code-block">
-                <pre>// invalid login</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid login",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1224,7 +2403,16 @@
                 <span class="response-description">empty token</span>
               </div>
               <div class="code-block">
-                <pre>// empty token</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty token",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1233,7 +2421,16 @@
                 <span class="response-description">empty fingerprint</span>
               </div>
               <div class="code-block">
-                <pre>// empty fingerprint</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty fingerprint",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1242,7 +2439,16 @@
                 <span class="response-description">not bearer token</span>
               </div>
               <div class="code-block">
-                <pre>// not bearer token</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "not bearer token",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1251,7 +2457,16 @@
                 <span class="response-description">invalid access token</span>
               </div>
               <div class="code-block">
-                <pre>// invalid access token</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid access token",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1260,7 +2475,16 @@
                 <span class="response-description">token expired</span>
               </div>
               <div class="code-block">
-                <pre>// token expired</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "token expired",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1269,7 +2493,16 @@
                 <span class="response-description">invalid login or password</span>
               </div>
               <div class="code-block">
-                <pre>// invalid login or password</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid login or password",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1278,7 +2511,16 @@
                 <span class="response-description">admin locked</span>
               </div>
               <div class="code-block">
-                <pre>// admin locked</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "admin locked",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1287,7 +2529,16 @@
                 <span class="response-description">invalid one time password</span>
               </div>
               <div class="code-block">
-                <pre>// invalid one time password</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid one time password",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1296,7 +2547,16 @@
                 <span class="response-description">admin deleted</span>
               </div>
               <div class="code-block">
-                <pre>// admin deleted</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "admin deleted",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1305,7 +2565,16 @@
                 <span class="response-description">empty OTP</span>
               </div>
               <div class="code-block">
-                <pre>// empty OTP</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty OTP",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1314,7 +2583,16 @@
                 <span class="response-description">admin is unlocked</span>
               </div>
               <div class="code-block">
-                <pre>// admin is unlocked</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "admin is unlocked",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1323,7 +2601,16 @@
                 <span class="response-description">invalid state value</span>
               </div>
               <div class="code-block">
-                <pre>// invalid state value</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid state value",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1332,7 +2619,16 @@
                 <span class="response-description">empty Google code</span>
               </div>
               <div class="code-block">
-                <pre>// empty Google code</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty Google code",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1341,7 +2637,16 @@
                 <span class="response-description">account is blocked</span>
               </div>
               <div class="code-block">
-                <pre>// account is blocked</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "account is blocked",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1350,7 +2655,16 @@
                 <span class="response-description">unsuccessful validation</span>
               </div>
               <div class="code-block">
-                <pre>// unsuccessful validation</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unsuccessful validation",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1359,7 +2673,16 @@
                 <span class="response-description">empty reCaptchaToken</span>
               </div>
               <div class="code-block">
-                <pre>// empty reCaptchaToken</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty reCaptchaToken",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1368,7 +2691,16 @@
                 <span class="response-description">user configuration error</span>
               </div>
               <div class="code-block">
-                <pre>// user configuration error</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "user configuration error",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1377,7 +2709,16 @@
                 <span class="response-description">empty recaptcha platform id</span>
               </div>
               <div class="code-block">
-                <pre>// empty recaptcha platform id</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "empty recaptcha platform id",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1386,7 +2727,16 @@
                 <span class="response-description">unknown platform</span>
               </div>
               <div class="code-block">
-                <pre>// unknown platform</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "unknown platform",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1395,7 +2745,16 @@
                 <span class="response-description">incorrect UID</span>
               </div>
               <div class="code-block">
-                <pre>// incorrect UID</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "incorrect UID",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1404,7 +2763,16 @@
                 <span class="response-description">user is disabled</span>
               </div>
               <div class="code-block">
-                <pre>// user is disabled</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "user is disabled",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1413,7 +2781,16 @@
                 <span class="response-description">user's email is not verified</span>
               </div>
               <div class="code-block">
-                <pre>// user's email is not verified</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "user's email is not verified",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1422,7 +2799,16 @@
                 <span class="response-description">operation isn't allowed</span>
               </div>
               <div class="code-block">
-                <pre>// operation isn't allowed</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "operation isn't allowed",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1431,7 +2817,16 @@
                 <span class="response-description">too many login attempts</span>
               </div>
               <div class="code-block">
-                <pre>// too many login attempts</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "too many login attempts",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1440,7 +2835,16 @@
                 <span class="response-description">too many different geolocations</span>
               </div>
               <div class="code-block">
-                <pre>// too many different geolocations</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "too many different geolocations",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1449,7 +2853,16 @@
                 <span class="response-description">too many different emails for one device in a row</span>
               </div>
               <div class="code-block">
-                <pre>// too many different emails for one device in a row</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "too many different emails for one device in a row",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1458,7 +2871,16 @@
                 <span class="response-description">too many failed login attempts in a row</span>
               </div>
               <div class="code-block">
-                <pre>// too many failed login attempts in a row</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "too many failed login attempts in a row",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1467,7 +2889,16 @@
                 <span class="response-description">too many failed login attempts</span>
               </div>
               <div class="code-block">
-                <pre>// too many failed login attempts</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "too many failed login attempts",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1476,7 +2907,16 @@
                 <span class="response-description">failed firebase validation</span>
               </div>
               <div class="code-block">
-                <pre>// failed firebase validation</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "failed firebase validation",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1485,7 +2925,16 @@
                 <span class="response-description">invalid balance type</span>
               </div>
               <div class="code-block">
-                <pre>// invalid balance type</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "invalid balance type",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -1494,7 +2943,16 @@
                 <span class="response-description">access denied</span>
               </div>
               <div class="code-block">
-                <pre>// access denied</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "access denied",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
           </div>

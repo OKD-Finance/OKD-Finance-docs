@@ -52,7 +52,15 @@ Private:
                 <span class="response-description">successful connection</span>
               </div>
               <div class="code-block">
-                <pre>// successful connection</pre>
+                <pre>{
+  "success": true,
+  "message": "Operation completed successfully",
+  "data": {
+    "operationId": "op_1234567890",
+    "timestamp": "2024-01-01T12:00:00Z",
+    "status": "completed"
+  }
+}</pre>
               </div>
             </div>
           </div>

@@ -46,7 +46,11 @@ Payload "path" is path of some subscription.</p>
                 <span class="response-description">unsubscribed</span>
               </div>
               <div class="code-block">
-                <pre>// unsubscribed</pre>
+                <pre>{
+  "success": true,
+  "message": "unsubscribed",
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
           </div>

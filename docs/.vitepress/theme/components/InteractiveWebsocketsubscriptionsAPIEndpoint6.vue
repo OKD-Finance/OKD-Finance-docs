@@ -46,7 +46,18 @@
                 <span class="response-description">profile event</span>
               </div>
               <div class="code-block">
-                <pre>// profile event</pre>
+                <pre>{
+  "success": true,
+  "data": {
+    "userId": "user_123456",
+    "email": "user@example.com",
+    "profile": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "createdAt": "2024-01-01T12:00:00Z"
+    }
+  }
+}</pre>
               </div>
             </div>
           </div>

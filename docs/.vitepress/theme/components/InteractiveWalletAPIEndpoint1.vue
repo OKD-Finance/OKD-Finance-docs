@@ -63,7 +63,18 @@
                 <span class="response-description">user balances</span>
               </div>
               <div class="code-block">
-                <pre>// user balances</pre>
+                <pre>{
+  "success": true,
+  "data": {
+    "userId": "user_123456",
+    "email": "user@example.com",
+    "profile": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "createdAt": "2024-01-01T12:00:00Z"
+    }
+  }
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -72,7 +83,15 @@
                 <span class="response-description">unauthorized error</span>
               </div>
               <div class="code-block">
-                <pre>// unauthorized error</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "unauthorized error",
+    "details": "Access token is missing or invalid"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
             <div class="response-example">
@@ -81,7 +100,16 @@
                 <span class="response-description">some error in internal server</span>
               </div>
               <div class="code-block">
-                <pre>// some error in internal server</pre>
+                <pre>{
+  "success": false,
+  "error": {
+    "code": "INTERNAL_SERVER_ERROR",
+    "message": "some error in internal server",
+    "details": "An unexpected error occurred on the server",
+    "requestId": "req_1234567890"
+  },
+  "timestamp": "2024-01-01T12:00:00Z"
+}</pre>
               </div>
             </div>
           </div>
