@@ -221,26 +221,18 @@ const copyToClipboard = (text, event) => {
 
 .auth-title h4 {
   margin: 0 0 1rem 0;
-  color: var(--vp-c-text-1);
   font-size: 1.25rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  /* Fallback for browsers that don't support background-clip */
-  background: linear-gradient(135deg, var(--vp-c-brand) 0%, var(--vp-c-brand-light) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Fallback for browsers that don't support background-clip */
-@supports not (background-clip: text) {
-  .auth-title h4 {
-    color: var(--vp-c-brand) !important;
-    background: none !important;
-    -webkit-text-fill-color: unset !important;
-  }
+  /* Primary color for maximum visibility */
+  color: var(--vp-c-brand) !important;
+  /* Remove gradient effects that may cause invisibility */
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  background-clip: unset !important;
 }
 
 .collapse-toggle {
