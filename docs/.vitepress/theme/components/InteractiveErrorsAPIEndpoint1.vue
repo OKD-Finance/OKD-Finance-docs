@@ -1772,6 +1772,24 @@ except requests.exceptions.RequestException as e:
             </div>
             <div class="response-example">
               <div class="response-header">
+                <span class="response-status error">400564</span>
+                <span class="response-description">Asset close-only mode enabled</span>
+              </div>
+              <div class="code-block">
+                <pre>{
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;Asset close-only mode enabled&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
+  },
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+}</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
                 <span class="response-status error">400568</span>
                 <span class="response-description">email code is invalid</span>
               </div>
@@ -2213,6 +2231,24 @@ except requests.exceptions.RequestException as e:
   &quot;error&quot;: {
     &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
     &quot;message&quot;: &quot;zero coin price&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
+  },
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+}</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">400595</span>
+                <span class="response-description">failed to create inter transfer</span>
+              </div>
+              <div class="code-block">
+                <pre>{
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;failed to create inter transfer&quot;,
     &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
     &quot;requestId&quot;: &quot;req_1234567890&quot;
   },

@@ -4,7 +4,7 @@ layout: page
 
 # Exchange configuration API
 
-<InteractiveExchangeconfigurationAPI />
+<GlobalAuth />
 
 ## Returns assets. Result is described here.
 https://bybit-exchange.github.io/docs/v5/asset/coin-info
@@ -40,13 +40,13 @@ No description available
 <InteractiveExchangeconfigurationAPIEndpoint6 />
 
 <script setup>
-import InteractiveExchangeconfigurationAPI from '../.vitepress/theme/components/InteractiveExchangeconfigurationAPI.vue'
 import InteractiveExchangeconfigurationAPIEndpoint1 from '../.vitepress/theme/components/InteractiveExchangeconfigurationAPIEndpoint1.vue'
 import InteractiveExchangeconfigurationAPIEndpoint2 from '../.vitepress/theme/components/InteractiveExchangeconfigurationAPIEndpoint2.vue'
 import InteractiveExchangeconfigurationAPIEndpoint3 from '../.vitepress/theme/components/InteractiveExchangeconfigurationAPIEndpoint3.vue'
 import InteractiveExchangeconfigurationAPIEndpoint4 from '../.vitepress/theme/components/InteractiveExchangeconfigurationAPIEndpoint4.vue'
 import InteractiveExchangeconfigurationAPIEndpoint5 from '../.vitepress/theme/components/InteractiveExchangeconfigurationAPIEndpoint5.vue'
 import InteractiveExchangeconfigurationAPIEndpoint6 from '../.vitepress/theme/components/InteractiveExchangeconfigurationAPIEndpoint6.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 

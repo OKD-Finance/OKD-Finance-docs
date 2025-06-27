@@ -4,7 +4,7 @@ layout: page
 
 # Websocket subscriptions API
 
-<InteractiveWebsocketsubscriptionsAPI />
+<GlobalAuth />
 
 ## Authorize websocket connection.
 Request is **{"path": "authorization", "payload": {"accessToken": "", "fingerprint": ""}}**.
@@ -48,13 +48,13 @@ Request is **{"path": "/user/profile"}**. No need additional payload.
 <InteractiveWebsocketsubscriptionsAPIEndpoint6 />
 
 <script setup>
-import InteractiveWebsocketsubscriptionsAPI from '../.vitepress/theme/components/InteractiveWebsocketsubscriptionsAPI.vue'
 import InteractiveWebsocketsubscriptionsAPIEndpoint1 from '../.vitepress/theme/components/InteractiveWebsocketsubscriptionsAPIEndpoint1.vue'
 import InteractiveWebsocketsubscriptionsAPIEndpoint2 from '../.vitepress/theme/components/InteractiveWebsocketsubscriptionsAPIEndpoint2.vue'
 import InteractiveWebsocketsubscriptionsAPIEndpoint3 from '../.vitepress/theme/components/InteractiveWebsocketsubscriptionsAPIEndpoint3.vue'
 import InteractiveWebsocketsubscriptionsAPIEndpoint4 from '../.vitepress/theme/components/InteractiveWebsocketsubscriptionsAPIEndpoint4.vue'
 import InteractiveWebsocketsubscriptionsAPIEndpoint5 from '../.vitepress/theme/components/InteractiveWebsocketsubscriptionsAPIEndpoint5.vue'
 import InteractiveWebsocketsubscriptionsAPIEndpoint6 from '../.vitepress/theme/components/InteractiveWebsocketsubscriptionsAPIEndpoint6.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 

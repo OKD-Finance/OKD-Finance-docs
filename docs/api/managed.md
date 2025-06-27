@@ -4,7 +4,7 @@ layout: page
 
 # Managed API
 
-<InteractiveManagedAPI />
+<GlobalAuth />
 
 ## Login user for managed ID.
 No description available
@@ -17,9 +17,9 @@ No description available
 <InteractiveManagedAPIEndpoint2 />
 
 <script setup>
-import InteractiveManagedAPI from '../.vitepress/theme/components/InteractiveManagedAPI.vue'
 import InteractiveManagedAPIEndpoint1 from '../.vitepress/theme/components/InteractiveManagedAPIEndpoint1.vue'
 import InteractiveManagedAPIEndpoint2 from '../.vitepress/theme/components/InteractiveManagedAPIEndpoint2.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 

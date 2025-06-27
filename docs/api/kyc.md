@@ -4,7 +4,7 @@ layout: page
 
 # KYC API
 
-<InteractiveKYCAPI />
+<GlobalAuth />
 
 ## POST /amlbot/callback
 Receives callback messages during KYC procedure
@@ -22,10 +22,10 @@ Receives webhook messages during KYC procedure
 <InteractiveKYCAPIEndpoint3 />
 
 <script setup>
-import InteractiveKYCAPI from '../.vitepress/theme/components/InteractiveKYCAPI.vue'
 import InteractiveKYCAPIEndpoint1 from '../.vitepress/theme/components/InteractiveKYCAPIEndpoint1.vue'
 import InteractiveKYCAPIEndpoint2 from '../.vitepress/theme/components/InteractiveKYCAPIEndpoint2.vue'
 import InteractiveKYCAPIEndpoint3 from '../.vitepress/theme/components/InteractiveKYCAPIEndpoint3.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 

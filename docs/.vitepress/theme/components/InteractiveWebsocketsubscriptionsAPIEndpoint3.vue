@@ -157,9 +157,9 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: true,
-  &quot;message&quot;: &quot;symbol event&quot;,
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;lastPrice&quot;: &quot;3849&quot;,
+  &quot;price24hPcnt&quot;: &quot;0&quot;,
+  &quot;symbol&quot;: &quot;ETHUSDT&quot;
 }</pre>
               </div>
             </div>

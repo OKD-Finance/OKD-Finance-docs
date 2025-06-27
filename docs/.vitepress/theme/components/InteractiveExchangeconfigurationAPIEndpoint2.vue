@@ -16,13 +16,13 @@
           <div class="param-list">
             <div class="param-item required">
               <code class="param-name">limit</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Limit of records in request
 </span>
             </div>
             <div class="param-item required">
               <code class="param-name">offset</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Offset of records in request
 </span>
             </div>
@@ -34,7 +34,7 @@
             </div>
             <div class="param-item required">
               <code class="param-name">activityEnabled</code>
-              <span class="param-type">string</span>
+              <span class="param-type">bool</span>
               <span class="param-desc">Deposit, withdrawal, trading enabled/disabled
 </span>
             </div>
@@ -239,9 +239,18 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: true,
-  &quot;message&quot;: &quot;list networks&quot;,
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;count&quot;: 1,
+  &quot;list&quot;: [
+    {
+      &quot;coin&quot;: &quot;ETH&quot;,
+      &quot;deposit&quot;: false,
+      &quot;icon&quot;: &quot;...&quot;,
+      &quot;iconNight&quot;: &quot;...&quot;,
+      &quot;network&quot;: &quot;Bitcoin network&quot;,
+      &quot;trading&quot;: false,
+      &quot;withdrawal&quot;: false
+    }
+  ]
 }</pre>
               </div>
             </div>
@@ -252,14 +261,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;some error in internal server&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>
@@ -272,11 +275,11 @@ except requests.exceptions.RequestException as e:
         <div class="test-section">
           <div class="form-group">
                 <label>Limit</label>
-                <input v-model="testData.limit" type="text" placeholder="example_limit" class="test-input" />
+                <input v-model="testData.limit" type="number" placeholder="example_limit" class="test-input" />
               </div>
           <div class="form-group">
                 <label>Offset</label>
-                <input v-model="testData.offset" type="text" placeholder="example_offset" class="test-input" />
+                <input v-model="testData.offset" type="number" placeholder="example_offset" class="test-input" />
               </div>
           <div class="form-group">
                 <label>ActivityType</label>
@@ -345,8 +348,8 @@ const activeCodeTab = ref('cURL')
 const hasParameters = true
 
 const testData = reactive({
-  limit: 'example_limit',
-  offset: 'example_offset',
+  limit: 123,
+  offset: 123,
   activityType: 'example_activityType',
   activityEnabled: 'example_activityEnabled',
   sortBy: 'example_sortBy',

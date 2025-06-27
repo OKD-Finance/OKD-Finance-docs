@@ -41,13 +41,13 @@
             </div>
             <div class="param-item required">
               <code class="param-name">from</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Get transactions created after the _from_ timestamp (in seconds)
 </span>
             </div>
             <div class="param-item required">
               <code class="param-name">to</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Get transactions created before the _to_ timestamp (in seconds)
 </span>
             </div>
@@ -60,13 +60,13 @@
             </div>
             <div class="param-item required">
               <code class="param-name">limit</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Limit of records in request
 </span>
             </div>
             <div class="param-item required">
               <code class="param-name">offset</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Offset of records in request
 </span>
             </div>
@@ -284,9 +284,23 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: true,
-  &quot;message&quot;: &quot;list of transactions&quot;,
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;count&quot;: 1,
+  &quot;data&quot;: [
+    {
+      &quot;accountId&quot;: 1,
+      &quot;address&quot;: &quot;0x4bb9158ace117fb393b0a375193aeb260d17b31b&quot;,
+      &quot;amount&quot;: &quot;0.3&quot;,
+      &quot;chain&quot;: &quot;Binance Testnet&quot;,
+      &quot;coin&quot;: &quot;BNB&quot;,
+      &quot;createdAt&quot;: 1674667813,
+      &quot;expiresAt&quot;: 1674997813,
+      &quot;hash&quot;: &quot;0x21920b030887e92fb8eb48f544e08b82f800b122ab24b50ef6885f980ec56163&quot;,
+      &quot;recipientId&quot;: 2,
+      &quot;status&quot;: &quot;deposit_completed&quot;,
+      &quot;type&quot;: &quot;deposit&quot;,
+      &quot;uuid&quot;: &quot;somed1g1t7&quot;
+    }
+  ]
 }</pre>
               </div>
             </div>
@@ -297,14 +311,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;internal server error&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>
@@ -333,11 +341,11 @@ except requests.exceptions.RequestException as e:
               </div>
           <div class="form-group">
                 <label>From</label>
-                <input v-model="testData.from" type="text" placeholder="example_from" class="test-input" />
+                <input v-model="testData.from" type="number" placeholder="example_from" class="test-input" />
               </div>
           <div class="form-group">
                 <label>To</label>
-                <input v-model="testData.to" type="text" placeholder="example_to" class="test-input" />
+                <input v-model="testData.to" type="number" placeholder="example_to" class="test-input" />
               </div>
           <div class="form-group">
                 <label>SortBy</label>
@@ -345,11 +353,11 @@ except requests.exceptions.RequestException as e:
               </div>
           <div class="form-group">
                 <label>Limit</label>
-                <input v-model="testData.limit" type="text" placeholder="example_limit" class="test-input" />
+                <input v-model="testData.limit" type="number" placeholder="example_limit" class="test-input" />
               </div>
           <div class="form-group">
                 <label>Offset</label>
-                <input v-model="testData.offset" type="text" placeholder="example_offset" class="test-input" />
+                <input v-model="testData.offset" type="number" placeholder="example_offset" class="test-input" />
               </div>
           <div class="form-group">
                 <label>Search</label>
@@ -410,11 +418,11 @@ const testData = reactive({
   coin: 'example_coin',
   amount: 'example_amount',
   type: 'example_type',
-  from: 'example_from',
-  to: 'example_to',
+  from: 123,
+  to: 123,
   sortBy: 'example_sortBy',
-  limit: 'example_limit',
-  offset: 'example_offset',
+  limit: 123,
+  offset: 123,
   search: 'example_search'
 })
 

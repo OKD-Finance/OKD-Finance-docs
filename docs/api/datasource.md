@@ -4,7 +4,7 @@ layout: page
 
 # Datasource API
 
-<InteractiveDatasourceAPI />
+<GlobalAuth />
 
 ## GET /datasource/coin-info
 get coin info by asset id and source id
@@ -27,11 +27,11 @@ No description available
 <InteractiveDatasourceAPIEndpoint4 />
 
 <script setup>
-import InteractiveDatasourceAPI from '../.vitepress/theme/components/InteractiveDatasourceAPI.vue'
 import InteractiveDatasourceAPIEndpoint1 from '../.vitepress/theme/components/InteractiveDatasourceAPIEndpoint1.vue'
 import InteractiveDatasourceAPIEndpoint2 from '../.vitepress/theme/components/InteractiveDatasourceAPIEndpoint2.vue'
 import InteractiveDatasourceAPIEndpoint3 from '../.vitepress/theme/components/InteractiveDatasourceAPIEndpoint3.vue'
 import InteractiveDatasourceAPIEndpoint4 from '../.vitepress/theme/components/InteractiveDatasourceAPIEndpoint4.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 

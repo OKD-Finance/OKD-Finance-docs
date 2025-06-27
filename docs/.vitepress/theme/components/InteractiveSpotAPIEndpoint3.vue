@@ -18,7 +18,7 @@
           <div class="param-list">
             <div class="param-item required">
               <code class="param-name">limit</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">limit</span>
             </div>
             <div class="param-item required">
@@ -194,9 +194,9 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: true,
-  &quot;message&quot;: &quot;list spot orders history&quot;,
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;category&quot;: &quot;spot&quot;,
+  &quot;list&quot;: [],
+  &quot;nextPageCursor&quot;: &quot;&quot;
 }</pre>
               </div>
             </div>
@@ -207,13 +207,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;UNAUTHORIZED&quot;,
-    &quot;message&quot;: &quot;unauthorized error&quot;,
-    &quot;details&quot;: &quot;Access token is missing or invalid&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 401000,
+  &quot;message&quot;: &quot;access token is expired&quot;
 }</pre>
               </div>
             </div>
@@ -224,14 +219,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;some error in internal server&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>
@@ -244,7 +233,7 @@ except requests.exceptions.RequestException as e:
         <div class="test-section">
           <div class="form-group">
                 <label>Limit</label>
-                <input v-model="testData.limit" type="text" placeholder="example_limit" class="test-input" />
+                <input v-model="testData.limit" type="number" placeholder="example_limit" class="test-input" />
               </div>
           <div class="form-group">
                 <label>Category</label>
@@ -301,7 +290,7 @@ const activeCodeTab = ref('cURL')
 const hasParameters = true
 
 const testData = reactive({
-  limit: 'example_limit',
+  limit: 123,
   category: 'example_category'
 })
 

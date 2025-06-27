@@ -192,7 +192,19 @@ except requests.exceptions.RequestException as e:
                 <span class="response-status success">200</span>
                 <span class="response-description"></span>
               </div>
-              
+              <div class="code-block">
+                <pre>{
+  &quot;assetId&quot;: &quot;BTC&quot;,
+  &quot;coinId&quot;: &quot;bitcoin&quot;,
+  &quot;createdAt&quot;: 1674667813,
+  &quot;description&quot;: &quot;Bitcoin...&quot;,
+  &quot;marketCap&quot;: &quot;123456&quot;,
+  &quot;marketCapRank&quot;: &quot;1&quot;,
+  &quot;priceChangePercentage24h&quot;: &quot;3.12502&quot;,
+  &quot;sourceId&quot;: &quot;CoinGecko.com&quot;,
+  &quot;totalVolume&quot;: &quot;1234567&quot;
+}</pre>
+              </div>
             </div>
             <div class="response-example">
               <div class="response-header">
@@ -201,14 +213,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;some error in internal server&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>

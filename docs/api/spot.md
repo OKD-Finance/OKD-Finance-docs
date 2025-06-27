@@ -4,7 +4,7 @@ layout: page
 
 # Spot API
 
-<InteractiveSpotAPI />
+<GlobalAuth />
 
 ## Create spot order
 Returns spot order id and order link id. Result is described here.
@@ -44,12 +44,12 @@ https://bybit-exchange.github.io/docs/v5/order/execution
 <InteractiveSpotAPIEndpoint5 />
 
 <script setup>
-import InteractiveSpotAPI from '../.vitepress/theme/components/InteractiveSpotAPI.vue'
 import InteractiveSpotAPIEndpoint1 from '../.vitepress/theme/components/InteractiveSpotAPIEndpoint1.vue'
 import InteractiveSpotAPIEndpoint2 from '../.vitepress/theme/components/InteractiveSpotAPIEndpoint2.vue'
 import InteractiveSpotAPIEndpoint3 from '../.vitepress/theme/components/InteractiveSpotAPIEndpoint3.vue'
 import InteractiveSpotAPIEndpoint4 from '../.vitepress/theme/components/InteractiveSpotAPIEndpoint4.vue'
 import InteractiveSpotAPIEndpoint5 from '../.vitepress/theme/components/InteractiveSpotAPIEndpoint5.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 

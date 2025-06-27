@@ -27,18 +27,18 @@ https://bybit-exchange.github.io/docs/v5/market/instrument</p>
             </div>
             <div class="param-item required">
               <code class="param-name">tradingEnabled</code>
-              <span class="param-type">string</span>
+              <span class="param-type">bool</span>
               <span class="param-desc">trading status</span>
             </div>
             <div class="param-item required">
               <code class="param-name">limit</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Limit of records in request
 </span>
             </div>
             <div class="param-item required">
               <code class="param-name">offset</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Offset of records in request
 </span>
             </div>
@@ -248,9 +248,38 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: true,
-  &quot;message&quot;: &quot;create spot order&quot;,
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;count&quot;: 1,
+  &quot;list&quot;: [
+    {
+      &quot;ask1Price&quot;: &quot;20527.77&quot;,
+      &quot;ask1Size&quot;: &quot;1.862172&quot;,
+      &quot;baseCoin&quot;: &quot;BTC&quot;,
+      &quot;basePrecision&quot;: &quot;0.000001&quot;,
+      &quot;bid1Price&quot;: &quot;20517.96&quot;,
+      &quot;bid1Size&quot;: &quot;2&quot;,
+      &quot;highPrice24h&quot;: &quot;21128.12&quot;,
+      &quot;icon&quot;: &quot;...&quot;,
+      &quot;iconNight&quot;: &quot;...&quot;,
+      &quot;lastPrice&quot;: &quot;20533.13&quot;,
+      &quot;limitParameter&quot;: &quot;0.05&quot;,
+      &quot;lowPrice24h&quot;: &quot;20318.89&quot;,
+      &quot;marketParameter&quot;: &quot;0.05&quot;,
+      &quot;maxOrderAmt&quot;: &quot;2000000&quot;,
+      &quot;maxOrderQty&quot;: &quot;71.73956243&quot;,
+      &quot;minOrderAmt&quot;: &quot;1&quot;,
+      &quot;minOrderQty&quot;: &quot;0.000048&quot;,
+      &quot;prevPrice24h&quot;: &quot;20393.48&quot;,
+      &quot;price24hPcnt&quot;: &quot;0.0068&quot;,
+      &quot;quoteCoin&quot;: &quot;USDC&quot;,
+      &quot;quotePrecision&quot;: &quot;0.00000001&quot;,
+      &quot;symbol&quot;: &quot;BNBETH&quot;,
+      &quot;tickSize&quot;: &quot;0.01&quot;,
+      &quot;tradingEnabled&quot;: true,
+      &quot;turnover24h&quot;: &quot;243765620.65899866&quot;,
+      &quot;usdIndexPrice&quot;: &quot;20784.12009279&quot;,
+      &quot;volume24h&quot;: &quot;11801.27771&quot;
+    }
+  ]
 }</pre>
               </div>
             </div>
@@ -261,14 +290,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;some error in internal server&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>
@@ -293,11 +316,11 @@ except requests.exceptions.RequestException as e:
               </div>
           <div class="form-group">
                 <label>Limit</label>
-                <input v-model="testData.limit" type="text" placeholder="example_limit" class="test-input" />
+                <input v-model="testData.limit" type="number" placeholder="example_limit" class="test-input" />
               </div>
           <div class="form-group">
                 <label>Offset</label>
-                <input v-model="testData.offset" type="text" placeholder="example_offset" class="test-input" />
+                <input v-model="testData.offset" type="number" placeholder="example_offset" class="test-input" />
               </div>
           <div class="form-group">
                 <label>SortBy</label>
@@ -361,8 +384,8 @@ const testData = reactive({
   category: 'example_category',
   baseCoin: 'example_baseCoin',
   tradingEnabled: 'example_tradingEnabled',
-  limit: 'example_limit',
-  offset: 'example_offset',
+  limit: 123,
+  offset: 123,
   sortBy: 'example_sortBy',
   search: 'example_search'
 })

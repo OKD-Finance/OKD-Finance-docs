@@ -4,7 +4,7 @@ layout: page
 
 # Errors API
 
-<InteractiveErrorsAPI />
+<GlobalAuth />
 
 ## Errors list.
 No description available
@@ -12,8 +12,8 @@ No description available
 <InteractiveErrorsAPIEndpoint1 />
 
 <script setup>
-import InteractiveErrorsAPI from '../.vitepress/theme/components/InteractiveErrorsAPI.vue'
 import InteractiveErrorsAPIEndpoint1 from '../.vitepress/theme/components/InteractiveErrorsAPIEndpoint1.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 

@@ -4,7 +4,7 @@
       <div class="endpoint-docs">
         <div class="method-header">
           <span class="method-badge post">POST</span>
-          <span class="endpoint-path">/v5/order/amend</span>
+          <span class="endpoint-path">/v5/order/cancel-all</span>
         </div>
 
         <div class="endpoint-info">
@@ -28,7 +28,7 @@
               </button>
             </div>
                         <div v-show="activeCodeTab === 'cURL'" class="code-block">
-              <pre>curl -X POST &quot;https://develop.okd.finance/api/v5/order/amend&quot; \
+              <pre>curl -X POST &quot;https://develop.okd.finance/api/v5/order/cancel-all&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Fingerprint: YOUR_FINGERPRINT&quot;</pre>
@@ -44,7 +44,7 @@ import (
 )
 
 func main() {
-    url := &quot;https://develop.okd.finance/api/v5/order/amend&quot;
+    url := &quot;https://develop.okd.finance/api/v5/order/cancel-all&quot;
     
     req, _ := http.NewRequest(&quot;POST&quot;, url, nil)
     
@@ -75,9 +75,9 @@ const apiClient = axios.create({
   }
 });
 
-async function v5orderamendRequest() {
+async function v5ordercancelallRequest() {
   try {
-    const response = await apiClient.post(&#39;/v5/order/amend&#39;);
+    const response = await apiClient.post(&#39;/v5/order/cancel-all&#39;);
     
     console.log(&#39;Response:&#39;, response.data);
     return response.data;
@@ -88,12 +88,12 @@ async function v5orderamendRequest() {
 }
 
 // Usage
-v5orderamendRequest();</pre>
+v5ordercancelallRequest();</pre>
             </div>
             <div v-show="activeCodeTab === 'PHP'" class="code-block">
               <pre>&lt;?php
 
-$url = &#39;https://develop.okd.finance/api/v5/order/amend&#39;;
+$url = &#39;https://develop.okd.finance/api/v5/order/cancel-all&#39;;
 $headers = [
     &#39;Authorization: Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type: application/json&#39;,
@@ -124,7 +124,7 @@ if ($error) {
               <pre>import requests
 import json
 
-url = &#39;https://develop.okd.finance/api/v5/order/amend&#39;
+url = &#39;https://develop.okd.finance/api/v5/order/cancel-all&#39;
 headers = {
     &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type&#39;: &#39;application/json&#39;,
@@ -312,7 +312,7 @@ const testEndpoint = async () => {
       
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/v5/order/amend`
+    const fullUrl = `${authValues.apiBaseUrl}/v5/order/cancel-all`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',

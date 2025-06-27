@@ -4,7 +4,7 @@ layout: page
 
 # OKD API
 
-<InteractiveOKDAPI />
+<GlobalAuth />
 
 ## Send feedback.
 No description available
@@ -27,11 +27,11 @@ No description available
 <InteractiveOKDAPIEndpoint4 />
 
 <script setup>
-import InteractiveOKDAPI from '../.vitepress/theme/components/InteractiveOKDAPI.vue'
 import InteractiveOKDAPIEndpoint1 from '../.vitepress/theme/components/InteractiveOKDAPIEndpoint1.vue'
 import InteractiveOKDAPIEndpoint2 from '../.vitepress/theme/components/InteractiveOKDAPIEndpoint2.vue'
 import InteractiveOKDAPIEndpoint3 from '../.vitepress/theme/components/InteractiveOKDAPIEndpoint3.vue'
 import InteractiveOKDAPIEndpoint4 from '../.vitepress/theme/components/InteractiveOKDAPIEndpoint4.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 

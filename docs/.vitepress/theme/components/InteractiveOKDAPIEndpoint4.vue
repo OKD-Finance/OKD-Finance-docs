@@ -181,11 +181,18 @@ except requests.exceptions.RequestException as e:
                 <span class="response-description">list of top assets</span>
               </div>
               <div class="code-block">
-                <pre>{
-  &quot;success&quot;: true,
-  &quot;message&quot;: &quot;list of top assets&quot;,
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
-}</pre>
+                <pre>[
+  {
+    &quot;asset&quot;: &quot;BTC&quot;,
+    &quot;icon&quot;: &quot;...&quot;,
+    &quot;iconNight&quot;: &quot;...&quot;,
+    &quot;name&quot;: &quot;Bitcoin&quot;,
+    &quot;price&quot;: &quot;20393.48&quot;,
+    &quot;priceChange24h&quot;: &quot;+12.68&quot;,
+    &quot;priceChangeYear&quot;: &quot;-1.68&quot;,
+    &quot;volume&quot;: &quot;1232.12&quot;
+  }
+]</pre>
               </div>
             </div>
             <div class="response-example">
@@ -195,14 +202,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;some error in internal server&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>

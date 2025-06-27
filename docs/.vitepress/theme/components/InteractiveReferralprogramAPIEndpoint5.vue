@@ -183,9 +183,7 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: true,
-  &quot;message&quot;: &quot;Link attributes&quot;,
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;linkId&quot;: &quot;1EDF45PA&quot;
 }</pre>
               </div>
             </div>
@@ -196,22 +194,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;VALIDATION_ERROR&quot;,
-    &quot;message&quot;: &quot;some logical error in request&quot;,
-    &quot;details&quot;: [
-      {
-        &quot;field&quot;: &quot;email&quot;,
-        &quot;message&quot;: &quot;Invalid email format&quot;
-      },
-      {
-        &quot;field&quot;: &quot;password&quot;,
-        &quot;message&quot;: &quot;Password must be at least 8 characters&quot;
-      }
-    ]
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 400001,
+  &quot;message&quot;: &quot;email or password not valid&quot;
 }</pre>
               </div>
             </div>
@@ -222,13 +206,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;UNAUTHORIZED&quot;,
-    &quot;message&quot;: &quot;unauthorized error&quot;,
-    &quot;details&quot;: &quot;Access token is missing or invalid&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 401000,
+  &quot;message&quot;: &quot;access token is expired&quot;
 }</pre>
               </div>
             </div>
@@ -239,14 +218,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;some error in internal server&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>

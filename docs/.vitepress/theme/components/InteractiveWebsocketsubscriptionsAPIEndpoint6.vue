@@ -158,16 +158,36 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: true,
-  &quot;data&quot;: {
-    &quot;userId&quot;: &quot;user_123456&quot;,
-    &quot;email&quot;: &quot;user@example.com&quot;,
-    &quot;profile&quot;: {
-      &quot;firstName&quot;: &quot;John&quot;,
-      &quot;lastName&quot;: &quot;Doe&quot;,
-      &quot;createdAt&quot;: &quot;2024-01-01T12:00:00Z&quot;
-    }
-  }
+  &quot;address&quot;: &quot;123456, GB, London...&quot;,
+  &quot;avatar&quot;: &quot;asd3sferdf&quot;,
+  &quot;country&quot;: &quot;Germany&quot;,
+  &quot;currentWithdrawAmount&quot;: &quot;100&quot;,
+  &quot;dateOfBirth&quot;: &quot;1990-01-01&quot;,
+  &quot;documentDetails&quot;: &quot;Number: ....&quot;,
+  &quot;documentType&quot;: &quot;passport&quot;,
+  &quot;email&quot;: &quot;john@mail.com&quot;,
+  &quot;favouriteSymbols&quot;: [
+    &quot;BTC_LTC&quot;,
+    &quot;BNB_ETH&quot;
+  ],
+  &quot;fullName&quot;: &quot;John Sebastian Smith&quot;,
+  &quot;id&quot;: 1,
+  &quot;kyc1State&quot;: &quot;accepted&quot;,
+  &quot;kyc2State&quot;: &quot;rejected&quot;,
+  &quot;kycEmail&quot;: &quot;a@a.com&quot;,
+  &quot;kycLevel&quot;: &quot;verified&quot;,
+  &quot;kycPhone&quot;: &quot;+01234567...&quot;,
+  &quot;name&quot;: &quot;John Smith&quot;,
+  &quot;otp2fa&quot;: true,
+  &quot;referralProgramEnabled&quot;: true,
+  &quot;signInAt&quot;: 1674667813,
+  &quot;signUpAt&quot;: 1674611813,
+  &quot;status&quot;: &quot;active&quot;,
+  &quot;tradeStatus&quot;: &quot;active&quot;,
+  &quot;withdrawLimit&quot;: &quot;10000&quot;,
+  &quot;withdrawResetAt&quot;: 1678329049834,
+  &quot;withdrawStatus&quot;: &quot;unlimited&quot;,
+  &quot;withdrawUnlockAt&quot;: 1678329049834
 }</pre>
               </div>
             </div>

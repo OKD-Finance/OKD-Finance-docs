@@ -3,8 +3,8 @@
     <div class="endpoint-layout">
       <div class="endpoint-docs">
         <div class="method-header">
-          <span class="method-badge get">GET</span>
-          <span class="endpoint-path">/v5/market/time</span>
+          <span class="method-badge post">POST</span>
+          <span class="endpoint-path">/v5/order/amend</span>
         </div>
 
         <div class="endpoint-info">
@@ -28,7 +28,7 @@
               </button>
             </div>
                         <div v-show="activeCodeTab === 'cURL'" class="code-block">
-              <pre>curl -X GET &quot;https://develop.okd.finance/api/v5/market/time&quot; \
+              <pre>curl -X POST &quot;https://develop.okd.finance/api/v5/order/amend&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Fingerprint: YOUR_FINGERPRINT&quot;</pre>
@@ -44,9 +44,9 @@ import (
 )
 
 func main() {
-    url := &quot;https://develop.okd.finance/api/v5/market/time&quot;
+    url := &quot;https://develop.okd.finance/api/v5/order/amend&quot;
     
-    req, _ := http.NewRequest(&quot;GET&quot;, url, nil)
+    req, _ := http.NewRequest(&quot;POST&quot;, url, nil)
     
     req.Header.Set(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;)
     req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
@@ -75,9 +75,9 @@ const apiClient = axios.create({
   }
 });
 
-async function v5markettimeRequest() {
+async function v5orderamendRequest() {
   try {
-    const response = await apiClient.get(&#39;/v5/market/time&#39;);
+    const response = await apiClient.post(&#39;/v5/order/amend&#39;);
     
     console.log(&#39;Response:&#39;, response.data);
     return response.data;
@@ -88,12 +88,12 @@ async function v5markettimeRequest() {
 }
 
 // Usage
-v5markettimeRequest();</pre>
+v5orderamendRequest();</pre>
             </div>
             <div v-show="activeCodeTab === 'PHP'" class="code-block">
               <pre>&lt;?php
 
-$url = &#39;https://develop.okd.finance/api/v5/market/time&#39;;
+$url = &#39;https://develop.okd.finance/api/v5/order/amend&#39;;
 $headers = [
     &#39;Authorization: Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type: application/json&#39;,
@@ -102,7 +102,7 @@ $headers = [
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, &#39;GET&#39;);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, &#39;POST&#39;);
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -124,7 +124,7 @@ if ($error) {
               <pre>import requests
 import json
 
-url = &#39;https://develop.okd.finance/api/v5/market/time&#39;
+url = &#39;https://develop.okd.finance/api/v5/order/amend&#39;
 headers = {
     &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type&#39;: &#39;application/json&#39;,
@@ -132,7 +132,7 @@ headers = {
 }
 
 try:
-    response = requests.get(url, headers=headers)
+    response = requests.post(url, headers=headers)
     response.raise_for_status()
     
     print(f&quot;Status Code: {response.status_code}&quot;)
@@ -312,7 +312,7 @@ const testEndpoint = async () => {
       
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/v5/market/time`
+    const fullUrl = `${authValues.apiBaseUrl}/v5/order/amend`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
@@ -321,7 +321,7 @@ const testEndpoint = async () => {
     const bodyString = JSON.stringify(requestBody)
 
     const response = await fetch(fullUrl, {
-      method: 'GET',
+      method: 'POST',
       headers: headers,
       body: bodyString
     })
@@ -331,7 +331,7 @@ const testEndpoint = async () => {
       status: `${response.status} ${response.statusText}`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `GET ${fullUrl}`,
+      requestUrl: `POST ${fullUrl}`,
       headers: JSON.stringify(headers, null, 2),
       body: bodyString
     }

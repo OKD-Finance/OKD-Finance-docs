@@ -4,26 +4,21 @@
       <div class="endpoint-docs">
         <div class="method-header">
           <span class="method-badge post">POST</span>
-          <span class="endpoint-path">/auth/login</span>
+          <span class="endpoint-path">/v5/asset/transfer/inter-transfer</span>
         </div>
 
         <div class="endpoint-info">
-          <p class="endpoint-description">Authenticate user with email and password</p>
+          <p class="endpoint-description">Creates an internal transfer between different account types (spot, unified, etc.)
+Returns transfer ID and status. Result is described here.
+https://bybit-exchange.github.io/docs/v5/asset/transfer-inter-transfer
+
+! Need access token in bearer token authorization</p>
         </div>
 
         <div class="api-section" v-if="hasParameters">
           <h4 class="section-title">⚙️ Parameters</h4>
           <div class="param-list">
-            <div class="param-item required">
-              <code class="param-name">email</code>
-              <span class="param-type">string</span>
-              <span class="param-desc">User email address</span>
-            </div>
-            <div class="param-item required">
-              <code class="param-name">password</code>
-              <span class="param-type">string</span>
-              <span class="param-desc">User password</span>
-            </div>
+            
           </div>
         </div>
 
@@ -37,14 +32,10 @@
               </button>
             </div>
                         <div v-show="activeCodeTab === 'cURL'" class="code-block">
-              <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/login&quot; \
+              <pre>curl -X POST &quot;https://develop.okd.finance/api/v5/asset/transfer/inter-transfer&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
-  -d &#39;{
-    &quot;email&quot;: &quot;example_email&quot;,
-    &quot;password&quot;: &quot;example_password&quot;
-  }&#39;</pre>
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot;</pre>
             </div>
             <div v-show="activeCodeTab === 'Go'" class="code-block">
               <pre>package main
@@ -57,15 +48,9 @@ import (
 )
 
 func main() {
-    url := &quot;https://develop.okd.finance/api/auth/login&quot;
+    url := &quot;https://develop.okd.finance/api/v5/asset/transfer/inter-transfer&quot;
     
-    payload := map[string]interface{}{
-        &quot;email&quot;: &quot;example_email&quot;,
-        &quot;password&quot;: &quot;example_password&quot;,
-    }
-    
-    jsonData, _ := json.Marshal(payload)
-    req, _ := http.NewRequest(&quot;POST&quot;, url, bytes.NewBuffer(jsonData))
+    req, _ := http.NewRequest(&quot;POST&quot;, url, nil)
     
     req.Header.Set(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;)
     req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
@@ -94,14 +79,9 @@ const apiClient = axios.create({
   }
 });
 
-async function authloginRequest() {
+async function v5assettransferintertransferRequest() {
   try {
-    const data = {
-      email: &#39;example_email&#39;,
-      password: &#39;example_password&#39;,
-    };
-    
-    const response = await apiClient.post(&#39;/auth/login&#39;, data);
+    const response = await apiClient.post(&#39;/v5/asset/transfer/inter-transfer&#39;);
     
     console.log(&#39;Response:&#39;, response.data);
     return response.data;
@@ -112,27 +92,21 @@ async function authloginRequest() {
 }
 
 // Usage
-authloginRequest();</pre>
+v5assettransferintertransferRequest();</pre>
             </div>
             <div v-show="activeCodeTab === 'PHP'" class="code-block">
               <pre>&lt;?php
 
-$url = &#39;https://develop.okd.finance/api/auth/login&#39;;
+$url = &#39;https://develop.okd.finance/api/v5/asset/transfer/inter-transfer&#39;;
 $headers = [
     &#39;Authorization: Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type: application/json&#39;,
     &#39;Fingerprint: YOUR_FINGERPRINT&#39;
 ];
 
-$data = [
-    &#39;email&#39; =&gt; &#39;example_email&#39;,
-    &#39;password&#39; =&gt; &#39;example_password&#39;,
-];
-
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, &#39;POST&#39;);
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -154,20 +128,15 @@ if ($error) {
               <pre>import requests
 import json
 
-url = &#39;https://develop.okd.finance/api/auth/login&#39;
+url = &#39;https://develop.okd.finance/api/v5/asset/transfer/inter-transfer&#39;
 headers = {
     &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type&#39;: &#39;application/json&#39;,
     &#39;Fingerprint&#39;: &#39;YOUR_FINGERPRINT&#39;
 }
 
-data = {
-    &#39;email&#39;: &#39;example_email&#39;,
-    &#39;password&#39;: &#39;example_password&#39;,
-}
-
 try:
-    response = requests.post(url, headers=headers, json=data)
+    response = requests.post(url, headers=headers)
     response.raise_for_status()
     
     print(f&quot;Status Code: {response.status_code}&quot;)
@@ -182,20 +151,53 @@ except requests.exceptions.RequestException as e:
           </div>
         </div>
 
-        
+        <div class="api-section">
+          <h4 class="section-title">📋 Response Examples</h4>
+          <div class="response-examples">
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status success">200</span>
+                <span class="response-description">internal transfer created</span>
+              </div>
+              <div class="code-block">
+                <pre>{
+  &quot;status&quot;: &quot;SUCCESS&quot;,
+  &quot;transferId&quot;: &quot;123456789&quot;
+}</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">401</span>
+                <span class="response-description">unauthorized error</span>
+              </div>
+              <div class="code-block">
+                <pre>{
+  &quot;code&quot;: 401000,
+  &quot;message&quot;: &quot;access token is expired&quot;
+}</pre>
+              </div>
+            </div>
+            <div class="response-example">
+              <div class="response-header">
+                <span class="response-status error">500</span>
+                <span class="response-description">some error in internal server</span>
+              </div>
+              <div class="code-block">
+                <pre>{
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="endpoint-testing">
         <h4 class="testing-title">🚀 Live Testing</h4>
         <div class="test-section">
-          <div class="form-group">
-                <label>Email</label>
-                <input v-model="testData.email" type="text" placeholder="example_email" class="test-input" />
-              </div>
-          <div class="form-group">
-                <label>Password</label>
-                <input v-model="testData.password" type="text" placeholder="example_password" class="test-input" />
-              </div>
+          
           <button @click="testEndpoint" class="test-btn"
             :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
             {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
@@ -244,11 +246,10 @@ const {
 const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
 const activeCodeTab = ref('cURL')
 
-const hasParameters = true
+const hasParameters = false
 
 const testData = reactive({
-  email: 'example_email',
-  password: 'example_password'
+  
 })
 
 const result = ref(null)
@@ -270,11 +271,10 @@ const testEndpoint = async () => {
     }
 
     const requestBody = {
-      email: testData.email,
-      password: testData.password
+      
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/auth/login`
+    const fullUrl = `${authValues.apiBaseUrl}/v5/asset/transfer/inter-transfer`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',

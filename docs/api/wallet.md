@@ -4,7 +4,7 @@ layout: page
 
 # Wallet API
 
-<InteractiveWalletAPI />
+<GlobalAuth />
 
 ## Get balances
 ! Need access token in bearer token authorization
@@ -43,7 +43,6 @@ https://bybit-exchange.github.io/docs/v5/asset/deposit/sub-deposit-addr
 <InteractiveWalletAPIEndpoint7 />
 
 <script setup>
-import InteractiveWalletAPI from '../.vitepress/theme/components/InteractiveWalletAPI.vue'
 import InteractiveWalletAPIEndpoint1 from '../.vitepress/theme/components/InteractiveWalletAPIEndpoint1.vue'
 import InteractiveWalletAPIEndpoint2 from '../.vitepress/theme/components/InteractiveWalletAPIEndpoint2.vue'
 import InteractiveWalletAPIEndpoint3 from '../.vitepress/theme/components/InteractiveWalletAPIEndpoint3.vue'
@@ -51,6 +50,7 @@ import InteractiveWalletAPIEndpoint4 from '../.vitepress/theme/components/Intera
 import InteractiveWalletAPIEndpoint5 from '../.vitepress/theme/components/InteractiveWalletAPIEndpoint5.vue'
 import InteractiveWalletAPIEndpoint6 from '../.vitepress/theme/components/InteractiveWalletAPIEndpoint6.vue'
 import InteractiveWalletAPIEndpoint7 from '../.vitepress/theme/components/InteractiveWalletAPIEndpoint7.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 

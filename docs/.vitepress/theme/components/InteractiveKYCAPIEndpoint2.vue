@@ -182,15 +182,14 @@ except requests.exceptions.RequestException as e:
                 <span class="response-description">KYC token</span>
               </div>
               <div class="code-block">
-                <pre>{
-  &quot;success&quot;: true,
-  &quot;data&quot;: {
-    &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&quot;,
-    &quot;refreshToken&quot;: &quot;rt_1234567890abcdef&quot;,
-    &quot;expiresIn&quot;: 3600,
-    &quot;tokenType&quot;: &quot;Bearer&quot;
+                <pre>[
+  {
+    &quot;expiresAt&quot;: 1674997813,
+    &quot;providerKYC&quot;: &quot;amlbot&quot;,
+    &quot;token&quot;: &quot;_act-b8ebfb63-5f24-4b89-9c08-5bbabeec986e&quot;,
+    &quot;url&quot;: &quot;https://kyc-forms-new.amlbot.com/0da19511064d144d091a46a0f4df1998f563&quot;
   }
-}</pre>
+]</pre>
               </div>
             </div>
             <div class="response-example">
@@ -200,13 +199,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;UNAUTHORIZED&quot;,
-    &quot;message&quot;: &quot;unauthorized error&quot;,
-    &quot;details&quot;: &quot;Access token is missing or invalid&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 401000,
+  &quot;message&quot;: &quot;access token is expired&quot;
 }</pre>
               </div>
             </div>
@@ -217,14 +211,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;some error in internal server&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>

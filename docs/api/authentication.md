@@ -4,7 +4,7 @@ layout: page
 
 # Authentication API
 
-<InteractiveAuthenticationAPI />
+<GlobalAuth />
 
 ## Check account existence by firebase token.
 No description available
@@ -159,7 +159,6 @@ No description available
 <InteractiveAuthenticationAPIEndpoint30 />
 
 <script setup>
-import InteractiveAuthenticationAPI from '../.vitepress/theme/components/InteractiveAuthenticationAPI.vue'
 import InteractiveAuthenticationAPIEndpoint1 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint1.vue'
 import InteractiveAuthenticationAPIEndpoint2 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint2.vue'
 import InteractiveAuthenticationAPIEndpoint3 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint3.vue'
@@ -190,6 +189,7 @@ import InteractiveAuthenticationAPIEndpoint27 from '../.vitepress/theme/componen
 import InteractiveAuthenticationAPIEndpoint28 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint28.vue'
 import InteractiveAuthenticationAPIEndpoint29 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint29.vue'
 import InteractiveAuthenticationAPIEndpoint30 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint30.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 

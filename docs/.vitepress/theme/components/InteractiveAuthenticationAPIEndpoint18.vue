@@ -157,16 +157,42 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: true,
-  &quot;data&quot;: {
-    &quot;userId&quot;: &quot;user_123456&quot;,
-    &quot;email&quot;: &quot;user@example.com&quot;,
-    &quot;profile&quot;: {
-      &quot;firstName&quot;: &quot;John&quot;,
-      &quot;lastName&quot;: &quot;Doe&quot;,
-      &quot;createdAt&quot;: &quot;2024-01-01T12:00:00Z&quot;
-    }
-  }
+  &quot;address&quot;: &quot;123456, GB, London...&quot;,
+  &quot;authMethod&quot;: &quot;firebase&quot;,
+  &quot;avatar&quot;: &quot;asd3sferdf&quot;,
+  &quot;country&quot;: &quot;Germany&quot;,
+  &quot;currentWithdrawAmount&quot;: &quot;100&quot;,
+  &quot;dateOfBirth&quot;: &quot;1990-01-01&quot;,
+  &quot;documentDetails&quot;: &quot;Number: ....&quot;,
+  &quot;documentType&quot;: &quot;passport&quot;,
+  &quot;email&quot;: &quot;john@mail.com&quot;,
+  &quot;favouriteSymbols&quot;: [
+    &quot;BTC_LTC&quot;,
+    &quot;BNB_ETH&quot;
+  ],
+  &quot;fullName&quot;: &quot;John Sebastian Smith&quot;,
+  &quot;id&quot;: 1,
+  &quot;kyc1State&quot;: &quot;accepted&quot;,
+  &quot;kyc2State&quot;: &quot;rejected&quot;,
+  &quot;kycEmail&quot;: &quot;a@a.com&quot;,
+  &quot;kycLevel&quot;: &quot;verified&quot;,
+  &quot;kycPhone&quot;: &quot;+01234567...&quot;,
+  &quot;name&quot;: &quot;John Smith&quot;,
+  &quot;otp2fa&quot;: true,
+  &quot;profileFlags&quot;: {
+    &quot;firstOrderAfterOneClickTrading&quot;: false,
+    &quot;futuresOrderConfirmation&quot;: false,
+    &quot;futuresVisited&quot;: false
+  },
+  &quot;referralProgramEnabled&quot;: true,
+  &quot;signInAt&quot;: 1674667813,
+  &quot;signUpAt&quot;: 1674611813,
+  &quot;status&quot;: &quot;active&quot;,
+  &quot;tradeStatus&quot;: &quot;active&quot;,
+  &quot;withdrawLimit&quot;: &quot;10000&quot;,
+  &quot;withdrawResetAt&quot;: 1678329049834,
+  &quot;withdrawStatus&quot;: &quot;unlimited&quot;,
+  &quot;withdrawUnlockAt&quot;: 1678329049834
 }</pre>
               </div>
             </div>
@@ -177,22 +203,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;VALIDATION_ERROR&quot;,
-    &quot;message&quot;: &quot;some logical error in request&quot;,
-    &quot;details&quot;: [
-      {
-        &quot;field&quot;: &quot;email&quot;,
-        &quot;message&quot;: &quot;Invalid email format&quot;
-      },
-      {
-        &quot;field&quot;: &quot;password&quot;,
-        &quot;message&quot;: &quot;Password must be at least 8 characters&quot;
-      }
-    ]
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 400001,
+  &quot;message&quot;: &quot;email or password not valid&quot;
 }</pre>
               </div>
             </div>
@@ -203,13 +215,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;UNAUTHORIZED&quot;,
-    &quot;message&quot;: &quot;unauthorized error&quot;,
-    &quot;details&quot;: &quot;Access token is missing or invalid&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 401000,
+  &quot;message&quot;: &quot;access token is expired&quot;
 }</pre>
               </div>
             </div>
@@ -220,14 +227,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;some error in internal server&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>

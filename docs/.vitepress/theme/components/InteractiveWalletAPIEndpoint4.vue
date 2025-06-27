@@ -192,9 +192,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: true,
-  &quot;message&quot;: &quot;Sample for doc, deposit address&quot;,
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;chains&quot;: {
+    &quot;addressDeposit&quot;: &quot;TCB6NmwGXjn8eJYDuPxLvs4aM8Jn7gvJ1f&quot;,
+    &quot;batchReleaseLimit&quot;: &quot;-1&quot;,
+    &quot;chain&quot;: &quot;TRX&quot;,
+    &quot;chainType&quot;: &quot;TRC20&quot;,
+    &quot;tagDeposit&quot;: &quot;&quot;
+  },
+  &quot;coin&quot;: &quot;USDT&quot;
 }</pre>
               </div>
             </div>
@@ -205,14 +210,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;some error in internal server&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>

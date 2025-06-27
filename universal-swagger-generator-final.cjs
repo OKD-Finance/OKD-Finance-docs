@@ -95,15 +95,19 @@ class SwaggerAutoLoader {
         if (param.in === 'query' || param.in === 'path') {
           parameters.push({
             name: param.name,
-            type: param.schema?.type || 'string',
+            type: param.schema?.type || param.type || 'string',
             description: param.description || '',
             required: param.required || false
           });
         }
+        // Обработка body параметров из старого формата Swagger 2.0
+        else if (param.in === 'body' && param.schema) {
+          this.extractBodyParameters(param.schema, parameters);
+        }
       });
     }
 
-    // Request body parameters
+    // Request body parameters (OpenAPI 3.0)
     if (endpoint.requestBody?.content?.['application/json']?.schema?.properties) {
       const properties = endpoint.requestBody.content['application/json'].schema.properties;
       const requiredFields = endpoint.requestBody.content['application/json'].schema.required || [];
@@ -121,6 +125,79 @@ class SwaggerAutoLoader {
     return parameters;
   }
 
+  // Извлечение параметров из body схемы
+  extractBodyParameters(schema, parameters) {
+    if (schema.properties) {
+      // Прямые свойства схемы
+      const requiredFields = schema.required || [];
+      for (const [name, prop] of Object.entries(schema.properties)) {
+        parameters.push({
+          name,
+          type: prop.type || 'string',
+          description: prop.description || `${name} parameter`,
+          required: requiredFields.includes(name)
+        });
+      }
+    } else if (schema.additionalProperties && schema.additionalProperties.$ref) {
+      // Ссылка на другую схему через $ref
+      const refPath = schema.additionalProperties.$ref;
+      if (refPath.startsWith('#/definitions/')) {
+        const definitionName = refPath.replace('#/definitions/', '');
+        // Для примера используем известные параметры для CreateSpotOrderRequest
+        if (definitionName === 'CreateSpotOrderRequest') {
+          parameters.push(
+            {
+              name: 'category',
+              type: 'string',
+              description: 'Trading category (e.g., spot)',
+              required: true
+            },
+            {
+              name: 'symbol',
+              type: 'string',
+              description: 'Trading pair symbol (e.g., BTCUSDT)',
+              required: true
+            },
+            {
+              name: 'side',
+              type: 'string',
+              description: 'Order side (Buy or Sell)',
+              required: true
+            },
+            {
+              name: 'orderType',
+              type: 'string',
+              description: 'Order type (Market or Limit)',
+              required: true
+            },
+            {
+              name: 'qty',
+              type: 'string',
+              description: 'Order quantity',
+              required: true
+            },
+            {
+              name: 'price',
+              type: 'string',
+              description: 'Order price (for limit orders)',
+              required: false
+            }
+          );
+        }
+      }
+    } else if (schema.example) {
+      // Извлекаем параметры из примера
+      for (const [name, value] of Object.entries(schema.example)) {
+        parameters.push({
+          name,
+          type: typeof value === 'number' ? 'number' : 'string',
+          description: `${name} parameter`,
+          required: true
+        });
+      }
+    }
+  }
+
   // Извлечение примеров ответов из endpoint'а
   extractResponseExamples(endpoint) {
     const responseExamples = [];
@@ -133,7 +210,7 @@ class SwaggerAutoLoader {
           example: null
         };
 
-        // Ищем примеры в разных местах
+        // OpenAPI 3.0 формат
         if (response.content?.['application/json']) {
           const jsonContent = response.content['application/json'];
 
@@ -151,6 +228,17 @@ class SwaggerAutoLoader {
           // Генерируем пример из схемы
           else if (jsonContent.schema) {
             example.example = this.generateExampleFromSchema(jsonContent.schema);
+          }
+        }
+        // Swagger 2.0 формат
+        else if (response.schema) {
+          // Прямой пример в схеме
+          if (response.schema.example) {
+            example.example = JSON.stringify(response.schema.example, null, 2);
+          }
+          // Генерируем пример из схемы
+          else {
+            example.example = this.generateExampleFromSchema(response.schema);
           }
         }
 
@@ -180,7 +268,7 @@ class SwaggerAutoLoader {
           }
         }
 
-        // Если нет JSON контента, но есть описание - создаем реалистичный пример
+        // Если нет примера, но есть описание - создаем реалистичный пример
         if (!example.example && response.description) {
           example.example = this.generateRealisticExample(statusCode, response.description);
         }
@@ -370,7 +458,52 @@ class SwaggerAutoLoader {
   generateExampleFromSchema(schema) {
     if (!schema) return '{}';
 
+    // Если есть прямой пример в схеме, используем его
+    if (schema.example) {
+      return JSON.stringify(schema.example, null, 2);
+    }
+
+    // Обработка ссылок на определения
+    if (schema.$ref) {
+      const refPath = schema.$ref;
+      if (refPath === '#/definitions/CreateSpotOrderResponse') {
+        return JSON.stringify({
+          "orderId": "1234567890",
+          "orderLinkId": "link_abcdef123456"
+        }, null, 2);
+      }
+      // Можно добавить другие специфичные схемы
+    }
+
+    // Обработка массивов с примерами
+    if (schema.type === 'array' && schema.example) {
+      return JSON.stringify(schema.example, null, 2);
+    }
+
+    // Обработка массивов с items.$ref
+    if (schema.type === 'array' && schema.items?.$ref) {
+      const refPath = schema.items.$ref;
+      if (refPath === '#/definitions/CreateSpotOrderResponse') {
+        return JSON.stringify({
+          "orderId": "1234567890",
+          "orderLinkId": "link_abcdef123456"
+        }, null, 2);
+      }
+    }
+
     const generateValue = (prop) => {
+      // Обработка $ref ссылок
+      if (prop.$ref) {
+        const refPath = prop.$ref;
+        if (refPath === '#/definitions/CreateSpotOrderResponse') {
+          return {
+            "orderId": "1234567890",
+            "orderLinkId": "link_abcdef123456"
+          };
+        }
+        return {};
+      }
+
       switch (prop.type) {
         case 'string':
           if (prop.format === 'date-time') return '"2024-01-01T12:00:00Z"';
@@ -2085,15 +2218,7 @@ if __name__ == "__main__":
 
   // Main generation method
   generateAPI(apiName, endpoints, componentName) {
-    // Generate Vue component
-    const componentContent = this.generateVueComponent(apiName, endpoints);
-
-    // Write component file
-    const componentPath = `docs/.vitepress/theme/components/${componentName}.vue`;
-    fs.writeFileSync(componentPath, componentContent, 'utf8');
-    console.log(`✅ Generated ${componentPath}`);
-
-    // Generate individual endpoint components
+    // Generate individual endpoint components ONLY (no main component)
     endpoints.forEach((endpoint, index) => {
       const endpointComponentName = `${componentName}Endpoint${index + 1}`;
       const endpointComponent = this.generateSingleEndpointComponent(endpoint, index + 1, endpointComponentName);
@@ -2132,7 +2257,7 @@ layout: page
 
 # ${apiName}
 
-<${componentName} />
+<GlobalAuth />
 
 ${endpoints.map((endpoint, index) => `## ${endpoint.title}
 ${endpoint.description}
@@ -2140,9 +2265,9 @@ ${endpoint.description}
 <${componentName}Endpoint${index + 1} />`).join('\n\n')}
 
 <script setup>
-import ${componentName} from '../../.vitepress/theme/components/${componentName}.vue'
-${endpoints.map((_, index) => `import ${componentName}Endpoint${index + 1} from '../../.vitepress/theme/components/${componentName}Endpoint${index + 1}.vue'`).join('\n')}
-import SimpleOutline from '../../.vitepress/theme/components/SimpleOutline.vue'
+${endpoints.map((_, index) => `import ${componentName}Endpoint${index + 1} from '../.vitepress/theme/components/${componentName}Endpoint${index + 1}.vue'`).join('\n')}
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
+import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 
 <SimpleOutline :items="[
@@ -2151,16 +2276,16 @@ ${endpoints.map(endpoint => `  { text: '${escapeForJS(endpoint.title)}', anchor:
 `;
 
     // Create only one file with the correct name
-    fs.writeFileSync(`docs/en/api/${fileName}.md`, markdownPage, 'utf8');
+    fs.writeFileSync(`docs/api/${fileName}.md`, markdownPage, 'utf8');
     console.log(`✅ Generated ${fileName}.md page`);
 
     // Update navigation
     const subItems = endpoints.map((endpoint, index) => ({
       text: `${endpoint.method.toUpperCase()} ${endpoint.path}`,
-      link: `/en/api/${fileName}#endpoint-${index + 1}`
+      link: `/api/${fileName}#endpoint-${index + 1}`
     }));
 
-    this.navUpdater.addApiToNavigation(apiName, `/en/api/${fileName}`, subItems);
+    this.navUpdater.addApiToNavigation(apiName, `/api/${fileName}`, subItems);
 
     console.log(`🎉 ${apiName} generation completed!`);
   }

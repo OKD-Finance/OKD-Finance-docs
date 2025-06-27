@@ -16,19 +16,19 @@
           <div class="param-list">
             <div class="param-item required">
               <code class="param-name">id</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Link internal ID
 </span>
             </div>
             <div class="param-item required">
               <code class="param-name">limit</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Limit of records in request
 </span>
             </div>
             <div class="param-item required">
               <code class="param-name">offset</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Offset of records in request
 </span>
             </div>
@@ -205,9 +205,29 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: true,
-  &quot;message&quot;: &quot;Link details&quot;,
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;createdAt&quot;: 123456,
+  &quot;id&quot;: 1,
+  &quot;isDefault&quot;: true,
+  &quot;linkId&quot;: &quot;1DASN87&quot;,
+  &quot;summary&quot;: {
+    &quot;level1&quot;: {
+      &quot;referrals&quot;: 10,
+      &quot;rewards&quot;: &quot;123.456&quot;
+    },
+    &quot;level2&quot;: {
+      &quot;referrals&quot;: 10,
+      &quot;rewards&quot;: &quot;123.456&quot;
+    },
+    &quot;level3&quot;: {
+      &quot;referrals&quot;: 10,
+      &quot;rewards&quot;: &quot;123.456&quot;
+    },
+    &quot;liquidityFee&quot;: &quot;123.456&quot;,
+    &quot;total&quot;: {
+      &quot;referrals&quot;: 10,
+      &quot;rewards&quot;: &quot;123.456&quot;
+    }
+  }
 }</pre>
               </div>
             </div>
@@ -218,22 +238,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;VALIDATION_ERROR&quot;,
-    &quot;message&quot;: &quot;some logical error in request&quot;,
-    &quot;details&quot;: [
-      {
-        &quot;field&quot;: &quot;email&quot;,
-        &quot;message&quot;: &quot;Invalid email format&quot;
-      },
-      {
-        &quot;field&quot;: &quot;password&quot;,
-        &quot;message&quot;: &quot;Password must be at least 8 characters&quot;
-      }
-    ]
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 400001,
+  &quot;message&quot;: &quot;email or password not valid&quot;
 }</pre>
               </div>
             </div>
@@ -244,13 +250,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;UNAUTHORIZED&quot;,
-    &quot;message&quot;: &quot;unauthorized error&quot;,
-    &quot;details&quot;: &quot;Access token is missing or invalid&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 401000,
+  &quot;message&quot;: &quot;access token is expired&quot;
 }</pre>
               </div>
             </div>
@@ -261,14 +262,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;some error in internal server&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>
@@ -281,15 +276,15 @@ except requests.exceptions.RequestException as e:
         <div class="test-section">
           <div class="form-group">
                 <label>Id</label>
-                <input v-model="testData.id" type="text" placeholder="example_id" class="test-input" />
+                <input v-model="testData.id" type="number" placeholder="example_id" class="test-input" />
               </div>
           <div class="form-group">
                 <label>Limit</label>
-                <input v-model="testData.limit" type="text" placeholder="example_limit" class="test-input" />
+                <input v-model="testData.limit" type="number" placeholder="example_limit" class="test-input" />
               </div>
           <div class="form-group">
                 <label>Offset</label>
-                <input v-model="testData.offset" type="text" placeholder="example_offset" class="test-input" />
+                <input v-model="testData.offset" type="number" placeholder="example_offset" class="test-input" />
               </div>
           <button @click="testEndpoint" class="test-btn"
             :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
@@ -342,9 +337,9 @@ const activeCodeTab = ref('cURL')
 const hasParameters = true
 
 const testData = reactive({
-  id: 'example_id',
-  limit: 'example_limit',
-  offset: 'example_offset'
+  id: 123,
+  limit: 123,
+  offset: 123
 })
 
 const result = ref(null)

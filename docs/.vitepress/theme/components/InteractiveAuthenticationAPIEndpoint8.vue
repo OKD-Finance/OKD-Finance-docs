@@ -16,7 +16,7 @@
           <div class="param-list">
             <div class="param-item required">
               <code class="param-name">group_id</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Group of notifications. Omitted or 0 mean all.
 </span>
             </div>
@@ -28,13 +28,13 @@
             </div>
             <div class="param-item required">
               <code class="param-name">limit</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Limit of records in request
 </span>
             </div>
             <div class="param-item required">
               <code class="param-name">offset</code>
-              <span class="param-type">string</span>
+              <span class="param-type">integer</span>
               <span class="param-desc">Offset of records in request
 </span>
             </div>
@@ -215,11 +215,24 @@ except requests.exceptions.RequestException as e:
                 <span class="response-description">list of notifications</span>
               </div>
               <div class="code-block">
-                <pre>{
-  &quot;success&quot;: true,
-  &quot;message&quot;: &quot;list of notifications&quot;,
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
-}</pre>
+                <pre>[
+  {
+    &quot;count&quot;: 1,
+    &quot;data&quot;: [
+      {
+        &quot;data&quot;: {
+          &quot;key1&quot;: &quot;value1&quot;,
+          &quot;key2&quot;: &quot;value2&quot;
+        },
+        &quot;group_id&quot;: 1,
+        &quot;id&quot;: 1,
+        &quot;tag&quot;: 100,
+        &quot;timestamp&quot;: 1674667813,
+        &quot;viewed&quot;: false
+      }
+    ]
+  }
+]</pre>
               </div>
             </div>
             <div class="response-example">
@@ -229,14 +242,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;internal server error&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>
@@ -249,7 +256,7 @@ except requests.exceptions.RequestException as e:
         <div class="test-section">
           <div class="form-group">
                 <label>Group_id</label>
-                <input v-model="testData.group_id" type="text" placeholder="example_group_id" class="test-input" />
+                <input v-model="testData.group_id" type="number" placeholder="example_group_id" class="test-input" />
               </div>
           <div class="form-group">
                 <label>Hide_read</label>
@@ -257,11 +264,11 @@ except requests.exceptions.RequestException as e:
               </div>
           <div class="form-group">
                 <label>Limit</label>
-                <input v-model="testData.limit" type="text" placeholder="example_limit" class="test-input" />
+                <input v-model="testData.limit" type="number" placeholder="example_limit" class="test-input" />
               </div>
           <div class="form-group">
                 <label>Offset</label>
-                <input v-model="testData.offset" type="text" placeholder="example_offset" class="test-input" />
+                <input v-model="testData.offset" type="number" placeholder="example_offset" class="test-input" />
               </div>
           <button @click="testEndpoint" class="test-btn"
             :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
@@ -314,10 +321,10 @@ const activeCodeTab = ref('cURL')
 const hasParameters = true
 
 const testData = reactive({
-  group_id: 'example_group_id',
+  group_id: 123,
   hide_read: 'example_hide_read',
-  limit: 'example_limit',
-  offset: 'example_offset'
+  limit: 123,
+  offset: 123
 })
 
 const result = ref(null)

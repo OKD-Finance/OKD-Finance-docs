@@ -4,7 +4,7 @@ layout: page
 
 # ByBit REST endpoints API
 
-<InteractiveByBitRESTendpointsAPI />
+<GlobalAuth />
 
 ## GET /v5/account/wallet-balance
 No description available
@@ -31,118 +31,112 @@ No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint5 />
 
-## POST /v5/asset/transfer/inter-transfer
+## GET /v5/asset/transfer/query-account-coin-balance
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint6 />
 
-## GET /v5/asset/transfer/query-account-coin-balance
+## GET /v5/asset/transfer/query-account-coins-balance
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint7 />
 
-## GET /v5/asset/transfer/query-account-coins-balance
+## GET /v5/asset/transfer/query-asset-info
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint8 />
 
-## GET /v5/asset/transfer/query-asset-info
+## GET /v5/asset/transfer/query-inter-transfer-list
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint9 />
 
-## GET /v5/asset/transfer/query-inter-transfer-list
+## GET /v5/asset/transfer/query-transfer-coin-list
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint10 />
 
-## GET /v5/asset/transfer/query-transfer-coin-list
+## GET /v5/asset/withdraw/query-record
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint11 />
 
-## GET /v5/asset/withdraw/query-record
+## GET /v5/asset/withdraw/withdrawable-amount
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint12 />
 
-## GET /v5/asset/withdraw/withdrawable-amount
+## GET /v5/execution/list
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint13 />
 
-## GET /v5/execution/list
+## GET /v5/market/index-price-kline
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint14 />
 
-## GET /v5/market/index-price-kline
+## GET /v5/market/instruments-info
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint15 />
 
-## GET /v5/market/instruments-info
+## GET /v5/market/kline
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint16 />
 
-## GET /v5/market/kline
+## GET /v5/market/mark-price-kline
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint17 />
 
-## GET /v5/market/mark-price-kline
+## GET /v5/market/orderbook
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint18 />
 
-## GET /v5/market/orderbook
+## GET /v5/market/recent-trade
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint19 />
 
-## GET /v5/market/recent-trade
+## GET /v5/market/tickers
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint20 />
 
-## GET /v5/market/tickers
+## GET /v5/market/time
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint21 />
 
-## GET /v5/market/time
+## POST /v5/order/amend
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint22 />
 
-## POST /v5/order/amend
+## POST /v5/order/cancel-all
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint23 />
 
-## POST /v5/order/cancel-all
+## GET /v5/order/history
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint24 />
 
-## GET /v5/order/history
+## GET /v5/order/realtime
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint25 />
 
-## GET /v5/order/realtime
+## GET /v5/order/spot-borrow-check
 No description available
 
 <InteractiveByBitRESTendpointsAPIEndpoint26 />
 
-## GET /v5/order/spot-borrow-check
-No description available
-
-<InteractiveByBitRESTendpointsAPIEndpoint27 />
-
 <script setup>
-import InteractiveByBitRESTendpointsAPI from '../.vitepress/theme/components/InteractiveByBitRESTendpointsAPI.vue'
 import InteractiveByBitRESTendpointsAPIEndpoint1 from '../.vitepress/theme/components/InteractiveByBitRESTendpointsAPIEndpoint1.vue'
 import InteractiveByBitRESTendpointsAPIEndpoint2 from '../.vitepress/theme/components/InteractiveByBitRESTendpointsAPIEndpoint2.vue'
 import InteractiveByBitRESTendpointsAPIEndpoint3 from '../.vitepress/theme/components/InteractiveByBitRESTendpointsAPIEndpoint3.vue'
@@ -169,7 +163,7 @@ import InteractiveByBitRESTendpointsAPIEndpoint23 from '../.vitepress/theme/comp
 import InteractiveByBitRESTendpointsAPIEndpoint24 from '../.vitepress/theme/components/InteractiveByBitRESTendpointsAPIEndpoint24.vue'
 import InteractiveByBitRESTendpointsAPIEndpoint25 from '../.vitepress/theme/components/InteractiveByBitRESTendpointsAPIEndpoint25.vue'
 import InteractiveByBitRESTendpointsAPIEndpoint26 from '../.vitepress/theme/components/InteractiveByBitRESTendpointsAPIEndpoint26.vue'
-import InteractiveByBitRESTendpointsAPIEndpoint27 from '../.vitepress/theme/components/InteractiveByBitRESTendpointsAPIEndpoint27.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 
@@ -179,7 +173,6 @@ import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
   { text: 'GET /v5/asset/deposit/query-allowed-list', anchor: '#get-v5assetdepositqueryallowedlist' },
   { text: 'GET /v5/asset/deposit/query-internal-record', anchor: '#get-v5assetdepositqueryinternalrecord' },
   { text: 'GET /v5/asset/deposit/query-record', anchor: '#get-v5assetdepositqueryrecord' },
-  { text: 'POST /v5/asset/transfer/inter-transfer', anchor: '#post-v5assettransferintertransfer' },
   { text: 'GET /v5/asset/transfer/query-account-coin-balance', anchor: '#get-v5assettransferqueryaccountcoinbalance' },
   { text: 'GET /v5/asset/transfer/query-account-coins-balance', anchor: '#get-v5assettransferqueryaccountcoinsbalance' },
   { text: 'GET /v5/asset/transfer/query-asset-info', anchor: '#get-v5assettransferqueryassetinfo' },

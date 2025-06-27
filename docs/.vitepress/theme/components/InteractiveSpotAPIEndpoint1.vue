@@ -17,7 +17,36 @@ https://bybit-exchange.github.io/docs/v5/order/create-order
         <div class="api-section" v-if="hasParameters">
           <h4 class="section-title">⚙️ Parameters</h4>
           <div class="param-list">
-            
+            <div class="param-item required">
+              <code class="param-name">category</code>
+              <span class="param-type">string</span>
+              <span class="param-desc">Trading category (e.g., spot)</span>
+            </div>
+            <div class="param-item required">
+              <code class="param-name">symbol</code>
+              <span class="param-type">string</span>
+              <span class="param-desc">Trading pair symbol (e.g., BTCUSDT)</span>
+            </div>
+            <div class="param-item required">
+              <code class="param-name">side</code>
+              <span class="param-type">string</span>
+              <span class="param-desc">Order side (Buy or Sell)</span>
+            </div>
+            <div class="param-item required">
+              <code class="param-name">orderType</code>
+              <span class="param-type">string</span>
+              <span class="param-desc">Order type (Market or Limit)</span>
+            </div>
+            <div class="param-item required">
+              <code class="param-name">qty</code>
+              <span class="param-type">string</span>
+              <span class="param-desc">Order quantity</span>
+            </div>
+            <div class="param-item required">
+              <code class="param-name">price</code>
+              <span class="param-type">string</span>
+              <span class="param-desc">Order price (for limit orders)</span>
+            </div>
           </div>
         </div>
 
@@ -34,7 +63,15 @@ https://bybit-exchange.github.io/docs/v5/order/create-order
               <pre>curl -X POST &quot;https://develop.okd.finance/api/spot/orders&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot;</pre>
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#39;{
+    &quot;category&quot;: &quot;example_category&quot;,
+    &quot;symbol&quot;: &quot;example_symbol&quot;,
+    &quot;side&quot;: &quot;example_side&quot;,
+    &quot;orderType&quot;: &quot;example_orderType&quot;,
+    &quot;qty&quot;: &quot;example_qty&quot;,
+    &quot;price&quot;: &quot;example_price&quot;
+  }&#39;</pre>
             </div>
             <div v-show="activeCodeTab === 'Go'" class="code-block">
               <pre>package main
@@ -49,7 +86,17 @@ import (
 func main() {
     url := &quot;https://develop.okd.finance/api/spot/orders&quot;
     
-    req, _ := http.NewRequest(&quot;POST&quot;, url, nil)
+    payload := map[string]interface{}{
+        &quot;category&quot;: &quot;example_category&quot;,
+        &quot;symbol&quot;: &quot;example_symbol&quot;,
+        &quot;side&quot;: &quot;example_side&quot;,
+        &quot;orderType&quot;: &quot;example_orderType&quot;,
+        &quot;qty&quot;: &quot;example_qty&quot;,
+        &quot;price&quot;: &quot;example_price&quot;,
+    }
+    
+    jsonData, _ := json.Marshal(payload)
+    req, _ := http.NewRequest(&quot;POST&quot;, url, bytes.NewBuffer(jsonData))
     
     req.Header.Set(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;)
     req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
@@ -80,7 +127,16 @@ const apiClient = axios.create({
 
 async function spotordersRequest() {
   try {
-    const response = await apiClient.post(&#39;/spot/orders&#39;);
+    const data = {
+      category: &#39;example_category&#39;,
+      symbol: &#39;example_symbol&#39;,
+      side: &#39;example_side&#39;,
+      orderType: &#39;example_orderType&#39;,
+      qty: &#39;example_qty&#39;,
+      price: &#39;example_price&#39;,
+    };
+    
+    const response = await apiClient.post(&#39;/spot/orders&#39;, data);
     
     console.log(&#39;Response:&#39;, response.data);
     return response.data;
@@ -103,9 +159,19 @@ $headers = [
     &#39;Fingerprint: YOUR_FINGERPRINT&#39;
 ];
 
+$data = [
+    &#39;category&#39; =&gt; &#39;example_category&#39;,
+    &#39;symbol&#39; =&gt; &#39;example_symbol&#39;,
+    &#39;side&#39; =&gt; &#39;example_side&#39;,
+    &#39;orderType&#39; =&gt; &#39;example_orderType&#39;,
+    &#39;qty&#39; =&gt; &#39;example_qty&#39;,
+    &#39;price&#39; =&gt; &#39;example_price&#39;,
+];
+
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, &#39;POST&#39;);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -134,8 +200,17 @@ headers = {
     &#39;Fingerprint&#39;: &#39;YOUR_FINGERPRINT&#39;
 }
 
+data = {
+    &#39;category&#39;: &#39;example_category&#39;,
+    &#39;symbol&#39;: &#39;example_symbol&#39;,
+    &#39;side&#39;: &#39;example_side&#39;,
+    &#39;orderType&#39;: &#39;example_orderType&#39;,
+    &#39;qty&#39;: &#39;example_qty&#39;,
+    &#39;price&#39;: &#39;example_price&#39;,
+}
+
 try:
-    response = requests.post(url, headers=headers)
+    response = requests.post(url, headers=headers, json=data)
     response.raise_for_status()
     
     print(f&quot;Status Code: {response.status_code}&quot;)
@@ -160,9 +235,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: true,
-  &quot;message&quot;: &quot;create spot order&quot;,
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;orderId&quot;: &quot;1&quot;,
+  &quot;orderLinkId&quot;: &quot;2&quot;
 }</pre>
               </div>
             </div>
@@ -173,13 +247,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;UNAUTHORIZED&quot;,
-    &quot;message&quot;: &quot;unauthorized error&quot;,
-    &quot;details&quot;: &quot;Access token is missing or invalid&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 401000,
+  &quot;message&quot;: &quot;access token is expired&quot;
 }</pre>
               </div>
             </div>
@@ -190,14 +259,8 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;success&quot;: false,
-  &quot;error&quot;: {
-    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
-    &quot;message&quot;: &quot;some error in internal server&quot;,
-    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
-    &quot;requestId&quot;: &quot;req_1234567890&quot;
-  },
-  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
+  &quot;code&quot;: 500000,
+  &quot;message&quot;: &quot;internal server error&quot;
 }</pre>
               </div>
             </div>
@@ -208,7 +271,30 @@ except requests.exceptions.RequestException as e:
       <div class="endpoint-testing">
         <h4 class="testing-title">🚀 Live Testing</h4>
         <div class="test-section">
-          
+          <div class="form-group">
+                <label>Category</label>
+                <input v-model="testData.category" type="text" placeholder="example_category" class="test-input" />
+              </div>
+          <div class="form-group">
+                <label>Symbol</label>
+                <input v-model="testData.symbol" type="text" placeholder="example_symbol" class="test-input" />
+              </div>
+          <div class="form-group">
+                <label>Side</label>
+                <input v-model="testData.side" type="text" placeholder="example_side" class="test-input" />
+              </div>
+          <div class="form-group">
+                <label>OrderType</label>
+                <input v-model="testData.orderType" type="text" placeholder="example_orderType" class="test-input" />
+              </div>
+          <div class="form-group">
+                <label>Qty</label>
+                <input v-model="testData.qty" type="text" placeholder="example_qty" class="test-input" />
+              </div>
+          <div class="form-group">
+                <label>Price</label>
+                <input v-model="testData.price" type="text" placeholder="example_price" class="test-input" />
+              </div>
           <button @click="testEndpoint" class="test-btn"
             :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
             {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
@@ -257,10 +343,15 @@ const {
 const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
 const activeCodeTab = ref('cURL')
 
-const hasParameters = false
+const hasParameters = true
 
 const testData = reactive({
-  
+  category: 'example_category',
+  symbol: 'example_symbol',
+  side: 'example_side',
+  orderType: 'example_orderType',
+  qty: 'example_qty',
+  price: 'example_price'
 })
 
 const result = ref(null)
@@ -282,7 +373,12 @@ const testEndpoint = async () => {
     }
 
     const requestBody = {
-      
+      category: testData.category,
+      symbol: testData.symbol,
+      side: testData.side,
+      orderType: testData.orderType,
+      qty: testData.qty,
+      price: testData.price
     }
 
     const fullUrl = `${authValues.apiBaseUrl}/spot/orders`

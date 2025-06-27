@@ -4,7 +4,7 @@ layout: page
 
 # Referral program API
 
-<InteractiveReferralprogramAPI />
+<GlobalAuth />
 
 ## Get list of referral link.
 ! Need access token in bearer token authorization
@@ -52,7 +52,6 @@ No description available
 <InteractiveReferralprogramAPIEndpoint9 />
 
 <script setup>
-import InteractiveReferralprogramAPI from '../.vitepress/theme/components/InteractiveReferralprogramAPI.vue'
 import InteractiveReferralprogramAPIEndpoint1 from '../.vitepress/theme/components/InteractiveReferralprogramAPIEndpoint1.vue'
 import InteractiveReferralprogramAPIEndpoint2 from '../.vitepress/theme/components/InteractiveReferralprogramAPIEndpoint2.vue'
 import InteractiveReferralprogramAPIEndpoint3 from '../.vitepress/theme/components/InteractiveReferralprogramAPIEndpoint3.vue'
@@ -62,6 +61,7 @@ import InteractiveReferralprogramAPIEndpoint6 from '../.vitepress/theme/componen
 import InteractiveReferralprogramAPIEndpoint7 from '../.vitepress/theme/components/InteractiveReferralprogramAPIEndpoint7.vue'
 import InteractiveReferralprogramAPIEndpoint8 from '../.vitepress/theme/components/InteractiveReferralprogramAPIEndpoint8.vue'
 import InteractiveReferralprogramAPIEndpoint9 from '../.vitepress/theme/components/InteractiveReferralprogramAPIEndpoint9.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 

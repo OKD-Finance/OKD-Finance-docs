@@ -4,7 +4,7 @@
       <div class="endpoint-docs">
         <div class="method-header">
           <span class="method-badge get">GET</span>
-          <span class="endpoint-path">/v5/market/kline</span>
+          <span class="endpoint-path">/v5/market/mark-price-kline</span>
         </div>
 
         <div class="endpoint-info">
@@ -28,7 +28,7 @@
               </button>
             </div>
                         <div v-show="activeCodeTab === 'cURL'" class="code-block">
-              <pre>curl -X GET &quot;https://develop.okd.finance/api/v5/market/kline&quot; \
+              <pre>curl -X GET &quot;https://develop.okd.finance/api/v5/market/mark-price-kline&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Fingerprint: YOUR_FINGERPRINT&quot;</pre>
@@ -44,7 +44,7 @@ import (
 )
 
 func main() {
-    url := &quot;https://develop.okd.finance/api/v5/market/kline&quot;
+    url := &quot;https://develop.okd.finance/api/v5/market/mark-price-kline&quot;
     
     req, _ := http.NewRequest(&quot;GET&quot;, url, nil)
     
@@ -75,9 +75,9 @@ const apiClient = axios.create({
   }
 });
 
-async function v5marketklineRequest() {
+async function v5marketmarkpriceklineRequest() {
   try {
-    const response = await apiClient.get(&#39;/v5/market/kline&#39;);
+    const response = await apiClient.get(&#39;/v5/market/mark-price-kline&#39;);
     
     console.log(&#39;Response:&#39;, response.data);
     return response.data;
@@ -88,12 +88,12 @@ async function v5marketklineRequest() {
 }
 
 // Usage
-v5marketklineRequest();</pre>
+v5marketmarkpriceklineRequest();</pre>
             </div>
             <div v-show="activeCodeTab === 'PHP'" class="code-block">
               <pre>&lt;?php
 
-$url = &#39;https://develop.okd.finance/api/v5/market/kline&#39;;
+$url = &#39;https://develop.okd.finance/api/v5/market/mark-price-kline&#39;;
 $headers = [
     &#39;Authorization: Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type: application/json&#39;,
@@ -124,7 +124,7 @@ if ($error) {
               <pre>import requests
 import json
 
-url = &#39;https://develop.okd.finance/api/v5/market/kline&#39;
+url = &#39;https://develop.okd.finance/api/v5/market/mark-price-kline&#39;
 headers = {
     &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type&#39;: &#39;application/json&#39;,
@@ -312,7 +312,7 @@ const testEndpoint = async () => {
       
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/v5/market/kline`
+    const fullUrl = `${authValues.apiBaseUrl}/v5/market/mark-price-kline`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',

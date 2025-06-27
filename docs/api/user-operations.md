@@ -4,7 +4,7 @@ layout: page
 
 # User Operations API
 
-<InteractiveUserOperationsAPI />
+<GlobalAuth />
 
 ## Cancels operation by uuid.
 ! Need access token in bearer token authorization
@@ -22,10 +22,10 @@ layout: page
 <InteractiveUserOperationsAPIEndpoint3 />
 
 <script setup>
-import InteractiveUserOperationsAPI from '../.vitepress/theme/components/InteractiveUserOperationsAPI.vue'
 import InteractiveUserOperationsAPIEndpoint1 from '../.vitepress/theme/components/InteractiveUserOperationsAPIEndpoint1.vue'
 import InteractiveUserOperationsAPIEndpoint2 from '../.vitepress/theme/components/InteractiveUserOperationsAPIEndpoint2.vue'
 import InteractiveUserOperationsAPIEndpoint3 from '../.vitepress/theme/components/InteractiveUserOperationsAPIEndpoint3.vue'
+import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 
