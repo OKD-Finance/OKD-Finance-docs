@@ -39,7 +39,9 @@ jobs:
         run: npm run build
         
       - name: Add .nojekyll file
-        run: touch docs/.vitepress/dist/.nojekyll
+        run: |
+          touch docs/.vitepress/dist/.nojekyll
+          echo "# Disable Jekyll processing for GitHub Pages" > docs/.vitepress/dist/.nojekyll
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
