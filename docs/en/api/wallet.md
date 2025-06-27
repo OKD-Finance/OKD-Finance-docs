@@ -1,133 +1,65 @@
+---
+layout: page
+---
+
 # Wallet API
-
-Interactive documentation for Wallet endpoints.
-
-<script setup>
-import InteractiveWalletAPI from '../.vitepress/theme/components/InteractiveWalletAPI.vue'
-</script>
 
 <InteractiveWalletAPI />
 
-## Endpoints Overview
-
-### GET /wallet/balances
-
+## Get balances
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `type` (string, optional) - Balance type
+<InteractiveWalletAPIEndpoint1 />
 
-- `coin` (string, optional) - Comma-separated list of coins. Can be empty
-- `sortBy` (string, optional) - Comma-separated list of sort balances. Every item must be *field name:sort order*. Sort order must be 'asc' or 'desc'
-  Available values: *coin, total, available,locked*
-
-
-**Responses:**
-- `200` - user balances
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### GET /wallet/total-balance
-
+## Get total balance in USD
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
+<InteractiveWalletAPIEndpoint2 />
 
-**Responses:**
-- `200` - user total balance
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### GET /wallet/transactions
-
+## Get user transactions history.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `statuses` (string, optional) - Comma-separated list of transaction statuses
-  Available values: *new, rejected, completed, pending, failed*
+<InteractiveWalletAPIEndpoint3 />
 
-- `coin` (string, optional) - Transaction coin
-
-- `amount` (string, optional) - Amount of transaction
-
-- `type` (string, optional) - Type of transaction
-
-- `from` (string, optional) - Get transactions created after the _from_ timestamp (in seconds)
-
-- `to` (string, optional) - Get transactions created before the _to_ timestamp (in seconds)
-
-- `sortBy` (string, optional) - Comma-separated list of sort order. Every item must be *field name:sort order*. Sort order must be 'asc' or 'desc'
-  Available values: *created_at, type, amount, coin, status*
-
-- `limit` (string, optional) - Limit of records in request
-
-- `offset` (string, optional) - Offset of records in request
-
-- `search` (string, optional) - User ID; wallet address; transaction hash; Recipient email (for internal transfer sent by email);
-
-
-**Responses:**
-- `200` - list of transactions
-- `500` - internal server error
-
-### GET /wallet/transactions/deposit
-
+## Returns deposit address for coin+chain. Result is described here.
+https://bybit-exchange.github.io/docs/v5/asset/deposit/sub-deposit-addr
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `coin` (string, optional) - Coin
-- `chainType` (string, optional) - Chain type
+<InteractiveWalletAPIEndpoint4 />
 
-**Responses:**
-- `200` - Sample for doc, deposit address
-- `500` - some error in internal server
-
-### POST /wallet/transactions/transfer
-
+## Create internal transfer (operation) between users.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `Body` (object, optional) - No description
+<InteractiveWalletAPIEndpoint5 />
 
-**Responses:**
-- `200` - operation attributes
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### POST /wallet/transactions/withdraw
-
+## Create withdrawal (operation) for specified assets
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `Body` (object, optional) - No description
+<InteractiveWalletAPIEndpoint6 />
 
-**Responses:**
-- `200` - operation attributes
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### PUT /wallet/transactions/withdraw/{uuid}/reject
-
+## Reject withdrawal confirmed by user.
 ! Need Bearer token and OTP authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `uuid` (string, optional) - Transaction UUID
+<InteractiveWalletAPIEndpoint7 />
 
-- `type` (string, optional) - Reject type
+<script setup>
+import InteractiveWalletAPI from '../../.vitepress/theme/components/InteractiveWalletAPI.vue'
+import InteractiveWalletAPIEndpoint1 from '../../.vitepress/theme/components/InteractiveWalletAPIEndpoint1.vue'
+import InteractiveWalletAPIEndpoint2 from '../../.vitepress/theme/components/InteractiveWalletAPIEndpoint2.vue'
+import InteractiveWalletAPIEndpoint3 from '../../.vitepress/theme/components/InteractiveWalletAPIEndpoint3.vue'
+import InteractiveWalletAPIEndpoint4 from '../../.vitepress/theme/components/InteractiveWalletAPIEndpoint4.vue'
+import InteractiveWalletAPIEndpoint5 from '../../.vitepress/theme/components/InteractiveWalletAPIEndpoint5.vue'
+import InteractiveWalletAPIEndpoint6 from '../../.vitepress/theme/components/InteractiveWalletAPIEndpoint6.vue'
+import InteractiveWalletAPIEndpoint7 from '../../.vitepress/theme/components/InteractiveWalletAPIEndpoint7.vue'
+import SimpleOutline from '../../.vitepress/theme/components/SimpleOutline.vue'
+</script>
 
-
-**Responses:**
-- `200` - withdrawal declined
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
+<SimpleOutline :items="[
+  { text: 'Get balances', anchor: '#get-balances' },
+  { text: 'Get total balance in USD', anchor: '#get-total-balance-in-usd' },
+  { text: 'Get user transactions history.', anchor: '#get-user-transactions-history' },
+  { text: 'Returns deposit address for coin+chain. Result is described here. https://bybit-exchange.github.io/docs/v5/asset/deposit/sub-deposit-addr', anchor: '#returns-deposit-address-for-coinchain-result-is-described-here-httpsbybitexchangegithubiodocsv5assetdepositsubdepositaddr' },
+  { text: 'Create internal transfer (operation) between users.', anchor: '#create-internal-transfer-operation-between-users' },
+  { text: 'Create withdrawal (operation) for specified assets', anchor: '#create-withdrawal-operation-for-specified-assets' },
+  { text: 'Reject withdrawal confirmed by user.', anchor: '#reject-withdrawal-confirmed-by-user' }
+]" />

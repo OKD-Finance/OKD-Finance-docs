@@ -1,433 +1,227 @@
+---
+layout: page
+---
+
 # Authentication API
-
-Interactive documentation for Authentication endpoints.
-
-<script setup>
-import InteractiveAuthenticationAPI from '../.vitepress/theme/components/InteractiveAuthenticationAPI.vue'
-</script>
 
 <InteractiveAuthenticationAPI />
 
-## Endpoints Overview
+## Check account existence by firebase token.
+No description available
 
-### POST /auth/check/firebase
+<InteractiveAuthenticationAPIEndpoint1 />
 
-Check account existence by firebase token.
+## Send confirmation code to email.
+No description available
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint2 />
 
-**Responses:**
-- `200` - pair of tokens response or operation response
-- `400` - some logical error in request
-- `500` - some error in internal server
-
-### POST /auth/confirm
-
-Send confirmation code to email.
-
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `Body` (object, optional) - No description
-
-**Responses:**
-- `200` - code is sended
-- `400` - some logical error in request
-- `500` - some error in internal server
-
-### POST /auth/fcm
-
+## Inits operation to create user fcm.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `Body` (object, optional) - user device id, platform and fcm
+<InteractiveAuthenticationAPIEndpoint3 />
 
-**Responses:**
-- `200` - fcm successfully created
-- `500` - some error in internal server
-
-### DELETE /auth/fcm
-
+## Inits operation to delete user fcm by device id and fcm.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `Body` (object, optional) - user device id, platform and fcm
+<InteractiveAuthenticationAPIEndpoint4 />
 
-**Responses:**
-- `200` - fcm successfully created
-- `500` - some error in internal server
+## Get Google link for lgoin/register.
+No description available
 
-### GET /auth/google
+<InteractiveAuthenticationAPIEndpoint5 />
 
-Get Google link for lgoin/register.
-
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-
-**Responses:**
-- `200` - link
-- `400` - some logical error in request
-- `500` - some error in internal server
-
-### POST /auth/jwt/refresh
-
+## Regenerate a pair of authenticate tokens if refresh token is valid
 ! Need refresh token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
+<InteractiveAuthenticationAPIEndpoint6 />
 
-**Responses:**
-- `200` - a pair of new access and refresh tokens
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### PUT /auth/locale
-
+## Inits operation to change current user locale.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint7 />
 
-**Responses:**
-- `200` - locale successfully changed
-- `500` - some error in internal server
-
-### GET /auth/notifications
-
+## Get notifications for user
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `group_id` (string, optional) - Group of notifications. Omitted or 0 mean all.
+<InteractiveAuthenticationAPIEndpoint8 />
 
-- `hide_read` (string, optional) - Hide read notifications. Bool value: true or false.
-
-- `limit` (string, optional) - Limit of records in request
-
-- `offset` (string, optional) - Offset of records in request
-
-
-**Responses:**
-- `200` - list of notifications
-- `500` - internal server error
-
-### PUT /auth/notifications
-
+## Mark all/group of notifications as viewed. Body is optional.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint9 />
 
-**Responses:**
-- `200` - notifications are marked as viewed.
-- `500` - internal server error
-
-### DELETE /auth/notifications
-
+## Delete all/group of notifications. Body is optional.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint10 />
 
-**Responses:**
-- `200` - notifications are deleted.
-- `500` - internal server error
-
-### PUT /auth/notifications/{id}
-
+## Mark notification as viewed.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `id` (string, optional) - ID of notifications.
+<InteractiveAuthenticationAPIEndpoint11 />
 
-
-**Responses:**
-- `200` - notification is marked as viewed.
-- `500` - internal server error
-
-### POST /auth/otp
-
+## Inits operation to turn OTP on (one time password) for current user.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
+<InteractiveAuthenticationAPIEndpoint12 />
 
-**Responses:**
-- `200` - operation attributes
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### DELETE /auth/otp
-
+## Inits operation to turn OTP off (one time password 2FA) for current user by using email and OTP.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `email` (string, optional) - Flag indicates to use only email to turn off 2FA
+<InteractiveAuthenticationAPIEndpoint13 />
 
-
-**Responses:**
-- `200` - operation attributes
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### PUT /auth/password
-
+## Inits operation to change current user password.
+Operation is valid only for regular and firebase accounts.
+It's no need to set old/new password for firebase account.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint14 />
 
-**Responses:**
-- `200` - operation attributes
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
+## Finishes restoration of current user password.
+No description available
 
-### PUT /auth/password/restore
+<InteractiveAuthenticationAPIEndpoint15 />
 
-Finishes restoration of current user password.
+## Inits restoration of current user password.
+No description available
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint16 />
 
-**Responses:**
-- `200` - finish successful
-- `400` - some logical error in request
-- `500` - some error in internal server
+## Check restoration code.
+No description available
 
-### POST /auth/password/restore
+<InteractiveAuthenticationAPIEndpoint17 />
 
-Inits restoration of current user password.
-
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `Body` (object, optional) - No description
-
-**Responses:**
-- `200` - init successful
-- `400` - some logical error in request
-- `500` - some error in internal server
-
-### GET /auth/password/restore/{code}
-
-Check restoration code.
-
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `code` (string, optional) - code from email
-
-**Responses:**
-- `200` - result of checking
-- `400` - some logical error in request
-- `500` - some error in internal server
-
-### GET /auth/profile
-
+## GetProfile returns information about current user.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
+<InteractiveAuthenticationAPIEndpoint18 />
 
-**Responses:**
-- `200` - user information
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### PUT /auth/profile
-
+## SetProfile sets some fields in profile of current user. All fields are optional.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint19 />
 
-**Responses:**
-- `200` - profile is updated successful
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### GET /auth/remove
-
+## Check possibility to remove account.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
+<InteractiveAuthenticationAPIEndpoint20 />
 
-**Responses:**
-- `200` - operation attributes
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### PUT /auth/remove
-
+## Inits operation to remove account. Reason maximum length is 200.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint21 />
 
-**Responses:**
-- `200` - operation attributes
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
+## Confirm login operation.
+No description available
 
-### PUT /auth/sign-in
+<InteractiveAuthenticationAPIEndpoint22 />
 
-Confirm login operation.
+## Logins user and return pair of tokens or login operation with hints.
+No description available
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint23 />
 
-**Responses:**
-- `200` - pair of tokens response or operation response
-- `400` - some logical error in request
-- `500` - some error in internal server
+## Sign in by firebase request.
+No description available
 
-### POST /auth/sign-in
+<InteractiveAuthenticationAPIEndpoint24 />
 
-Logins user and return pair of tokens or login operation with hints.
+## Sign in by Google OAuth2 request.
+No description available
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint25 />
 
-**Responses:**
-- `200` - pair of tokens response or operation response
-- `400` - some logical error in request
-- `500` - some error in internal server
-
-### POST /auth/sign-in/firebase
-
-Sign in by firebase request.
-
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `Body` (object, optional) - No description
-
-**Responses:**
-- `200` - pair of tokens response or operation response
-- `203` - we need additional confirmation codes
-- `400` - some logical error in request
-- `500` - some error in internal server
-
-### POST /auth/sign-in/google
-
-Sign in by Google OAuth2 request.
-
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `Body` (object, optional) - No description
-
-**Responses:**
-- `200` - pair of tokens response or operation response
-- `400` - some logical error in request
-- `500` - some error in internal server
-
-### PUT /auth/sign-in/resend
-
+## Resend email/phone codes for sign-in process.
 Only one of flags should be set.
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint26 />
 
-**Responses:**
-- `200` - operation response
-- `400` - some logical error in request
-- `500` - some error in internal server
-
-### POST /auth/sign-out
-
+## Logout remove user sessions and makes the token invalid.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
+<InteractiveAuthenticationAPIEndpoint27 />
 
-**Responses:**
-- `200` - user session was removed
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
+## Registration save user in database and send verification url to email.
+No description available
 
-### POST /auth/sign-up
+<InteractiveAuthenticationAPIEndpoint28 />
 
-Registration save user in database and send verification url to email.
+## Sign up by Google OAuth2 request.
+No description available
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `Body` (object, optional) - No description
+<InteractiveAuthenticationAPIEndpoint29 />
 
-**Responses:**
-- `200` - user was registrated
-- `400` - some logical error in request
-- `500` - some error in internal server
-
-### POST /auth/sign-up/google
-
-Sign up by Google OAuth2 request.
-
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `X-RECAPTCHA` (string, required) - RECAPTCHA token
-- `X-PLATFORM-ID` (string, required) - recaptcha platform id
-- `Body` (object, optional) - No description
-
-**Responses:**
-- `200` - user was registrated
-- `400` - some logical error in request
-- `500` - some error in internal server
-
-### PUT /user/flags
-
+## SetProfile sets profile flags of current user.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `Body` (object, optional) - profile flag. Can be *futures_order_confirmation* , *futures_visited*, *first_order_after_one_click_trading*
+<InteractiveAuthenticationAPIEndpoint30 />
 
-**Responses:**
-- `200` - profile is updated successful
-- `500` - some error in internal server
+<script setup>
+import InteractiveAuthenticationAPI from '../../.vitepress/theme/components/InteractiveAuthenticationAPI.vue'
+import InteractiveAuthenticationAPIEndpoint1 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint1.vue'
+import InteractiveAuthenticationAPIEndpoint2 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint2.vue'
+import InteractiveAuthenticationAPIEndpoint3 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint3.vue'
+import InteractiveAuthenticationAPIEndpoint4 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint4.vue'
+import InteractiveAuthenticationAPIEndpoint5 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint5.vue'
+import InteractiveAuthenticationAPIEndpoint6 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint6.vue'
+import InteractiveAuthenticationAPIEndpoint7 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint7.vue'
+import InteractiveAuthenticationAPIEndpoint8 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint8.vue'
+import InteractiveAuthenticationAPIEndpoint9 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint9.vue'
+import InteractiveAuthenticationAPIEndpoint10 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint10.vue'
+import InteractiveAuthenticationAPIEndpoint11 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint11.vue'
+import InteractiveAuthenticationAPIEndpoint12 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint12.vue'
+import InteractiveAuthenticationAPIEndpoint13 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint13.vue'
+import InteractiveAuthenticationAPIEndpoint14 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint14.vue'
+import InteractiveAuthenticationAPIEndpoint15 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint15.vue'
+import InteractiveAuthenticationAPIEndpoint16 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint16.vue'
+import InteractiveAuthenticationAPIEndpoint17 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint17.vue'
+import InteractiveAuthenticationAPIEndpoint18 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint18.vue'
+import InteractiveAuthenticationAPIEndpoint19 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint19.vue'
+import InteractiveAuthenticationAPIEndpoint20 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint20.vue'
+import InteractiveAuthenticationAPIEndpoint21 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint21.vue'
+import InteractiveAuthenticationAPIEndpoint22 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint22.vue'
+import InteractiveAuthenticationAPIEndpoint23 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint23.vue'
+import InteractiveAuthenticationAPIEndpoint24 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint24.vue'
+import InteractiveAuthenticationAPIEndpoint25 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint25.vue'
+import InteractiveAuthenticationAPIEndpoint26 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint26.vue'
+import InteractiveAuthenticationAPIEndpoint27 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint27.vue'
+import InteractiveAuthenticationAPIEndpoint28 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint28.vue'
+import InteractiveAuthenticationAPIEndpoint29 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint29.vue'
+import InteractiveAuthenticationAPIEndpoint30 from '../../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint30.vue'
+import SimpleOutline from '../../.vitepress/theme/components/SimpleOutline.vue'
+</script>
 
+<SimpleOutline :items="[
+  { text: 'Check account existence by firebase token.', anchor: '#check-account-existence-by-firebase-token' },
+  { text: 'Send confirmation code to email.', anchor: '#send-confirmation-code-to-email' },
+  { text: 'Inits operation to create user fcm.', anchor: '#inits-operation-to-create-user-fcm' },
+  { text: 'Inits operation to delete user fcm by device id and fcm.', anchor: '#inits-operation-to-delete-user-fcm-by-device-id-and-fcm' },
+  { text: 'Get Google link for lgoin/register.', anchor: '#get-google-link-for-lgoinregister' },
+  { text: 'Regenerate a pair of authenticate tokens if refresh token is valid', anchor: '#regenerate-a-pair-of-authenticate-tokens-if-refresh-token-is-valid' },
+  { text: 'Inits operation to change current user locale.', anchor: '#inits-operation-to-change-current-user-locale' },
+  { text: 'Get notifications for user', anchor: '#get-notifications-for-user' },
+  { text: 'Mark all/group of notifications as viewed. Body is optional.', anchor: '#mark-allgroup-of-notifications-as-viewed-body-is-optional' },
+  { text: 'Delete all/group of notifications. Body is optional.', anchor: '#delete-allgroup-of-notifications-body-is-optional' },
+  { text: 'Mark notification as viewed.', anchor: '#mark-notification-as-viewed' },
+  { text: 'Inits operation to turn OTP on (one time password) for current user.', anchor: '#inits-operation-to-turn-otp-on-one-time-password-for-current-user' },
+  { text: 'Inits operation to turn OTP off (one time password 2FA) for current user by using email and OTP.', anchor: '#inits-operation-to-turn-otp-off-one-time-password-2fa-for-current-user-by-using-email-and-otp' },
+  { text: 'Inits operation to change current user password. Operation is valid only for regular and firebase accounts. It\'s no need to set old/new password for firebase account.', anchor: '#inits-operation-to-change-current-user-password-operation-is-valid-only-for-regular-and-firebase-accounts-its-no-need-to-set-oldnew-password-for-firebase-account' },
+  { text: 'Finishes restoration of current user password.', anchor: '#finishes-restoration-of-current-user-password' },
+  { text: 'Inits restoration of current user password.', anchor: '#inits-restoration-of-current-user-password' },
+  { text: 'Check restoration code.', anchor: '#check-restoration-code' },
+  { text: 'GetProfile returns information about current user.', anchor: '#getprofile-returns-information-about-current-user' },
+  { text: 'SetProfile sets some fields in profile of current user. All fields are optional.', anchor: '#setprofile-sets-some-fields-in-profile-of-current-user-all-fields-are-optional' },
+  { text: 'Check possibility to remove account.', anchor: '#check-possibility-to-remove-account' },
+  { text: 'Inits operation to remove account. Reason maximum length is 200.', anchor: '#inits-operation-to-remove-account-reason-maximum-length-is-200' },
+  { text: 'Confirm login operation.', anchor: '#confirm-login-operation' },
+  { text: 'Logins user and return pair of tokens or login operation with hints.', anchor: '#logins-user-and-return-pair-of-tokens-or-login-operation-with-hints' },
+  { text: 'Sign in by firebase request.', anchor: '#sign-in-by-firebase-request' },
+  { text: 'Sign in by Google OAuth2 request.', anchor: '#sign-in-by-google-oauth2-request' },
+  { text: 'Resend email/phone codes for sign-in process.', anchor: '#resend-emailphone-codes-for-signin-process' },
+  { text: 'Logout remove user sessions and makes the token invalid.', anchor: '#logout-remove-user-sessions-and-makes-the-token-invalid' },
+  { text: 'Registration save user in database and send verification url to email.', anchor: '#registration-save-user-in-database-and-send-verification-url-to-email' },
+  { text: 'Sign up by Google OAuth2 request.', anchor: '#sign-up-by-google-oauth2-request' },
+  { text: 'SetProfile sets profile flags of current user.', anchor: '#setprofile-sets-profile-flags-of-current-user' }
+]" />

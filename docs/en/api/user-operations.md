@@ -1,58 +1,36 @@
+---
+layout: page
+---
+
 # User Operations API
-
-Interactive documentation for User Operations endpoints.
-
-<script setup>
-import InteractiveUserOperationsAPI from '../.vitepress/theme/components/InteractiveUserOperationsAPI.vue'
-</script>
 
 <InteractiveUserOperationsAPI />
 
-## Endpoints Overview
-
-### PUT /operations/{uuid}/cancel
-
+## Cancels operation by uuid.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `uuid` (string, optional) - UUID of transaction
+<InteractiveUserOperationsAPIEndpoint1 />
 
-
-**Responses:**
-- `200` - operation cancelled
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### PUT /operations/{uuid}/confirm
-
+## Confirms operation by uuid and code.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `uuid` (string, optional) - UUID of operation
+<InteractiveUserOperationsAPIEndpoint2 />
 
-- `Body` (object, optional) - No description
-
-**Responses:**
-- `200` - operation completed
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
-### PUT /operations/{uuid}/resend
-
+## Resends code to email for specified operation.
 ! Need access token in bearer token authorization
 
-**Parameters:**
-- `Fingerprint` (string, required) - user device unique id
-- `uuid` (string, optional) - UUID of transaction
+<InteractiveUserOperationsAPIEndpoint3 />
 
+<script setup>
+import InteractiveUserOperationsAPI from '../../.vitepress/theme/components/InteractiveUserOperationsAPI.vue'
+import InteractiveUserOperationsAPIEndpoint1 from '../../.vitepress/theme/components/InteractiveUserOperationsAPIEndpoint1.vue'
+import InteractiveUserOperationsAPIEndpoint2 from '../../.vitepress/theme/components/InteractiveUserOperationsAPIEndpoint2.vue'
+import InteractiveUserOperationsAPIEndpoint3 from '../../.vitepress/theme/components/InteractiveUserOperationsAPIEndpoint3.vue'
+import SimpleOutline from '../../.vitepress/theme/components/SimpleOutline.vue'
+</script>
 
-**Responses:**
-- `200` - operation attributes
-- `400` - some logical error in request
-- `401` - unauthorized error
-- `500` - some error in internal server
-
+<SimpleOutline :items="[
+  { text: 'Cancels operation by uuid.', anchor: '#cancels-operation-by-uuid' },
+  { text: 'Confirms operation by uuid and code.', anchor: '#confirms-operation-by-uuid-and-code' },
+  { text: 'Resends code to email for specified operation.', anchor: '#resends-code-to-email-for-specified-operation' }
+]" />

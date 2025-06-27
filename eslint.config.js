@@ -112,7 +112,7 @@ export default [
             'swagger-generator.cjs',
             'swagger-generator.js',
             'template-new-component.js',
-            'docs/.vitepress/theme/components/Interactive*API.vue',
+            'docs/.vitepress/theme/components/Interactive*.vue',
             'temp_backup/**',
             'temp_build/**'
         ]

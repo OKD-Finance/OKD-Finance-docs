@@ -243,84 +243,82 @@ ${apiItems}
             let configContent = this.readConfig();
             if (!configContent) return false;
 
-            // Find the API Reference section
-            const apiSectionRegex = /(\s+text: 'API Reference',\s+items: \[\s*)([\s\S]*?)(\s+\]\s+\})/;
+            // Найти секцию '/en/api/' в sidebar
+            const apiSectionRegex = /(\s+)'\/en\/api\/': \[\s*\n([\s\S]*?)\n(\s+)\],/;
             const match = configContent.match(apiSectionRegex);
 
             if (!match) {
-                console.log('❌ Could not find API Reference section in config');
+                console.log('❌ Could not find /en/api/ section in sidebar');
                 return false;
             }
 
-            const [, beforeItems, itemsContent, afterItems] = match;
+            const [fullMatch, indent, sectionContent, endIndent] = match;
 
-            // Remove existing entries for this API to prevent duplicates
-            const existingPatterns = [
-                new RegExp(`\\s*\\{[^}]*text:\\s*'${apiName}'[^}]*\\}[,]?\\s*`, 'g'),
-                new RegExp(`\\s*\\{[^}]*text:\\s*'${apiName.replace(' API', '')}'[^}]*\\}[,]?\\s*`, 'g'),
-                new RegExp(`\\s*\\{[^}]*text:\\s*'${apiName.replace(' API', '')} API'[^}]*\\}[,]?\\s*`, 'g')
-            ];
+            // Парсим существующие API элементы из секции
+            const existingApis = new Set();
+            const apiItemRegex = /text:\s*['"](.*?)['"],/g;
+            let itemMatch;
 
-            let cleanedItemsContent = itemsContent;
-            existingPatterns.forEach(pattern => {
-                cleanedItemsContent = cleanedItemsContent.replace(pattern, '');
-            });
+            while ((itemMatch = apiItemRegex.exec(sectionContent)) !== null) {
+                if (itemMatch[1] !== 'API Reference' && itemMatch[1] !== 'Overview') {
+                    existingApis.add(itemMatch[1]);
+                }
+            }
 
-            // Create new API entry
-            let newApiEntry;
+            // Если API уже существует, не добавляем дубликат
+            if (existingApis.has(apiName)) {
+                console.log(`✅ ${apiName} already exists in navigation`);
+                return true;
+            }
+
+            // Создаем новую запись API
+            let newApiItem;
             if (subItems.length > 0) {
                 const subItemsStr = subItems.map(item =>
-                    `                                { text: '${item.text}', link: '${item.link}' }`
+                    `${indent}                    { text: '${item.text}', link: '${item.link}' }`
                 ).join(',\n');
 
-                newApiEntry = `                        {
-                            text: '${apiName}',
-                            link: '${apiLink}',
-                            collapsed: true,
-                            items: [
+                newApiItem = `,
+${indent}            {
+${indent}                text: '${apiName}',
+${indent}                link: '${apiLink}',
+${indent}                collapsed: true,
+${indent}                items: [
 ${subItemsStr}
-                            ]
-                        },`;
+${indent}                ]
+${indent}            }`;
             } else {
-                newApiEntry = `                        {
-                            text: '${apiName}',
-                            link: '${apiLink}'
-                        },`;
+                newApiItem = `,
+${indent}            {
+${indent}                text: '${apiName}',
+${indent}                link: '${apiLink}'
+${indent}            }`;
             }
 
-            // Insert after Overview but before other APIs
-            let updatedItemsContent = cleanedItemsContent;
-            const overviewIndex = cleanedItemsContent.indexOf("text: 'Overview'");
+            // Найти место для вставки (после Overview)
+            const overviewRegex = /(\s+text:\s*'Overview',\s*\n\s+link:\s*'\/en\/api\/overview'\s*\n\s+\})/;
+            const overviewMatch = sectionContent.match(overviewRegex);
 
-            if (overviewIndex !== -1) {
-                // Find the end of Overview entry
-                const overviewEnd = cleanedItemsContent.indexOf('},', overviewIndex) + 2;
-                const beforeOverviewEnd = cleanedItemsContent.substring(0, overviewEnd);
-                const afterOverviewEnd = cleanedItemsContent.substring(overviewEnd);
-
-                updatedItemsContent = beforeOverviewEnd + '\n' + newApiEntry + afterOverviewEnd;
+            let newSectionContent;
+            if (overviewMatch) {
+                // Вставляем после Overview
+                newSectionContent = sectionContent.replace(overviewRegex, `$1${newApiItem}`);
             } else {
-                // If no Overview, add at the beginning
-                updatedItemsContent = newApiEntry + '\n' + cleanedItemsContent;
+                // Если Overview не найден, добавляем в конец items
+                const itemsEndRegex = /(\s+\]\s*\n\s+\})/;
+                newSectionContent = sectionContent.replace(itemsEndRegex, `${newApiItem}$1`);
             }
 
-            // Replace the content
-            const newConfigContent = configContent.replace(
-                apiSectionRegex,
-                beforeItems + updatedItemsContent + afterItems
-            );
+            // Создаем новую секцию API
+            const newApiSection = `${indent}'/en/api/': [
+${newSectionContent}
+${endIndent}],`;
 
+            // Заменяем в конфиге
+            const newConfigContent = configContent.replace(fullMatch, newApiSection);
             fs.writeFileSync(this.configPath, newConfigContent, 'utf8');
+
             console.log(`✅ Added ${apiName} to navigation (removed duplicates)`);
-
-            // Auto-fix navigation after adding
-            console.log('\n🔧 Running automatic navigation validation...');
-            const wasFixed = this.fixNavigation();
-
-            if (wasFixed) {
-                console.log('✅ Navigation automatically fixed!');
-            }
-
             return true;
 
         } catch (error) {

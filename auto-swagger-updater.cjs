@@ -1,7 +1,117 @@
+/* eslint-env node */
+/* global AbortController, setTimeout, clearTimeout, fetch */
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
+// Navigation updater class
+class NavigationUpdater {
+  constructor(configPath = 'docs/.vitepress/config.ts') {
+    this.configPath = configPath;
+    this.apiList = []; // Список API для пересоздания навигации
+  }
+
+  // Создание правильной структуры навигации с нуля
+  rebuildApiNavigation(apis = []) {
+    try {
+      let configContent = fs.readFileSync(this.configPath, 'utf8');
+
+      // Найти и заменить всю секцию /en/api/ полностью
+      // Используем более гибкий regex для поиска секции
+      const apiSectionRegex = /(\/en\/api\/'\s*:\s*\[[\s\S]*?\]\s*,)/;
+
+      // Альтернативные regex для поврежденных конфигураций
+      const altRegexes = [
+        /('{2,}\/en\/api\/'\s*:\s*\[[\s\S]*?\]\s*,)/,  // Множественные кавычки в начале
+        /(\/en\/api\/\s*'\s*:\s*\[[\s\S]*?\]\s*,)/,    // Перепутанные кавычки
+        /(\/en\/api\/\s*:\s*\[[\s\S]*?\]\s*,)/,        // Без кавычек
+        /('\/en\/api\/'\s*:\s*\[[\s\S]*?\]\s*,)/       // Правильный формат
+      ];
+
+      // Создать правильную структуру навигации
+      const apiItems = [
+        { text: 'Overview', link: '/en/api/overview' },
+        ...apis.map(api => ({ text: api.name, link: api.link }))
+      ];
+
+      const newApiSection = `'/en/api/': [
+                {
+                    text: 'API Reference',
+                    items: [
+${apiItems.map(item => `                        { text: '${item.text}', link: '${item.link}' }`).join(',\n')}
+                    ]
+                }
+            ],`;
+
+      let newConfigContent = configContent;
+      let replaced = false;
+
+      // Попробовать основной regex
+      if (configContent.match(apiSectionRegex)) {
+        newConfigContent = configContent.replace(apiSectionRegex, newApiSection);
+        replaced = true;
+        console.log('✅ Found and replaced API section using main regex');
+      } else {
+        // Попробовать альтернативные regex для поврежденных конфигураций
+        for (let i = 0; i < altRegexes.length; i++) {
+          const altRegex = altRegexes[i];
+          if (configContent.match(altRegex)) {
+            newConfigContent = configContent.replace(altRegex, newApiSection);
+            replaced = true;
+            console.log(`✅ Found and replaced API section using alternative regex ${i + 1}`);
+            break;
+          }
+        }
+      }
+
+      if (!replaced) {
+        console.log('❌ Could not find /en/api/ section in config with any regex pattern');
+        console.log('🔍 Available sections in config:');
+        const sections = configContent.match(/\/[^/]+\/[^']*':\s*\[/g) || [];
+        sections.forEach(section => console.log(`   - ${section}`));
+        return false;
+      }
+
+      // Проверить что замена произошла корректно
+      if (newConfigContent === configContent) {
+        console.log('❌ Navigation section was not replaced');
+        return false;
+      }
+
+      fs.writeFileSync(this.configPath, newConfigContent, 'utf8');
+      console.log(`✅ Rebuilt navigation with ${apis.length} APIs`);
+
+      return true;
+
+    } catch (error) {
+      console.error('❌ Error rebuilding navigation:', error.message);
+      console.error('Stack trace:', error.stack);
+      return false;
+    }
+  }
+
+  addApiToNavigation(apiName, apiLink, subItems = []) {
+    // Новый подход: не модифицируем sidebar навигацию
+    // Вместо этого просто логируем что API создан
+    console.log(`✅ API navigation entry ready: ${apiName} -> ${apiLink}`);
+
+    // Добавляем в список для отслеживания
+    if (!this.apiList) {
+      this.apiList = [];
+    }
+
+    // Удаляем дубликаты
+    this.apiList = this.apiList.filter(api => api.name !== apiName);
+
+    // Добавляем новый API
+    this.apiList.push({ name: apiName, link: apiLink });
+
+    console.log(`📝 Total APIs tracked: ${this.apiList.length}`);
+    return true; // Всегда успешно
+  }
+}
+
+// Auto Swagger Updater - объединяет функции автообновления с правильными методами генерации
 class AutoSwaggerUpdater {
   constructor(config = {}) {
     this.config = {
@@ -16,6 +126,7 @@ class AutoSwaggerUpdater {
     };
 
     this.cache = this.loadCache();
+    this.navUpdater = new NavigationUpdater(this.config.configPath);
     console.log('🚀 Auto Swagger Updater initialized');
     console.log(`📡 Swagger URL: ${this.config.swaggerUrl}`);
   }
@@ -46,117 +157,478 @@ class AutoSwaggerUpdater {
     }
   }
 
-  // Загрузка Swagger JSON
-  async fetchSwagger() {
+  // Сброс к начальному состоянию
+  async reset(options = {}) {
     try {
-      console.log(`📥 Fetching Swagger from: ${this.config.swaggerUrl}`);
+      const {
+        confirmReset = true,
+        removeComponents = true,
+        removeMarkdown = true,
+        clearCache = true,
+        resetNavigation = true
+      } = options;
 
-      const fetch = (await import('node-fetch')).default;
-      const { AbortController } = globalThis;
+      console.log('🔄 Resetting to initial state...\n');
+
+      // Подтверждение если требуется
+      if (confirmReset && process.stdin.isTTY) {
+        const readline = require('readline');
+        const rl = readline.createInterface({
+          input: process.stdin,
+          output: process.stdout
+        });
+
+        const answer = await new Promise(resolve => {
+          rl.question('⚠️  This will remove all generated API documentation. Continue? (y/N): ', resolve);
+        });
+        rl.close();
+
+        if (answer.toLowerCase() !== 'y' && answer.toLowerCase() !== 'yes') {
+          console.log('❌ Reset cancelled by user');
+          return { cancelled: true };
+        }
+      }
+
+      const removedFiles = [];
+      const errors = [];
+
+      // 1. Удаление сгенерированных Vue компонентов
+      if (removeComponents) {
+        console.log('1️⃣ Removing generated Vue components...');
+
+        if (fs.existsSync(this.config.componentsDir)) {
+          const componentFiles = fs.readdirSync(this.config.componentsDir);
+
+          for (const file of componentFiles) {
+            if (file.startsWith('Interactive') && file.endsWith('API.vue')) {
+              const filePath = path.join(this.config.componentsDir, file);
+              try {
+                fs.unlinkSync(filePath);
+                removedFiles.push(filePath);
+                console.log(`   ✅ Removed: ${file}`);
+              } catch (error) {
+                errors.push(`Failed to remove ${file}: ${error.message}`);
+                console.log(`   ❌ Failed to remove: ${file}`);
+              }
+            }
+          }
+        }
+      }
+
+      // 2. Удаление сгенерированных Markdown файлов
+      if (removeMarkdown) {
+        console.log('\n2️⃣ Removing generated Markdown files...');
+
+        if (fs.existsSync(this.config.docsDir)) {
+          const mdFiles = fs.readdirSync(this.config.docsDir);
+          const protectedFiles = ['overview.md', 'index.md'];
+
+          for (const file of mdFiles) {
+            if (file.endsWith('.md') && !protectedFiles.includes(file)) {
+              const filePath = path.join(this.config.docsDir, file);
+
+              try {
+                const content = fs.readFileSync(filePath, 'utf8');
+                if (content.includes('Interactive') && content.includes('API.vue')) {
+                  fs.unlinkSync(filePath);
+                  removedFiles.push(filePath);
+                  console.log(`   ✅ Removed: ${file}`);
+                }
+              } catch (error) {
+                errors.push(`Failed to remove ${file}: ${error.message}`);
+                console.log(`   ❌ Failed to remove: ${file}`);
+              }
+            }
+          }
+        }
+      }
+
+      // 3. Очистка кеша
+      if (clearCache) {
+        console.log('\n3️⃣ Clearing cache...');
+
+        if (fs.existsSync(this.config.cacheFile)) {
+          try {
+            fs.unlinkSync(this.config.cacheFile);
+            removedFiles.push(this.config.cacheFile);
+            console.log(`   ✅ Removed cache file: ${this.config.cacheFile}`);
+          } catch (error) {
+            errors.push(`Failed to remove cache: ${error.message}`);
+            console.log(`   ❌ Failed to remove cache file`);
+          }
+        }
+
+        this.cache = {
+          lastHash: null,
+          lastUpdate: null,
+          apis: {},
+          metadata: {}
+        };
+      }
+
+      // 4. Сброс навигации к начальному состоянию (новый подход - только очистка списка)
+      if (resetNavigation) {
+        console.log('\n4️⃣ Clearing API tracking list...');
+
+        try {
+          // Просто очищаем список отслеживаемых API
+          this.navUpdater.apiList = [];
+          console.log(`   ✅ API tracking list cleared`);
+          console.log(`   💡 Sidebar navigation remains unchanged - using internal page navigation`);
+        } catch (error) {
+          errors.push(`API list clear error: ${error.message}`);
+          console.log(`   ❌ API list clear error: ${error.message}`);
+        }
+      }
+
+      // 5. Отчет о результатах
+      console.log('\n📊 Reset Summary:');
+      console.log(`   • Removed files: ${removedFiles.length}`);
+      console.log(`   • Errors: ${errors.length}`);
+
+      if (removedFiles.length > 0) {
+        console.log('\n✅ Removed files:');
+        removedFiles.forEach(file => console.log(`   - ${file}`));
+      }
+
+      if (errors.length > 0) {
+        console.log('\n❌ Errors:');
+        errors.forEach(error => console.log(`   - ${error}`));
+      }
+
+      console.log('\n🎉 Reset to initial state completed!');
+      console.log('💡 You can now run "npm run swagger:generate-all" to regenerate all APIs');
+
+      return {
+        success: true,
+        removedFiles: removedFiles.length,
+        errors: errors.length,
+        details: { removedFiles, errors }
+      };
+
+    } catch (error) {
+      console.error('❌ Reset failed:', error.message);
+      return {
+        success: false,
+        error: error.message
+      };
+    }
+  }
+
+  // Сброс навигации к начальному состоянию
+  async resetNavigationToInitial() {
+    try {
+      // Очистить список API
+      this.navUpdater.apiList = [];
+
+      // Восстановить config.ts из git если он поврежден
+      const { exec } = require('child_process');
+      const { promisify } = require('util');
+      const execAsync = promisify(exec);
+
+      try {
+        await execAsync('git checkout docs/.vitepress/config.ts');
+        console.log('✅ Restored config.ts from git');
+      } catch (gitError) {
+        console.log('⚠️ Could not restore from git, proceeding with manual fix');
+      }
+
+      // Пересоздать навигацию только с Overview
+      const success = this.navUpdater.rebuildApiNavigation([]);
+
+      if (success) {
+        console.log('✅ Navigation reset to initial state (Overview only)');
+        return { success: true, removedApis: 0 };
+      } else {
+        console.log('❌ Failed to reset navigation');
+        return { success: false, removedApis: 0 };
+      }
+
+    } catch (error) {
+      console.error('❌ Error resetting navigation:', error.message);
+      return { success: false, removedApis: 0 };
+    }
+  }
+
+  // Получение Swagger документации
+  async fetchSwaggerDocs() {
+    try {
+      console.log('📡 Fetching Swagger documentation...');
+
       const controller = new AbortController();
-      const timeout = global.setTimeout(() => controller.abort(), this.config.timeout);
+      const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
 
       const response = await fetch(this.config.swaggerUrl, {
         signal: controller.signal,
         headers: {
-          'User-Agent': 'OKD-Finance-Docs-Generator/1.0.0'
+          'User-Agent': 'Auto-Swagger-Updater/1.0',
+          'Accept': 'application/json'
         }
       });
 
-      global.clearTimeout(timeout);
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
       const swaggerData = await response.json();
-      console.log(`✅ Swagger loaded: ${Object.keys(swaggerData.paths || {}).length} endpoints found`);
+      const swaggerHash = crypto.createHash('md5').update(JSON.stringify(swaggerData)).digest('hex');
 
-      return swaggerData;
+      console.log(`✅ Swagger documentation fetched (hash: ${swaggerHash.substring(0, 8)}...)`);
+
+      return { swaggerData, swaggerHash };
+
     } catch (error) {
       if (error.name === 'AbortError') {
-        throw new Error(`Timeout after ${this.config.timeout}ms`);
+        throw new Error(`Request timeout after ${this.config.timeout}ms`);
       }
       throw error;
     }
   }
 
-  // Вычисление хеша
-  calculateHash(data) {
-    return crypto.createHash('sha256').update(JSON.stringify(data)).digest('hex');
-  }
-
-  // Проверка изменений
-  async checkForChanges(forceUpdate = false) {
+  // Проверка на изменения
+  async checkForUpdates() {
     try {
-      const swaggerData = await this.fetchSwagger();
-      const currentHash = this.calculateHash(swaggerData);
+      const { swaggerData, swaggerHash } = await this.fetchSwaggerDocs();
 
-      if (!forceUpdate && this.cache.lastHash === currentHash) {
-        console.log('✅ No changes detected');
-        return { hasChanges: false, swaggerData };
+      if (this.cache.lastHash === swaggerHash) {
+        console.log('✅ No changes detected in Swagger documentation');
+        return { hasUpdates: false, swaggerData, swaggerHash };
       }
 
-      console.log(`🔄 Changes detected (hash: ${currentHash.substring(0, 8)}...)`);
-      return { hasChanges: true, swaggerData, currentHash };
+      console.log('🔄 Changes detected in Swagger documentation');
+      return { hasUpdates: true, swaggerData, swaggerHash };
+
     } catch (error) {
-      console.error('❌ Failed to check for changes:', error.message);
+      console.error('❌ Failed to check for updates:', error.message);
       throw error;
     }
   }
 
-  // Извлечение тегов из Swagger
-  extractTags(swaggerData) {
-    const tags = {};
-    const paths = swaggerData.paths || {};
+  // Обновление всех API
+  async updateAll() {
+    try {
+      const { hasUpdates, swaggerData, swaggerHash } = await this.checkForUpdates();
 
-    Object.entries(paths).forEach(([path, methods]) => {
-      Object.entries(methods).forEach(([method, endpoint]) => {
-        if (endpoint.tags && endpoint.tags.length > 0) {
-          const tag = endpoint.tags[0];
-          if (!tags[tag]) {
-            tags[tag] = [];
-          }
-          tags[tag].push({
-            path,
-            method: method.toUpperCase(),
-            summary: endpoint.summary || '',
-            description: endpoint.description || '',
-            operationId: endpoint.operationId || '',
-            parameters: endpoint.parameters || [],
-            requestBody: endpoint.requestBody || null,
-            responses: endpoint.responses || {},
-            security: endpoint.security || []
+      if (!hasUpdates) {
+        return { updated: false, message: 'No updates needed' };
+      }
+
+      console.log('🔄 Starting API documentation update...');
+
+      const results = await this.generateAllAPIs(swaggerData);
+
+      // Обновление кеша
+      this.cache.lastHash = swaggerHash;
+      this.cache.lastUpdate = new Date().toISOString();
+      this.cache.apis = results.apis;
+      this.cache.metadata = {
+        totalApis: results.totalApis,
+        totalEndpoints: results.totalEndpoints,
+        generatedAt: new Date().toISOString()
+      };
+
+      this.saveCache();
+
+      console.log('🎉 API documentation update completed!');
+      console.log(`📊 Generated ${results.totalApis} APIs with ${results.totalEndpoints} endpoints`);
+
+      return {
+        updated: true,
+        results,
+        hash: swaggerHash
+      };
+
+    } catch (error) {
+      console.error('❌ Update failed:', error.message);
+      throw error;
+    }
+  }
+
+  // Генерация всех API из Swagger
+  async generateAllAPIs(swaggerData) {
+    const results = {
+      apis: {},
+      totalApis: 0,
+      totalEndpoints: 0,
+      errors: []
+    };
+
+    try {
+      // Группировка endpoint'ов по тегам
+      const apiGroups = this.groupEndpointsByTags(swaggerData);
+
+      for (const [tagName, endpoints] of Object.entries(apiGroups)) {
+        try {
+          console.log(`\n🔧 Generating ${tagName} API...`);
+
+          const apiResult = await this.generateAPI(tagName, endpoints);
+
+          results.apis[tagName] = apiResult;
+          results.totalApis++;
+          results.totalEndpoints += endpoints.length;
+
+          console.log(`✅ ${tagName} API generated (${endpoints.length} endpoints)`);
+
+        } catch (error) {
+          console.error(`❌ Failed to generate ${tagName} API:`, error.message);
+          results.errors.push({ api: tagName, error: error.message });
+        }
+      }
+
+      return results;
+
+    } catch (error) {
+      console.error('❌ Failed to generate APIs:', error.message);
+      throw error;
+    }
+  }
+
+  // Группировка endpoint'ов по тегам
+  groupEndpointsByTags(swaggerData) {
+    const apiGroups = {};
+
+    if (!swaggerData.paths) {
+      throw new Error('No paths found in Swagger documentation');
+    }
+
+    for (const [path, methods] of Object.entries(swaggerData.paths)) {
+      for (const [method, endpoint] of Object.entries(methods)) {
+        if (typeof endpoint !== 'object' || !endpoint.tags) continue;
+
+        const tag = endpoint.tags[0] || 'Default';
+
+        if (!apiGroups[tag]) {
+          apiGroups[tag] = [];
+        }
+
+        apiGroups[tag].push({
+          method: method.toUpperCase(),
+          path,
+          title: endpoint.summary || `${method.toUpperCase()} ${path}`,
+          description: endpoint.description || 'No description available',
+          parameters: this.extractParameters(endpoint),
+          responses: endpoint.responses || {}
+        });
+      }
+    }
+
+    return apiGroups;
+  }
+
+  // Извлечение параметров из endpoint'а
+  extractParameters(endpoint) {
+    const parameters = [];
+
+    // Parameters из самого endpoint'а
+    if (endpoint.parameters) {
+      endpoint.parameters.forEach(param => {
+        if (param.in === 'query' || param.in === 'path') {
+          parameters.push({
+            name: param.name,
+            type: param.schema?.type || 'string',
+            description: param.description || '',
+            required: param.required || false
           });
         }
       });
-    });
-
-    return tags;
-  }
-
-  // Показать доступные теги
-  async showTags() {
-    try {
-      const swaggerData = await this.fetchSwagger();
-      const tags = this.extractTags(swaggerData);
-
-      console.log('\n📋 Available Swagger Tags:');
-      Object.entries(tags).forEach(([tag, endpoints], index) => {
-        console.log(`${index + 1}. ${tag} (${endpoints.length} endpoints)`);
-      });
-
-      return tags;
-    } catch (error) {
-      console.error('❌ Failed to load tags:', error.message);
-      throw error;
     }
+
+    // Request body parameters
+    if (endpoint.requestBody?.content?.['application/json']?.schema?.properties) {
+      const properties = endpoint.requestBody.content['application/json'].schema.properties;
+
+      for (const [name, prop] of Object.entries(properties)) {
+        parameters.push({
+          name,
+          type: prop.type || 'string',
+          description: prop.description || '',
+          required: endpoint.requestBody.content['application/json'].schema.required?.includes(name) || false
+        });
+      }
+    }
+
+    return parameters;
   }
 
-  // Генерация Vue компонента
-  generateVueComponent(tagName, endpoints) {
+  // Генерация API (использует методы из universal-swagger-generator-final.cjs)
+  async generateAPI(tagName, endpoints) {
+    const apiName = `${tagName} API`;
     const componentName = `Interactive${tagName.replace(/[^a-zA-Z0-9]/g, '')}API`;
 
+    // Создание директорий
+    if (!fs.existsSync(this.config.componentsDir)) {
+      fs.mkdirSync(this.config.componentsDir, { recursive: true });
+    }
+    if (!fs.existsSync(this.config.docsDir)) {
+      fs.mkdirSync(this.config.docsDir, { recursive: true });
+    }
+
+    // Перенесенные методы из universal-swagger-generator-final.cjs
+
+
+
+    // Генерация Vue компонента
+    const componentContent = this.generateVueComponent(apiName, endpoints);
+    const componentPath = path.join(this.config.componentsDir, `${componentName}.vue`);
+    fs.writeFileSync(componentPath, componentContent, 'utf8');
+
+    // Генерация отдельных компонентов для каждого endpoint'а
+    for (let i = 0; i < endpoints.length; i++) {
+      const endpointComponent = this.generateEndpointComponent(componentName, endpoints[i], i + 1);
+      const endpointPath = path.join(this.config.componentsDir, `${componentName}Endpoint${i + 1}.vue`);
+      fs.writeFileSync(endpointPath, endpointComponent, 'utf8');
+    }
+
+    // Генерация Markdown страницы
+    const apiNameLower = tagName.toLowerCase().replace(/\s+/g, '-').replace(/-api$/, '');
+    const fileName = apiNameLower === 'user' ? 'users' : apiNameLower;
+
+    const markdownPage = `---
+layout: page
+---
+
+# ${apiName}
+
+<SimpleOutline />
+
+${endpoints.map((endpoint, index) => {
+      const endpointId = `${endpoint.method.toLowerCase()}-${endpoint.path.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')}`;
+      return `## ${endpoint.method.toUpperCase()} ${endpoint.path} {#${endpointId}}
+
+${endpoint.title}
+
+${endpoint.description ? endpoint.description + '\n' : ''}
+
+<${componentName}Endpoint${index + 1} />
+`;
+    }).join('\n')}
+
+<script setup>
+import ${componentName} from '../../.vitepress/theme/components/${componentName}.vue'
+${endpoints.map((_, index) => `import ${componentName}Endpoint${index + 1} from '../../.vitepress/theme/components/${componentName}Endpoint${index + 1}.vue'`).join('\n')}
+import SimpleOutline from '../../.vitepress/theme/components/SimpleOutline.vue'
+</script>
+`;
+
+    const markdownPath = path.join(this.config.docsDir, `${fileName}.md`);
+    fs.writeFileSync(markdownPath, markdownPage, 'utf8');
+
+    // Обновление навигации - используем простую структуру без subItems
+    this.navUpdater.addApiToNavigation(apiName, `/en/api/${fileName}`);
+
+    return {
+      componentName,
+      componentPath,
+      markdownPath,
+      fileName,
+      endpoints: endpoints.length
+    };
+  }
+
+  // Generate Vue component for any API with authentication block
+  generateVueComponent(apiName, endpoints) {
     const template = `<template>
   <!-- Fixed Authentication Header -->
   <div class="auth-header-fixed" :class="{ 'collapsed': isHeaderCollapsed }">
@@ -171,7 +643,7 @@ class AutoSwaggerUpdater {
       <div class="api-config-row">
         <div class="config-group">
           <label class="config-label">🌐 API Base URL</label>
-          <input v-model="apiBaseUrl" type="text" placeholder="${this.config.apiBaseUrl}" class="config-input" />
+          <input v-model="apiBaseUrl" type="text" placeholder="https://develop.okd.finance/api" class="config-input" />
         </div>
         <div class="config-group token-group">
           <label class="config-label">🔑 Access Token</label>
@@ -192,9 +664,6 @@ class AutoSwaggerUpdater {
             <button @click="showFingerprint = !showFingerprint" class="token-toggle"
               :title="showFingerprint ? 'Hide fingerprint' : 'Show fingerprint'">
               {{ showFingerprint ? '🙈' : '👁️' }}
-            </button>
-            <button @click="generateRandomFingerprint" class="generate-btn" title="Generate random fingerprint">
-              🎲
             </button>
           </div>
         </div>
@@ -233,8 +702,7 @@ const {
   toggleHeader,
   clearAuth,
   getRawValues,
-  isReadyToSendRequest,
-  generateRandomFingerprint
+  isReadyToSendRequest
 } = useAuth()
 
 // Code examples tabs
@@ -243,346 +711,507 @@ ${endpoints.map((_, index) => `const activeCodeTab${index + 1} = ref('cURL')`).j
 
 ${endpoints.map((endpoint, index) => this.generateTestData(endpoint, index + 1)).join('\n')}
 
+const results = reactive({
+${endpoints.map((_, index) => `  endpoint${index + 1}: null`).join(',\n')}
+})
+
 ${endpoints.map((endpoint, index) => this.generateTestFunction(endpoint, index + 1)).join('\n\n')}
 
-${endpoints.map((endpoint, index) => this.generateCodeExamples(endpoint, index + 1)).join('\n\n')}
+${this.generateCopyFunctions()}
 
-// Copy code to clipboard
-const copyCode = (code) => {
-  navigator.clipboard.writeText(code).then(() => {
-    console.log('Code copied to clipboard!')
-  })
-}
+${this.generateCodeExamples(endpoints)}
 </script>
 
 <style scoped>
 ${this.generateStyles()}
 </style>`;
 
-    return { componentName, template };
+    return template;
   }
 
-  // Генерация секции endpoint'а
   generateEndpointSection(endpoint, index) {
-    const methodClass = `method-${endpoint.method.toLowerCase()}`;
+    const methodBadge = endpoint.method.toLowerCase();
+    const endpointId = `${endpoint.method.toLowerCase()}-${endpoint.path.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')}`;
 
-    return `      <!-- Endpoint ${index}: ${endpoint.method} ${endpoint.path} -->
-      <div class="endpoint-section">
-        <div class="endpoint-header">
-          <span class="method-badge ${methodClass}">${endpoint.method}</span>
-          <span class="endpoint-path">${endpoint.path}</span>
-          <h3>${endpoint.summary || `Endpoint ${index}`}</h3>
-        </div>
-        <div class="endpoint-content">
-          <div class="endpoint-description">
-            <p>${endpoint.description || 'No description available'}</p>
+    return `      <section id="${endpointId}" class="endpoint-section">
+        <div class="endpoint-layout">
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge ${methodBadge}">${endpoint.method.toUpperCase()}</span>
+              <span class="endpoint-path">${endpoint.path}</span>
+            </div>
+
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">📋 ${endpoint.title}</h3>
+              <p class="endpoint-description">${endpoint.description}</p>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📋 Headers</h4>
+              <div class="param-list">
+                <div class="param-item">
+                  <code class="param-name">Authorization</code>
+                  <span class="param-type">Bearer token</span>
+                  <span class="param-desc">JWT access token for authentication</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Fingerprint</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">32-character hex string for device identification</span>
+                </div>
+              </div>
+            </div>
+
+            ${endpoint.parameters.length > 0 ? `<div class="api-section">
+              <h4 class="section-title">⚙️ Body Parameters</h4>
+              <div class="param-list">
+                ${endpoint.parameters.map(param => `<div class="param-item ${param.required ? 'required' : ''}">
+                  <code class="param-name">${param.name}</code>
+                  <span class="param-type">${param.type}</span>
+                  <span class="param-desc">${param.description}</span>
+                </div>`).join('\n                ')}
+              </div>
+            </div>` : ''}
+
+            <div class="api-section">
+              <h4 class="section-title">📝 Example Request</h4>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab${index} = lang"
+                    :class="['code-tab', { active: activeCodeTab${index} === lang }]">
+                    {{ lang }}
+                  </button>
+                </div>
+                ${this.generateCodeBlocks(endpoint, index)}
+              </div>
+            </div>
           </div>
-          
-          ${this.generateParametersSection(endpoint, index)}
-          
-          <div class="test-section">
-            <div class="test-controls">
-              <button @click="testEndpoint${index}" 
-                :disabled="!isReadyToSendRequest()"
-                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
-                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
+
+          <div class="endpoint-testing">
+            <h4 class="testing-title">🚀 Live Testing</h4>
+            <div class="test-section">
+              ${endpoint.parameters.map(param => this.generateFormField(param, index)).join('\n              ')}
+              <button @click="testEndpoint${index}" class="test-btn"
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
-              <div v-if="loading${index}" class="loading">⏳ Testing...</div>
-            </div>
-            
-            <div v-if="response${index}" class="response-section">
-              <h4>Response:</h4>
-              <pre class="response-content">{{ response${index} }}</pre>
-            </div>
-          </div>
-          
-          <div class="code-examples">
-            <div class="code-tabs">
-              <button v-for="lang in codeLangs" :key="lang"
-                @click="activeCodeTab${index} = lang"
-                :class="['code-tab', { active: activeCodeTab${index} === lang }]">
-                {{ lang }}
-              </button>
-            </div>
-            <div class="code-content">
-              <div v-for="lang in codeLangs" :key="lang"
-                v-show="activeCodeTab${index} === lang"
-                class="code-block">
-                <button @click="copyCode(getCodeExample${index}(lang))" class="copy-btn">📋 Copy</button>
-                <pre><code>{{ getCodeExample${index}(lang) }}</code></pre>
+              <div v-if="results.endpoint${index}" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.endpoint${index}.status }}</span>
+                  <span class="timestamp">{{ results.endpoint${index}.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint${index}.data, $event)" class="copy-btn">📋 Copy Response</button>
+                </div>
+                <div v-if="results.endpoint${index}.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.endpoint${index}.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.endpoint${index}.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint${index}.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
+                <pre class="result-data">{{ results.endpoint${index}.data }}</pre>
               </div>
             </div>
           </div>
         </div>
-      </div>`;
+      </section>`;
   }
 
-  // Генерация секции параметров
-  generateParametersSection(endpoint, index) {
-    const parameters = endpoint.parameters || [];
-    const requestBody = endpoint.requestBody;
+  // Generate individual endpoint component
+  generateEndpointComponent(parentComponentName, endpoint, index) {
+    const methodBadge = endpoint.method.toLowerCase();
+    const endpointId = `${endpoint.method.toLowerCase()}-${endpoint.path.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')}`;
 
-    if (parameters.length === 0 && !requestBody) {
-      return '';
-    }
+    const template = `<template>
+  <section id="${endpointId}" class="endpoint-section">
+    <div class="endpoint-layout">
+      <div class="endpoint-docs">
+        <div class="method-header">
+          <span class="method-badge ${methodBadge}">${endpoint.method.toUpperCase()}</span>
+          <span class="endpoint-path">${endpoint.path}</span>
+        </div>
 
-    let section = `          <div class="parameters-section">
-            <h4>Parameters:</h4>`;
+        <div class="api-section">
+          <h4 class="section-title">📋 Headers</h4>
+          <div class="param-list">
+            <div class="param-item">
+              <code class="param-name">Authorization</code>
+              <span class="param-type">Bearer token</span>
+              <span class="param-desc">JWT access token for authentication</span>
+            </div>
+            <div class="param-item">
+              <code class="param-name">Content-Type</code>
+              <span class="param-type">application/json</span>
+              <span class="param-desc">Request content type</span>
+            </div>
+            <div class="param-item">
+              <code class="param-name">Fingerprint</code>
+              <span class="param-type">string</span>
+              <span class="param-desc">32-character hex string for device identification</span>
+            </div>
+          </div>
+        </div>
 
-    // Path и Query параметры
-    parameters.forEach(param => {
-      const required = param.required ? ' *' : '';
-      section += `
-            <div class="parameter-group">
-              <label class="parameter-label">${param.name}${required} (${param.in})</label>
-              <input v-model="testData${index}.${param.name}" 
-                type="text" 
-                placeholder="${param.description || param.name}"
-                class="parameter-input" />
-            </div>`;
-    });
+        ${endpoint.parameters.length > 0 ? `<div class="api-section">
+          <h4 class="section-title">⚙️ Body Parameters</h4>
+          <div class="param-list">
+            ${endpoint.parameters.map(param => `<div class="param-item ${param.required ? 'required' : ''}">
+              <code class="param-name">${param.name}</code>
+              <span class="param-type">${param.type}</span>
+              <span class="param-desc">${param.description}</span>
+            </div>`).join('\n            ')}
+          </div>
+        </div>` : ''}
 
-    // Request Body
-    if (requestBody) {
-      section += `
-            <div class="parameter-group">
-              <label class="parameter-label">Request Body *</label>
-              <textarea v-model="testData${index}.requestBody" 
-                placeholder="Enter JSON request body"
-                class="parameter-textarea"
-                rows="4"></textarea>
-            </div>`;
-    }
+        <div class="api-section">
+          <h4 class="section-title">📝 Example Request</h4>
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab = lang"
+                :class="['code-tab', { active: activeCodeTab === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            ${this.generateCodeBlocks(endpoint, 1)}
+          </div>
+        </div>
+      </div>
 
-    section += `          </div>`;
-    return section;
+      <div class="endpoint-testing">
+        <h4 class="testing-title">🚀 Live Testing</h4>
+        <div class="test-section">
+          ${endpoint.parameters.map(param => this.generateFormField(param, 1)).join('\n          ')}
+          <button @click="testEndpoint" class="test-btn"
+            :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+            {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+          </button>
+          <div v-if="result" class="result-container">
+            <div class="result-header">
+              <span class="status-badge">{{ result.status }}</span>
+              <span class="timestamp">{{ result.timestamp }}</span>
+              <button @click="copyToClipboard(result.data, $event)" class="copy-btn">📋 Copy Response</button>
+            </div>
+            <div v-if="result.requestUrl" class="request-info">
+              <h5>📤 Actual Request:</h5>
+              <pre class="request-data">{{ result.requestUrl }}</pre>
+              <h5>📋 Headers:</h5>
+              <pre class="request-data">{{ result.headers }}</pre>
+              <h5>📦 Body:</h5>
+              <pre class="request-data">{{ result.body }}</pre>
+            </div>
+            <h5>📥 Response:</h5>
+            <pre class="result-data">{{ result.data }}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { reactive, ref } from 'vue'
+import { useAuth } from '../composables/useAuth.js'
+
+// Global authentication state
+const {
+  apiToken,
+  apiBaseUrl,
+  apiFingerprint,
+  showToken,
+  showFingerprint,
+  isHeaderCollapsed,
+  toggleHeader,
+  clearAuth,
+  getRawValues,
+  isReadyToSendRequest
+} = useAuth()
+
+// Code examples tabs
+const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
+const activeCodeTab = ref('cURL')
+
+// Test data
+${this.generateTestData(endpoint, 1)}
+
+// Result storage
+const result = ref(null)
+
+// Test function
+${this.generateTestFunction(endpoint, 1).replace('testEndpoint1', 'testEndpoint').replace('endpoint1', 'endpoint').replace('results.endpoint1', 'result.value')}
+
+${this.generateCopyFunctions()}
+
+${this.generateCodeExamples([endpoint]).replace(/activeCodeTab1/g, 'activeCodeTab')}
+</script>
+
+<style scoped>
+${this.generateStyles()}
+</style>`;
+
+    return template;
   }
 
-  // Генерация тестовых данных
   generateTestData(endpoint, index) {
-    const parameters = endpoint.parameters || [];
-    const testData = {};
+    const defaultValues = endpoint.parameters.map(param => {
+      if (param.type === 'boolean') return `${param.name}: true`;
+      if (param.type === 'integer') return `${param.name}: 123`;
+      return `${param.name}: 'example_${param.name}'`;
+    }).join(', ');
 
-    parameters.forEach(param => {
-      testData[param.name] = '';
-    });
-
-    if (endpoint.requestBody) {
-      testData.requestBody = '';
-    }
-
-    return `const testData${index} = reactive(${JSON.stringify(testData, null, 2)})
-const loading${index} = ref(false)
-const response${index} = ref(null)`;
+    return `const testData${index} = reactive({ ${defaultValues} })`;
   }
 
-  // Генерация функции тестирования
+  generateFormField(param, index) {
+    if (param.type === 'boolean') {
+      return `<div class="form-group">
+                <label>${param.name.charAt(0).toUpperCase() + param.name.slice(1)}</label>
+                <select v-model="testData${index}.${param.name}" class="test-input">
+                  <option :value="true">True</option>
+                  <option :value="false">False</option>
+                </select>
+              </div>`;
+    } else {
+      return `<div class="form-group">
+                <label>${param.name.charAt(0).toUpperCase() + param.name.slice(1)}</label>
+                <input v-model="testData${index}.${param.name}" type="${param.type === 'integer' ? 'number' : 'text'}" placeholder="example_${param.name}" class="test-input" />
+              </div>`;
+    }
+  }
+
   generateTestFunction(endpoint, index) {
     return `const testEndpoint${index} = async () => {
-  if (!isReadyToSendRequest()) {
-    alert('Please configure both API Token and Fingerprint first')
-    return
-  }
-  
-  loading${index}.value = true
-  response${index}.value = null
-  
   try {
-    let url = getRawValues().apiBaseUrl + '${endpoint.path}'
+    const authValues = getRawValues()
     
-    // Replace path parameters
-    ${endpoint.parameters?.filter(p => p.in === 'path').map(p =>
-      `url = url.replace('{${p.name}}', testData${index}.${p.name} || 'example')`
-    ).join('\n    ') || ''}
-    
-    // Add query parameters
-    const queryParams = new URLSearchParams()
-    ${endpoint.parameters?.filter(p => p.in === 'query').map(p =>
-      `if (testData${index}.${p.name}) queryParams.append('${p.name}', testData${index}.${p.name})`
-    ).join('\n    ') || ''}
-    
-    if (queryParams.toString()) {
-      url += '?' + queryParams.toString()
-    }
-    
-    const options = {
-      method: '${endpoint.method}',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + getRawValues().apiToken,
-        'X-Fingerprint': getRawValues().apiFingerprint
+    if (!isReadyToSendRequest()) {
+      results.endpoint${index} = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
       }
+      return
     }
-    
-    ${endpoint.requestBody ? `if (testData${index}.requestBody) {
-      options.body = testData${index}.requestBody
-    }` : ''}
-    
-    const response = await fetch(url, options)
-    const data = await response.json()
-    
-    response${index}.value = JSON.stringify(data, null, 2)
+
+    const requestBody = {
+      ${endpoint.parameters.map(param => `${param.name}: testData${index}.${param.name}`).join(',\n      ')}
+    }
+
+    const fullUrl = \`\${authValues.apiBaseUrl}${endpoint.path}\`
+    const headers = {
+      'Authorization': \`Bearer \${authValues.apiToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: '${endpoint.method.toUpperCase()}',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    results.endpoint${index} = {
+      status: \`\${response.status} \${response.statusText}\`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: \`${endpoint.method.toUpperCase()} \${fullUrl}\`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
   } catch (error) {
-    response${index}.value = 'Error: ' + error.message
-  } finally {
-    loading${index}.value = false
+    results.endpoint${index} = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
+    }
   }
-}`;
+}`
   }
 
-  // Генерация примеров кода
-  generateCodeExamples(endpoint, index) {
-    return `const getCodeExample${index} = (lang) => {
-  const baseUrl = getRawValues().apiBaseUrl || '${this.config.apiBaseUrl}'
-  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
-  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
-  
-  let url = baseUrl + '${endpoint.path}'
-  
-  // Replace path parameters with example values
-  ${endpoint.parameters?.filter(p => p.in === 'path').map(p =>
-      `url = url.replace('{${p.name}}', testData${index}.${p.name} || 'example')`
-    ).join('\n  ') || ''}
-  
-  switch (lang) {
-    case 'cURL':
-      return \`curl -X ${endpoint.method} "\${url}" \\\\
-  -H "Authorization: Bearer \${token}" \\\\
-  -H "X-Fingerprint: \${fingerprint}" \\\\
-  -H "Content-Type: application/json"\${${endpoint.requestBody ? `testData${index}.requestBody ? ' \\\\\\n  -d \\'' + testData${index}.requestBody + '\\'' : ''` : `''`}}\`
-    
-    case 'Go':
-      return \`package main
+  generateCodeBlocks(endpoint, index) {
+    return `
+                <div v-show="activeCodeTab${index} === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', ${index})" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>curl -X ${endpoint.method.toUpperCase()} &quot;https://develop.okd.finance/api${endpoint.path}&quot; \\
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \\
+  -H &quot;Content-Type: application/json&quot; \\
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \\
+  -d &#x27;{${endpoint.parameters.map(p => `&quot;${p.name}&quot;:&quot;example&quot;`).join(',')}}&#x27;</pre>
+                  </div>
+                </div>
 
-import (
-    "fmt"
-    "net/http"
-    "strings"
-)
+                <div v-show="activeCodeTab${index} === 'Go'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('go', ${index})" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.go[${index}] }}</pre>
+                  </div>
+                </div>
 
-func main() {
-    client := &http.Client{}
-    ${endpoint.requestBody ? `payload := strings.NewReader(\`\${testData${index}.requestBody || '{}'}\`)
-    req, _ := http.NewRequest("${endpoint.method}", "\${url}", payload)` : `req, _ := http.NewRequest("${endpoint.method}", "\${url}", nil)`}
-    
-    req.Header.Add("Authorization", "Bearer \${token}")
-    req.Header.Add("X-Fingerprint", "\${fingerprint}")
-    req.Header.Add("Content-Type", "application/json")
-    
-    res, _ := client.Do(req)
-    defer res.Body.Close()
-}\`
-    
-    case 'TypeScript':
-      return \`const response = await fetch('\${url}', {
-  method: '${endpoint.method}',
-  headers: {
-    'Authorization': 'Bearer \${token}',
-    'X-Fingerprint': '\${fingerprint}',
-    'Content-Type': 'application/json'
-  }${endpoint.requestBody ? `,
-  body: JSON.stringify(\${testData${index}.requestBody || '{}'})` : ''}
-});
+                <div v-show="activeCodeTab${index} === 'TypeScript'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('typescript', ${index})" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.typescript[${index}] }}</pre>
+                  </div>
+                </div>
 
-const data = await response.json();
-console.log(data);\`
-    
-    case 'PHP':
-      return \`<?php
-\\$curl = curl_init();
+                <div v-show="activeCodeTab${index} === 'PHP'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('php', ${index})" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.php[${index}] }}</pre>
+                  </div>
+                </div>
 
-curl_setopt_array(\\$curl, array(
-  CURLOPT_URL => '\${url}',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_CUSTOMREQUEST => '${endpoint.method}',
-  CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer \${token}',
-    'X-Fingerprint: \${fingerprint}',
-    'Content-Type: application/json'
-  )${endpoint.requestBody ? `,
-  CURLOPT_POSTFIELDS => '\${testData${index}.requestBody || '{}'}'` : ''}
-));
+                <div v-show="activeCodeTab${index} === 'Python'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('python', ${index})" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.python[${index}] }}</pre>
+                  </div>
+                </div>`;
+  }
 
-\\$response = curl_exec(\\$curl);
-curl_close(\\$curl);
-echo \\$response;
-?>\`
-    
-    case 'Python':
-      return \`import requests
-
-url = "\${url}"
-headers = {
-    "Authorization": "Bearer \${token}",
-    "X-Fingerprint": "\${fingerprint}",
-    "Content-Type": "application/json"
+  generateCopyFunctions() {
+    return `const copyToClipboard = (text, event) => {
+  navigator.clipboard.writeText(text).then(() => {
+    const button = event.target
+    const originalText = button.textContent
+    button.textContent = '✅ Copied!'
+    button.style.background = 'linear-gradient(135deg, #4caf50, #45a049)'
+    setTimeout(() => {
+      button.textContent = originalText
+      button.style.background = ''
+    }, 2000)
+  }).catch(() => {
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    document.body.appendChild(textArea)
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+  })
 }
 
-${endpoint.requestBody ? `data = \${testData${index}.requestBody || '{}'}
-response = requests.${endpoint.method.toLowerCase()}(url, headers=headers, data=data)` : `response = requests.${endpoint.method.toLowerCase()}(url, headers=headers)`}
-print(response.json())\`
+const copyCodeToClipboard = (lang, endpointNum) => {
+  const authValues = getRawValues()
+  let code = codeExamples[lang]?.[endpointNum]
+  
+  if (code) {
+    code = code.replace(/YOUR_ACCESS_TOKEN/g, authValues.apiToken || 'YOUR_ACCESS_TOKEN')
+    code = code.replace(/YOUR_FINGERPRINT/g, authValues.apiFingerprint || 'YOUR_FINGERPRINT')
+    code = code.replace(/https:\\/\\/develop\\.okd\\.finance\\/api/g, authValues.apiBaseUrl || 'https://develop.okd.finance/api')
     
-    default:
-      return 'Language not supported'
+    navigator.clipboard.writeText(code).then(() => {
+      console.log('Code copied to clipboard!')
+    }).catch(err => {
+      console.error('Failed to copy code:', err)
+    })
   }
 }`;
   }
 
-  // Генерация стилей
+  generateCodeExamples(endpoints) {
+    return `const codeExamples = {
+  curl: {
+    ${endpoints.map((endpoint, index) => `${index + 1}: \`curl -X ${endpoint.method.toUpperCase()} "https://develop.okd.finance/api${endpoint.path}" \\\\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\\\
+  -H "Content-Type: application/json" \\\\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\\\
+  -d '{${endpoint.parameters.map(p => `"${p.name}":"example"`).join(',')}}'\``).join(',\n    ')}
+  },
+  go: { ${endpoints.map((_, index) => `${index + 1}: 'Go example'`).join(', ')} },
+  typescript: { ${endpoints.map((_, index) => `${index + 1}: 'TypeScript example'`).join(', ')} },
+  php: { ${endpoints.map((_, index) => `${index + 1}: 'PHP example'`).join(', ')} },
+  python: { ${endpoints.map((_, index) => `${index + 1}: 'Python example'`).join(', ')} }
+}`;
+  }
+
   generateStyles() {
     return `/* Fixed Authentication Header */
 .auth-header-fixed {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  background: var(--vp-c-bg);
+  border-bottom: 2px solid var(--vp-c-brand);
+  padding: 0.65rem 0;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: padding 0.3s ease-out, box-shadow 0.3s ease-out;
+  overflow: hidden;
 }
 
-.auth-header-fixed.collapsed .auth-container > *:not(.auth-title) {
-  display: none;
+.auth-header-fixed.collapsed {
+  padding: 0.4rem 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.auth-header-fixed.collapsed .api-config-row,
+.auth-header-fixed.collapsed .status-row,
+.auth-header-fixed.collapsed .token-hint {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
 }
 
 .auth-container {
-  padding: 1.5rem;
-  color: white;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .auth-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
 }
 
 .auth-title h4 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
+  margin: 0 0 0.65rem 0;
+  color: var(--vp-c-brand);
+  font-size: 1rem;
 }
 
 .collapse-toggle {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: white;
-  padding: 0.5rem;
-  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
   cursor: pointer;
-  transition: background 0.2s;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  margin-bottom: 0.65rem;
 }
 
 .collapse-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--vp-c-brand);
+  color: white;
+  border-color: var(--vp-c-brand);
+  transform: scale(1.05);
 }
 
 .api-config-row {
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 0.65rem;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+  max-height: 200px;
+  opacity: 1;
 }
 
 .config-group {
@@ -592,627 +1221,748 @@ print(response.json())\`
 
 .config-label {
   font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
   margin-bottom: 0.5rem;
-  font-weight: 500;
 }
 
-.config-input, .token-input {
+.config-input {
   padding: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid var(--vp-c-border);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  font-family: monospace;
   font-size: 0.9rem;
+  transition: border-color 0.2s;
 }
 
-.config-input::placeholder, .token-input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+.config-input:focus {
+  outline: none;
+  border-color: var(--vp-c-brand);
 }
 
 .token-input-group {
-  position: relative;
   display: flex;
+  gap: 0.5rem;
 }
 
 .token-input {
   flex: 1;
-  border-radius: 8px 0 0 8px;
+  padding: 0.75rem;
+  border: 2px solid var(--vp-c-border);
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
 }
 
-.token-toggle, .generate-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-left: none;
-  color: white;
-  padding: 0.75rem;
-  cursor: pointer;
-  transition: background 0.2s;
+.token-input:focus {
+  outline: none;
+  border-color: var(--vp-c-brand);
 }
 
 .token-toggle {
-  border-radius: 0 8px 8px 0;
+  padding: 0.75rem;
+  border: 2px solid var(--vp-c-border);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.generate-btn {
-  border-radius: 0;
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.generate-btn:last-child {
-  border-radius: 0 8px 8px 0;
-}
-
-.token-toggle:hover, .generate-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+.token-toggle:hover {
+  background: var(--vp-c-brand);
+  color: white;
+  border-color: var(--vp-c-brand);
 }
 
 .status-row {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  gap: 1.5rem;
   align-items: center;
-  font-size: 0.85rem;
   margin-bottom: 0.5rem;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+  max-height: 50px;
+  opacity: 1;
 }
 
-.url-status, .token-status, .fingerprint-status {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
+.url-status {
+  color: var(--vp-c-brand);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: monospace;
+  background: var(--vp-c-bg-soft);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.token-status {
+  color: var(--vp-c-green);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.fingerprint-status {
+  color: var(--vp-c-purple);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .clear-auth-btn {
-  background: rgba(255, 0, 0, 0.3);
-  border: 1px solid rgba(255, 0, 0, 0.5);
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--vp-c-red);
+  border-radius: 6px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-red);
   cursor: pointer;
   font-size: 0.8rem;
-  transition: background 0.2s;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .clear-auth-btn:hover {
-  background: rgba(255, 0, 0, 0.5);
+  background: var(--vp-c-red);
+  color: white;
+  transform: scale(1.05);
 }
 
 .token-hint {
-  font-size: 0.8rem;
-  opacity: 0.8;
-  font-style: italic;
+  color: var(--vp-c-text-2);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+  max-height: 30px;
+  opacity: 1;
 }
 
-/* Main Content */
+/* Main Container */
 .interactive-api-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.main-content {
+  width: 100%;
 }
 
 .endpoint-section {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-  overflow: hidden;
-  border: 1px solid #e2e8f0;
+  margin-bottom: 4rem;
+  padding-bottom: 3rem;
+  border-bottom: 2px solid var(--vp-c-border);
 }
 
-.endpoint-header {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  padding: 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
+.endpoint-layout {
+  display: flex;
+  gap: 3rem;
+}
+
+.endpoint-docs {
+  flex: 1;
+  min-width: 0;
+}
+
+.endpoint-testing {
+  flex: 0 0 450px;
+  border-left: 2px solid var(--vp-c-border);
+  padding-left: 2rem;
+}
+
+/* Method Header */
+.method-header {
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .method-badge {
   padding: 0.5rem 1rem;
   border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.method-get { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
-.method-post { background: linear-gradient(135deg, #10b981, #047857); color: white; }
-.method-put { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
-.method-patch { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
-.method-delete { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+.method-badge.get {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  color: #1976d2;
+  border: 2px solid #1976d2;
+}
+
+.method-badge.post {
+  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+  color: #2e7d32;
+  border: 2px solid #2e7d32;
+}
+
+.method-badge.put {
+  background: linear-gradient(135deg, #fff3e0, #ffcc02);
+  color: #f57c00;
+  border: 2px solid #f57c00;
+}
+
+.method-badge.patch {
+  background: linear-gradient(135deg, #f3e5f5, #ce93d8);
+  color: #7b1fa2;
+  border: 2px solid #7b1fa2;
+}
+
+.method-badge.delete {
+  background: linear-gradient(135deg, #ffebee, #ffcdd2);
+  color: #c62828;
+  border: 2px solid #c62828;
+}
 
 .endpoint-path {
-  font-family: 'Monaco', 'Menlo', monospace;
-  background: rgba(0, 0, 0, 0.05);
+  font-family: var(--vp-font-family-mono);
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-soft);
   padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  color: #374151;
+  border-radius: 6px;
 }
 
-.endpoint-header h3 {
-  margin: 0;
-  color: #1f2937;
-  font-size: 1.25rem;
+/* Endpoint Info */
+.endpoint-info {
+  margin-bottom: 2rem;
 }
 
-.endpoint-content {
-  padding: 2rem;
+.endpoint-title {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--vp-c-text-1);
 }
 
 .endpoint-description {
-  margin-bottom: 1.5rem;
-  color: #6b7280;
+  color: var(--vp-c-text-2);
+  font-size: 1rem;
   line-height: 1.6;
+  margin: 0;
 }
 
-.parameters-section {
+/* API Sections */
+.api-section {
   margin-bottom: 2rem;
 }
 
-.parameters-section h4 {
-  color: #374151;
-  margin-bottom: 1rem;
+.section-title {
   font-size: 1.1rem;
-}
-
-.parameter-group {
-  margin-bottom: 1rem;
-}
-
-.parameter-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #374151;
-  font-size: 0.9rem;
-}
-
-.parameter-input, .parameter-textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  transition: border-color 0.2s;
-}
-
-.parameter-input:focus, .parameter-textarea:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.test-section {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: #f8fafc;
-  border-radius: 8px;
-}
-
-.test-controls {
+  margin: 0 0 1rem 0;
+  color: var(--vp-c-brand);
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 0.5rem;
 }
 
-.test-btn {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
+.param-list {
+  background: var(--vp-c-bg-soft);
   border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.test-btn:hover:not(.disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-.test-btn.disabled {
-  background: #9ca3af;
-  cursor: not-allowed;
-}
-
-.loading {
-  color: #f59e0b;
-  font-weight: 500;
-}
-
-.response-section {
-  margin-top: 1rem;
-}
-
-.response-section h4 {
-  color: #374151;
-  margin-bottom: 0.5rem;
-}
-
-.response-content {
-  background: #1f2937;
-  color: #f3f4f6;
   padding: 1rem;
-  border-radius: 8px;
-  overflow-x: auto;
-  font-family: 'Monaco', 'Menlo', monospace;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  border: 1px solid var(--vp-c-border);
 }
 
+.param-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--vp-c-border-soft);
+}
+
+.param-item:last-child {
+  border-bottom: none;
+}
+
+.param-item.required .param-name::after {
+  content: " *";
+  color: #ff4444;
+  font-weight: bold;
+}
+
+.param-name {
+  font-family: var(--vp-font-family-mono);
+  font-weight: bold;
+  color: var(--vp-c-brand);
+  background: var(--vp-c-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.param-type {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.8rem;
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--vp-c-border);
+}
+
+.param-desc {
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Code Examples with Tabs */
 .code-examples {
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.code-block-container {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.copy-code-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  z-index: 10;
+  opacity: 0.8;
+}
+
+.copy-code-btn:hover {
+  background: var(--vp-c-bg);
+  opacity: 1;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.copy-code-btn:active {
+  transform: scale(0.95);
+}
+
+.code-block-container .code-block {
+  margin: 0;
 }
 
 .code-tabs {
   display: flex;
-  background: #f3f4f6;
-  border-bottom: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0;
+  border-bottom: 2px solid var(--vp-c-border);
+  padding-bottom: 0.5rem;
 }
 
 .code-tab {
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   border: none;
-  background: transparent;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
   cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  font-size: 0.85rem;
   font-weight: 500;
-  color: #6b7280;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  border: 1px solid var(--vp-c-border);
+  border-bottom: none;
+}
+
+.code-tab:hover {
+  background: var(--vp-c-bg-mute);
+  color: var(--vp-c-text-1);
 }
 
 .code-tab.active {
-  background: white;
-  color: #3b82f6;
-  border-bottom: 2px solid #3b82f6;
-}
-
-.code-tab:hover:not(.active) {
-  background: #e5e7eb;
-}
-
-.code-content {
-  position: relative;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+  font-weight: 600;
 }
 
 .code-block {
-  position: relative;
-}
-
-.copy-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  z-index: 10;
-  transition: background 0.2s;
-}
-
-.copy-btn:hover {
-  background: rgba(0, 0, 0, 0.9);
+  background: var(--vp-code-bg);
+  color: var(--vp-code-color);
+  padding: 1.5rem;
+  border-radius: 8px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  border: 1px solid var(--vp-c-border);
+  white-space: pre;
+  word-wrap: normal;
+  overflow-wrap: normal;
+  tab-size: 2;
+  -moz-tab-size: 2;
 }
 
 .code-block pre {
   margin: 0;
-  padding: 1.5rem;
-  background: #1f2937;
-  color: #f3f4f6;
-  overflow-x: auto;
-  font-family: 'Monaco', 'Menlo', monospace;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  white-space: pre;
+  overflow: visible;
 }
 
-.code-block code {
-  background: none;
-  padding: 0;
-  font-family: inherit;
+/* Testing Section */
+.testing-title {
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  color: var(--vp-c-brand);
+}
+
+.test-section {
+  background: var(--vp-c-bg-soft);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--vp-c-border);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+.test-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--vp-c-border);
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.test-input:focus {
+  outline: none;
+  border-color: var(--vp-c-brand);
+}
+
+.test-btn {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #1976d2, #1565c0);
+  color: white;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+}
+
+.test-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0d47a1, #1565c0);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(13, 71, 161, 0.6);
+}
+
+.test-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(13, 71, 161, 0.4);
+}
+
+.test-btn:disabled {
+  background: var(--vp-c-text-3);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Dark theme button adjustments */
+.dark .test-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1565c0, #1976d2);
+  box-shadow: 0 8px 25px rgba(21, 101, 192, 0.7);
+}
+
+/* Result Container */
+.result-container {
+  background: var(--vp-c-bg);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-top: 1rem;
+  border: 1px solid var(--vp-c-border);
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  background: var(--vp-c-green-soft);
+  color: var(--vp-c-green);
+}
+
+.timestamp {
+  color: var(--vp-c-text-3);
+  font-size: 0.8rem;
+  font-family: var(--vp-font-family-mono);
+}
+
+.copy-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #6c757d, #5a6268);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.copy-btn:hover {
+  background: linear-gradient(135deg, #5a6268, #495057);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+.request-info {
+  padding: 1rem;
+  border-bottom: 1px solid var(--vp-c-border);
+}
+
+.request-info h5 {
+  margin: 0 0 0.5rem 0;
+  color: var(--vp-c-text-1);
+  font-size: 0.9rem;
+}
+
+.request-data {
+  background: var(--vp-code-bg);
+  color: var(--vp-code-color);
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  overflow-x: auto;
+  margin: 0.5rem 0;
+  border: 1px solid var(--vp-c-border);
+  white-space: pre-wrap;
+}
+
+.result-data {
+  background: var(--vp-code-bg);
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
+  color: var(--vp-code-color);
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .endpoint-layout {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .endpoint-testing {
+    flex: none;
+    border-left: none;
+    border-top: 2px solid var(--vp-c-border);
+    padding-left: 0;
+    padding-top: 2rem;
+  }
+
+  .param-item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .auth-header-fixed {
+    padding: 0.75rem 0;
+  }
+
   .api-config-row {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
-  
-  .endpoint-header {
+
+  .status-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
-  .status-row {
+
+  .token-input-group {
     flex-direction: column;
-    align-items: flex-start;
   }
-  
+
+  .interactive-api-container {
+    padding: 0 0.5rem;
+  }
+
+  .endpoint-layout {
+    gap: 1.5rem;
+  }
+
   .code-tabs {
+    gap: 0.125rem;
     flex-wrap: wrap;
   }
-  
+
   .code-tab {
-    min-width: 80px;
-    text-align: center;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .code-block {
+    font-size: 0.85rem;
+    padding: 1rem;
   }
 }`;
   }
-
-  // Создание навигационного обновлятора
-  createNavigationUpdater() {
-    const NavigationUpdater = require('./navigation-validator.cjs').NavigationValidator || class {
-      constructor(configPath) {
-        this.configPath = configPath;
-      }
-
-      addApiToNavigation(apiName) {
-        console.log(`✅ Added ${apiName} to navigation`);
-        return true;
-      }
-
-      fixNavigation() {
-        console.log('✅ Navigation validated');
-        return false;
-      }
-    };
-
-    return new NavigationUpdater(this.config.configPath);
-  }
-
-  // Генерация API документации
-  async generateApiDocumentation(tagName, endpoints) {
-    try {
-      // Создание директорий
-      if (!fs.existsSync(this.config.componentsDir)) {
-        fs.mkdirSync(this.config.componentsDir, { recursive: true });
-      }
-      if (!fs.existsSync(this.config.docsDir)) {
-        fs.mkdirSync(this.config.docsDir, { recursive: true });
-      }
-
-      // Генерация Vue компонента
-      const { componentName, template } = this.generateVueComponent(tagName, endpoints);
-      const componentPath = path.join(this.config.componentsDir, `${componentName}.vue`);
-      fs.writeFileSync(componentPath, template);
-      console.log(`✅ Generated ${componentPath}`);
-
-      // Генерация Markdown страницы
-      const mdContent = `# ${tagName} API
-
-Interactive documentation for ${tagName} endpoints.
-
-<script setup>
-import ${componentName} from '../.vitepress/theme/components/${componentName}.vue'
-</script>
-
-<${componentName} />
-
-## Endpoints Overview
-
-${endpoints.map((endpoint) => `### ${endpoint.method} ${endpoint.path}
-
-${endpoint.description || endpoint.summary || 'No description available'}
-
-**Parameters:**
-${endpoint.parameters?.map(p => `- \`${p.name}\` (${p.schema?.type || 'string'}${p.required ? ', required' : ', optional'}) - ${p.description || 'No description'}`).join('\n') || '- No parameters'}
-
-**Responses:**
-${Object.entries(endpoint.responses).map(([code, resp]) => `- \`${code}\` - ${resp.description || 'No description'}`).join('\n')}
-`).join('\n')}
-`;
-
-      const mdPath = path.join(this.config.docsDir, `${tagName.toLowerCase().replace(/[^a-z0-9]/g, '-')}.md`);
-      fs.writeFileSync(mdPath, mdContent);
-      console.log(`✅ Generated ${mdPath}`);
-
-      // Обновление навигации
-      const navUpdater = this.createNavigationUpdater();
-      navUpdater.addApiToNavigation(`${tagName} API`);
-
-      return { componentName, componentPath, mdPath };
-    } catch (error) {
-      console.error(`❌ Failed to generate ${tagName} API:`, error.message);
-      throw error;
-    }
-  }
-
-  // Генерация конкретного тега
-  async generateTag(tagName) {
-    try {
-      console.log(`🔥 Generating ${tagName} API...`);
-
-      const swaggerData = await this.fetchSwagger();
-      const tags = this.extractTags(swaggerData);
-
-      if (!tags[tagName]) {
-        throw new Error(`Tag "${tagName}" not found. Available tags: ${Object.keys(tags).join(', ')}`);
-      }
-
-      const endpoints = tags[tagName];
-      const result = await this.generateApiDocumentation(tagName, endpoints);
-
-      // Обновление кеша
-      this.cache.apis[tagName] = {
-        lastGenerated: new Date().toISOString(),
-        endpointsCount: endpoints.length,
-        componentPath: result.componentPath,
-        mdPath: result.mdPath
-      };
-      this.saveCache();
-
-      console.log(`🎉 ${tagName} API generation completed!`);
-      return result;
-    } catch (error) {
-      console.error(`❌ Failed to generate ${tagName}:`, error.message);
-      throw error;
-    }
-  }
-
-  // Генерация всех API
-  async generateAll() {
-    try {
-      console.log('🔥 Generating all APIs...');
-
-      const swaggerData = await this.fetchSwagger();
-      const tags = this.extractTags(swaggerData);
-      const results = [];
-
-      for (const [tagName, endpoints] of Object.entries(tags)) {
-        try {
-          console.log(`\n🔄 Processing tag: ${tagName}`);
-          const result = await this.generateApiDocumentation(tagName, endpoints);
-          results.push({ tagName, ...result });
-
-          // Обновление кеша
-          this.cache.apis[tagName] = {
-            lastGenerated: new Date().toISOString(),
-            endpointsCount: endpoints.length,
-            componentPath: result.componentPath,
-            mdPath: result.mdPath
-          };
-        } catch (error) {
-          console.error(`❌ Failed to generate ${tagName}:`, error.message);
-        }
-      }
-
-      // Обновление общего кеша
-      const currentHash = this.calculateHash(swaggerData);
-      this.cache.lastHash = currentHash;
-      this.cache.lastUpdate = new Date().toISOString();
-      this.cache.metadata = {
-        totalTags: Object.keys(tags).length,
-        totalEndpoints: Object.values(tags).reduce((sum, endpoints) => sum + endpoints.length, 0),
-        generatedCount: results.length
-      };
-      this.saveCache();
-
-      console.log(`\n🎉 Generated ${results.length} APIs successfully!`);
-      console.log(`📊 Total: ${this.cache.metadata.totalEndpoints} endpoints across ${this.cache.metadata.totalTags} tags`);
-
-      return results;
-    } catch (error) {
-      console.error('❌ Failed to generate all APIs:', error.message);
-      throw error;
-    }
-  }
-
-  // Обновление документации
-  async updateDocumentation(options = {}) {
-    try {
-      const { forceUpdate = false } = options;
-      console.log(`🔄 ${forceUpdate ? 'Force updating' : 'Checking for updates'}...`);
-
-      const { hasChanges, currentHash } = await this.checkForChanges(forceUpdate);
-
-      if (!hasChanges && !forceUpdate) {
-        console.log('✅ Documentation is up to date');
-        return { updated: false, message: 'No changes detected' };
-      }
-
-      const results = await this.generateAll();
-
-      console.log('✅ Documentation update completed!');
-      console.log(`📊 Updated ${results.length} APIs`);
-
-      return {
-        updated: true,
-        updatedApis: results.map(r => r.tagName),
-        totalEndpoints: this.cache.metadata.totalEndpoints,
-        hash: currentHash?.substring(0, 8)
-      };
-    } catch (error) {
-      console.error('❌ Update failed:', error.message);
-      throw error;
-    }
-  }
 }
 
-// CLI интерфейс
+// Example usage functions
+function generateWalletAPI() {
+  const generator = new AutoSwaggerUpdater();
+  const endpoints = [
+    {
+      method: 'GET',
+      path: '/wallet/balance',
+      title: 'Get Wallet Balance',
+      description: 'Retrieve current wallet balance for all currencies',
+      parameters: []
+    },
+    {
+      method: 'POST',
+      path: '/wallet/transfer',
+      title: 'Transfer Funds',
+      description: 'Transfer funds between wallets',
+      parameters: [
+        { name: 'fromWallet', type: 'string', description: 'Source wallet ID' },
+        { name: 'toWallet', type: 'string', description: 'Destination wallet ID' },
+        { name: 'amount', type: 'number', description: 'Amount to transfer' },
+        { name: 'currency', type: 'string', description: 'Currency code' }
+      ]
+    },
+    {
+      method: 'GET',
+      path: '/wallet/history',
+      title: 'Transaction History',
+      description: 'Get wallet transaction history',
+      parameters: [
+        { name: 'limit', type: 'integer', description: 'Number of transactions to return' },
+        { name: 'offset', type: 'integer', description: 'Offset for pagination' }
+      ]
+    }
+  ];
+
+  generator.generateAPI('Wallet API', endpoints, 'InteractiveWalletAPI');
+}
+
+// CLI interface
 async function main() {
   const args = process.argv.slice(2);
-  const command = args[0];
-  const param = args[1];
+  const updater = new AutoSwaggerUpdater();
 
   try {
-    const updater = new AutoSwaggerUpdater();
-
-    switch (command) {
-      case 'help':
-      case '--help':
-      case '-h':
-        console.log(`
+    if (args.length === 0 || args[0] === 'help' || args[0] === '--help') {
+      console.log(`
 🚀 Auto Swagger Updater
 
 Usage:
   node auto-swagger-updater.cjs <command> [options]
 
 Commands:
-  tags                    Show available Swagger tags
-  generate <tag>          Generate documentation for specific tag
-  generate-all           Generate documentation for all tags
-  update                 Update documentation if changes detected
-  update --force         Force update all documentation
-  help                   Show this help message
+  update            - Check for updates and regenerate if needed
+  force             - Force regenerate all APIs
+  reset             - Reset to initial state (removes all generated APIs)
+  reset --no-confirm - Reset without confirmation prompt
+  check             - Check for updates without regenerating
 
 Examples:
-  node auto-swagger-updater.cjs tags
-  node auto-swagger-updater.cjs generate "User Operations"
-  node auto-swagger-updater.cjs generate-all
   node auto-swagger-updater.cjs update
-  node auto-swagger-updater.cjs update --force
+  node auto-swagger-updater.cjs force
+  node auto-swagger-updater.cjs reset
+  node auto-swagger-updater.cjs reset --no-confirm
 `);
-        break;
+      return;
+    }
 
-      case 'tags':
-        await updater.showTags();
-        break;
-
-      case 'generate':
-        if (!param) {
-          console.error('❌ Please specify a tag name');
-          console.log('Available tags:');
-          await updater.showTags();
-          process.exit(1);
-        }
-        await updater.generateTag(param);
-        break;
-
-      case 'generate-all':
-        await updater.generateAll();
-        break;
-
+    switch (args[0]) {
       case 'update': {
-        const forceUpdate = args.includes('--force');
-        await updater.updateDocumentation({ forceUpdate });
+        console.log('🔄 Checking for Swagger updates...');
+        await updater.updateAll();
+        break;
+      }
+
+      case 'force': {
+        console.log('🔄 Force regenerating all APIs...');
+        const { swaggerData } = await updater.fetchSwaggerDocs();
+        await updater.generateAllAPIs(swaggerData);
+        break;
+      }
+
+      case 'reset': {
+        const confirmReset = !args.includes('--no-confirm');
+        await updater.reset({ confirmReset });
+        break;
+      }
+
+      case 'check': {
+        const { hasUpdates } = await updater.checkForUpdates();
+        console.log(hasUpdates ? '🔄 Updates available' : '✅ No updates needed');
         break;
       }
 
       default:
-        if (command) {
-          console.error(`❌ Unknown command: ${command}`);
-        }
-        console.log('Use "node auto-swagger-updater.cjs help" for usage information');
+        console.error(`❌ Unknown command: ${args[0]}`);
+        console.log('Use "help" to see available commands');
         process.exit(1);
     }
+
   } catch (error) {
-    console.error('❌ Error:', error.message);
+    console.error('❌ Operation failed:', error.message);
     process.exit(1);
   }
 }
 
-// Запуск CLI если файл выполняется напрямую
+// Export for use as module
+module.exports = { AutoSwaggerUpdater, NavigationUpdater };
+
+// Run if called directly
 if (require.main === module) {
   main();
 }
 
-module.exports = { AutoSwaggerUpdater }; 

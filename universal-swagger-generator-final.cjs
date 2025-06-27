@@ -1,4 +1,165 @@
+/* eslint-env node */
+/* global AbortController, setTimeout, clearTimeout, fetch */
 const fs = require('fs');
+const crypto = require('crypto');
+
+// Swagger Auto-Loader class
+class SwaggerAutoLoader {
+  constructor(config = {}) {
+    this.config = {
+      swaggerUrl: process.env.SWAGGER_URL || config.swaggerUrl || 'https://develop.okd.finance/api/swagger/swagger.json',
+      apiBaseUrl: process.env.API_BASE_URL || config.apiBaseUrl || 'https://develop.okd.finance/api',
+      timeout: config.timeout || 30000,
+      ...config
+    };
+  }
+
+  // Получение Swagger документации
+  async fetchSwaggerDocs() {
+    try {
+      console.log('📡 Fetching Swagger documentation...');
+      console.log(`🔗 URL: ${this.config.swaggerUrl}`);
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
+
+      const response = await fetch(this.config.swaggerUrl, {
+        signal: controller.signal,
+        headers: {
+          'User-Agent': 'Universal-Swagger-Generator/1.0',
+          'Accept': 'application/json'
+        }
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const swaggerData = await response.json();
+      const swaggerHash = crypto.createHash('md5').update(JSON.stringify(swaggerData)).digest('hex');
+
+      console.log(`✅ Swagger documentation fetched (hash: ${swaggerHash.substring(0, 8)}...)`);
+
+      return { swaggerData, swaggerHash };
+
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        throw new Error(`Request timeout after ${this.config.timeout}ms`);
+      }
+      throw error;
+    }
+  }
+
+  // Группировка endpoint'ов по тегам
+  groupEndpointsByTags(swaggerData) {
+    const apiGroups = {};
+
+    if (!swaggerData.paths) {
+      throw new Error('No paths found in Swagger documentation');
+    }
+
+    for (const [path, methods] of Object.entries(swaggerData.paths)) {
+      for (const [method, endpoint] of Object.entries(methods)) {
+        if (typeof endpoint !== 'object' || !endpoint.tags) continue;
+
+        const tag = endpoint.tags[0] || 'Default';
+
+        if (!apiGroups[tag]) {
+          apiGroups[tag] = [];
+        }
+
+        apiGroups[tag].push({
+          method: method.toUpperCase(),
+          path,
+          title: endpoint.summary || `${method.toUpperCase()} ${path}`,
+          description: endpoint.description || 'No description available',
+          parameters: this.extractParameters(endpoint),
+          responses: endpoint.responses || {}
+        });
+      }
+    }
+
+    return apiGroups;
+  }
+
+  // Извлечение параметров из endpoint'а
+  extractParameters(endpoint) {
+    const parameters = [];
+
+    // Parameters из самого endpoint'а
+    if (endpoint.parameters) {
+      endpoint.parameters.forEach(param => {
+        if (param.in === 'query' || param.in === 'path') {
+          parameters.push({
+            name: param.name,
+            type: param.schema?.type || 'string',
+            description: param.description || '',
+            required: param.required || false
+          });
+        }
+      });
+    }
+
+    // Request body parameters
+    if (endpoint.requestBody?.content?.['application/json']?.schema?.properties) {
+      const properties = endpoint.requestBody.content['application/json'].schema.properties;
+      const requiredFields = endpoint.requestBody.content['application/json'].schema.required || [];
+
+      for (const [name, prop] of Object.entries(properties)) {
+        parameters.push({
+          name,
+          type: prop.type || 'string',
+          description: prop.description || '',
+          required: requiredFields.includes(name)
+        });
+      }
+    }
+
+    return parameters;
+  }
+
+  // Генерация всех API из Swagger
+  async generateAllAPIsFromSwagger() {
+    try {
+      const { swaggerData } = await this.fetchSwaggerDocs();
+      const apiGroups = this.groupEndpointsByTags(swaggerData);
+      const generator = new UniversalAPIGenerator();
+
+      console.log(`\n🔥 Found ${Object.keys(apiGroups).length} API groups in Swagger:\n`);
+
+      for (const [tagName, endpoints] of Object.entries(apiGroups)) {
+        console.log(`📋 ${tagName}: ${endpoints.length} endpoints`);
+      }
+
+      console.log('\n🚀 Starting generation...\n');
+
+      for (const [tagName, endpoints] of Object.entries(apiGroups)) {
+        try {
+          console.log(`\n--- Generating ${tagName.toUpperCase()} API ---`);
+
+          const apiName = `${tagName} API`;
+          const componentName = `Interactive${tagName.replace(/[^a-zA-Z0-9]/g, '')}API`;
+
+          generator.generateAPI(apiName, endpoints, componentName);
+
+          console.log(`✅ ${tagName} API generated successfully!`);
+
+        } catch (error) {
+          console.error(`❌ Failed to generate ${tagName} API:`, error.message);
+        }
+      }
+
+      console.log('\n🎉 All APIs generated from Swagger successfully!');
+      return { success: true, apisGenerated: Object.keys(apiGroups).length };
+
+    } catch (error) {
+      console.error('❌ Failed to generate APIs from Swagger:', error.message);
+      throw error;
+    }
+  }
+}
 
 // Navigation updater class
 class NavigationUpdater {
@@ -610,11 +771,11 @@ main();\``;
 function ${endpoint.title.toLowerCase().replace(/[^a-zA-Z0-9]/g, '')}($baseUrl, $accessToken, $data) {
     $url = $baseUrl . '${endpoint.path}';
     
-    $headers = [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-        'Fingerprint: YOUR_FINGERPRINT'
-    ];
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
 
     $ch = curl_init();
     curl_setopt_array($ch, [
@@ -739,18 +900,21 @@ if __name__ == "__main__":
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--vp-c-bg);
-  border-bottom: 2px solid var(--vp-c-brand);
-  padding: 0.65rem 0;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: padding 0.3s ease-out, box-shadow 0.3s ease-out;
+  background: linear-gradient(135deg, var(--vp-c-bg) 0%, var(--vp-c-bg-soft) 100%);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
 .auth-header-fixed.collapsed {
-  padding: 0.4rem 0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
 }
 
 .auth-header-fixed.collapsed .api-config-row,
@@ -776,27 +940,37 @@ if __name__ == "__main__":
 }
 
 .auth-title h4 {
-  margin: 0 0 0.65rem 0;
-  color: var(--vp-c-brand);
-  font-size: 1rem;
+  margin: 0 0 1rem 0;
+  background: linear-gradient(135deg, var(--vp-c-brand) 0%, var(--vp-c-brand-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .collapse-toggle {
-  background: var(--vp-c-bg-soft);
+  background: linear-gradient(135deg, var(--vp-c-bg-soft) 0%, var(--vp-c-bg-alt) 100%);
   border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
-  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-  margin-bottom: 0.65rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .collapse-toggle:hover {
-  background: var(--vp-c-brand);
+  background: linear-gradient(135deg, var(--vp-c-brand) 0%, var(--vp-c-brand-dark) 100%);
   color: white;
   border-color: var(--vp-c-brand);
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(var(--vp-c-brand-rgb), 0.3);
 }
 
 .api-config-row {
@@ -822,17 +996,21 @@ if __name__ == "__main__":
 }
 
 .config-input {
-  padding: 0.75rem;
+  padding: 0.875rem 1rem;
   border: 2px solid var(--vp-c-border);
-  border-radius: 8px;
-  font-family: monospace;
+  border-radius: 12px;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   font-size: 0.9rem;
-  transition: border-color 0.2s;
+  background: var(--vp-c-bg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .config-input:focus {
   outline: none;
   border-color: var(--vp-c-brand);
+  box-shadow: 0 0 0 3px rgba(var(--vp-c-brand-rgb), 0.1), 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
 }
 
 .token-input-group {
@@ -1529,9 +1707,38 @@ if __name__ == "__main__":
     fs.writeFileSync(componentPath, componentContent, 'utf8');
     console.log(`✅ Generated ${componentPath}`);
 
+    // Generate individual endpoint components
+    endpoints.forEach((endpoint, index) => {
+      const endpointComponentName = `${componentName}Endpoint${index + 1}`;
+      const endpointComponent = this.generateSingleEndpointComponent(endpoint, index + 1, endpointComponentName);
+      const endpointPath = `docs/.vitepress/theme/components/${endpointComponentName}.vue`;
+      fs.writeFileSync(endpointPath, endpointComponent, 'utf8');
+      console.log(`✅ Generated ${endpointPath}`);
+    });
+
     // Generate markdown page (only one file)
     const apiNameLower = apiName.toLowerCase().replace(/\s+/g, '-').replace(/-api$/, '');
     const fileName = apiNameLower === 'user' ? 'users' : apiNameLower;
+
+    // Функция для экранирования текста для JavaScript
+    const escapeForJS = (text) => {
+      return text
+        .replace(/\\/g, '\\\\')
+        .replace(/'/g, "\\'")
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, ' ')
+        .replace(/\r/g, '')
+        .replace(/\t/g, ' ')
+        .trim();
+    };
+
+    // Функция для создания якоря
+    const createAnchor = (text) => {
+      return text.toLowerCase()
+        .replace(/[^a-z0-9\s]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    };
 
     const markdownPage = `---
 layout: page
@@ -1539,11 +1746,22 @@ layout: page
 
 # ${apiName}
 
+<${componentName} />
+
+${endpoints.map((endpoint, index) => `## ${endpoint.title}
+${endpoint.description}
+
+<${componentName}Endpoint${index + 1} />`).join('\n\n')}
+
 <script setup>
 import ${componentName} from '../../.vitepress/theme/components/${componentName}.vue'
+${endpoints.map((_, index) => `import ${componentName}Endpoint${index + 1} from '../../.vitepress/theme/components/${componentName}Endpoint${index + 1}.vue'`).join('\n')}
+import SimpleOutline from '../../.vitepress/theme/components/SimpleOutline.vue'
 </script>
 
-<${componentName} />
+<SimpleOutline :items="[
+${endpoints.map(endpoint => `  { text: '${escapeForJS(endpoint.title)}', anchor: '#${createAnchor(endpoint.title)}' }`).join(',\n')}
+]" />
 `;
 
     // Create only one file with the correct name
@@ -1559,6 +1777,197 @@ import ${componentName} from '../../.vitepress/theme/components/${componentName}
     this.navUpdater.addApiToNavigation(apiName, `/en/api/${fileName}`, subItems);
 
     console.log(`🎉 ${apiName} generation completed!`);
+  }
+
+  // Generate single endpoint component
+  generateSingleEndpointComponent(endpoint, _index, _componentName) {
+    return `<template>
+  <div class="single-endpoint">
+    <div class="endpoint-layout">
+      <div class="endpoint-docs">
+        <div class="method-header">
+          <span class="method-badge ${endpoint.method.toLowerCase()}">${endpoint.method.toUpperCase()}</span>
+          <span class="endpoint-path">${endpoint.path}</span>
+        </div>
+
+        <div class="endpoint-info">
+          <p class="endpoint-description">${endpoint.description}</p>
+        </div>
+
+        <div class="api-section" v-if="hasParameters">
+          <h4 class="section-title">⚙️ Parameters</h4>
+          <div class="param-list">
+            ${endpoint.parameters.map(param => `<div class="param-item required">
+              <code class="param-name">${param.name}</code>
+              <span class="param-type">${param.type}</span>
+              <span class="param-desc">${param.description}</span>
+            </div>`).join('\n            ')}
+          </div>
+        </div>
+
+        <div class="api-section">
+          <h4 class="section-title">📝 Example Request</h4>
+          <div class="code-examples">
+            <div class="code-tabs">
+              <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab = lang"
+                :class="['code-tab', { active: activeCodeTab === lang }]">
+                {{ lang }}
+              </button>
+            </div>
+            <div v-show="activeCodeTab === 'cURL'" class="code-block">
+              <pre>curl -X ${endpoint.method.toUpperCase()} "https://develop.okd.finance/api${endpoint.path}" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT"${endpoint.parameters.length > 0 ? ` \\
+  -d '{"${endpoint.parameters.map(p => `${p.name}":"example"`).join('","')}"}'` : ''}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="endpoint-testing">
+        <h4 class="testing-title">🚀 Live Testing</h4>
+        <div class="test-section">
+          ${endpoint.parameters.map(param => this.generateFormField(param, '')).join('\n          ')}
+          <button @click="testEndpoint" class="test-btn"
+            :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+            {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+          </button>
+          <div v-if="result" class="result-container">
+            <div class="result-header">
+              <span class="status-badge">{{ result.status }}</span>
+              <span class="timestamp">{{ result.timestamp }}</span>
+              <button @click="copyToClipboard(result.data, $event)" class="copy-btn">📋 Copy Response</button>
+            </div>
+            <div v-if="result.requestUrl" class="request-info">
+              <h5>📤 Actual Request:</h5>
+              <pre class="request-data">{{ result.requestUrl }}</pre>
+              <h5>📋 Headers:</h5>
+              <pre class="request-data">{{ result.headers }}</pre>
+              <h5>📦 Body:</h5>
+              <pre class="request-data">{{ result.body }}</pre>
+            </div>
+            <h5>📥 Response:</h5>
+            <pre class="result-data">{{ result.data }}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { reactive, ref } from 'vue'
+import { useAuth } from '../composables/useAuth.js'
+
+// Global authentication state
+const {
+  apiToken,
+  apiBaseUrl,
+  apiFingerprint,
+  showToken,
+  showFingerprint,
+  isHeaderCollapsed,
+  toggleHeader,
+  clearAuth,
+  getRawValues,
+  isReadyToSendRequest
+} = useAuth()
+
+const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
+const activeCodeTab = ref('cURL')
+
+const hasParameters = ${endpoint.parameters.length > 0}
+
+const testData = reactive({
+  ${endpoint.parameters.map(param => {
+      if (param.type === 'boolean') return `${param.name}: true`;
+      if (param.type === 'integer') return `${param.name}: 123`;
+      return `${param.name}: 'example_${param.name}'`;
+    }).join(',\n  ')}
+})
+
+const result = ref(null)
+
+const testEndpoint = async () => {
+  try {
+    const authValues = getRawValues()
+    
+    if (!isReadyToSendRequest()) {
+      result.value = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
+      }
+      return
+    }
+
+    const requestBody = {
+      ${endpoint.parameters.map(param => `${param.name}: testData.${param.name}`).join(',\n      ')}
+    }
+
+    const fullUrl = \`\${authValues.apiBaseUrl}${endpoint.path}\`
+    const headers = {
+      'Authorization': \`Bearer \${authValues.apiToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: '${endpoint.method.toUpperCase()}',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    result.value = {
+      status: \`\${response.status} \${response.statusText}\`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: \`${endpoint.method.toUpperCase()} \${fullUrl}\`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
+  } catch (error) {
+    result.value = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
+    }
+  }
+}
+
+const copyToClipboard = (text, event) => {
+  navigator.clipboard.writeText(text).then(() => {
+    const button = event.target
+    const originalText = button.textContent
+    button.textContent = '✅ Copied!'
+    button.style.background = 'linear-gradient(135deg, #4caf50, #45a049)'
+    setTimeout(() => {
+      button.textContent = originalText
+      button.style.background = ''
+    }, 2000)
+  }).catch(() => {
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    document.body.appendChild(textArea)
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+  })
+}
+</script>
+
+<style scoped>
+${this.generateStyles()}
+</style>`;
   }
 }
 
@@ -1601,7 +2010,7 @@ function generateWalletAPI() {
 }
 
 // Export for use
-module.exports = { UniversalAPIGenerator, NavigationUpdater, generateWalletAPI };
+module.exports = { UniversalAPIGenerator, NavigationUpdater, SwaggerAutoLoader, generateWalletAPI };
 
 // Predefined API configurations
 const API_CONFIGS = {
@@ -1765,7 +2174,7 @@ function showHelp() {
 
 Usage:
   node universal-swagger-generator-final.cjs <api-type>
-  node universal-swagger-generator-final.cjs all
+  node universal-swagger-generator-final.cjs <command>
 
 Available API types:
   user      - Generate User API (profile, notifications, flags)
@@ -1774,10 +2183,17 @@ Available API types:
   trading   - Generate Trading API (orders, cancel, history)
   all       - Generate all APIs
 
+Available commands:
+  swagger   - Generate all APIs from Swagger documentation automatically
+  auto      - Same as swagger (alias)
+  help      - Show this help message
+
 Examples:
   node universal-swagger-generator-final.cjs user
   node universal-swagger-generator-final.cjs wallet
   node universal-swagger-generator-final.cjs all
+  node universal-swagger-generator-final.cjs swagger
+  node universal-swagger-generator-final.cjs auto
 `);
 }
 
@@ -1806,6 +2222,19 @@ function generateAllAPIs() {
   console.log('\n🎉 All APIs generated successfully!');
 }
 
+async function generateFromSwagger() {
+  try {
+    console.log('🔥 Generating APIs from Swagger documentation...\n');
+
+    const loader = new SwaggerAutoLoader();
+    await loader.generateAllAPIsFromSwagger();
+
+  } catch (error) {
+    console.error('❌ Failed to generate from Swagger:', error.message);
+    process.exit(1);
+  }
+}
+
 // Run if called directly
 if (require.main === module) {
   const args = process.argv.slice(2);
@@ -1814,6 +2243,8 @@ if (require.main === module) {
     showHelp();
   } else if (args[0] === 'all') {
     generateAllAPIs();
+  } else if (args[0] === 'swagger' || args[0] === 'auto') {
+    generateFromSwagger();
   } else {
     generateAPI(args[0]);
   }

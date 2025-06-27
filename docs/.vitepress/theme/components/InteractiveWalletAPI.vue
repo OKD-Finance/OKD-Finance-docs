@@ -34,9 +34,6 @@
               :title="showFingerprint ? 'Hide fingerprint' : 'Show fingerprint'">
               {{ showFingerprint ? '🙈' : '👁️' }}
             </button>
-            <button @click="generateRandomFingerprint" class="generate-btn" title="Generate random fingerprint">
-              🎲
-            </button>
           </div>
         </div>
       </div>
@@ -54,562 +51,1014 @@
 
   <div class="interactive-api-container">
     <div class="main-content">
-      <!-- Endpoint 1: GET /wallet/balances -->
-      <div class="endpoint-section">
-        <div class="endpoint-header">
-          <span class="method-badge method-get">GET</span>
-          <span class="endpoint-path">/wallet/balances</span>
-          <h3>Get balances</h3>
-        </div>
-        <div class="endpoint-content">
-          <div class="endpoint-description">
-            <p>! Need access token in bearer token authorization</p>
-          </div>
-          
-                    <div class="parameters-section">
-            <h4>Parameters:</h4>
-            <div class="parameter-group">
-              <label class="parameter-label">Fingerprint * (header)</label>
-              <input v-model="testData1.Fingerprint" 
-                type="text" 
-                placeholder="user device unique id"
-                class="parameter-input" />
+      <section id="endpoint-1" class="endpoint-section">
+        <div class="endpoint-layout">
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge get">GET</span>
+              <span class="endpoint-path">/wallet/balances</span>
             </div>
-            <div class="parameter-group">
-              <label class="parameter-label">type (query)</label>
-              <input v-model="testData1.type" 
-                type="text" 
-                placeholder="Balance type
-"
-                class="parameter-input" />
+
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">📋 Get balances</h3>
+              <p class="endpoint-description">! Need access token in bearer token authorization</p>
             </div>
-            <div class="parameter-group">
-              <label class="parameter-label">coin (query)</label>
-              <input v-model="testData1.coin" 
-                type="text" 
-                placeholder="Comma-separated list of coins. Can be empty"
-                class="parameter-input" />
+
+            <div class="api-section">
+              <h4 class="section-title">📋 Headers</h4>
+              <div class="param-list">
+                <div class="param-item">
+                  <code class="param-name">Authorization</code>
+                  <span class="param-type">Bearer token</span>
+                  <span class="param-desc">JWT access token for authentication</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Fingerprint</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">32-character hex string for device identification</span>
+                </div>
+              </div>
             </div>
-            <div class="parameter-group">
-              <label class="parameter-label">sortBy (query)</label>
-              <input v-model="testData1.sortBy" 
-                type="text" 
-                placeholder="Comma-separated list of sort balances. Every item must be *field name:sort order*. Sort order must be 'asc' or 'desc'
+
+            <div class="api-section">
+              <h4 class="section-title">⚙️ Body Parameters</h4>
+              <div class="param-list">
+                <div class="param-item required">
+                  <code class="param-name">type</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Balance type
+</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">coin</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Comma-separated list of coins. Can be empty</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">sortBy</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Comma-separated list of sort balances. Every item must be *field name:sort order*. Sort order must be 'asc' or 'desc'
   Available values: *coin, total, available,locked*
-"
-                class="parameter-input" />
-            </div>          </div>
-          
-          <div class="test-section">
-            <div class="test-controls">
-              <button @click="testEndpoint1" 
-                :disabled="!isReadyToSendRequest()"
-                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
-                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
-              </button>
-              <div v-if="loading1" class="loading">⏳ Testing...</div>
+</span>
+                </div>
+              </div>
             </div>
-            
-            <div v-if="response1" class="response-section">
-              <h4>Response:</h4>
-              <pre class="response-content">{{ response1 }}</pre>
+
+            <div class="api-section">
+              <h4 class="section-title">📝 Example Request</h4>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab1 = lang"
+                    :class="['code-tab', { active: activeCodeTab1 === lang }]">
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab1 === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>curl -X GET &quot;https://develop.okd.finance/api/wallet/balances&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{&quot;type&quot;:&quot;example&quot;,&quot;coin&quot;:&quot;example&quot;,&quot;sortBy&quot;:&quot;example&quot;}&#x27;</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab1 === 'Go'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('go', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.go[1] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab1 === 'TypeScript'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('typescript', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.typescript[1] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab1 === 'PHP'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('php', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.php[1] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab1 === 'Python'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('python', 1)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.python[1] }}</pre>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div class="code-examples">
-            <div class="code-tabs">
-              <button v-for="lang in codeLangs" :key="lang"
-                @click="activeCodeTab1 = lang"
-                :class="['code-tab', { active: activeCodeTab1 === lang }]">
-                {{ lang }}
+
+          <div class="endpoint-testing">
+            <h4 class="testing-title">🚀 Live Testing</h4>
+            <div class="test-section">
+              <div class="form-group">
+                <label>Type</label>
+                <input v-model="testData1.type" type="text" placeholder="example_type" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Coin</label>
+                <input v-model="testData1.coin" type="text" placeholder="example_coin" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>SortBy</label>
+                <input v-model="testData1.sortBy" type="text" placeholder="example_sortBy" class="test-input" />
+              </div>
+              <button @click="testEndpoint1" class="test-btn"
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
-            </div>
-            <div class="code-content">
-              <div v-for="lang in codeLangs" :key="lang"
-                v-show="activeCodeTab1 === lang"
-                class="code-block">
-                <button @click="copyCode(getCodeExample1(lang))" class="copy-btn">📋 Copy</button>
-                <pre><code>{{ getCodeExample1(lang) }}</code></pre>
+              <div v-if="results.endpoint1" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.endpoint1.status }}</span>
+                  <span class="timestamp">{{ results.endpoint1.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint1.data, $event)" class="copy-btn">📋 Copy Response</button>
+                </div>
+                <div v-if="results.endpoint1.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.endpoint1.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.endpoint1.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint1.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
+                <pre class="result-data">{{ results.endpoint1.data }}</pre>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Endpoint 2: GET /wallet/total-balance -->
-      <div class="endpoint-section">
-        <div class="endpoint-header">
-          <span class="method-badge method-get">GET</span>
-          <span class="endpoint-path">/wallet/total-balance</span>
-          <h3>Get total balance in USD</h3>
-        </div>
-        <div class="endpoint-content">
-          <div class="endpoint-description">
-            <p>! Need access token in bearer token authorization</p>
-          </div>
-          
-                    <div class="parameters-section">
-            <h4>Parameters:</h4>
-            <div class="parameter-group">
-              <label class="parameter-label">Fingerprint * (header)</label>
-              <input v-model="testData2.Fingerprint" 
-                type="text" 
-                placeholder="user device unique id"
-                class="parameter-input" />
-            </div>          </div>
-          
-          <div class="test-section">
-            <div class="test-controls">
-              <button @click="testEndpoint2" 
-                :disabled="!isReadyToSendRequest()"
-                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
-                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
-              </button>
-              <div v-if="loading2" class="loading">⏳ Testing...</div>
+      <section id="endpoint-2" class="endpoint-section">
+        <div class="endpoint-layout">
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge get">GET</span>
+              <span class="endpoint-path">/wallet/total-balance</span>
             </div>
+
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">📋 Get total balance in USD</h3>
+              <p class="endpoint-description">! Need access token in bearer token authorization</p>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📋 Headers</h4>
+              <div class="param-list">
+                <div class="param-item">
+                  <code class="param-name">Authorization</code>
+                  <span class="param-type">Bearer token</span>
+                  <span class="param-desc">JWT access token for authentication</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Fingerprint</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">32-character hex string for device identification</span>
+                </div>
+              </div>
+            </div>
+
             
-            <div v-if="response2" class="response-section">
-              <h4>Response:</h4>
-              <pre class="response-content">{{ response2 }}</pre>
+
+            <div class="api-section">
+              <h4 class="section-title">📝 Example Request</h4>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab2 = lang"
+                    :class="['code-tab', { active: activeCodeTab2 === lang }]">
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab2 === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>curl -X GET &quot;https://develop.okd.finance/api/wallet/total-balance&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{}&#x27;</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab2 === 'Go'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('go', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.go[2] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab2 === 'TypeScript'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('typescript', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.typescript[2] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab2 === 'PHP'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('php', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.php[2] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab2 === 'Python'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('python', 2)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.python[2] }}</pre>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div class="code-examples">
-            <div class="code-tabs">
-              <button v-for="lang in codeLangs" :key="lang"
-                @click="activeCodeTab2 = lang"
-                :class="['code-tab', { active: activeCodeTab2 === lang }]">
-                {{ lang }}
+
+          <div class="endpoint-testing">
+            <h4 class="testing-title">🚀 Live Testing</h4>
+            <div class="test-section">
+              
+              <button @click="testEndpoint2" class="test-btn"
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
-            </div>
-            <div class="code-content">
-              <div v-for="lang in codeLangs" :key="lang"
-                v-show="activeCodeTab2 === lang"
-                class="code-block">
-                <button @click="copyCode(getCodeExample2(lang))" class="copy-btn">📋 Copy</button>
-                <pre><code>{{ getCodeExample2(lang) }}</code></pre>
+              <div v-if="results.endpoint2" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.endpoint2.status }}</span>
+                  <span class="timestamp">{{ results.endpoint2.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint2.data, $event)" class="copy-btn">📋 Copy Response</button>
+                </div>
+                <div v-if="results.endpoint2.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.endpoint2.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.endpoint2.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint2.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
+                <pre class="result-data">{{ results.endpoint2.data }}</pre>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Endpoint 3: GET /wallet/transactions -->
-      <div class="endpoint-section">
-        <div class="endpoint-header">
-          <span class="method-badge method-get">GET</span>
-          <span class="endpoint-path">/wallet/transactions</span>
-          <h3>Get user transactions history.</h3>
-        </div>
-        <div class="endpoint-content">
-          <div class="endpoint-description">
-            <p>! Need access token in bearer token authorization</p>
-          </div>
-          
-                    <div class="parameters-section">
-            <h4>Parameters:</h4>
-            <div class="parameter-group">
-              <label class="parameter-label">Fingerprint * (header)</label>
-              <input v-model="testData3.Fingerprint" 
-                type="text" 
-                placeholder="user device unique id"
-                class="parameter-input" />
+      <section id="endpoint-3" class="endpoint-section">
+        <div class="endpoint-layout">
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge get">GET</span>
+              <span class="endpoint-path">/wallet/transactions</span>
             </div>
-            <div class="parameter-group">
-              <label class="parameter-label">statuses (query)</label>
-              <input v-model="testData3.statuses" 
-                type="text" 
-                placeholder="Comma-separated list of transaction statuses
+
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">📋 Get user transactions history.</h3>
+              <p class="endpoint-description">! Need access token in bearer token authorization</p>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📋 Headers</h4>
+              <div class="param-list">
+                <div class="param-item">
+                  <code class="param-name">Authorization</code>
+                  <span class="param-type">Bearer token</span>
+                  <span class="param-desc">JWT access token for authentication</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Fingerprint</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">32-character hex string for device identification</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">⚙️ Body Parameters</h4>
+              <div class="param-list">
+                <div class="param-item required">
+                  <code class="param-name">statuses</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Comma-separated list of transaction statuses
   Available values: *new, rejected, completed, pending, failed*
-"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">coin (query)</label>
-              <input v-model="testData3.coin" 
-                type="text" 
-                placeholder="Transaction coin
-"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">amount (query)</label>
-              <input v-model="testData3.amount" 
-                type="text" 
-                placeholder="Amount of transaction
-"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">type (query)</label>
-              <input v-model="testData3.type" 
-                type="text" 
-                placeholder="Type of transaction
-"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">from (query)</label>
-              <input v-model="testData3.from" 
-                type="text" 
-                placeholder="Get transactions created after the _from_ timestamp (in seconds)
-"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">to (query)</label>
-              <input v-model="testData3.to" 
-                type="text" 
-                placeholder="Get transactions created before the _to_ timestamp (in seconds)
-"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">sortBy (query)</label>
-              <input v-model="testData3.sortBy" 
-                type="text" 
-                placeholder="Comma-separated list of sort order. Every item must be *field name:sort order*. Sort order must be 'asc' or 'desc'
+</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">coin</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Transaction coin
+</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">amount</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Amount of transaction
+</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">type</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Type of transaction
+</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">from</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Get transactions created after the _from_ timestamp (in seconds)
+</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">to</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Get transactions created before the _to_ timestamp (in seconds)
+</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">sortBy</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Comma-separated list of sort order. Every item must be *field name:sort order*. Sort order must be 'asc' or 'desc'
   Available values: *created_at, type, amount, coin, status*
-"
-                class="parameter-input" />
+</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">limit</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Limit of records in request
+</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">offset</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Offset of records in request
+</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">search</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">User ID; wallet address; transaction hash; Recipient email (for internal transfer sent by email);
+</span>
+                </div>
+              </div>
             </div>
-            <div class="parameter-group">
-              <label class="parameter-label">limit (query)</label>
-              <input v-model="testData3.limit" 
-                type="text" 
-                placeholder="Limit of records in request
-"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">offset (query)</label>
-              <input v-model="testData3.offset" 
-                type="text" 
-                placeholder="Offset of records in request
-"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">search (query)</label>
-              <input v-model="testData3.search" 
-                type="text" 
-                placeholder="User ID; wallet address; transaction hash; Recipient email (for internal transfer sent by email);
-"
-                class="parameter-input" />
-            </div>          </div>
-          
-          <div class="test-section">
-            <div class="test-controls">
-              <button @click="testEndpoint3" 
-                :disabled="!isReadyToSendRequest()"
-                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
-                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
-              </button>
-              <div v-if="loading3" class="loading">⏳ Testing...</div>
-            </div>
-            
-            <div v-if="response3" class="response-section">
-              <h4>Response:</h4>
-              <pre class="response-content">{{ response3 }}</pre>
+
+            <div class="api-section">
+              <h4 class="section-title">📝 Example Request</h4>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab3 = lang"
+                    :class="['code-tab', { active: activeCodeTab3 === lang }]">
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab3 === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>curl -X GET &quot;https://develop.okd.finance/api/wallet/transactions&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{&quot;statuses&quot;:&quot;example&quot;,&quot;coin&quot;:&quot;example&quot;,&quot;amount&quot;:&quot;example&quot;,&quot;type&quot;:&quot;example&quot;,&quot;from&quot;:&quot;example&quot;,&quot;to&quot;:&quot;example&quot;,&quot;sortBy&quot;:&quot;example&quot;,&quot;limit&quot;:&quot;example&quot;,&quot;offset&quot;:&quot;example&quot;,&quot;search&quot;:&quot;example&quot;}&#x27;</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab3 === 'Go'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('go', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.go[3] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab3 === 'TypeScript'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('typescript', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.typescript[3] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab3 === 'PHP'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('php', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.php[3] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab3 === 'Python'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('python', 3)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.python[3] }}</pre>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div class="code-examples">
-            <div class="code-tabs">
-              <button v-for="lang in codeLangs" :key="lang"
-                @click="activeCodeTab3 = lang"
-                :class="['code-tab', { active: activeCodeTab3 === lang }]">
-                {{ lang }}
+
+          <div class="endpoint-testing">
+            <h4 class="testing-title">🚀 Live Testing</h4>
+            <div class="test-section">
+              <div class="form-group">
+                <label>Statuses</label>
+                <input v-model="testData3.statuses" type="text" placeholder="example_statuses" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Coin</label>
+                <input v-model="testData3.coin" type="text" placeholder="example_coin" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Amount</label>
+                <input v-model="testData3.amount" type="text" placeholder="example_amount" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Type</label>
+                <input v-model="testData3.type" type="text" placeholder="example_type" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>From</label>
+                <input v-model="testData3.from" type="text" placeholder="example_from" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>To</label>
+                <input v-model="testData3.to" type="text" placeholder="example_to" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>SortBy</label>
+                <input v-model="testData3.sortBy" type="text" placeholder="example_sortBy" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Limit</label>
+                <input v-model="testData3.limit" type="text" placeholder="example_limit" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Offset</label>
+                <input v-model="testData3.offset" type="text" placeholder="example_offset" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Search</label>
+                <input v-model="testData3.search" type="text" placeholder="example_search" class="test-input" />
+              </div>
+              <button @click="testEndpoint3" class="test-btn"
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
-            </div>
-            <div class="code-content">
-              <div v-for="lang in codeLangs" :key="lang"
-                v-show="activeCodeTab3 === lang"
-                class="code-block">
-                <button @click="copyCode(getCodeExample3(lang))" class="copy-btn">📋 Copy</button>
-                <pre><code>{{ getCodeExample3(lang) }}</code></pre>
+              <div v-if="results.endpoint3" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.endpoint3.status }}</span>
+                  <span class="timestamp">{{ results.endpoint3.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint3.data, $event)" class="copy-btn">📋 Copy Response</button>
+                </div>
+                <div v-if="results.endpoint3.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.endpoint3.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.endpoint3.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint3.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
+                <pre class="result-data">{{ results.endpoint3.data }}</pre>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Endpoint 4: GET /wallet/transactions/deposit -->
-      <div class="endpoint-section">
-        <div class="endpoint-header">
-          <span class="method-badge method-get">GET</span>
-          <span class="endpoint-path">/wallet/transactions/deposit</span>
-          <h3>Returns deposit address for coin+chain. Result is described here.
+      <section id="endpoint-4" class="endpoint-section">
+        <div class="endpoint-layout">
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge get">GET</span>
+              <span class="endpoint-path">/wallet/transactions/deposit</span>
+            </div>
+
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">📋 Returns deposit address for coin+chain. Result is described here.
 https://bybit-exchange.github.io/docs/v5/asset/deposit/sub-deposit-addr</h3>
-        </div>
-        <div class="endpoint-content">
-          <div class="endpoint-description">
-            <p>! Need access token in bearer token authorization</p>
-          </div>
-          
-                    <div class="parameters-section">
-            <h4>Parameters:</h4>
-            <div class="parameter-group">
-              <label class="parameter-label">Fingerprint * (header)</label>
-              <input v-model="testData4.Fingerprint" 
-                type="text" 
-                placeholder="user device unique id"
-                class="parameter-input" />
+              <p class="endpoint-description">! Need access token in bearer token authorization</p>
             </div>
-            <div class="parameter-group">
-              <label class="parameter-label">coin (query)</label>
-              <input v-model="testData4.coin" 
-                type="text" 
-                placeholder="Coin"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">chainType (query)</label>
-              <input v-model="testData4.chainType" 
-                type="text" 
-                placeholder="Chain type"
-                class="parameter-input" />
-            </div>          </div>
-          
-          <div class="test-section">
-            <div class="test-controls">
-              <button @click="testEndpoint4" 
-                :disabled="!isReadyToSendRequest()"
-                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
-                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
-              </button>
-              <div v-if="loading4" class="loading">⏳ Testing...</div>
-            </div>
-            
-            <div v-if="response4" class="response-section">
-              <h4>Response:</h4>
-              <pre class="response-content">{{ response4 }}</pre>
-            </div>
-          </div>
-          
-          <div class="code-examples">
-            <div class="code-tabs">
-              <button v-for="lang in codeLangs" :key="lang"
-                @click="activeCodeTab4 = lang"
-                :class="['code-tab', { active: activeCodeTab4 === lang }]">
-                {{ lang }}
-              </button>
-            </div>
-            <div class="code-content">
-              <div v-for="lang in codeLangs" :key="lang"
-                v-show="activeCodeTab4 === lang"
-                class="code-block">
-                <button @click="copyCode(getCodeExample4(lang))" class="copy-btn">📋 Copy</button>
-                <pre><code>{{ getCodeExample4(lang) }}</code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Endpoint 5: POST /wallet/transactions/transfer -->
-      <div class="endpoint-section">
-        <div class="endpoint-header">
-          <span class="method-badge method-post">POST</span>
-          <span class="endpoint-path">/wallet/transactions/transfer</span>
-          <h3>Create internal transfer (operation) between users.</h3>
-        </div>
-        <div class="endpoint-content">
-          <div class="endpoint-description">
-            <p>! Need access token in bearer token authorization</p>
-          </div>
-          
-                    <div class="parameters-section">
-            <h4>Parameters:</h4>
-            <div class="parameter-group">
-              <label class="parameter-label">Fingerprint * (header)</label>
-              <input v-model="testData5.Fingerprint" 
-                type="text" 
-                placeholder="user device unique id"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">Body (body)</label>
-              <input v-model="testData5.Body" 
-                type="text" 
-                placeholder="Body"
-                class="parameter-input" />
-            </div>          </div>
-          
-          <div class="test-section">
-            <div class="test-controls">
-              <button @click="testEndpoint5" 
-                :disabled="!isReadyToSendRequest()"
-                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
-                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
-              </button>
-              <div v-if="loading5" class="loading">⏳ Testing...</div>
-            </div>
-            
-            <div v-if="response5" class="response-section">
-              <h4>Response:</h4>
-              <pre class="response-content">{{ response5 }}</pre>
-            </div>
-          </div>
-          
-          <div class="code-examples">
-            <div class="code-tabs">
-              <button v-for="lang in codeLangs" :key="lang"
-                @click="activeCodeTab5 = lang"
-                :class="['code-tab', { active: activeCodeTab5 === lang }]">
-                {{ lang }}
-              </button>
-            </div>
-            <div class="code-content">
-              <div v-for="lang in codeLangs" :key="lang"
-                v-show="activeCodeTab5 === lang"
-                class="code-block">
-                <button @click="copyCode(getCodeExample5(lang))" class="copy-btn">📋 Copy</button>
-                <pre><code>{{ getCodeExample5(lang) }}</code></pre>
+            <div class="api-section">
+              <h4 class="section-title">📋 Headers</h4>
+              <div class="param-list">
+                <div class="param-item">
+                  <code class="param-name">Authorization</code>
+                  <span class="param-type">Bearer token</span>
+                  <span class="param-desc">JWT access token for authentication</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Fingerprint</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">32-character hex string for device identification</span>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Endpoint 6: POST /wallet/transactions/withdraw -->
-      <div class="endpoint-section">
-        <div class="endpoint-header">
-          <span class="method-badge method-post">POST</span>
-          <span class="endpoint-path">/wallet/transactions/withdraw</span>
-          <h3>Create withdrawal (operation) for specified assets</h3>
-        </div>
-        <div class="endpoint-content">
-          <div class="endpoint-description">
-            <p>! Need access token in bearer token authorization</p>
-          </div>
-          
-                    <div class="parameters-section">
-            <h4>Parameters:</h4>
-            <div class="parameter-group">
-              <label class="parameter-label">Fingerprint * (header)</label>
-              <input v-model="testData6.Fingerprint" 
-                type="text" 
-                placeholder="user device unique id"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">Body (body)</label>
-              <input v-model="testData6.Body" 
-                type="text" 
-                placeholder="Body"
-                class="parameter-input" />
-            </div>          </div>
-          
-          <div class="test-section">
-            <div class="test-controls">
-              <button @click="testEndpoint6" 
-                :disabled="!isReadyToSendRequest()"
-                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
-                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
-              </button>
-              <div v-if="loading6" class="loading">⏳ Testing...</div>
-            </div>
-            
-            <div v-if="response6" class="response-section">
-              <h4>Response:</h4>
-              <pre class="response-content">{{ response6 }}</pre>
-            </div>
-          </div>
-          
-          <div class="code-examples">
-            <div class="code-tabs">
-              <button v-for="lang in codeLangs" :key="lang"
-                @click="activeCodeTab6 = lang"
-                :class="['code-tab', { active: activeCodeTab6 === lang }]">
-                {{ lang }}
-              </button>
-            </div>
-            <div class="code-content">
-              <div v-for="lang in codeLangs" :key="lang"
-                v-show="activeCodeTab6 === lang"
-                class="code-block">
-                <button @click="copyCode(getCodeExample6(lang))" class="copy-btn">📋 Copy</button>
-                <pre><code>{{ getCodeExample6(lang) }}</code></pre>
+            <div class="api-section">
+              <h4 class="section-title">⚙️ Body Parameters</h4>
+              <div class="param-list">
+                <div class="param-item required">
+                  <code class="param-name">coin</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Coin</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">chainType</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Chain type</span>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Endpoint 7: PUT /wallet/transactions/withdraw/{uuid}/reject -->
-      <div class="endpoint-section">
-        <div class="endpoint-header">
-          <span class="method-badge method-put">PUT</span>
-          <span class="endpoint-path">/wallet/transactions/withdraw/{uuid}/reject</span>
-          <h3>Reject withdrawal confirmed by user.</h3>
-        </div>
-        <div class="endpoint-content">
-          <div class="endpoint-description">
-            <p>! Need Bearer token and OTP authorization</p>
-          </div>
-          
-                    <div class="parameters-section">
-            <h4>Parameters:</h4>
-            <div class="parameter-group">
-              <label class="parameter-label">Fingerprint * (header)</label>
-              <input v-model="testData7.Fingerprint" 
-                type="text" 
-                placeholder="user device unique id"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">uuid (path)</label>
-              <input v-model="testData7.uuid" 
-                type="text" 
-                placeholder="Transaction UUID
-"
-                class="parameter-input" />
-            </div>
-            <div class="parameter-group">
-              <label class="parameter-label">type (query)</label>
-              <input v-model="testData7.type" 
-                type="text" 
-                placeholder="Reject type
-"
-                class="parameter-input" />
-            </div>          </div>
-          
-          <div class="test-section">
-            <div class="test-controls">
-              <button @click="testEndpoint7" 
-                :disabled="!isReadyToSendRequest()"
-                :class="['test-btn', { 'disabled': !isReadyToSendRequest() }]">
-                {{ isReadyToSendRequest() ? '🚀 Test API' : (getRawValues().apiToken ? '🔐 Need Fingerprint' : '🔑 Need Token & Fingerprint') }}
-              </button>
-              <div v-if="loading7" class="loading">⏳ Testing...</div>
-            </div>
-            
-            <div v-if="response7" class="response-section">
-              <h4>Response:</h4>
-              <pre class="response-content">{{ response7 }}</pre>
+            <div class="api-section">
+              <h4 class="section-title">📝 Example Request</h4>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab4 = lang"
+                    :class="['code-tab', { active: activeCodeTab4 === lang }]">
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab4 === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>curl -X GET &quot;https://develop.okd.finance/api/wallet/transactions/deposit&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{&quot;coin&quot;:&quot;example&quot;,&quot;chainType&quot;:&quot;example&quot;}&#x27;</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab4 === 'Go'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('go', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.go[4] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab4 === 'TypeScript'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('typescript', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.typescript[4] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab4 === 'PHP'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('php', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.php[4] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab4 === 'Python'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('python', 4)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.python[4] }}</pre>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div class="code-examples">
-            <div class="code-tabs">
-              <button v-for="lang in codeLangs" :key="lang"
-                @click="activeCodeTab7 = lang"
-                :class="['code-tab', { active: activeCodeTab7 === lang }]">
-                {{ lang }}
+
+          <div class="endpoint-testing">
+            <h4 class="testing-title">🚀 Live Testing</h4>
+            <div class="test-section">
+              <div class="form-group">
+                <label>Coin</label>
+                <input v-model="testData4.coin" type="text" placeholder="example_coin" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>ChainType</label>
+                <input v-model="testData4.chainType" type="text" placeholder="example_chainType" class="test-input" />
+              </div>
+              <button @click="testEndpoint4" class="test-btn"
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
               </button>
-            </div>
-            <div class="code-content">
-              <div v-for="lang in codeLangs" :key="lang"
-                v-show="activeCodeTab7 === lang"
-                class="code-block">
-                <button @click="copyCode(getCodeExample7(lang))" class="copy-btn">📋 Copy</button>
-                <pre><code>{{ getCodeExample7(lang) }}</code></pre>
+              <div v-if="results.endpoint4" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.endpoint4.status }}</span>
+                  <span class="timestamp">{{ results.endpoint4.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint4.data, $event)" class="copy-btn">📋 Copy Response</button>
+                </div>
+                <div v-if="results.endpoint4.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.endpoint4.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.endpoint4.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint4.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
+                <pre class="result-data">{{ results.endpoint4.data }}</pre>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section id="endpoint-5" class="endpoint-section">
+        <div class="endpoint-layout">
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge post">POST</span>
+              <span class="endpoint-path">/wallet/transactions/transfer</span>
+            </div>
+
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">📋 Create internal transfer (operation) between users.</h3>
+              <p class="endpoint-description">! Need access token in bearer token authorization</p>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📋 Headers</h4>
+              <div class="param-list">
+                <div class="param-item">
+                  <code class="param-name">Authorization</code>
+                  <span class="param-type">Bearer token</span>
+                  <span class="param-desc">JWT access token for authentication</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Fingerprint</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">32-character hex string for device identification</span>
+                </div>
+              </div>
+            </div>
+
+            
+
+            <div class="api-section">
+              <h4 class="section-title">📝 Example Request</h4>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab5 = lang"
+                    :class="['code-tab', { active: activeCodeTab5 === lang }]">
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab5 === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>curl -X POST &quot;https://develop.okd.finance/api/wallet/transactions/transfer&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{}&#x27;</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab5 === 'Go'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('go', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.go[5] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab5 === 'TypeScript'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('typescript', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.typescript[5] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab5 === 'PHP'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('php', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.php[5] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab5 === 'Python'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('python', 5)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.python[5] }}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="endpoint-testing">
+            <h4 class="testing-title">🚀 Live Testing</h4>
+            <div class="test-section">
+              
+              <button @click="testEndpoint5" class="test-btn"
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+              </button>
+              <div v-if="results.endpoint5" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.endpoint5.status }}</span>
+                  <span class="timestamp">{{ results.endpoint5.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint5.data, $event)" class="copy-btn">📋 Copy Response</button>
+                </div>
+                <div v-if="results.endpoint5.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.endpoint5.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.endpoint5.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint5.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
+                <pre class="result-data">{{ results.endpoint5.data }}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="endpoint-6" class="endpoint-section">
+        <div class="endpoint-layout">
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge post">POST</span>
+              <span class="endpoint-path">/wallet/transactions/withdraw</span>
+            </div>
+
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">📋 Create withdrawal (operation) for specified assets</h3>
+              <p class="endpoint-description">! Need access token in bearer token authorization</p>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📋 Headers</h4>
+              <div class="param-list">
+                <div class="param-item">
+                  <code class="param-name">Authorization</code>
+                  <span class="param-type">Bearer token</span>
+                  <span class="param-desc">JWT access token for authentication</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Fingerprint</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">32-character hex string for device identification</span>
+                </div>
+              </div>
+            </div>
+
+            
+
+            <div class="api-section">
+              <h4 class="section-title">📝 Example Request</h4>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab6 = lang"
+                    :class="['code-tab', { active: activeCodeTab6 === lang }]">
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab6 === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', 6)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>curl -X POST &quot;https://develop.okd.finance/api/wallet/transactions/withdraw&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{}&#x27;</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab6 === 'Go'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('go', 6)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.go[6] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab6 === 'TypeScript'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('typescript', 6)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.typescript[6] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab6 === 'PHP'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('php', 6)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.php[6] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab6 === 'Python'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('python', 6)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.python[6] }}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="endpoint-testing">
+            <h4 class="testing-title">🚀 Live Testing</h4>
+            <div class="test-section">
+              
+              <button @click="testEndpoint6" class="test-btn"
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+              </button>
+              <div v-if="results.endpoint6" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.endpoint6.status }}</span>
+                  <span class="timestamp">{{ results.endpoint6.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint6.data, $event)" class="copy-btn">📋 Copy Response</button>
+                </div>
+                <div v-if="results.endpoint6.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.endpoint6.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.endpoint6.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint6.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
+                <pre class="result-data">{{ results.endpoint6.data }}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="endpoint-7" class="endpoint-section">
+        <div class="endpoint-layout">
+          <div class="endpoint-docs">
+            <div class="method-header">
+              <span class="method-badge put">PUT</span>
+              <span class="endpoint-path">/wallet/transactions/withdraw/{uuid}/reject</span>
+            </div>
+
+            <div class="endpoint-info">
+              <h3 class="endpoint-title">📋 Reject withdrawal confirmed by user.</h3>
+              <p class="endpoint-description">! Need Bearer token and OTP authorization</p>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📋 Headers</h4>
+              <div class="param-list">
+                <div class="param-item">
+                  <code class="param-name">Authorization</code>
+                  <span class="param-type">Bearer token</span>
+                  <span class="param-desc">JWT access token for authentication</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Content-Type</code>
+                  <span class="param-type">application/json</span>
+                  <span class="param-desc">Request content type</span>
+                </div>
+                <div class="param-item">
+                  <code class="param-name">Fingerprint</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">32-character hex string for device identification</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">⚙️ Body Parameters</h4>
+              <div class="param-list">
+                <div class="param-item required">
+                  <code class="param-name">uuid</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Transaction UUID
+</span>
+                </div>
+                <div class="param-item required">
+                  <code class="param-name">type</code>
+                  <span class="param-type">string</span>
+                  <span class="param-desc">Reject type
+</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="api-section">
+              <h4 class="section-title">📝 Example Request</h4>
+              <div class="code-examples">
+                <div class="code-tabs">
+                  <button v-for="lang in codeLangs" :key="lang" @click="activeCodeTab7 = lang"
+                    :class="['code-tab', { active: activeCodeTab7 === lang }]">
+                    {{ lang }}
+                  </button>
+                </div>
+                
+                <div v-show="activeCodeTab7 === 'cURL'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('curl', 7)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>curl -X PUT &quot;https://develop.okd.finance/api/wallet/transactions/withdraw/{uuid}/reject&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#x27;{&quot;uuid&quot;:&quot;example&quot;,&quot;type&quot;:&quot;example&quot;}&#x27;</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab7 === 'Go'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('go', 7)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.go[7] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab7 === 'TypeScript'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('typescript', 7)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.typescript[7] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab7 === 'PHP'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('php', 7)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.php[7] }}</pre>
+                  </div>
+                </div>
+
+                <div v-show="activeCodeTab7 === 'Python'" class="code-block-container">
+                  <button @click="copyCodeToClipboard('python', 7)" class="copy-code-btn" title="Copy to clipboard">📋</button>
+                  <div class="code-block">
+                    <pre>{{ codeExamples.python[7] }}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="endpoint-testing">
+            <h4 class="testing-title">🚀 Live Testing</h4>
+            <div class="test-section">
+              <div class="form-group">
+                <label>Uuid</label>
+                <input v-model="testData7.uuid" type="text" placeholder="example_uuid" class="test-input" />
+              </div>
+              <div class="form-group">
+                <label>Type</label>
+                <input v-model="testData7.type" type="text" placeholder="example_type" class="test-input" />
+              </div>
+              <button @click="testEndpoint7" class="test-btn"
+                :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
+                {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
+              </button>
+              <div v-if="results.endpoint7" class="result-container">
+                <div class="result-header">
+                  <span class="status-badge">{{ results.endpoint7.status }}</span>
+                  <span class="timestamp">{{ results.endpoint7.timestamp }}</span>
+                  <button @click="copyToClipboard(results.endpoint7.data, $event)" class="copy-btn">📋 Copy Response</button>
+                </div>
+                <div v-if="results.endpoint7.requestUrl" class="request-info">
+                  <h5>📤 Actual Request:</h5>
+                  <pre class="request-data">{{ results.endpoint7.requestUrl }}</pre>
+                  <h5>📋 Headers:</h5>
+                  <pre class="request-data">{{ results.endpoint7.headers }}</pre>
+                  <h5>📦 Body:</h5>
+                  <pre class="request-data">{{ results.endpoint7.body }}</pre>
+                </div>
+                <h5>📥 Response:</h5>
+                <pre class="result-data">{{ results.endpoint7.data }}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -629,8 +1078,7 @@ const {
   toggleHeader,
   clearAuth,
   getRawValues,
-  isReadyToSendRequest,
-  generateRandomFingerprint
+  isReadyToSendRequest
 } = useAuth()
 
 // Code examples tabs
@@ -643,1016 +1091,2019 @@ const activeCodeTab5 = ref('cURL')
 const activeCodeTab6 = ref('cURL')
 const activeCodeTab7 = ref('cURL')
 
-const testData1 = reactive({
-  "Fingerprint": "",
-  "type": "",
-  "coin": "",
-  "sortBy": ""
+const testData1 = reactive({ type: 'example_type', coin: 'example_coin', sortBy: 'example_sortBy' })
+const testData2 = reactive({  })
+const testData3 = reactive({ statuses: 'example_statuses', coin: 'example_coin', amount: 'example_amount', type: 'example_type', from: 'example_from', to: 'example_to', sortBy: 'example_sortBy', limit: 'example_limit', offset: 'example_offset', search: 'example_search' })
+const testData4 = reactive({ coin: 'example_coin', chainType: 'example_chainType' })
+const testData5 = reactive({  })
+const testData6 = reactive({  })
+const testData7 = reactive({ uuid: 'example_uuid', type: 'example_type' })
+
+
+
+const results = reactive({
+  endpoint1: null,
+  endpoint2: null,
+  endpoint3: null,
+  endpoint4: null,
+  endpoint5: null,
+  endpoint6: null,
+  endpoint7: null
 })
-const loading1 = ref(false)
-const response1 = ref(null)
-const testData2 = reactive({
-  "Fingerprint": ""
-})
-const loading2 = ref(false)
-const response2 = ref(null)
-const testData3 = reactive({
-  "Fingerprint": "",
-  "statuses": "",
-  "coin": "",
-  "amount": "",
-  "type": "",
-  "from": "",
-  "to": "",
-  "sortBy": "",
-  "limit": "",
-  "offset": "",
-  "search": ""
-})
-const loading3 = ref(false)
-const response3 = ref(null)
-const testData4 = reactive({
-  "Fingerprint": "",
-  "coin": "",
-  "chainType": ""
-})
-const loading4 = ref(false)
-const response4 = ref(null)
-const testData5 = reactive({
-  "Fingerprint": "",
-  "Body": ""
-})
-const loading5 = ref(false)
-const response5 = ref(null)
-const testData6 = reactive({
-  "Fingerprint": "",
-  "Body": ""
-})
-const loading6 = ref(false)
-const response6 = ref(null)
-const testData7 = reactive({
-  "Fingerprint": "",
-  "uuid": "",
-  "type": ""
-})
-const loading7 = ref(false)
-const response7 = ref(null)
 
 const testEndpoint1 = async () => {
-  if (!isReadyToSendRequest()) {
-    alert('Please configure both API Token and Fingerprint first')
-    return
-  }
-  
-  loading1.value = true
-  response1.value = null
-  
   try {
-    let url = getRawValues().apiBaseUrl + '/wallet/balances'
+    const authValues = getRawValues()
     
-    // Replace path parameters
-    
-    
-    // Add query parameters
-    const queryParams = new URLSearchParams()
-    if (testData1.type) queryParams.append('type', testData1.type)
-    if (testData1.coin) queryParams.append('coin', testData1.coin)
-    if (testData1.sortBy) queryParams.append('sortBy', testData1.sortBy)
-    
-    if (queryParams.toString()) {
-      url += '?' + queryParams.toString()
-    }
-    
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + getRawValues().apiToken,
-        'X-Fingerprint': getRawValues().apiFingerprint
+    if (!isReadyToSendRequest()) {
+      results.endpoint1 = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
       }
+      return
     }
-    
-    
-    
-    const response = await fetch(url, options)
-    const data = await response.json()
-    
-    response1.value = JSON.stringify(data, null, 2)
+
+    const requestBody = {
+      type: testData1.type,
+      coin: testData1.coin,
+      sortBy: testData1.sortBy
+    }
+
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/balances`
+    const headers = {
+      'Authorization': `Bearer ${authValues.apiToken}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: 'GET',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    results.endpoint1 = {
+      status: `${response.status} ${response.statusText}`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `GET ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
   } catch (error) {
-    response1.value = 'Error: ' + error.message
-  } finally {
-    loading1.value = false
+    results.endpoint1 = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
+    }
   }
 }
 
 const testEndpoint2 = async () => {
-  if (!isReadyToSendRequest()) {
-    alert('Please configure both API Token and Fingerprint first')
-    return
-  }
-  
-  loading2.value = true
-  response2.value = null
-  
   try {
-    let url = getRawValues().apiBaseUrl + '/wallet/total-balance'
+    const authValues = getRawValues()
     
-    // Replace path parameters
-    
-    
-    // Add query parameters
-    const queryParams = new URLSearchParams()
-    
-    
-    if (queryParams.toString()) {
-      url += '?' + queryParams.toString()
-    }
-    
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + getRawValues().apiToken,
-        'X-Fingerprint': getRawValues().apiFingerprint
+    if (!isReadyToSendRequest()) {
+      results.endpoint2 = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
       }
+      return
     }
-    
-    
-    
-    const response = await fetch(url, options)
-    const data = await response.json()
-    
-    response2.value = JSON.stringify(data, null, 2)
+
+    const requestBody = {
+      
+    }
+
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/total-balance`
+    const headers = {
+      'Authorization': `Bearer ${authValues.apiToken}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: 'GET',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    results.endpoint2 = {
+      status: `${response.status} ${response.statusText}`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `GET ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
   } catch (error) {
-    response2.value = 'Error: ' + error.message
-  } finally {
-    loading2.value = false
+    results.endpoint2 = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
+    }
   }
 }
 
 const testEndpoint3 = async () => {
-  if (!isReadyToSendRequest()) {
-    alert('Please configure both API Token and Fingerprint first')
-    return
-  }
-  
-  loading3.value = true
-  response3.value = null
-  
   try {
-    let url = getRawValues().apiBaseUrl + '/wallet/transactions'
+    const authValues = getRawValues()
     
-    // Replace path parameters
-    
-    
-    // Add query parameters
-    const queryParams = new URLSearchParams()
-    if (testData3.statuses) queryParams.append('statuses', testData3.statuses)
-    if (testData3.coin) queryParams.append('coin', testData3.coin)
-    if (testData3.amount) queryParams.append('amount', testData3.amount)
-    if (testData3.type) queryParams.append('type', testData3.type)
-    if (testData3.from) queryParams.append('from', testData3.from)
-    if (testData3.to) queryParams.append('to', testData3.to)
-    if (testData3.sortBy) queryParams.append('sortBy', testData3.sortBy)
-    if (testData3.limit) queryParams.append('limit', testData3.limit)
-    if (testData3.offset) queryParams.append('offset', testData3.offset)
-    if (testData3.search) queryParams.append('search', testData3.search)
-    
-    if (queryParams.toString()) {
-      url += '?' + queryParams.toString()
-    }
-    
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + getRawValues().apiToken,
-        'X-Fingerprint': getRawValues().apiFingerprint
+    if (!isReadyToSendRequest()) {
+      results.endpoint3 = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
       }
+      return
     }
-    
-    
-    
-    const response = await fetch(url, options)
-    const data = await response.json()
-    
-    response3.value = JSON.stringify(data, null, 2)
+
+    const requestBody = {
+      statuses: testData3.statuses,
+      coin: testData3.coin,
+      amount: testData3.amount,
+      type: testData3.type,
+      from: testData3.from,
+      to: testData3.to,
+      sortBy: testData3.sortBy,
+      limit: testData3.limit,
+      offset: testData3.offset,
+      search: testData3.search
+    }
+
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/transactions`
+    const headers = {
+      'Authorization': `Bearer ${authValues.apiToken}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: 'GET',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    results.endpoint3 = {
+      status: `${response.status} ${response.statusText}`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `GET ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
   } catch (error) {
-    response3.value = 'Error: ' + error.message
-  } finally {
-    loading3.value = false
+    results.endpoint3 = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
+    }
   }
 }
 
 const testEndpoint4 = async () => {
-  if (!isReadyToSendRequest()) {
-    alert('Please configure both API Token and Fingerprint first')
-    return
-  }
-  
-  loading4.value = true
-  response4.value = null
-  
   try {
-    let url = getRawValues().apiBaseUrl + '/wallet/transactions/deposit'
+    const authValues = getRawValues()
     
-    // Replace path parameters
-    
-    
-    // Add query parameters
-    const queryParams = new URLSearchParams()
-    if (testData4.coin) queryParams.append('coin', testData4.coin)
-    if (testData4.chainType) queryParams.append('chainType', testData4.chainType)
-    
-    if (queryParams.toString()) {
-      url += '?' + queryParams.toString()
-    }
-    
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + getRawValues().apiToken,
-        'X-Fingerprint': getRawValues().apiFingerprint
+    if (!isReadyToSendRequest()) {
+      results.endpoint4 = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
       }
+      return
     }
-    
-    
-    
-    const response = await fetch(url, options)
-    const data = await response.json()
-    
-    response4.value = JSON.stringify(data, null, 2)
+
+    const requestBody = {
+      coin: testData4.coin,
+      chainType: testData4.chainType
+    }
+
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/transactions/deposit`
+    const headers = {
+      'Authorization': `Bearer ${authValues.apiToken}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: 'GET',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    results.endpoint4 = {
+      status: `${response.status} ${response.statusText}`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `GET ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
   } catch (error) {
-    response4.value = 'Error: ' + error.message
-  } finally {
-    loading4.value = false
+    results.endpoint4 = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
+    }
   }
 }
 
 const testEndpoint5 = async () => {
-  if (!isReadyToSendRequest()) {
-    alert('Please configure both API Token and Fingerprint first')
-    return
-  }
-  
-  loading5.value = true
-  response5.value = null
-  
   try {
-    let url = getRawValues().apiBaseUrl + '/wallet/transactions/transfer'
+    const authValues = getRawValues()
     
-    // Replace path parameters
-    
-    
-    // Add query parameters
-    const queryParams = new URLSearchParams()
-    
-    
-    if (queryParams.toString()) {
-      url += '?' + queryParams.toString()
-    }
-    
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + getRawValues().apiToken,
-        'X-Fingerprint': getRawValues().apiFingerprint
+    if (!isReadyToSendRequest()) {
+      results.endpoint5 = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
       }
+      return
     }
-    
-    
-    
-    const response = await fetch(url, options)
-    const data = await response.json()
-    
-    response5.value = JSON.stringify(data, null, 2)
+
+    const requestBody = {
+      
+    }
+
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/transactions/transfer`
+    const headers = {
+      'Authorization': `Bearer ${authValues.apiToken}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: 'POST',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    results.endpoint5 = {
+      status: `${response.status} ${response.statusText}`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `POST ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
   } catch (error) {
-    response5.value = 'Error: ' + error.message
-  } finally {
-    loading5.value = false
+    results.endpoint5 = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
+    }
   }
 }
 
 const testEndpoint6 = async () => {
-  if (!isReadyToSendRequest()) {
-    alert('Please configure both API Token and Fingerprint first')
-    return
-  }
-  
-  loading6.value = true
-  response6.value = null
-  
   try {
-    let url = getRawValues().apiBaseUrl + '/wallet/transactions/withdraw'
+    const authValues = getRawValues()
     
-    // Replace path parameters
-    
-    
-    // Add query parameters
-    const queryParams = new URLSearchParams()
-    
-    
-    if (queryParams.toString()) {
-      url += '?' + queryParams.toString()
-    }
-    
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + getRawValues().apiToken,
-        'X-Fingerprint': getRawValues().apiFingerprint
+    if (!isReadyToSendRequest()) {
+      results.endpoint6 = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
       }
+      return
     }
-    
-    
-    
-    const response = await fetch(url, options)
-    const data = await response.json()
-    
-    response6.value = JSON.stringify(data, null, 2)
+
+    const requestBody = {
+      
+    }
+
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/transactions/withdraw`
+    const headers = {
+      'Authorization': `Bearer ${authValues.apiToken}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: 'POST',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    results.endpoint6 = {
+      status: `${response.status} ${response.statusText}`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `POST ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
   } catch (error) {
-    response6.value = 'Error: ' + error.message
-  } finally {
-    loading6.value = false
+    results.endpoint6 = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
+    }
   }
 }
 
 const testEndpoint7 = async () => {
-  if (!isReadyToSendRequest()) {
-    alert('Please configure both API Token and Fingerprint first')
-    return
-  }
-  
-  loading7.value = true
-  response7.value = null
-  
   try {
-    let url = getRawValues().apiBaseUrl + '/wallet/transactions/withdraw/{uuid}/reject'
+    const authValues = getRawValues()
     
-    // Replace path parameters
-    url = url.replace('{uuid}', testData7.uuid || 'example')
-    
-    // Add query parameters
-    const queryParams = new URLSearchParams()
-    if (testData7.type) queryParams.append('type', testData7.type)
-    
-    if (queryParams.toString()) {
-      url += '?' + queryParams.toString()
-    }
-    
-    const options = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + getRawValues().apiToken,
-        'X-Fingerprint': getRawValues().apiFingerprint
+    if (!isReadyToSendRequest()) {
+      results.endpoint7 = {
+        status: 'Authentication Error',
+        data: 'Both Access Token and Fingerprint are required',
+        timestamp: new Date().toLocaleTimeString(),
+        requestUrl: 'Request not sent',
+        headers: 'N/A',
+        body: 'N/A'
       }
+      return
+    }
+
+    const requestBody = {
+      uuid: testData7.uuid,
+      type: testData7.type
+    }
+
+    const fullUrl = `${authValues.apiBaseUrl}/wallet/transactions/withdraw/{uuid}/reject`
+    const headers = {
+      'Authorization': `Bearer ${authValues.apiToken}`,
+      'Content-Type': 'application/json',
+      'Fingerprint': authValues.apiFingerprint
+    }
+    const bodyString = JSON.stringify(requestBody)
+
+    const response = await fetch(fullUrl, {
+      method: 'PUT',
+      headers: headers,
+      body: bodyString
+    })
+
+    const data = await response.text()
+    results.endpoint7 = {
+      status: `${response.status} ${response.statusText}`,
+      data: data,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: `PUT ${fullUrl}`,
+      headers: JSON.stringify(headers, null, 2),
+      body: bodyString
+    }
+  } catch (error) {
+    results.endpoint7 = {
+      status: 'Network Error',
+      data: error.message,
+      timestamp: new Date().toLocaleTimeString(),
+      requestUrl: 'Request failed',
+      headers: 'N/A',
+      body: 'N/A'
+    }
+  }
+}
+
+const copyToClipboard = (text, event) => {
+  navigator.clipboard.writeText(text).then(() => {
+    const button = event.target
+    const originalText = button.textContent
+    button.textContent = '✅ Copied!'
+    button.style.background = 'linear-gradient(135deg, #4caf50, #45a049)'
+    setTimeout(() => {
+      button.textContent = originalText
+      button.style.background = ''
+    }, 2000)
+  }).catch(() => {
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    document.body.appendChild(textArea)
+    textArea.select()
+    document.execCommand('copy')
+    document.body.removeChild(textArea)
+  })
+}
+
+const copyCodeToClipboard = (lang, endpointNum) => {
+  const authValues = getRawValues()
+  let code = codeExamples[lang]?.[endpointNum]
+  
+  if (code) {
+    code = code.replace(/YOUR_ACCESS_TOKEN/g, authValues.apiToken || 'YOUR_ACCESS_TOKEN')
+    code = code.replace(/YOUR_FINGERPRINT/g, authValues.apiFingerprint || 'YOUR_FINGERPRINT')
+    code = code.replace(/https:\/\/develop\.okd\.finance\/api/g, authValues.apiBaseUrl || 'https://develop.okd.finance/api')
+    
+    navigator.clipboard.writeText(code).then(() => {
+      console.log('Code copied to clipboard!')
+    }).catch(err => {
+      console.error('Failed to copy code:', err)
+    })
+  }
+}
+
+const codeExamples = {
+  curl: {
+    1: `curl -X GET "https://develop.okd.finance/api/wallet/balances" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"type":"example","coin":"example","sortBy":"example"}'`,
+    2: `curl -X GET "https://develop.okd.finance/api/wallet/total-balance" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    3: `curl -X GET "https://develop.okd.finance/api/wallet/transactions" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"statuses":"example","coin":"example","amount":"example","type":"example","from":"example","to":"example","sortBy":"example","limit":"example","offset":"example","search":"example"}'`,
+    4: `curl -X GET "https://develop.okd.finance/api/wallet/transactions/deposit" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"coin":"example","chainType":"example"}'`,
+    5: `curl -X POST "https://develop.okd.finance/api/wallet/transactions/transfer" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    6: `curl -X POST "https://develop.okd.finance/api/wallet/transactions/withdraw" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    7: `curl -X PUT "https://develop.okd.finance/api/wallet/transactions/withdraw/{uuid}/reject" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"uuid":"example","type":"example"}'`
+  },
+  go: {
+    1: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetbalancesRequest struct {
+    Type string \`json:"type"\`\n    Coin string \`json:"coin"\`\n    SortBy string \`json:"sortBy"\`
+}
+
+func getbalances() error {
+    url := "https://develop.okd.finance/api/wallet/balances"
+    
+    requestData := GetbalancesRequest{
+        Type: "example",\n        Coin: "example",\n        SortBy: "example",
     }
     
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
     
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
     
-    const response = await fetch(url, options)
-    const data = await response.json()
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
     
-    response7.value = JSON.stringify(data, null, 2)
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getbalances(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    2: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GettotalbalanceinUSDRequest struct {
+
+}
+
+func gettotalbalanceinusd() error {
+    url := "https://develop.okd.finance/api/wallet/total-balance"
+    
+    requestData := GettotalbalanceinUSDRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := gettotalbalanceinusd(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    3: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetusertransactionshistoryRequest struct {
+    Statuses string \`json:"statuses"\`\n    Coin string \`json:"coin"\`\n    Amount string \`json:"amount"\`\n    Type string \`json:"type"\`\n    From string \`json:"from"\`\n    To string \`json:"to"\`\n    SortBy string \`json:"sortBy"\`\n    Limit string \`json:"limit"\`\n    Offset string \`json:"offset"\`\n    Search string \`json:"search"\`
+}
+
+func getusertransactionshistory() error {
+    url := "https://develop.okd.finance/api/wallet/transactions"
+    
+    requestData := GetusertransactionshistoryRequest{
+        Statuses: "example",\n        Coin: "example",\n        Amount: "example",\n        Type: "example",\n        From: "example",\n        To: "example",\n        SortBy: "example",\n        Limit: "example",\n        Offset: "example",\n        Search: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getusertransactionshistory(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    4: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type ReturnsdepositaddressforcoinchainResultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddrRequest struct {
+    Coin string \`json:"coin"\`\n    ChainType string \`json:"chainType"\`
+}
+
+func returnsdepositaddressforcoinchainresultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddr() error {
+    url := "https://develop.okd.finance/api/wallet/transactions/deposit"
+    
+    requestData := ReturnsdepositaddressforcoinchainResultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddrRequest{
+        Coin: "example",\n        ChainType: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := returnsdepositaddressforcoinchainresultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddr(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    5: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type CreateinternaltransferoperationbetweenusersRequest struct {
+
+}
+
+func createinternaltransferoperationbetweenusers() error {
+    url := "https://develop.okd.finance/api/wallet/transactions/transfer"
+    
+    requestData := CreateinternaltransferoperationbetweenusersRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := createinternaltransferoperationbetweenusers(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    6: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type CreatewithdrawaloperationforspecifiedassetsRequest struct {
+
+}
+
+func createwithdrawaloperationforspecifiedassets() error {
+    url := "https://develop.okd.finance/api/wallet/transactions/withdraw"
+    
+    requestData := CreatewithdrawaloperationforspecifiedassetsRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := createwithdrawaloperationforspecifiedassets(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    7: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type RejectwithdrawalconfirmedbyuserRequest struct {
+    Uuid string \`json:"uuid"\`\n    Type string \`json:"type"\`
+}
+
+func rejectwithdrawalconfirmedbyuser() error {
+    url := "https://develop.okd.finance/api/wallet/transactions/withdraw/{uuid}/reject"
+    
+    requestData := RejectwithdrawalconfirmedbyuserRequest{
+        Uuid: "example",\n        Type: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := rejectwithdrawalconfirmedbyuser(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`
+  },
+  typescript: {
+    1: `interface GetbalancesRequest {
+  type: string;\n  coin: string;\n  sortBy: string;
+}
+
+async function getbalances(
+  baseUrl: string,
+  accessToken: string,
+  data: GetbalancesRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/wallet/balances\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getbalances(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        type: "example",\n        coin: "example",\n        sortBy: "example",
+      }
+    );
+    console.log('Success:', result);
   } catch (error) {
-    response7.value = 'Error: ' + error.message
-  } finally {
-    loading7.value = false
+    console.error('Error:', error);
   }
 }
 
-const getCodeExample1 = (lang) => {
-  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
-  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
-  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
-  
-  let url = baseUrl + '/wallet/balances'
-  
-  // Replace path parameters with example values
-  
-  
-  switch (lang) {
-    case 'cURL':
-      return `curl -X GET "${url}" \\
-  -H "Authorization: Bearer ${token}" \\
-  -H "X-Fingerprint: ${fingerprint}" \\
-  -H "Content-Type: application/json"${''}`
-    
-    case 'Go':
-      return `package main
+main();`,
+    2: `interface GettotalbalanceinUSDRequest {
 
-import (
-    "fmt"
-    "net/http"
-    "strings"
-)
+}
 
-func main() {
-    client := &http.Client{}
-    req, _ := http.NewRequest("GET", "${url}", nil)
-    
-    req.Header.Add("Authorization", "Bearer ${token}")
-    req.Header.Add("X-Fingerprint", "${fingerprint}")
-    req.Header.Add("Content-Type", "application/json")
-    
-    res, _ := client.Do(req)
-    defer res.Body.Close()
-}`
-    
-    case 'TypeScript':
-      return `const response = await fetch('${url}', {
-  method: 'GET',
-  headers: {
-    'Authorization': 'Bearer ${token}',
-    'X-Fingerprint': '${fingerprint}',
-    'Content-Type': 'application/json'
+async function gettotalbalanceinusd(
+  baseUrl: string,
+  accessToken: string,
+  data: GettotalbalanceinUSDRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/wallet/total-balance\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
   }
-});
 
-const data = await response.json();
-console.log(data);`
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await gettotalbalanceinusd(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    3: `interface GetusertransactionshistoryRequest {
+  statuses: string;\n  coin: string;\n  amount: string;\n  type: string;\n  from: string;\n  to: string;\n  sortBy: string;\n  limit: string;\n  offset: string;\n  search: string;
+}
+
+async function getusertransactionshistory(
+  baseUrl: string,
+  accessToken: string,
+  data: GetusertransactionshistoryRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/wallet/transactions\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getusertransactionshistory(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        statuses: "example",\n        coin: "example",\n        amount: "example",\n        type: "example",\n        from: "example",\n        to: "example",\n        sortBy: "example",\n        limit: "example",\n        offset: "example",\n        search: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    4: `interface ReturnsdepositaddressforcoinchainResultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddrRequest {
+  coin: string;\n  chainType: string;
+}
+
+async function returnsdepositaddressforcoinchainresultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddr(
+  baseUrl: string,
+  accessToken: string,
+  data: ReturnsdepositaddressforcoinchainResultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddrRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/wallet/transactions/deposit\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await returnsdepositaddressforcoinchainresultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddr(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        coin: "example",\n        chainType: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    5: `interface CreateinternaltransferoperationbetweenusersRequest {
+
+}
+
+async function createinternaltransferoperationbetweenusers(
+  baseUrl: string,
+  accessToken: string,
+  data: CreateinternaltransferoperationbetweenusersRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/wallet/transactions/transfer\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await createinternaltransferoperationbetweenusers(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    6: `interface CreatewithdrawaloperationforspecifiedassetsRequest {
+
+}
+
+async function createwithdrawaloperationforspecifiedassets(
+  baseUrl: string,
+  accessToken: string,
+  data: CreatewithdrawaloperationforspecifiedassetsRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/wallet/transactions/withdraw\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await createwithdrawaloperationforspecifiedassets(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    7: `interface RejectwithdrawalconfirmedbyuserRequest {
+  uuid: string;\n  type: string;
+}
+
+async function rejectwithdrawalconfirmedbyuser(
+  baseUrl: string,
+  accessToken: string,
+  data: RejectwithdrawalconfirmedbyuserRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/wallet/transactions/withdraw/{uuid}/reject\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await rejectwithdrawalconfirmedbyuser(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        uuid: "example",\n        type: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`
+  },
+  php: {
+    1: `<?php
+
+function getbalances($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/balances';
     
-    case 'PHP':
-      return `<?php
-\$curl = curl_init();
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
 
-curl_setopt_array(\$curl, array(
-  CURLOPT_URL => '${url}',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer ${token}',
-    'X-Fingerprint: ${fingerprint}',
-    'Content-Type: application/json'
-  )
-));
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
 
-\$response = curl_exec(\$curl);
-curl_close(\$curl);
-echo \$response;
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'type' => 'example',\n        'coin' => 'example',\n        'sortBy' => 'example',
+    ];
+
+    $result = getbalances(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    2: `<?php
+
+function gettotalbalanceinusd($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/total-balance';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = gettotalbalanceinusd(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    3: `<?php
+
+function getusertransactionshistory($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/transactions';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'statuses' => 'example',\n        'coin' => 'example',\n        'amount' => 'example',\n        'type' => 'example',\n        'from' => 'example',\n        'to' => 'example',\n        'sortBy' => 'example',\n        'limit' => 'example',\n        'offset' => 'example',\n        'search' => 'example',
+    ];
+
+    $result = getusertransactionshistory(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    4: `<?php
+
+function returnsdepositaddressforcoinchainresultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddr($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/transactions/deposit';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'coin' => 'example',\n        'chainType' => 'example',
+    ];
+
+    $result = returnsdepositaddressforcoinchainresultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddr(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    5: `<?php
+
+function createinternaltransferoperationbetweenusers($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/transactions/transfer';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = createinternaltransferoperationbetweenusers(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    6: `<?php
+
+function createwithdrawaloperationforspecifiedassets($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/transactions/withdraw';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = createwithdrawaloperationforspecifiedassets(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    7: `<?php
+
+function rejectwithdrawalconfirmedbyuser($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/wallet/transactions/withdraw/{uuid}/reject';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'uuid' => 'example',\n        'type' => 'example',
+    ];
+
+    $result = rejectwithdrawalconfirmedbyuser(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
 ?>`
-    
-    case 'Python':
-      return `import requests
+  },
+  python: {
+    1: `import requests
+import json
+from typing import Dict, Any
 
-url = "${url}"
-headers = {
-    "Authorization": "Bearer ${token}",
-    "X-Fingerprint": "${fingerprint}",
-    "Content-Type": "application/json"
-}
 
-response = requests.get(url, headers=headers)
-print(response.json())`
+def getbalances(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/wallet/balances"
     
-    default:
-      return 'Language not supported'
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'type': 'example',\n        'coin': 'example',\n        'sortBy': 'example',
+    }
+    
+    try:
+        result = getbalances(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    2: `import requests
+import json
+from typing import Dict, Any
+
+
+def gettotalbalanceinusd(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/wallet/total-balance"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = gettotalbalanceinusd(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    3: `import requests
+import json
+from typing import Dict, Any
+
+
+def getusertransactionshistory(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/wallet/transactions"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'statuses': 'example',\n        'coin': 'example',\n        'amount': 'example',\n        'type': 'example',\n        'from': 'example',\n        'to': 'example',\n        'sortBy': 'example',\n        'limit': 'example',\n        'offset': 'example',\n        'search': 'example',
+    }
+    
+    try:
+        result = getusertransactionshistory(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    4: `import requests
+import json
+from typing import Dict, Any
+
+
+def returnsdepositaddressforcoinchainresultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddr(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/wallet/transactions/deposit"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'coin': 'example',\n        'chainType': 'example',
+    }
+    
+    try:
+        result = returnsdepositaddressforcoinchainresultisdescribedherehttpsbybitexchangegithubiodocsv5assetdepositsubdepositaddr(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    5: `import requests
+import json
+from typing import Dict, Any
+
+
+def createinternaltransferoperationbetweenusers(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/wallet/transactions/transfer"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = createinternaltransferoperationbetweenusers(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    6: `import requests
+import json
+from typing import Dict, Any
+
+
+def createwithdrawaloperationforspecifiedassets(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/wallet/transactions/withdraw"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = createwithdrawaloperationforspecifiedassets(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    7: `import requests
+import json
+from typing import Dict, Any
+
+
+def rejectwithdrawalconfirmedbyuser(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need Bearer token and OTP authorization"""
+    url = f"{base_url}/wallet/transactions/withdraw/{uuid}/reject"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'uuid': 'example',\n        'type': 'example',
+    }
+    
+    try:
+        result = rejectwithdrawalconfirmedbyuser(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`
   }
-}
-
-const getCodeExample2 = (lang) => {
-  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
-  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
-  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
-  
-  let url = baseUrl + '/wallet/total-balance'
-  
-  // Replace path parameters with example values
-  
-  
-  switch (lang) {
-    case 'cURL':
-      return `curl -X GET "${url}" \\
-  -H "Authorization: Bearer ${token}" \\
-  -H "X-Fingerprint: ${fingerprint}" \\
-  -H "Content-Type: application/json"${''}`
-    
-    case 'Go':
-      return `package main
-
-import (
-    "fmt"
-    "net/http"
-    "strings"
-)
-
-func main() {
-    client := &http.Client{}
-    req, _ := http.NewRequest("GET", "${url}", nil)
-    
-    req.Header.Add("Authorization", "Bearer ${token}")
-    req.Header.Add("X-Fingerprint", "${fingerprint}")
-    req.Header.Add("Content-Type", "application/json")
-    
-    res, _ := client.Do(req)
-    defer res.Body.Close()
-}`
-    
-    case 'TypeScript':
-      return `const response = await fetch('${url}', {
-  method: 'GET',
-  headers: {
-    'Authorization': 'Bearer ${token}',
-    'X-Fingerprint': '${fingerprint}',
-    'Content-Type': 'application/json'
-  }
-});
-
-const data = await response.json();
-console.log(data);`
-    
-    case 'PHP':
-      return `<?php
-\$curl = curl_init();
-
-curl_setopt_array(\$curl, array(
-  CURLOPT_URL => '${url}',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer ${token}',
-    'X-Fingerprint: ${fingerprint}',
-    'Content-Type: application/json'
-  )
-));
-
-\$response = curl_exec(\$curl);
-curl_close(\$curl);
-echo \$response;
-?>`
-    
-    case 'Python':
-      return `import requests
-
-url = "${url}"
-headers = {
-    "Authorization": "Bearer ${token}",
-    "X-Fingerprint": "${fingerprint}",
-    "Content-Type": "application/json"
-}
-
-response = requests.get(url, headers=headers)
-print(response.json())`
-    
-    default:
-      return 'Language not supported'
-  }
-}
-
-const getCodeExample3 = (lang) => {
-  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
-  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
-  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
-  
-  let url = baseUrl + '/wallet/transactions'
-  
-  // Replace path parameters with example values
-  
-  
-  switch (lang) {
-    case 'cURL':
-      return `curl -X GET "${url}" \\
-  -H "Authorization: Bearer ${token}" \\
-  -H "X-Fingerprint: ${fingerprint}" \\
-  -H "Content-Type: application/json"${''}`
-    
-    case 'Go':
-      return `package main
-
-import (
-    "fmt"
-    "net/http"
-    "strings"
-)
-
-func main() {
-    client := &http.Client{}
-    req, _ := http.NewRequest("GET", "${url}", nil)
-    
-    req.Header.Add("Authorization", "Bearer ${token}")
-    req.Header.Add("X-Fingerprint", "${fingerprint}")
-    req.Header.Add("Content-Type", "application/json")
-    
-    res, _ := client.Do(req)
-    defer res.Body.Close()
-}`
-    
-    case 'TypeScript':
-      return `const response = await fetch('${url}', {
-  method: 'GET',
-  headers: {
-    'Authorization': 'Bearer ${token}',
-    'X-Fingerprint': '${fingerprint}',
-    'Content-Type': 'application/json'
-  }
-});
-
-const data = await response.json();
-console.log(data);`
-    
-    case 'PHP':
-      return `<?php
-\$curl = curl_init();
-
-curl_setopt_array(\$curl, array(
-  CURLOPT_URL => '${url}',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer ${token}',
-    'X-Fingerprint: ${fingerprint}',
-    'Content-Type: application/json'
-  )
-));
-
-\$response = curl_exec(\$curl);
-curl_close(\$curl);
-echo \$response;
-?>`
-    
-    case 'Python':
-      return `import requests
-
-url = "${url}"
-headers = {
-    "Authorization": "Bearer ${token}",
-    "X-Fingerprint": "${fingerprint}",
-    "Content-Type": "application/json"
-}
-
-response = requests.get(url, headers=headers)
-print(response.json())`
-    
-    default:
-      return 'Language not supported'
-  }
-}
-
-const getCodeExample4 = (lang) => {
-  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
-  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
-  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
-  
-  let url = baseUrl + '/wallet/transactions/deposit'
-  
-  // Replace path parameters with example values
-  
-  
-  switch (lang) {
-    case 'cURL':
-      return `curl -X GET "${url}" \\
-  -H "Authorization: Bearer ${token}" \\
-  -H "X-Fingerprint: ${fingerprint}" \\
-  -H "Content-Type: application/json"${''}`
-    
-    case 'Go':
-      return `package main
-
-import (
-    "fmt"
-    "net/http"
-    "strings"
-)
-
-func main() {
-    client := &http.Client{}
-    req, _ := http.NewRequest("GET", "${url}", nil)
-    
-    req.Header.Add("Authorization", "Bearer ${token}")
-    req.Header.Add("X-Fingerprint", "${fingerprint}")
-    req.Header.Add("Content-Type", "application/json")
-    
-    res, _ := client.Do(req)
-    defer res.Body.Close()
-}`
-    
-    case 'TypeScript':
-      return `const response = await fetch('${url}', {
-  method: 'GET',
-  headers: {
-    'Authorization': 'Bearer ${token}',
-    'X-Fingerprint': '${fingerprint}',
-    'Content-Type': 'application/json'
-  }
-});
-
-const data = await response.json();
-console.log(data);`
-    
-    case 'PHP':
-      return `<?php
-\$curl = curl_init();
-
-curl_setopt_array(\$curl, array(
-  CURLOPT_URL => '${url}',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-  CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer ${token}',
-    'X-Fingerprint: ${fingerprint}',
-    'Content-Type: application/json'
-  )
-));
-
-\$response = curl_exec(\$curl);
-curl_close(\$curl);
-echo \$response;
-?>`
-    
-    case 'Python':
-      return `import requests
-
-url = "${url}"
-headers = {
-    "Authorization": "Bearer ${token}",
-    "X-Fingerprint": "${fingerprint}",
-    "Content-Type": "application/json"
-}
-
-response = requests.get(url, headers=headers)
-print(response.json())`
-    
-    default:
-      return 'Language not supported'
-  }
-}
-
-const getCodeExample5 = (lang) => {
-  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
-  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
-  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
-  
-  let url = baseUrl + '/wallet/transactions/transfer'
-  
-  // Replace path parameters with example values
-  
-  
-  switch (lang) {
-    case 'cURL':
-      return `curl -X POST "${url}" \\
-  -H "Authorization: Bearer ${token}" \\
-  -H "X-Fingerprint: ${fingerprint}" \\
-  -H "Content-Type: application/json"${''}`
-    
-    case 'Go':
-      return `package main
-
-import (
-    "fmt"
-    "net/http"
-    "strings"
-)
-
-func main() {
-    client := &http.Client{}
-    req, _ := http.NewRequest("POST", "${url}", nil)
-    
-    req.Header.Add("Authorization", "Bearer ${token}")
-    req.Header.Add("X-Fingerprint", "${fingerprint}")
-    req.Header.Add("Content-Type", "application/json")
-    
-    res, _ := client.Do(req)
-    defer res.Body.Close()
-}`
-    
-    case 'TypeScript':
-      return `const response = await fetch('${url}', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer ${token}',
-    'X-Fingerprint': '${fingerprint}',
-    'Content-Type': 'application/json'
-  }
-});
-
-const data = await response.json();
-console.log(data);`
-    
-    case 'PHP':
-      return `<?php
-\$curl = curl_init();
-
-curl_setopt_array(\$curl, array(
-  CURLOPT_URL => '${url}',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer ${token}',
-    'X-Fingerprint: ${fingerprint}',
-    'Content-Type: application/json'
-  )
-));
-
-\$response = curl_exec(\$curl);
-curl_close(\$curl);
-echo \$response;
-?>`
-    
-    case 'Python':
-      return `import requests
-
-url = "${url}"
-headers = {
-    "Authorization": "Bearer ${token}",
-    "X-Fingerprint": "${fingerprint}",
-    "Content-Type": "application/json"
-}
-
-response = requests.post(url, headers=headers)
-print(response.json())`
-    
-    default:
-      return 'Language not supported'
-  }
-}
-
-const getCodeExample6 = (lang) => {
-  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
-  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
-  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
-  
-  let url = baseUrl + '/wallet/transactions/withdraw'
-  
-  // Replace path parameters with example values
-  
-  
-  switch (lang) {
-    case 'cURL':
-      return `curl -X POST "${url}" \\
-  -H "Authorization: Bearer ${token}" \\
-  -H "X-Fingerprint: ${fingerprint}" \\
-  -H "Content-Type: application/json"${''}`
-    
-    case 'Go':
-      return `package main
-
-import (
-    "fmt"
-    "net/http"
-    "strings"
-)
-
-func main() {
-    client := &http.Client{}
-    req, _ := http.NewRequest("POST", "${url}", nil)
-    
-    req.Header.Add("Authorization", "Bearer ${token}")
-    req.Header.Add("X-Fingerprint", "${fingerprint}")
-    req.Header.Add("Content-Type", "application/json")
-    
-    res, _ := client.Do(req)
-    defer res.Body.Close()
-}`
-    
-    case 'TypeScript':
-      return `const response = await fetch('${url}', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer ${token}',
-    'X-Fingerprint': '${fingerprint}',
-    'Content-Type': 'application/json'
-  }
-});
-
-const data = await response.json();
-console.log(data);`
-    
-    case 'PHP':
-      return `<?php
-\$curl = curl_init();
-
-curl_setopt_array(\$curl, array(
-  CURLOPT_URL => '${url}',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer ${token}',
-    'X-Fingerprint: ${fingerprint}',
-    'Content-Type: application/json'
-  )
-));
-
-\$response = curl_exec(\$curl);
-curl_close(\$curl);
-echo \$response;
-?>`
-    
-    case 'Python':
-      return `import requests
-
-url = "${url}"
-headers = {
-    "Authorization": "Bearer ${token}",
-    "X-Fingerprint": "${fingerprint}",
-    "Content-Type": "application/json"
-}
-
-response = requests.post(url, headers=headers)
-print(response.json())`
-    
-    default:
-      return 'Language not supported'
-  }
-}
-
-const getCodeExample7 = (lang) => {
-  const baseUrl = getRawValues().apiBaseUrl || 'https://develop.okd.finance/api'
-  const token = getRawValues().apiToken || 'YOUR_ACCESS_TOKEN'
-  const fingerprint = getRawValues().apiFingerprint || 'YOUR_FINGERPRINT'
-  
-  let url = baseUrl + '/wallet/transactions/withdraw/{uuid}/reject'
-  
-  // Replace path parameters with example values
-  url = url.replace('{uuid}', testData7.uuid || 'example')
-  
-  switch (lang) {
-    case 'cURL':
-      return `curl -X PUT "${url}" \\
-  -H "Authorization: Bearer ${token}" \\
-  -H "X-Fingerprint: ${fingerprint}" \\
-  -H "Content-Type: application/json"${''}`
-    
-    case 'Go':
-      return `package main
-
-import (
-    "fmt"
-    "net/http"
-    "strings"
-)
-
-func main() {
-    client := &http.Client{}
-    req, _ := http.NewRequest("PUT", "${url}", nil)
-    
-    req.Header.Add("Authorization", "Bearer ${token}")
-    req.Header.Add("X-Fingerprint", "${fingerprint}")
-    req.Header.Add("Content-Type", "application/json")
-    
-    res, _ := client.Do(req)
-    defer res.Body.Close()
-}`
-    
-    case 'TypeScript':
-      return `const response = await fetch('${url}', {
-  method: 'PUT',
-  headers: {
-    'Authorization': 'Bearer ${token}',
-    'X-Fingerprint': '${fingerprint}',
-    'Content-Type': 'application/json'
-  }
-});
-
-const data = await response.json();
-console.log(data);`
-    
-    case 'PHP':
-      return `<?php
-\$curl = curl_init();
-
-curl_setopt_array(\$curl, array(
-  CURLOPT_URL => '${url}',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_CUSTOMREQUEST => 'PUT',
-  CURLOPT_HTTPHEADER => array(
-    'Authorization: Bearer ${token}',
-    'X-Fingerprint: ${fingerprint}',
-    'Content-Type: application/json'
-  )
-));
-
-\$response = curl_exec(\$curl);
-curl_close(\$curl);
-echo \$response;
-?>`
-    
-    case 'Python':
-      return `import requests
-
-url = "${url}"
-headers = {
-    "Authorization": "Bearer ${token}",
-    "X-Fingerprint": "${fingerprint}",
-    "Content-Type": "application/json"
-}
-
-response = requests.put(url, headers=headers)
-print(response.json())`
-    
-    default:
-      return 'Language not supported'
-  }
-}
-
-// Copy code to clipboard
-const copyCode = (code) => {
-  navigator.clipboard.writeText(code).then(() => {
-    console.log('Code copied to clipboard!')
-  })
 }
 </script>
 
@@ -1662,54 +3113,87 @@ const copyCode = (code) => {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--vp-c-bg) 0%, var(--vp-c-bg-soft) 100%);
+  border: 1px solid var(--vp-c-border);
   border-radius: 12px;
+  padding: 1rem;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
-.auth-header-fixed.collapsed .auth-container > *:not(.auth-title) {
-  display: none;
+.auth-header-fixed.collapsed {
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+}
+
+.auth-header-fixed.collapsed .api-config-row,
+.auth-header-fixed.collapsed .status-row,
+.auth-header-fixed.collapsed .token-hint {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
 }
 
 .auth-container {
-  padding: 1.5rem;
-  color: white;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .auth-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
 }
 
 .auth-title h4 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
+  margin: 0 0 1rem 0;
+  background: linear-gradient(135deg, var(--vp-c-brand) 0%, var(--vp-c-brand-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .collapse-toggle {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: white;
-  padding: 0.5rem;
+  background: linear-gradient(135deg, var(--vp-c-bg-soft) 0%, var(--vp-c-bg-alt) 100%);
+  border: 1px solid var(--vp-c-border);
   border-radius: 8px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
-  transition: background 0.2s;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .collapse-toggle:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, var(--vp-c-brand) 0%, var(--vp-c-brand-dark) 100%);
+  color: white;
+  border-color: var(--vp-c-brand);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(var(--vp-c-brand-rgb), 0.3);
 }
 
 .api-config-row {
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 0.65rem;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+  max-height: 200px;
+  opacity: 1;
 }
 
 .config-group {
@@ -1719,358 +3203,709 @@ const copyCode = (code) => {
 
 .config-label {
   font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
   margin-bottom: 0.5rem;
-  font-weight: 500;
 }
 
-.config-input, .token-input {
-  padding: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+.config-input {
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--vp-c-border);
+  border-radius: 12px;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
   font-size: 0.9rem;
+  background: var(--vp-c-bg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.config-input::placeholder, .token-input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+.config-input:focus {
+  outline: none;
+  border-color: var(--vp-c-brand);
+  box-shadow: 0 0 0 3px rgba(var(--vp-c-brand-rgb), 0.1), 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
 }
 
 .token-input-group {
-  position: relative;
   display: flex;
+  gap: 0.5rem;
 }
 
 .token-input {
   flex: 1;
-  border-radius: 8px 0 0 8px;
+  padding: 0.75rem;
+  border: 2px solid var(--vp-c-border);
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
 }
 
-.token-toggle, .generate-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-left: none;
-  color: white;
-  padding: 0.75rem;
-  cursor: pointer;
-  transition: background 0.2s;
+.token-input:focus {
+  outline: none;
+  border-color: var(--vp-c-brand);
 }
 
 .token-toggle {
-  border-radius: 0 8px 8px 0;
+  padding: 0.75rem;
+  border: 2px solid var(--vp-c-border);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.generate-btn {
-  border-radius: 0;
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.generate-btn:last-child {
-  border-radius: 0 8px 8px 0;
-}
-
-.token-toggle:hover, .generate-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+.token-toggle:hover {
+  background: var(--vp-c-brand);
+  color: white;
+  border-color: var(--vp-c-brand);
 }
 
 .status-row {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  gap: 1.5rem;
   align-items: center;
-  font-size: 0.85rem;
   margin-bottom: 0.5rem;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+  max-height: 50px;
+  opacity: 1;
 }
 
-.url-status, .token-status, .fingerprint-status {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
+.url-status {
+  color: var(--vp-c-brand);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: monospace;
+  background: var(--vp-c-bg-soft);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.token-status {
+  color: var(--vp-c-green);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.fingerprint-status {
+  color: var(--vp-c-purple);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .clear-auth-btn {
-  background: rgba(255, 0, 0, 0.3);
-  border: 1px solid rgba(255, 0, 0, 0.5);
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--vp-c-red);
+  border-radius: 6px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-red);
   cursor: pointer;
   font-size: 0.8rem;
-  transition: background 0.2s;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .clear-auth-btn:hover {
-  background: rgba(255, 0, 0, 0.5);
+  background: var(--vp-c-red);
+  color: white;
+  transform: scale(1.05);
 }
 
 .token-hint {
-  font-size: 0.8rem;
-  opacity: 0.8;
-  font-style: italic;
+  color: var(--vp-c-text-2);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out, margin 0.3s ease-out;
+  max-height: 30px;
+  opacity: 1;
 }
 
-/* Main Content */
+/* Main Container */
 .interactive-api-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.main-content {
+  width: 100%;
 }
 
 .endpoint-section {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-  overflow: hidden;
-  border: 1px solid #e2e8f0;
+  margin-bottom: 4rem;
+  padding-bottom: 3rem;
+  border-bottom: 2px solid var(--vp-c-border);
 }
 
-.endpoint-header {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  padding: 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
+.endpoint-layout {
+  display: flex;
+  gap: 3rem;
+}
+
+.endpoint-docs {
+  flex: 1;
+  min-width: 0;
+}
+
+.endpoint-testing {
+  flex: 0 0 450px;
+  border-left: 2px solid var(--vp-c-border);
+  padding-left: 2rem;
+}
+
+/* Method Header */
+.method-header {
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .method-badge {
   padding: 0.5rem 1rem;
   border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.method-get { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
-.method-post { background: linear-gradient(135deg, #10b981, #047857); color: white; }
-.method-put { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
-.method-patch { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
-.method-delete { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+.method-badge.get {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  color: #1976d2;
+  border: 2px solid #1976d2;
+}
+
+.method-badge.post {
+  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+  color: #2e7d32;
+  border: 2px solid #2e7d32;
+}
+
+.method-badge.put {
+  background: linear-gradient(135deg, #fff3e0, #ffcc02);
+  color: #f57c00;
+  border: 2px solid #f57c00;
+}
+
+.method-badge.patch {
+  background: linear-gradient(135deg, #f3e5f5, #ce93d8);
+  color: #7b1fa2;
+  border: 2px solid #7b1fa2;
+}
+
+.method-badge.delete {
+  background: linear-gradient(135deg, #ffebee, #ffcdd2);
+  color: #c62828;
+  border: 2px solid #c62828;
+}
 
 .endpoint-path {
-  font-family: 'Monaco', 'Menlo', monospace;
-  background: rgba(0, 0, 0, 0.05);
+  font-family: var(--vp-font-family-mono);
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-soft);
   padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  color: #374151;
+  border-radius: 6px;
 }
 
-.endpoint-header h3 {
-  margin: 0;
-  color: #1f2937;
-  font-size: 1.25rem;
+/* Endpoint Info */
+.endpoint-info {
+  margin-bottom: 2rem;
 }
 
-.endpoint-content {
-  padding: 2rem;
+.endpoint-title {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  color: var(--vp-c-text-1);
 }
 
 .endpoint-description {
-  margin-bottom: 1.5rem;
-  color: #6b7280;
+  color: var(--vp-c-text-2);
+  font-size: 1rem;
   line-height: 1.6;
+  margin: 0;
 }
 
-.parameters-section {
+/* API Sections */
+.api-section {
   margin-bottom: 2rem;
 }
 
-.parameters-section h4 {
-  color: #374151;
-  margin-bottom: 1rem;
+.section-title {
   font-size: 1.1rem;
-}
-
-.parameter-group {
-  margin-bottom: 1rem;
-}
-
-.parameter-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #374151;
-  font-size: 0.9rem;
-}
-
-.parameter-input, .parameter-textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  transition: border-color 0.2s;
-}
-
-.parameter-input:focus, .parameter-textarea:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.test-section {
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: #f8fafc;
-  border-radius: 8px;
-}
-
-.test-controls {
+  margin: 0 0 1rem 0;
+  color: var(--vp-c-brand);
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 0.5rem;
 }
 
-.test-btn {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
+.param-list {
+  background: var(--vp-c-bg-soft);
   border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.test-btn:hover:not(.disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-.test-btn.disabled {
-  background: #9ca3af;
-  cursor: not-allowed;
-}
-
-.loading {
-  color: #f59e0b;
-  font-weight: 500;
-}
-
-.response-section {
-  margin-top: 1rem;
-}
-
-.response-section h4 {
-  color: #374151;
-  margin-bottom: 0.5rem;
-}
-
-.response-content {
-  background: #1f2937;
-  color: #f3f4f6;
   padding: 1rem;
-  border-radius: 8px;
-  overflow-x: auto;
-  font-family: 'Monaco', 'Menlo', monospace;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  border: 1px solid var(--vp-c-border);
 }
 
+.param-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--vp-c-border-soft);
+}
+
+.param-item:last-child {
+  border-bottom: none;
+}
+
+.param-item.required .param-name::after {
+  content: " *";
+  color: #ff4444;
+  font-weight: bold;
+}
+
+.param-name {
+  font-family: var(--vp-font-family-mono);
+  font-weight: bold;
+  color: var(--vp-c-brand);
+  background: var(--vp-c-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.param-type {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.8rem;
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--vp-c-border);
+}
+
+.param-desc {
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Code Examples with Tabs */
 .code-examples {
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  overflow: hidden;
+  margin: 1rem 0;
+}
+
+/* Code Block Container with Copy Button */
+.code-block-container {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.copy-code-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  z-index: 10;
+  opacity: 0.8;
+}
+
+.copy-code-btn:hover {
+  background: var(--vp-c-bg);
+  opacity: 1;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.copy-code-btn:active {
+  transform: scale(0.95);
+}
+
+.code-block-container .code-block {
+  margin: 0;
 }
 
 .code-tabs {
   display: flex;
-  background: #f3f4f6;
-  border-bottom: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0;
+  border-bottom: 2px solid var(--vp-c-border);
+  padding-bottom: 0.5rem;
 }
 
 .code-tab {
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   border: none;
-  background: transparent;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
   cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  font-size: 0.85rem;
   font-weight: 500;
-  color: #6b7280;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  border: 1px solid var(--vp-c-border);
+  border-bottom: none;
+}
+
+.code-tab:hover {
+  background: var(--vp-c-bg-mute);
+  color: var(--vp-c-text-1);
 }
 
 .code-tab.active {
-  background: white;
-  color: #3b82f6;
-  border-bottom: 2px solid #3b82f6;
-}
-
-.code-tab:hover:not(.active) {
-  background: #e5e7eb;
-}
-
-.code-content {
-  position: relative;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+  font-weight: 600;
 }
 
 .code-block {
-  position: relative;
-}
-
-.copy-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  z-index: 10;
-  transition: background 0.2s;
-}
-
-.copy-btn:hover {
-  background: rgba(0, 0, 0, 0.9);
+  background: var(--vp-code-bg);
+  color: var(--vp-code-color);
+  padding: 1.5rem;
+  border-radius: 8px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  border: 1px solid var(--vp-c-border);
+  white-space: pre;
+  word-wrap: normal;
+  overflow-wrap: normal;
+  tab-size: 2;
+  -moz-tab-size: 2;
 }
 
 .code-block pre {
   margin: 0;
-  padding: 1.5rem;
-  background: #1f2937;
-  color: #f3f4f6;
-  overflow-x: auto;
-  font-family: 'Monaco', 'Menlo', monospace;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  white-space: pre;
+  overflow: visible;
 }
 
-.code-block code {
-  background: none;
-  padding: 0;
-  font-family: inherit;
+/* Testing Section */
+.testing-title {
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  color: var(--vp-c-brand);
+}
+
+.test-section {
+  background: var(--vp-c-bg-soft);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--vp-c-border);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+.test-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--vp-c-border);
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.test-input:focus {
+  outline: none;
+  border-color: var(--vp-c-brand);
+}
+
+.test-btn {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #1976d2, #1565c0);
+  color: white;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+}
+
+.test-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0d47a1, #1565c0);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(13, 71, 161, 0.6);
+}
+
+.test-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(13, 71, 161, 0.4);
+}
+
+.test-btn:disabled {
+  background: var(--vp-c-text-3);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Dark theme button adjustments */
+.dark .test-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1565c0, #1976d2);
+  box-shadow: 0 8px 25px rgba(21, 101, 192, 0.7);
+}
+
+/* Response Examples */
+.response-example {
+  margin: 1.5rem 0;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.response-status {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.response-status.success {
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  color: #0369a1;
+  border-bottom: 1px solid #0369a1;
+}
+
+.response-status.success::before {
+  content: "✅";
+}
+
+.response-status.error {
+  background: linear-gradient(135deg, #fef2f2, #fecaca);
+  color: #dc2626;
+  border-bottom: 1px solid #dc2626;
+}
+
+.response-status.error::before {
+  content: "❌";
+}
+
+.response-example .code-block {
+  margin: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Result Container */
+.result-container {
+  background: var(--vp-c-bg);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-top: 1rem;
+  border: 1px solid var(--vp-c-border);
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  background: var(--vp-c-green-soft);
+  color: var(--vp-c-green);
+}
+
+.timestamp {
+  color: var(--vp-c-text-3);
+  font-size: 0.8rem;
+  font-family: var(--vp-font-family-mono);
+}
+
+.copy-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #6c757d, #5a6268);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.copy-btn:hover {
+  background: linear-gradient(135deg, #5a6268, #495057);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+.request-info {
+  padding: 1rem;
+  border-bottom: 1px solid var(--vp-c-border);
+}
+
+.request-info h5 {
+  margin: 0 0 0.5rem 0;
+  color: var(--vp-c-text-1);
+  font-size: 0.9rem;
+}
+
+.request-data {
+  background: var(--vp-code-bg);
+  color: var(--vp-code-color);
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  overflow-x: auto;
+  margin: 0.5rem 0;
+  border: 1px solid var(--vp-c-border);
+  white-space: pre-wrap;
+}
+
+.result-data {
+  background: var(--vp-code-bg);
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
+  color: var(--vp-code-color);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.request-info {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: var(--vp-c-bg-soft);
+  border-radius: 6px;
+  border-left: 4px solid var(--vp-c-brand);
+}
+
+.request-info h5 {
+  margin: 0 0 0.5rem 0;
+  color: var(--vp-c-text-1);
+  font-size: 0.9rem;
+}
+
+.request-data {
+  background: var(--vp-code-bg);
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0 0 1rem 0;
+  color: var(--vp-code-color);
+  max-height: 150px;
+  overflow-y: auto;
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .endpoint-layout {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .endpoint-testing {
+    flex: none;
+    border-left: none;
+    border-top: 2px solid var(--vp-c-border);
+    padding-left: 0;
+    padding-top: 2rem;
+  }
+
+  .param-item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .auth-header-fixed {
+    padding: 0.75rem 0;
+  }
+
   .api-config-row {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
-  
-  .endpoint-header {
+
+  .status-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
-  .status-row {
+
+  .token-input-group {
     flex-direction: column;
-    align-items: flex-start;
   }
-  
+
+  .interactive-api-container {
+    padding: 0 0.5rem;
+  }
+
+  .endpoint-layout {
+    gap: 1.5rem;
+  }
+
   .code-tabs {
+    gap: 0.125rem;
     flex-wrap: wrap;
   }
-  
+
   .code-tab {
-    min-width: 80px;
-    text-align: center;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .code-block {
+    font-size: 0.85rem;
+    padding: 1rem;
   }
 }
 </style>
