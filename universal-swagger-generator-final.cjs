@@ -670,7 +670,7 @@ ${endpoints.map((endpoint, index) => this.generateTestFunction(endpoint, index +
 
 ${this.generateCopyFunctions()}
 
-${this.generateCodeExamples(endpoints)}
+${this.generateMultipleCodeExamples(endpoints)}
 </script>
 
 <style scoped>
@@ -938,7 +938,7 @@ const copyCodeToClipboard = (lang, endpointNum) => {
 }`;
   }
 
-  generateCodeExamples(endpoints) {
+  generateMultipleCodeExamples(endpoints) {
     return `const codeExamples = {
   curl: {
     ${endpoints.map((endpoint, index) => `${index + 1}: \`curl -X ${endpoint.method.toUpperCase()} "https://develop.okd.finance/api${endpoint.path}" \\\\
@@ -2171,16 +2171,26 @@ ${endpoints.map(endpoint => `  { text: '${escapeForJS(endpoint.title)}', anchor:
     const hasBody = endpoint.parameters && endpoint.parameters.length > 0;
     const bodyParams = (endpoint.parameters || []).map(p => `"${p.name}": "example_${p.name}"`).join(',\n    ');
 
+    // Функция для экранирования HTML в примерах кода
+    const escapeHtml = (code) => {
+      return code
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    };
+
     return {
-      cURL: `curl -X ${(endpoint.method || 'GET').toUpperCase()} "${baseUrl}${endpoint.path}" \\
+      cURL: escapeHtml(`curl -X ${(endpoint.method || 'GET').toUpperCase()} "${baseUrl}${endpoint.path}" \\
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
   -H "Content-Type: application/json" \\
   -H "Fingerprint: YOUR_FINGERPRINT"${hasBody ? ` \\
   -d '{
     ${bodyParams}
-  }'` : ''}`,
+  }'` : ''}`),
 
-      Go: `package main
+      Go: escapeHtml(`package main
 
 import (
     "bytes"
@@ -2192,12 +2202,12 @@ import (
 func main() {
     url := "${baseUrl}${endpoint.path}"
     
-         ${hasBody ? `payload := map[string]interface{}{
-         ${(endpoint.parameters || []).map(p => `"${p.name}": "example_${p.name}",`).join('\n        ')}
-     }
+    ${hasBody ? `payload := map[string]interface{}{
+        ${(endpoint.parameters || []).map(p => `"${p.name}": "example_${p.name}",`).join('\n        ')}
+    }
     
     jsonData, _ := json.Marshal(payload)
-         req, _ := http.NewRequest("${(endpoint.method || 'GET').toUpperCase()}", url, bytes.NewBuffer(jsonData))` : `req, _ := http.NewRequest("${(endpoint.method || 'GET').toUpperCase()}", url, nil)`}
+    req, _ := http.NewRequest("${(endpoint.method || 'GET').toUpperCase()}", url, bytes.NewBuffer(jsonData))` : `req, _ := http.NewRequest("${(endpoint.method || 'GET').toUpperCase()}", url, nil)`}
     
     req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
     req.Header.Set("Content-Type", "application/json")
@@ -2212,9 +2222,9 @@ func main() {
     defer resp.Body.Close()
     
     fmt.Printf("Status: %s\\n", resp.Status)
-}`,
+}`),
 
-      TypeScript: `import axios from 'axios';
+      TypeScript: escapeHtml(`import axios from 'axios';
 
 const apiClient = axios.create({
   baseURL: '${baseUrl}',
@@ -2225,13 +2235,13 @@ const apiClient = axios.create({
   }
 });
 
- async function ${(endpoint.path || '').replace(/[^a-zA-Z0-9]/g, '') || 'api'}Request() {
+async function ${(endpoint.path || '').replace(/[^a-zA-Z0-9]/g, '') || 'api'}Request() {
   try {
-         ${hasBody ? `const data = {
-       ${(endpoint.parameters || []).map(p => `${p.name}: 'example_${p.name}',`).join('\n      ')}
-     };
+    ${hasBody ? `const data = {
+      ${(endpoint.parameters || []).map(p => `${p.name}: 'example_${p.name}',`).join('\n      ')}
+    };
     
-         const response = await apiClient.${(endpoint.method || 'get').toLowerCase()}('${endpoint.path}', data);` : `const response = await apiClient.${(endpoint.method || 'get').toLowerCase()}('${endpoint.path}');`}
+    const response = await apiClient.${(endpoint.method || 'get').toLowerCase()}('${endpoint.path}', data);` : `const response = await apiClient.${(endpoint.method || 'get').toLowerCase()}('${endpoint.path}');`}
     
     console.log('Response:', response.data);
     return response.data;
@@ -2241,10 +2251,10 @@ const apiClient = axios.create({
   }
 }
 
- // Usage
- ${(endpoint.path || '').replace(/[^a-zA-Z0-9]/g, '') || 'api'}Request();`,
+// Usage
+${(endpoint.path || '').replace(/[^a-zA-Z0-9]/g, '') || 'api'}Request();`),
 
-      PHP: `<?php
+      PHP: escapeHtml(`<?php
 
 $url = '${baseUrl}${endpoint.path}';
 $headers = [
@@ -2253,9 +2263,9 @@ $headers = [
     'Fingerprint: YOUR_FINGERPRINT'
 ];
 
- ${hasBody ? `$data = [
-     ${(endpoint.parameters || []).map(p => `'${p.name}' => 'example_${p.name}',`).join('\n    ')}
- ];
+${hasBody ? `$data = [
+    ${(endpoint.parameters || []).map(p => `'${p.name}' => 'example_${p.name}',`).join('\n    ')}
+];
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
@@ -2278,9 +2288,9 @@ if ($error) {
     echo "Response: " . $response . "\\n";
 }
 
-?>`,
+?>`),
 
-      Python: `import requests
+      Python: escapeHtml(`import requests
 import json
 
 url = '${baseUrl}${endpoint.path}'
@@ -2290,9 +2300,9 @@ headers = {
     'Fingerprint': 'YOUR_FINGERPRINT'
 }
 
- ${hasBody ? `data = {
-     ${(endpoint.parameters || []).map(p => `'${p.name}': 'example_${p.name}',`).join('\n    ')}
- }
+${hasBody ? `data = {
+    ${(endpoint.parameters || []).map(p => `'${p.name}': 'example_${p.name}',`).join('\n    ')}
+}
 
 try:
     response = requests.${(endpoint.method || 'get').toLowerCase()}(url, headers=headers, json=data)` : `try:
@@ -2306,12 +2316,12 @@ except requests.exceptions.RequestException as e:
     print(f"Error: {e}")
     if hasattr(e, 'response') and e.response is not None:
         print(f"Response: {e.response.text}")
-`
+`)
     };
   }
 
   // Generate single endpoint component
-  generateSingleEndpointComponent(endpoint, _index, _componentName) {
+  generateSingleEndpointComponent(endpoint, index, componentName) {
     const codeExamples = this.generateCodeExamples(endpoint);
 
     return `<template>
@@ -2364,7 +2374,7 @@ except requests.exceptions.RequestException as e:
                 <span class="response-description">${example.description}</span>
               </div>
               ${example.example ? `<div class="code-block">
-                <pre>${example.example}</pre>
+                <pre>${example.example.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}</pre>
               </div>` : ''}
             </div>`).join('\n            ')}
           </div>

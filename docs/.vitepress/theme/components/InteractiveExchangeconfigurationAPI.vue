@@ -1447,7 +1447,1346 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   }
 }
 
-[object Object]
+const codeExamples = {
+  curl: {
+    1: `curl -X GET "https://develop.okd.finance/api/config/assets" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"limit":"example","offset":"example","sortBy":"example","search":"example"}'`,
+    2: `curl -X GET "https://develop.okd.finance/api/config/assets/networks" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"limit":"example","offset":"example","activityType":"example","activityEnabled":"example","sortBy":"example","search":"example"}'`,
+    3: `curl -X GET "https://develop.okd.finance/api/config/flags" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    4: `curl -X GET "https://develop.okd.finance/api/config/spot/lite-symbols" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"category":"example","baseCoin":"example","tradingEnabled":"example","limit":"example","offset":"example","sortBy":"example","search":"example"}'`,
+    5: `curl -X GET "https://develop.okd.finance/api/config/spot/symbols" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"category":"example","baseCoin":"example","tradingEnabled":"example","limit":"example","offset":"example","sortBy":"example","search":"example"}'`,
+    6: `curl -X GET "https://develop.okd.finance/api/config/withdrawal" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`
+  },
+  go: {
+    1: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type ReturnsassetsResultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfoRequest struct {
+    Limit string \`json:"limit"\`\n    Offset string \`json:"offset"\`\n    SortBy string \`json:"sortBy"\`\n    Search string \`json:"search"\`
+}
+
+func returnsassetsresultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfo() error {
+    url := "https://develop.okd.finance/api/config/assets"
+    
+    requestData := ReturnsassetsResultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfoRequest{
+        Limit: "example",\n        Offset: "example",\n        SortBy: "example",\n        Search: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := returnsassetsresultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfo(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    2: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type ReturnsnetworksassetchainwithtradingtransactionstatesinfoRequest struct {
+    Limit string \`json:"limit"\`\n    Offset string \`json:"offset"\`\n    ActivityType string \`json:"activityType"\`\n    ActivityEnabled string \`json:"activityEnabled"\`\n    SortBy string \`json:"sortBy"\`\n    Search string \`json:"search"\`
+}
+
+func returnsnetworksassetchainwithtradingtransactionstatesinfo() error {
+    url := "https://develop.okd.finance/api/config/assets/networks"
+    
+    requestData := ReturnsnetworksassetchainwithtradingtransactionstatesinfoRequest{
+        Limit: "example",\n        Offset: "example",\n        ActivityType: "example",\n        ActivityEnabled: "example",\n        SortBy: "example",\n        Search: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := returnsnetworksassetchainwithtradingtransactionstatesinfo(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    3: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GETconfigflagsRequest struct {
+
+}
+
+func getconfigflags() error {
+    url := "https://develop.okd.finance/api/config/flags"
+    
+    requestData := GETconfigflagsRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getconfigflags(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    4: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type ReturnsspottickertickerinfowherequoteCoinUSDCResultisdescribedhereRequest struct {
+    Category string \`json:"category"\`\n    BaseCoin string \`json:"baseCoin"\`\n    TradingEnabled string \`json:"tradingEnabled"\`\n    Limit string \`json:"limit"\`\n    Offset string \`json:"offset"\`\n    SortBy string \`json:"sortBy"\`\n    Search string \`json:"search"\`
+}
+
+func returnsspottickertickerinfowherequotecoinusdcresultisdescribedhere() error {
+    url := "https://develop.okd.finance/api/config/spot/lite-symbols"
+    
+    requestData := ReturnsspottickertickerinfowherequoteCoinUSDCResultisdescribedhereRequest{
+        Category: "example",\n        BaseCoin: "example",\n        TradingEnabled: "example",\n        Limit: "example",\n        Offset: "example",\n        SortBy: "example",\n        Search: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := returnsspottickertickerinfowherequotecoinusdcresultisdescribedhere(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    5: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type ReturnsspottickertickerinfoResultisdescribedhereRequest struct {
+    Category string \`json:"category"\`\n    BaseCoin string \`json:"baseCoin"\`\n    TradingEnabled string \`json:"tradingEnabled"\`\n    Limit string \`json:"limit"\`\n    Offset string \`json:"offset"\`\n    SortBy string \`json:"sortBy"\`\n    Search string \`json:"search"\`
+}
+
+func returnsspottickertickerinforesultisdescribedhere() error {
+    url := "https://develop.okd.finance/api/config/spot/symbols"
+    
+    requestData := ReturnsspottickertickerinfoResultisdescribedhereRequest{
+        Category: "example",\n        BaseCoin: "example",\n        TradingEnabled: "example",\n        Limit: "example",\n        Offset: "example",\n        SortBy: "example",\n        Search: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := returnsspottickertickerinforesultisdescribedhere(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    6: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetwithdrawalconfigurationforKYClevelsRequest struct {
+
+}
+
+func getwithdrawalconfigurationforkyclevels() error {
+    url := "https://develop.okd.finance/api/config/withdrawal"
+    
+    requestData := GetwithdrawalconfigurationforKYClevelsRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getwithdrawalconfigurationforkyclevels(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`
+  },
+  typescript: {
+    1: `interface ReturnsassetsResultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfoRequest {
+  limit: string;\n  offset: string;\n  sortBy: string;\n  search: string;
+}
+
+async function returnsassetsresultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfo(
+  baseUrl: string,
+  accessToken: string,
+  data: ReturnsassetsResultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfoRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/config/assets\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await returnsassetsresultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfo(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        limit: "example",\n        offset: "example",\n        sortBy: "example",\n        search: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    2: `interface ReturnsnetworksassetchainwithtradingtransactionstatesinfoRequest {
+  limit: string;\n  offset: string;\n  activityType: string;\n  activityEnabled: string;\n  sortBy: string;\n  search: string;
+}
+
+async function returnsnetworksassetchainwithtradingtransactionstatesinfo(
+  baseUrl: string,
+  accessToken: string,
+  data: ReturnsnetworksassetchainwithtradingtransactionstatesinfoRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/config/assets/networks\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await returnsnetworksassetchainwithtradingtransactionstatesinfo(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        limit: "example",\n        offset: "example",\n        activityType: "example",\n        activityEnabled: "example",\n        sortBy: "example",\n        search: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    3: `interface GETconfigflagsRequest {
+
+}
+
+async function getconfigflags(
+  baseUrl: string,
+  accessToken: string,
+  data: GETconfigflagsRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/config/flags\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getconfigflags(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    4: `interface ReturnsspottickertickerinfowherequoteCoinUSDCResultisdescribedhereRequest {
+  category: string;\n  baseCoin: string;\n  tradingEnabled: string;\n  limit: string;\n  offset: string;\n  sortBy: string;\n  search: string;
+}
+
+async function returnsspottickertickerinfowherequotecoinusdcresultisdescribedhere(
+  baseUrl: string,
+  accessToken: string,
+  data: ReturnsspottickertickerinfowherequoteCoinUSDCResultisdescribedhereRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/config/spot/lite-symbols\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await returnsspottickertickerinfowherequotecoinusdcresultisdescribedhere(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        category: "example",\n        baseCoin: "example",\n        tradingEnabled: "example",\n        limit: "example",\n        offset: "example",\n        sortBy: "example",\n        search: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    5: `interface ReturnsspottickertickerinfoResultisdescribedhereRequest {
+  category: string;\n  baseCoin: string;\n  tradingEnabled: string;\n  limit: string;\n  offset: string;\n  sortBy: string;\n  search: string;
+}
+
+async function returnsspottickertickerinforesultisdescribedhere(
+  baseUrl: string,
+  accessToken: string,
+  data: ReturnsspottickertickerinfoResultisdescribedhereRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/config/spot/symbols\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await returnsspottickertickerinforesultisdescribedhere(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        category: "example",\n        baseCoin: "example",\n        tradingEnabled: "example",\n        limit: "example",\n        offset: "example",\n        sortBy: "example",\n        search: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    6: `interface GetwithdrawalconfigurationforKYClevelsRequest {
+
+}
+
+async function getwithdrawalconfigurationforkyclevels(
+  baseUrl: string,
+  accessToken: string,
+  data: GetwithdrawalconfigurationforKYClevelsRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/config/withdrawal\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getwithdrawalconfigurationforkyclevels(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`
+  },
+  php: {
+    1: `<?php
+
+function returnsassetsresultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfo($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/config/assets';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'limit' => 'example',\n        'offset' => 'example',\n        'sortBy' => 'example',\n        'search' => 'example',
+    ];
+
+    $result = returnsassetsresultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfo(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    2: `<?php
+
+function returnsnetworksassetchainwithtradingtransactionstatesinfo($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/config/assets/networks';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'limit' => 'example',\n        'offset' => 'example',\n        'activityType' => 'example',\n        'activityEnabled' => 'example',\n        'sortBy' => 'example',\n        'search' => 'example',
+    ];
+
+    $result = returnsnetworksassetchainwithtradingtransactionstatesinfo(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    3: `<?php
+
+function getconfigflags($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/config/flags';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = getconfigflags(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    4: `<?php
+
+function returnsspottickertickerinfowherequotecoinusdcresultisdescribedhere($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/config/spot/lite-symbols';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'category' => 'example',\n        'baseCoin' => 'example',\n        'tradingEnabled' => 'example',\n        'limit' => 'example',\n        'offset' => 'example',\n        'sortBy' => 'example',\n        'search' => 'example',
+    ];
+
+    $result = returnsspottickertickerinfowherequotecoinusdcresultisdescribedhere(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    5: `<?php
+
+function returnsspottickertickerinforesultisdescribedhere($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/config/spot/symbols';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'category' => 'example',\n        'baseCoin' => 'example',\n        'tradingEnabled' => 'example',\n        'limit' => 'example',\n        'offset' => 'example',\n        'sortBy' => 'example',\n        'search' => 'example',
+    ];
+
+    $result = returnsspottickertickerinforesultisdescribedhere(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    6: `<?php
+
+function getwithdrawalconfigurationforkyclevels($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/config/withdrawal';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = getwithdrawalconfigurationforkyclevels(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`
+  },
+  python: {
+    1: `import requests
+import json
+from typing import Dict, Any
+
+
+def returnsassetsresultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfo(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/config/assets"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'limit': 'example',\n        'offset': 'example',\n        'sortBy': 'example',\n        'search': 'example',
+    }
+    
+    try:
+        result = returnsassetsresultisdescribedherehttpsbybitexchangegithubiodocsv5assetcoininfo(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    2: `import requests
+import json
+from typing import Dict, Any
+
+
+def returnsnetworksassetchainwithtradingtransactionstatesinfo(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/config/assets/networks"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'limit': 'example',\n        'offset': 'example',\n        'activityType': 'example',\n        'activityEnabled': 'example',\n        'sortBy': 'example',\n        'search': 'example',
+    }
+    
+    try:
+        result = returnsnetworksassetchainwithtradingtransactionstatesinfo(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    3: `import requests
+import json
+from typing import Dict, Any
+
+
+def getconfigflags(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """Get global flags"""
+    url = f"{base_url}/config/flags"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = getconfigflags(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    4: `import requests
+import json
+from typing import Dict, Any
+
+
+def returnsspottickertickerinfowherequotecoinusdcresultisdescribedhere(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """https://bybit-exchange.github.io/docs/v5/market/tickers
+https://bybit-exchange.github.io/docs/v5/market/instrument"""
+    url = f"{base_url}/config/spot/lite-symbols"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'category': 'example',\n        'baseCoin': 'example',\n        'tradingEnabled': 'example',\n        'limit': 'example',\n        'offset': 'example',\n        'sortBy': 'example',\n        'search': 'example',
+    }
+    
+    try:
+        result = returnsspottickertickerinfowherequotecoinusdcresultisdescribedhere(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    5: `import requests
+import json
+from typing import Dict, Any
+
+
+def returnsspottickertickerinforesultisdescribedhere(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """https://bybit-exchange.github.io/docs/v5/market/tickers
+https://bybit-exchange.github.io/docs/v5/market/instrument"""
+    url = f"{base_url}/config/spot/symbols"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'category': 'example',\n        'baseCoin': 'example',\n        'tradingEnabled': 'example',\n        'limit': 'example',\n        'offset': 'example',\n        'sortBy': 'example',\n        'search': 'example',
+    }
+    
+    try:
+        result = returnsspottickertickerinforesultisdescribedhere(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    6: `import requests
+import json
+from typing import Dict, Any
+
+
+def getwithdrawalconfigurationforkyclevels(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/config/withdrawal"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = getwithdrawalconfigurationforkyclevels(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`
+  }
+}
 </script>
 
 <style scoped>

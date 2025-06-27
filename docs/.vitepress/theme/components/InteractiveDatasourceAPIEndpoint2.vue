@@ -64,117 +64,117 @@
               </button>
             </div>
                         <div v-show="activeCodeTab === 'cURL'" class="code-block">
-              <pre>curl -X GET "https://develop.okd.finance/api/datasource/prices/assets" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Content-Type: application/json" \
-  -H "Fingerprint: YOUR_FINGERPRINT" \
-  -d '{
-    "datasource": "example_datasource",
-    "search": "example_search",
-    "sortBy": "example_sortBy",
-    "fullness": "example_fullness",
-    "limit": "example_limit",
-    "offset": "example_offset"
-  }'</pre>
+              <pre>curl -X GET &quot;https://develop.okd.finance/api/datasource/prices/assets&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#39;{
+    &quot;datasource&quot;: &quot;example_datasource&quot;,
+    &quot;search&quot;: &quot;example_search&quot;,
+    &quot;sortBy&quot;: &quot;example_sortBy&quot;,
+    &quot;fullness&quot;: &quot;example_fullness&quot;,
+    &quot;limit&quot;: &quot;example_limit&quot;,
+    &quot;offset&quot;: &quot;example_offset&quot;
+  }&#39;</pre>
             </div>
             <div v-show="activeCodeTab === 'Go'" class="code-block">
               <pre>package main
 
 import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "net/http"
+    &quot;bytes&quot;
+    &quot;encoding/json&quot;
+    &quot;fmt&quot;
+    &quot;net/http&quot;
 )
 
 func main() {
-    url := "https://develop.okd.finance/api/datasource/prices/assets"
+    url := &quot;https://develop.okd.finance/api/datasource/prices/assets&quot;
     
-         payload := map[string]interface{}{
-         "datasource": "example_datasource",
-        "search": "example_search",
-        "sortBy": "example_sortBy",
-        "fullness": "example_fullness",
-        "limit": "example_limit",
-        "offset": "example_offset",
-     }
+    payload := map[string]interface{}{
+        &quot;datasource&quot;: &quot;example_datasource&quot;,
+        &quot;search&quot;: &quot;example_search&quot;,
+        &quot;sortBy&quot;: &quot;example_sortBy&quot;,
+        &quot;fullness&quot;: &quot;example_fullness&quot;,
+        &quot;limit&quot;: &quot;example_limit&quot;,
+        &quot;offset&quot;: &quot;example_offset&quot;,
+    }
     
     jsonData, _ := json.Marshal(payload)
-         req, _ := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    req, _ := http.NewRequest(&quot;GET&quot;, url, bytes.NewBuffer(jsonData))
     
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    req.Header.Set(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;)
+    req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+    req.Header.Set(&quot;Fingerprint&quot;, &quot;YOUR_FINGERPRINT&quot;)
     
-    client := &http.Client{}
+    client := &amp;http.Client{}
     resp, err := client.Do(req)
     if err != nil {
-        fmt.Println("Error:", err)
+        fmt.Println(&quot;Error:&quot;, err)
         return
     }
     defer resp.Body.Close()
     
-    fmt.Printf("Status: %s\n", resp.Status)
+    fmt.Printf(&quot;Status: %s\n&quot;, resp.Status)
 }</pre>
             </div>
             <div v-show="activeCodeTab === 'TypeScript'" class="code-block">
-              <pre>import axios from 'axios';
+              <pre>import axios from &#39;axios&#39;;
 
 const apiClient = axios.create({
-  baseURL: 'https://develop.okd.finance/api',
+  baseURL: &#39;https://develop.okd.finance/api&#39;,
   headers: {
-    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
-    'Content-Type': 'application/json',
-    'Fingerprint': 'YOUR_FINGERPRINT'
+    &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
+    &#39;Content-Type&#39;: &#39;application/json&#39;,
+    &#39;Fingerprint&#39;: &#39;YOUR_FINGERPRINT&#39;
   }
 });
 
- async function datasourcepricesassetsRequest() {
+async function datasourcepricesassetsRequest() {
   try {
-         const data = {
-       datasource: 'example_datasource',
-      search: 'example_search',
-      sortBy: 'example_sortBy',
-      fullness: 'example_fullness',
-      limit: 'example_limit',
-      offset: 'example_offset',
-     };
+    const data = {
+      datasource: &#39;example_datasource&#39;,
+      search: &#39;example_search&#39;,
+      sortBy: &#39;example_sortBy&#39;,
+      fullness: &#39;example_fullness&#39;,
+      limit: &#39;example_limit&#39;,
+      offset: &#39;example_offset&#39;,
+    };
     
-         const response = await apiClient.get('/datasource/prices/assets', data);
+    const response = await apiClient.get(&#39;/datasource/prices/assets&#39;, data);
     
-    console.log('Response:', response.data);
+    console.log(&#39;Response:&#39;, response.data);
     return response.data;
   } catch (error) {
-    console.error('Error:', error.response?.data || error.message);
+    console.error(&#39;Error:&#39;, error.response?.data || error.message);
     throw error;
   }
 }
 
- // Usage
- datasourcepricesassetsRequest();</pre>
+// Usage
+datasourcepricesassetsRequest();</pre>
             </div>
             <div v-show="activeCodeTab === 'PHP'" class="code-block">
-              <pre><?php
+              <pre>&lt;?php
 
-$url = 'https://develop.okd.finance/api/datasource/prices/assets';
+$url = &#39;https://develop.okd.finance/api/datasource/prices/assets&#39;;
 $headers = [
-    'Authorization: Bearer YOUR_ACCESS_TOKEN',
-    'Content-Type: application/json',
-    'Fingerprint: YOUR_FINGERPRINT'
+    &#39;Authorization: Bearer YOUR_ACCESS_TOKEN&#39;,
+    &#39;Content-Type: application/json&#39;,
+    &#39;Fingerprint: YOUR_FINGERPRINT&#39;
 ];
 
- $data = [
-     'datasource' => 'example_datasource',
-    'search' => 'example_search',
-    'sortBy' => 'example_sortBy',
-    'fullness' => 'example_fullness',
-    'limit' => 'example_limit',
-    'offset' => 'example_offset',
- ];
+$data = [
+    &#39;datasource&#39; =&gt; &#39;example_datasource&#39;,
+    &#39;search&#39; =&gt; &#39;example_search&#39;,
+    &#39;sortBy&#39; =&gt; &#39;example_sortBy&#39;,
+    &#39;fullness&#39; =&gt; &#39;example_fullness&#39;,
+    &#39;limit&#39; =&gt; &#39;example_limit&#39;,
+    &#39;offset&#39; =&gt; &#39;example_offset&#39;,
+];
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, &#39;GET&#39;);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -185,45 +185,45 @@ $error = curl_error($ch);
 curl_close($ch);
 
 if ($error) {
-    echo "cURL Error: " . $error;
+    echo &quot;cURL Error: &quot; . $error;
 } else {
-    echo "HTTP Code: " . $httpCode . "\n";
-    echo "Response: " . $response . "\n";
+    echo &quot;HTTP Code: &quot; . $httpCode . &quot;\n&quot;;
+    echo &quot;Response: &quot; . $response . &quot;\n&quot;;
 }
 
-?></pre>
+?&gt;</pre>
             </div>
             <div v-show="activeCodeTab === 'Python'" class="code-block">
               <pre>import requests
 import json
 
-url = 'https://develop.okd.finance/api/datasource/prices/assets'
+url = &#39;https://develop.okd.finance/api/datasource/prices/assets&#39;
 headers = {
-    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
-    'Content-Type': 'application/json',
-    'Fingerprint': 'YOUR_FINGERPRINT'
+    &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
+    &#39;Content-Type&#39;: &#39;application/json&#39;,
+    &#39;Fingerprint&#39;: &#39;YOUR_FINGERPRINT&#39;
 }
 
- data = {
-     'datasource': 'example_datasource',
-    'search': 'example_search',
-    'sortBy': 'example_sortBy',
-    'fullness': 'example_fullness',
-    'limit': 'example_limit',
-    'offset': 'example_offset',
- }
+data = {
+    &#39;datasource&#39;: &#39;example_datasource&#39;,
+    &#39;search&#39;: &#39;example_search&#39;,
+    &#39;sortBy&#39;: &#39;example_sortBy&#39;,
+    &#39;fullness&#39;: &#39;example_fullness&#39;,
+    &#39;limit&#39;: &#39;example_limit&#39;,
+    &#39;offset&#39;: &#39;example_offset&#39;,
+}
 
 try:
     response = requests.get(url, headers=headers, json=data)
     response.raise_for_status()
     
-    print(f"Status Code: {response.status_code}")
-    print(f"Response: {response.json()}")
+    print(f&quot;Status Code: {response.status_code}&quot;)
+    print(f&quot;Response: {response.json()}&quot;)
     
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
-    if hasattr(e, 'response') and e.response is not None:
-        print(f"Response: {e.response.text}")
+    print(f&quot;Error: {e}&quot;)
+    if hasattr(e, &#39;response&#39;) and e.response is not None:
+        print(f&quot;Response: {e.response.text}&quot;)
 </pre>
             </div>
           </div>
@@ -239,9 +239,9 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": true,
-  "message": "asset",
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;asset&quot;,
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -252,14 +252,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "internal server error",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;internal server error&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>

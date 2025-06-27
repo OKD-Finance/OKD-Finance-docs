@@ -28,81 +28,81 @@
               </button>
             </div>
                         <div v-show="activeCodeTab === 'cURL'" class="code-block">
-              <pre>curl -X GET "https://develop.okd.finance/api/auth/remove" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Content-Type: application/json" \
-  -H "Fingerprint: YOUR_FINGERPRINT"</pre>
+              <pre>curl -X GET &quot;https://develop.okd.finance/api/auth/remove&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot;</pre>
             </div>
             <div v-show="activeCodeTab === 'Go'" class="code-block">
               <pre>package main
 
 import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "net/http"
+    &quot;bytes&quot;
+    &quot;encoding/json&quot;
+    &quot;fmt&quot;
+    &quot;net/http&quot;
 )
 
 func main() {
-    url := "https://develop.okd.finance/api/auth/remove"
+    url := &quot;https://develop.okd.finance/api/auth/remove&quot;
     
-         req, _ := http.NewRequest("GET", url, nil)
+    req, _ := http.NewRequest(&quot;GET&quot;, url, nil)
     
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    req.Header.Set(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;)
+    req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+    req.Header.Set(&quot;Fingerprint&quot;, &quot;YOUR_FINGERPRINT&quot;)
     
-    client := &http.Client{}
+    client := &amp;http.Client{}
     resp, err := client.Do(req)
     if err != nil {
-        fmt.Println("Error:", err)
+        fmt.Println(&quot;Error:&quot;, err)
         return
     }
     defer resp.Body.Close()
     
-    fmt.Printf("Status: %s\n", resp.Status)
+    fmt.Printf(&quot;Status: %s\n&quot;, resp.Status)
 }</pre>
             </div>
             <div v-show="activeCodeTab === 'TypeScript'" class="code-block">
-              <pre>import axios from 'axios';
+              <pre>import axios from &#39;axios&#39;;
 
 const apiClient = axios.create({
-  baseURL: 'https://develop.okd.finance/api',
+  baseURL: &#39;https://develop.okd.finance/api&#39;,
   headers: {
-    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
-    'Content-Type': 'application/json',
-    'Fingerprint': 'YOUR_FINGERPRINT'
+    &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
+    &#39;Content-Type&#39;: &#39;application/json&#39;,
+    &#39;Fingerprint&#39;: &#39;YOUR_FINGERPRINT&#39;
   }
 });
 
- async function authremoveRequest() {
+async function authremoveRequest() {
   try {
-         const response = await apiClient.get('/auth/remove');
+    const response = await apiClient.get(&#39;/auth/remove&#39;);
     
-    console.log('Response:', response.data);
+    console.log(&#39;Response:&#39;, response.data);
     return response.data;
   } catch (error) {
-    console.error('Error:', error.response?.data || error.message);
+    console.error(&#39;Error:&#39;, error.response?.data || error.message);
     throw error;
   }
 }
 
- // Usage
- authremoveRequest();</pre>
+// Usage
+authremoveRequest();</pre>
             </div>
             <div v-show="activeCodeTab === 'PHP'" class="code-block">
-              <pre><?php
+              <pre>&lt;?php
 
-$url = 'https://develop.okd.finance/api/auth/remove';
+$url = &#39;https://develop.okd.finance/api/auth/remove&#39;;
 $headers = [
-    'Authorization: Bearer YOUR_ACCESS_TOKEN',
-    'Content-Type: application/json',
-    'Fingerprint: YOUR_FINGERPRINT'
+    &#39;Authorization: Bearer YOUR_ACCESS_TOKEN&#39;,
+    &#39;Content-Type: application/json&#39;,
+    &#39;Fingerprint: YOUR_FINGERPRINT&#39;
 ];
 
- $ch = curl_init();
+$ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, &#39;GET&#39;);
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -112,36 +112,36 @@ $error = curl_error($ch);
 curl_close($ch);
 
 if ($error) {
-    echo "cURL Error: " . $error;
+    echo &quot;cURL Error: &quot; . $error;
 } else {
-    echo "HTTP Code: " . $httpCode . "\n";
-    echo "Response: " . $response . "\n";
+    echo &quot;HTTP Code: &quot; . $httpCode . &quot;\n&quot;;
+    echo &quot;Response: &quot; . $response . &quot;\n&quot;;
 }
 
-?></pre>
+?&gt;</pre>
             </div>
             <div v-show="activeCodeTab === 'Python'" class="code-block">
               <pre>import requests
 import json
 
-url = 'https://develop.okd.finance/api/auth/remove'
+url = &#39;https://develop.okd.finance/api/auth/remove&#39;
 headers = {
-    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
-    'Content-Type': 'application/json',
-    'Fingerprint': 'YOUR_FINGERPRINT'
+    &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
+    &#39;Content-Type&#39;: &#39;application/json&#39;,
+    &#39;Fingerprint&#39;: &#39;YOUR_FINGERPRINT&#39;
 }
 
- try:
+try:
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     
-    print(f"Status Code: {response.status_code}")
-    print(f"Response: {response.json()}")
+    print(f&quot;Status Code: {response.status_code}&quot;)
+    print(f&quot;Response: {response.json()}&quot;)
     
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
-    if hasattr(e, 'response') and e.response is not None:
-        print(f"Response: {e.response.text}")
+    print(f&quot;Error: {e}&quot;)
+    if hasattr(e, &#39;response&#39;) and e.response is not None:
+        print(f&quot;Response: {e.response.text}&quot;)
 </pre>
             </div>
           </div>
@@ -157,9 +157,9 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": true,
-  "message": "operation attributes",
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;operation attributes&quot;,
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -170,22 +170,22 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "some logical error in request",
-    "details": [
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;VALIDATION_ERROR&quot;,
+    &quot;message&quot;: &quot;some logical error in request&quot;,
+    &quot;details&quot;: [
       {
-        "field": "email",
-        "message": "Invalid email format"
+        &quot;field&quot;: &quot;email&quot;,
+        &quot;message&quot;: &quot;Invalid email format&quot;
       },
       {
-        "field": "password",
-        "message": "Password must be at least 8 characters"
+        &quot;field&quot;: &quot;password&quot;,
+        &quot;message&quot;: &quot;Password must be at least 8 characters&quot;
       }
     ]
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -196,13 +196,13 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "UNAUTHORIZED",
-    "message": "unauthorized error",
-    "details": "Access token is missing or invalid"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;UNAUTHORIZED&quot;,
+    &quot;message&quot;: &quot;unauthorized error&quot;,
+    &quot;details&quot;: &quot;Access token is missing or invalid&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -213,14 +213,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "some error in internal server",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;some error in internal server&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>

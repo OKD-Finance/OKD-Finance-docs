@@ -28,81 +28,81 @@
               </button>
             </div>
                         <div v-show="activeCodeTab === 'cURL'" class="code-block">
-              <pre>curl -X GET "https://develop.okd.finance/api/errdesc" \
-  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  -H "Content-Type: application/json" \
-  -H "Fingerprint: YOUR_FINGERPRINT"</pre>
+              <pre>curl -X GET &quot;https://develop.okd.finance/api/errdesc&quot; \
+  -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot;</pre>
             </div>
             <div v-show="activeCodeTab === 'Go'" class="code-block">
               <pre>package main
 
 import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "net/http"
+    &quot;bytes&quot;
+    &quot;encoding/json&quot;
+    &quot;fmt&quot;
+    &quot;net/http&quot;
 )
 
 func main() {
-    url := "https://develop.okd.finance/api/errdesc"
+    url := &quot;https://develop.okd.finance/api/errdesc&quot;
     
-         req, _ := http.NewRequest("GET", url, nil)
+    req, _ := http.NewRequest(&quot;GET&quot;, url, nil)
     
-    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
-    req.Header.Set("Content-Type", "application/json")
-    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    req.Header.Set(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;)
+    req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+    req.Header.Set(&quot;Fingerprint&quot;, &quot;YOUR_FINGERPRINT&quot;)
     
-    client := &http.Client{}
+    client := &amp;http.Client{}
     resp, err := client.Do(req)
     if err != nil {
-        fmt.Println("Error:", err)
+        fmt.Println(&quot;Error:&quot;, err)
         return
     }
     defer resp.Body.Close()
     
-    fmt.Printf("Status: %s\n", resp.Status)
+    fmt.Printf(&quot;Status: %s\n&quot;, resp.Status)
 }</pre>
             </div>
             <div v-show="activeCodeTab === 'TypeScript'" class="code-block">
-              <pre>import axios from 'axios';
+              <pre>import axios from &#39;axios&#39;;
 
 const apiClient = axios.create({
-  baseURL: 'https://develop.okd.finance/api',
+  baseURL: &#39;https://develop.okd.finance/api&#39;,
   headers: {
-    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
-    'Content-Type': 'application/json',
-    'Fingerprint': 'YOUR_FINGERPRINT'
+    &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
+    &#39;Content-Type&#39;: &#39;application/json&#39;,
+    &#39;Fingerprint&#39;: &#39;YOUR_FINGERPRINT&#39;
   }
 });
 
- async function errdescRequest() {
+async function errdescRequest() {
   try {
-         const response = await apiClient.get('/errdesc');
+    const response = await apiClient.get(&#39;/errdesc&#39;);
     
-    console.log('Response:', response.data);
+    console.log(&#39;Response:&#39;, response.data);
     return response.data;
   } catch (error) {
-    console.error('Error:', error.response?.data || error.message);
+    console.error(&#39;Error:&#39;, error.response?.data || error.message);
     throw error;
   }
 }
 
- // Usage
- errdescRequest();</pre>
+// Usage
+errdescRequest();</pre>
             </div>
             <div v-show="activeCodeTab === 'PHP'" class="code-block">
-              <pre><?php
+              <pre>&lt;?php
 
-$url = 'https://develop.okd.finance/api/errdesc';
+$url = &#39;https://develop.okd.finance/api/errdesc&#39;;
 $headers = [
-    'Authorization: Bearer YOUR_ACCESS_TOKEN',
-    'Content-Type: application/json',
-    'Fingerprint: YOUR_FINGERPRINT'
+    &#39;Authorization: Bearer YOUR_ACCESS_TOKEN&#39;,
+    &#39;Content-Type: application/json&#39;,
+    &#39;Fingerprint: YOUR_FINGERPRINT&#39;
 ];
 
- $ch = curl_init();
+$ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, &#39;GET&#39;);
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -112,36 +112,36 @@ $error = curl_error($ch);
 curl_close($ch);
 
 if ($error) {
-    echo "cURL Error: " . $error;
+    echo &quot;cURL Error: &quot; . $error;
 } else {
-    echo "HTTP Code: " . $httpCode . "\n";
-    echo "Response: " . $response . "\n";
+    echo &quot;HTTP Code: &quot; . $httpCode . &quot;\n&quot;;
+    echo &quot;Response: &quot; . $response . &quot;\n&quot;;
 }
 
-?></pre>
+?&gt;</pre>
             </div>
             <div v-show="activeCodeTab === 'Python'" class="code-block">
               <pre>import requests
 import json
 
-url = 'https://develop.okd.finance/api/errdesc'
+url = &#39;https://develop.okd.finance/api/errdesc&#39;
 headers = {
-    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
-    'Content-Type': 'application/json',
-    'Fingerprint': 'YOUR_FINGERPRINT'
+    &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
+    &#39;Content-Type&#39;: &#39;application/json&#39;,
+    &#39;Fingerprint&#39;: &#39;YOUR_FINGERPRINT&#39;
 }
 
- try:
+try:
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     
-    print(f"Status Code: {response.status_code}")
-    print(f"Response: {response.json()}")
+    print(f&quot;Status Code: {response.status_code}&quot;)
+    print(f&quot;Response: {response.json()}&quot;)
     
 except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")
-    if hasattr(e, 'response') and e.response is not None:
-        print(f"Response: {e.response.text}")
+    print(f&quot;Error: {e}&quot;)
+    if hasattr(e, &#39;response&#39;) and e.response is not None:
+        print(f&quot;Response: {e.response.text}&quot;)
 </pre>
             </div>
           </div>
@@ -157,14 +157,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown asset",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown asset&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -175,14 +175,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "balance is not enough",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;balance is not enough&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -193,14 +193,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "withdrawal is processed",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;withdrawal is processed&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -211,14 +211,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty source id or asset id in body",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty source id or asset id in body&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -229,14 +229,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "recipient not found",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;recipient not found&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -247,14 +247,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "transfer is processed",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;transfer is processed&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -265,14 +265,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "same account for transfer",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;same account for transfer&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -283,14 +283,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "precents sum is over 100",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;precents sum is over 100&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -301,14 +301,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "dublicated external id",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;dublicated external id&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -319,14 +319,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown wallet type",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown wallet type&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -337,14 +337,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "transfer is failed",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;transfer is failed&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -355,14 +355,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "same wallet for transfer",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;same wallet for transfer&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -373,14 +373,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "transaction is not found",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;transaction is not found&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -391,14 +391,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty admin id",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty admin id&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -409,14 +409,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "this login already exists",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;this login already exists&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -427,14 +427,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "no rights for role",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;no rights for role&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -445,14 +445,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "request validation fails",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;request validation fails&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -463,14 +463,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "no rights for endpoint",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;no rights for endpoint&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -481,14 +481,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "no rights for notification",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;no rights for notification&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -499,14 +499,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "role exists",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;role exists&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -517,14 +517,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "role is not exist",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;role is not exist&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -535,14 +535,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "you can't edit admin",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;you can&#39;t edit admin&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -553,14 +553,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "wrong role",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;wrong role&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -571,14 +571,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "you can't edit yourself",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;you can&#39;t edit yourself&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -589,14 +589,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "you can't delete yourself",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;you can&#39;t delete yourself&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -607,14 +607,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "department isn't empty",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;department isn&#39;t empty&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -625,14 +625,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown request type",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown request type&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -643,14 +643,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "can't approve your own action",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;can&#39;t approve your own action&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -661,14 +661,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "action is processed",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;action is processed&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -679,14 +679,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "different supervisors",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;different supervisors&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -697,14 +697,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "no approvers",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;no approvers&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -715,14 +715,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid access account permissions",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid access account permissions&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -733,14 +733,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "webhook payload is empty",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;webhook payload is empty&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -751,14 +751,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid KYC webhook message",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid KYC webhook message&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -769,14 +769,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid KYC limit",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid KYC limit&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -787,14 +787,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown risk factor",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown risk factor&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -805,14 +805,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "risk level is not high",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;risk level is not high&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -823,14 +823,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unsupported KYC provider",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unsupported KYC provider&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -841,14 +841,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid email",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid email&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -859,14 +859,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "KYC provider not found",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;KYC provider not found&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -877,14 +877,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "no files attached",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;no files attached&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -895,14 +895,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "the number of files exceeds the limit",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;the number of files exceeds the limit&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -913,14 +913,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "upload file size exceeds the limit",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;upload file size exceeds the limit&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -931,14 +931,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "incorrect upload files type",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;incorrect upload files type&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -949,14 +949,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "this email already exists",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;this email already exists&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -967,14 +967,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown global flag",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown global flag&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -985,14 +985,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid verification code",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid verification code&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1003,14 +1003,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid refresh token",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid refresh token&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1021,14 +1021,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "session does not exit",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;session does not exit&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1039,14 +1039,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid input data",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid input data&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1057,14 +1057,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "initiator does not exists",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;initiator does not exists&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1075,14 +1075,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "you can't invite admin for this role",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;you can&#39;t invite admin for this role&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1093,14 +1093,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown invitation",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown invitation&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1111,14 +1111,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty role",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty role&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1129,14 +1129,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty name",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty name&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1147,14 +1147,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty reason",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty reason&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1165,14 +1165,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "admin does not exists",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;admin does not exists&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1183,14 +1183,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "you can't lock admin with this role",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;you can&#39;t lock admin with this role&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1201,14 +1201,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty email",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty email&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1219,14 +1219,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "user does not exist",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;user does not exist&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1237,14 +1237,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid password",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid password&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1255,14 +1255,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "operation isn't exist",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;operation isn&#39;t exist&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1273,14 +1273,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "too early to resend code",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;too early to resend code&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1291,14 +1291,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid confirmation code",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid confirmation code&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1309,14 +1309,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown operation type",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown operation type&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1327,14 +1327,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "OTP is already turned on",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;OTP is already turned on&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1345,14 +1345,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "OTP is already turned off",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;OTP is already turned off&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1363,14 +1363,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "this email isn't exist",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;this email isn&#39;t exist&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1381,14 +1381,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "API key isn't exist",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;API key isn&#39;t exist&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1399,14 +1399,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid user name",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid user name&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1417,14 +1417,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty recipient",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty recipient&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1435,14 +1435,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "withdrawal is disabled",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;withdrawal is disabled&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1453,14 +1453,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty account id",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty account id&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1471,14 +1471,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invitation with this email already exists",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invitation with this email already exists&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1489,14 +1489,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown selection mode",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown selection mode&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1507,14 +1507,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown status of logs",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown status of logs&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1525,14 +1525,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "trading is locked",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;trading is locked&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1543,14 +1543,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty flag name",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty flag name&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1561,14 +1561,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "flag is already set",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;flag is already set&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1579,14 +1579,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown flag",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown flag&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1597,14 +1597,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "withdraw is blocked for this user",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;withdraw is blocked for this user&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1615,14 +1615,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "withdraw amount exceeded",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;withdraw amount exceeded&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1633,14 +1633,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "confirmation code is expired",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;confirmation code is expired&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1651,14 +1651,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "confirmation code is invalid",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;confirmation code is invalid&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1669,14 +1669,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "code is already sent",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;code is already sent&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1687,14 +1687,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "referral program is diabled for user",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;referral program is diabled for user&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1705,14 +1705,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "max count of referral links is reached",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;max count of referral links is reached&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1723,14 +1723,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "referral link is not found",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;referral link is not found&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1741,14 +1741,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty referral link",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty referral link&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1759,14 +1759,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid referral percent",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid referral percent&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1777,14 +1777,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "email code is invalid",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;email code is invalid&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1795,14 +1795,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown KYC flow",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown KYC flow&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1813,14 +1813,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "user is unverified",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;user is unverified&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1831,14 +1831,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "deposits are disabled",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;deposits are disabled&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1849,14 +1849,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "KYC level 1 is required",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;KYC level 1 is required&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1867,14 +1867,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown country",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown country&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1885,14 +1885,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "need to specify reason",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;need to specify reason&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1903,14 +1903,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown direction",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown direction&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1921,14 +1921,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "socket is not configured",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;socket is not configured&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1939,14 +1939,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "user is in removing process",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;user is in removing process&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1957,14 +1957,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "user is active",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;user is active&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1975,14 +1975,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "too long reason",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;too long reason&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -1993,14 +1993,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown locale",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown locale&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2011,14 +2011,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "fcm is empty",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;fcm is empty&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2029,14 +2029,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "device platform is empty",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;device platform is empty&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2047,14 +2047,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "device id is empty",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;device id is empty&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2065,14 +2065,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "source id is empty",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;source id is empty&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2083,14 +2083,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "datasource graphic period is invalid",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;datasource graphic period is invalid&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2101,14 +2101,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "datasource asset pair not found",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;datasource asset pair not found&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2119,14 +2119,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty datasource",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty datasource&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2137,14 +2137,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty config",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty config&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2155,14 +2155,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty prices",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty prices&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2173,14 +2173,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown category",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown category&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2191,14 +2191,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "wrong category",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;wrong category&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2209,14 +2209,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "zero coin price",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;zero coin price&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2227,14 +2227,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown order params",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown order params&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2245,14 +2245,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty external id",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty external id&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2263,14 +2263,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "symbol not found",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;symbol not found&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2281,14 +2281,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty issue date",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty issue date&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2299,14 +2299,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "symbol is disabled",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;symbol is disabled&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2317,14 +2317,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "coin is disabled",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;coin is disabled&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2335,14 +2335,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "function is disabled",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;function is disabled&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2353,14 +2353,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty order id",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty order id&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2371,14 +2371,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid number",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid number&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2389,14 +2389,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid bool",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid bool&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2407,14 +2407,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "not implemented",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;not implemented&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2425,14 +2425,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown API key",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown API key&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2443,14 +2443,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid timestamp",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid timestamp&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2461,14 +2461,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid signature",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid signature&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2479,14 +2479,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty password",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty password&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2497,14 +2497,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid login",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid login&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2515,14 +2515,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty token",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty token&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2533,14 +2533,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty fingerprint",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty fingerprint&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2551,14 +2551,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "not bearer token",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;not bearer token&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2569,14 +2569,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid access token",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid access token&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2587,14 +2587,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "token expired",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;token expired&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2605,14 +2605,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid login or password",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid login or password&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2623,14 +2623,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "admin locked",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;admin locked&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2641,14 +2641,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid one time password",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid one time password&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2659,14 +2659,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "admin deleted",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;admin deleted&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2677,14 +2677,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty OTP",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty OTP&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2695,14 +2695,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "admin is unlocked",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;admin is unlocked&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2713,14 +2713,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid state value",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid state value&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2731,14 +2731,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty Google code",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty Google code&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2749,14 +2749,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "account is blocked",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;account is blocked&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2767,14 +2767,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unsuccessful validation",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unsuccessful validation&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2785,14 +2785,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty reCaptchaToken",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty reCaptchaToken&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2803,14 +2803,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "user configuration error",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;user configuration error&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2821,14 +2821,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "empty recaptcha platform id",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;empty recaptcha platform id&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2839,14 +2839,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "unknown platform",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;unknown platform&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2857,14 +2857,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "incorrect UID",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;incorrect UID&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2875,14 +2875,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "user is disabled",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;user is disabled&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2893,14 +2893,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "user's email is not verified",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;user&#39;s email is not verified&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2911,14 +2911,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "operation isn't allowed",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;operation isn&#39;t allowed&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2929,14 +2929,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "too many login attempts",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;too many login attempts&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2947,14 +2947,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "too many different geolocations",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;too many different geolocations&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2965,14 +2965,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "too many different emails for one device in a row",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;too many different emails for one device in a row&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -2983,14 +2983,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "too many failed login attempts in a row",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;too many failed login attempts in a row&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -3001,14 +3001,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "too many failed login attempts",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;too many failed login attempts&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -3019,14 +3019,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "failed firebase validation",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;failed firebase validation&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -3037,14 +3037,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "invalid balance type",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;invalid balance type&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -3055,14 +3055,14 @@ except requests.exceptions.RequestException as e:
               </div>
               <div class="code-block">
                 <pre>{
-  "success": false,
-  "error": {
-    "code": "INTERNAL_SERVER_ERROR",
-    "message": "access denied",
-    "details": "An unexpected error occurred on the server",
-    "requestId": "req_1234567890"
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;INTERNAL_SERVER_ERROR&quot;,
+    &quot;message&quot;: &quot;access denied&quot;,
+    &quot;details&quot;: &quot;An unexpected error occurred on the server&quot;,
+    &quot;requestId&quot;: &quot;req_1234567890&quot;
   },
-  "timestamp": "2024-01-01T12:00:00Z"
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>

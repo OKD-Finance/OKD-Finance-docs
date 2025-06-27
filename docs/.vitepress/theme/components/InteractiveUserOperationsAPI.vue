@@ -685,7 +685,681 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   }
 }
 
-[object Object]
+const codeExamples = {
+  curl: {
+    1: `curl -X PUT "https://develop.okd.finance/api/operations/{uuid}/cancel" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"uuid":"example"}'`,
+    2: `curl -X PUT "https://develop.okd.finance/api/operations/{uuid}/confirm" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"uuid":"example"}'`,
+    3: `curl -X PUT "https://develop.okd.finance/api/operations/{uuid}/resend" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"uuid":"example"}'`
+  },
+  go: {
+    1: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type CancelsoperationbyuuidRequest struct {
+    Uuid string \`json:"uuid"\`
+}
+
+func cancelsoperationbyuuid() error {
+    url := "https://develop.okd.finance/api/operations/{uuid}/cancel"
+    
+    requestData := CancelsoperationbyuuidRequest{
+        Uuid: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := cancelsoperationbyuuid(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    2: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type ConfirmsoperationbyuuidandcodeRequest struct {
+    Uuid string \`json:"uuid"\`
+}
+
+func confirmsoperationbyuuidandcode() error {
+    url := "https://develop.okd.finance/api/operations/{uuid}/confirm"
+    
+    requestData := ConfirmsoperationbyuuidandcodeRequest{
+        Uuid: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := confirmsoperationbyuuidandcode(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    3: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type ResendscodetoemailforspecifiedoperationRequest struct {
+    Uuid string \`json:"uuid"\`
+}
+
+func resendscodetoemailforspecifiedoperation() error {
+    url := "https://develop.okd.finance/api/operations/{uuid}/resend"
+    
+    requestData := ResendscodetoemailforspecifiedoperationRequest{
+        Uuid: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := resendscodetoemailforspecifiedoperation(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`
+  },
+  typescript: {
+    1: `interface CancelsoperationbyuuidRequest {
+  uuid: string;
+}
+
+async function cancelsoperationbyuuid(
+  baseUrl: string,
+  accessToken: string,
+  data: CancelsoperationbyuuidRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/operations/{uuid}/cancel\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await cancelsoperationbyuuid(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        uuid: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    2: `interface ConfirmsoperationbyuuidandcodeRequest {
+  uuid: string;
+}
+
+async function confirmsoperationbyuuidandcode(
+  baseUrl: string,
+  accessToken: string,
+  data: ConfirmsoperationbyuuidandcodeRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/operations/{uuid}/confirm\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await confirmsoperationbyuuidandcode(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        uuid: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    3: `interface ResendscodetoemailforspecifiedoperationRequest {
+  uuid: string;
+}
+
+async function resendscodetoemailforspecifiedoperation(
+  baseUrl: string,
+  accessToken: string,
+  data: ResendscodetoemailforspecifiedoperationRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/operations/{uuid}/resend\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await resendscodetoemailforspecifiedoperation(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        uuid: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`
+  },
+  php: {
+    1: `<?php
+
+function cancelsoperationbyuuid($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/operations/{uuid}/cancel';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'uuid' => 'example',
+    ];
+
+    $result = cancelsoperationbyuuid(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    2: `<?php
+
+function confirmsoperationbyuuidandcode($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/operations/{uuid}/confirm';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'uuid' => 'example',
+    ];
+
+    $result = confirmsoperationbyuuidandcode(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    3: `<?php
+
+function resendscodetoemailforspecifiedoperation($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/operations/{uuid}/resend';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'uuid' => 'example',
+    ];
+
+    $result = resendscodetoemailforspecifiedoperation(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`
+  },
+  python: {
+    1: `import requests
+import json
+from typing import Dict, Any
+
+
+def cancelsoperationbyuuid(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/operations/{uuid}/cancel"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'uuid': 'example',
+    }
+    
+    try:
+        result = cancelsoperationbyuuid(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    2: `import requests
+import json
+from typing import Dict, Any
+
+
+def confirmsoperationbyuuidandcode(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/operations/{uuid}/confirm"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'uuid': 'example',
+    }
+    
+    try:
+        result = confirmsoperationbyuuidandcode(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    3: `import requests
+import json
+from typing import Dict, Any
+
+
+def resendscodetoemailforspecifiedoperation(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/operations/{uuid}/resend"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'uuid': 'example',
+    }
+    
+    try:
+        result = resendscodetoemailforspecifiedoperation(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`
+  }
+}
 </script>
 
 <style scoped>

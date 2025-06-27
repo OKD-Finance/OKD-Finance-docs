@@ -5484,7 +5484,6648 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   }
 }
 
-[object Object]
+const codeExamples = {
+  curl: {
+    1: `curl -X POST "https://develop.okd.finance/api/auth/check/firebase" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    2: `curl -X POST "https://develop.okd.finance/api/auth/confirm" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    3: `curl -X POST "https://develop.okd.finance/api/auth/fcm" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    4: `curl -X DELETE "https://develop.okd.finance/api/auth/fcm" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    5: `curl -X GET "https://develop.okd.finance/api/auth/google" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    6: `curl -X POST "https://develop.okd.finance/api/auth/jwt/refresh" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    7: `curl -X PUT "https://develop.okd.finance/api/auth/locale" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    8: `curl -X GET "https://develop.okd.finance/api/auth/notifications" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"group_id":"example","hide_read":"example","limit":"example","offset":"example"}'`,
+    9: `curl -X PUT "https://develop.okd.finance/api/auth/notifications" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    10: `curl -X DELETE "https://develop.okd.finance/api/auth/notifications" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    11: `curl -X PUT "https://develop.okd.finance/api/auth/notifications/{id}" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"id":"example"}'`,
+    12: `curl -X POST "https://develop.okd.finance/api/auth/otp" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    13: `curl -X DELETE "https://develop.okd.finance/api/auth/otp" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"email":"example"}'`,
+    14: `curl -X PUT "https://develop.okd.finance/api/auth/password" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    15: `curl -X PUT "https://develop.okd.finance/api/auth/password/restore" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    16: `curl -X POST "https://develop.okd.finance/api/auth/password/restore" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    17: `curl -X GET "https://develop.okd.finance/api/auth/password/restore/{code}" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"code":"example"}'`,
+    18: `curl -X GET "https://develop.okd.finance/api/auth/profile" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    19: `curl -X PUT "https://develop.okd.finance/api/auth/profile" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    20: `curl -X GET "https://develop.okd.finance/api/auth/remove" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    21: `curl -X PUT "https://develop.okd.finance/api/auth/remove" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    22: `curl -X PUT "https://develop.okd.finance/api/auth/sign-in" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    23: `curl -X POST "https://develop.okd.finance/api/auth/sign-in" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    24: `curl -X POST "https://develop.okd.finance/api/auth/sign-in/firebase" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    25: `curl -X POST "https://develop.okd.finance/api/auth/sign-in/google" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    26: `curl -X PUT "https://develop.okd.finance/api/auth/sign-in/resend" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    27: `curl -X POST "https://develop.okd.finance/api/auth/sign-out" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    28: `curl -X POST "https://develop.okd.finance/api/auth/sign-up" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    29: `curl -X POST "https://develop.okd.finance/api/auth/sign-up/google" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    30: `curl -X PUT "https://develop.okd.finance/api/user/flags" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`
+  },
+  go: {
+    1: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type CheckaccountexistencebyfirebasetokenRequest struct {
+
+}
+
+func checkaccountexistencebyfirebasetoken() error {
+    url := "https://develop.okd.finance/api/auth/check/firebase"
+    
+    requestData := CheckaccountexistencebyfirebasetokenRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := checkaccountexistencebyfirebasetoken(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    2: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type SendconfirmationcodetoemailRequest struct {
+
+}
+
+func sendconfirmationcodetoemail() error {
+    url := "https://develop.okd.finance/api/auth/confirm"
+    
+    requestData := SendconfirmationcodetoemailRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := sendconfirmationcodetoemail(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    3: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type InitsoperationtocreateuserfcmRequest struct {
+
+}
+
+func initsoperationtocreateuserfcm() error {
+    url := "https://develop.okd.finance/api/auth/fcm"
+    
+    requestData := InitsoperationtocreateuserfcmRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := initsoperationtocreateuserfcm(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    4: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type InitsoperationtodeleteuserfcmbydeviceidandfcmRequest struct {
+
+}
+
+func initsoperationtodeleteuserfcmbydeviceidandfcm() error {
+    url := "https://develop.okd.finance/api/auth/fcm"
+    
+    requestData := InitsoperationtodeleteuserfcmbydeviceidandfcmRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := initsoperationtodeleteuserfcmbydeviceidandfcm(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    5: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetGooglelinkforlgoinregisterRequest struct {
+
+}
+
+func getgooglelinkforlgoinregister() error {
+    url := "https://develop.okd.finance/api/auth/google"
+    
+    requestData := GetGooglelinkforlgoinregisterRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getgooglelinkforlgoinregister(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    6: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type RegenerateapairofauthenticatetokensifrefreshtokenisvalidRequest struct {
+
+}
+
+func regenerateapairofauthenticatetokensifrefreshtokenisvalid() error {
+    url := "https://develop.okd.finance/api/auth/jwt/refresh"
+    
+    requestData := RegenerateapairofauthenticatetokensifrefreshtokenisvalidRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := regenerateapairofauthenticatetokensifrefreshtokenisvalid(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    7: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type InitsoperationtochangecurrentuserlocaleRequest struct {
+
+}
+
+func initsoperationtochangecurrentuserlocale() error {
+    url := "https://develop.okd.finance/api/auth/locale"
+    
+    requestData := InitsoperationtochangecurrentuserlocaleRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := initsoperationtochangecurrentuserlocale(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    8: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetnotificationsforuserRequest struct {
+    Group_id string \`json:"group_id"\`\n    Hide_read string \`json:"hide_read"\`\n    Limit string \`json:"limit"\`\n    Offset string \`json:"offset"\`
+}
+
+func getnotificationsforuser() error {
+    url := "https://develop.okd.finance/api/auth/notifications"
+    
+    requestData := GetnotificationsforuserRequest{
+        Group_id: "example",\n        Hide_read: "example",\n        Limit: "example",\n        Offset: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getnotificationsforuser(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    9: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type MarkallgroupofnotificationsasviewedBodyisoptionalRequest struct {
+
+}
+
+func markallgroupofnotificationsasviewedbodyisoptional() error {
+    url := "https://develop.okd.finance/api/auth/notifications"
+    
+    requestData := MarkallgroupofnotificationsasviewedBodyisoptionalRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := markallgroupofnotificationsasviewedbodyisoptional(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    10: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type DeleteallgroupofnotificationsBodyisoptionalRequest struct {
+
+}
+
+func deleteallgroupofnotificationsbodyisoptional() error {
+    url := "https://develop.okd.finance/api/auth/notifications"
+    
+    requestData := DeleteallgroupofnotificationsBodyisoptionalRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := deleteallgroupofnotificationsbodyisoptional(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    11: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type MarknotificationasviewedRequest struct {
+    Id string \`json:"id"\`
+}
+
+func marknotificationasviewed() error {
+    url := "https://develop.okd.finance/api/auth/notifications/{id}"
+    
+    requestData := MarknotificationasviewedRequest{
+        Id: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := marknotificationasviewed(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    12: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type InitsoperationtoturnOTPononetimepasswordforcurrentuserRequest struct {
+
+}
+
+func initsoperationtoturnotpononetimepasswordforcurrentuser() error {
+    url := "https://develop.okd.finance/api/auth/otp"
+    
+    requestData := InitsoperationtoturnOTPononetimepasswordforcurrentuserRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := initsoperationtoturnotpononetimepasswordforcurrentuser(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    13: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type InitsoperationtoturnOTPoffonetimepassword2FAforcurrentuserbyusingemailandOTPRequest struct {
+    Email string \`json:"email"\`
+}
+
+func initsoperationtoturnotpoffonetimepassword2faforcurrentuserbyusingemailandotp() error {
+    url := "https://develop.okd.finance/api/auth/otp"
+    
+    requestData := InitsoperationtoturnOTPoffonetimepassword2FAforcurrentuserbyusingemailandOTPRequest{
+        Email: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := initsoperationtoturnotpoffonetimepassword2faforcurrentuserbyusingemailandotp(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    14: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type InitsoperationtochangecurrentuserpasswordOperationisvalidonlyforregularandfirebaseaccountsItsnoneedtosetoldnewpasswordforfirebaseaccountRequest struct {
+
+}
+
+func initsoperationtochangecurrentuserpasswordoperationisvalidonlyforregularandfirebaseaccountsitsnoneedtosetoldnewpasswordforfirebaseaccount() error {
+    url := "https://develop.okd.finance/api/auth/password"
+    
+    requestData := InitsoperationtochangecurrentuserpasswordOperationisvalidonlyforregularandfirebaseaccountsItsnoneedtosetoldnewpasswordforfirebaseaccountRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := initsoperationtochangecurrentuserpasswordoperationisvalidonlyforregularandfirebaseaccountsitsnoneedtosetoldnewpasswordforfirebaseaccount(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    15: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type FinishesrestorationofcurrentuserpasswordRequest struct {
+
+}
+
+func finishesrestorationofcurrentuserpassword() error {
+    url := "https://develop.okd.finance/api/auth/password/restore"
+    
+    requestData := FinishesrestorationofcurrentuserpasswordRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := finishesrestorationofcurrentuserpassword(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    16: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type InitsrestorationofcurrentuserpasswordRequest struct {
+
+}
+
+func initsrestorationofcurrentuserpassword() error {
+    url := "https://develop.okd.finance/api/auth/password/restore"
+    
+    requestData := InitsrestorationofcurrentuserpasswordRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := initsrestorationofcurrentuserpassword(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    17: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type CheckrestorationcodeRequest struct {
+    Code string \`json:"code"\`
+}
+
+func checkrestorationcode() error {
+    url := "https://develop.okd.finance/api/auth/password/restore/{code}"
+    
+    requestData := CheckrestorationcodeRequest{
+        Code: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := checkrestorationcode(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    18: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetProfilereturnsinformationaboutcurrentuserRequest struct {
+
+}
+
+func getprofilereturnsinformationaboutcurrentuser() error {
+    url := "https://develop.okd.finance/api/auth/profile"
+    
+    requestData := GetProfilereturnsinformationaboutcurrentuserRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getprofilereturnsinformationaboutcurrentuser(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    19: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type SetProfilesetssomefieldsinprofileofcurrentuserAllfieldsareoptionalRequest struct {
+
+}
+
+func setprofilesetssomefieldsinprofileofcurrentuserallfieldsareoptional() error {
+    url := "https://develop.okd.finance/api/auth/profile"
+    
+    requestData := SetProfilesetssomefieldsinprofileofcurrentuserAllfieldsareoptionalRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := setprofilesetssomefieldsinprofileofcurrentuserallfieldsareoptional(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    20: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type CheckpossibilitytoremoveaccountRequest struct {
+
+}
+
+func checkpossibilitytoremoveaccount() error {
+    url := "https://develop.okd.finance/api/auth/remove"
+    
+    requestData := CheckpossibilitytoremoveaccountRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := checkpossibilitytoremoveaccount(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    21: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type InitsoperationtoremoveaccountReasonmaximumlengthis200Request struct {
+
+}
+
+func initsoperationtoremoveaccountreasonmaximumlengthis200() error {
+    url := "https://develop.okd.finance/api/auth/remove"
+    
+    requestData := InitsoperationtoremoveaccountReasonmaximumlengthis200Request{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := initsoperationtoremoveaccountreasonmaximumlengthis200(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    22: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type ConfirmloginoperationRequest struct {
+
+}
+
+func confirmloginoperation() error {
+    url := "https://develop.okd.finance/api/auth/sign-in"
+    
+    requestData := ConfirmloginoperationRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := confirmloginoperation(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    23: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type LoginsuserandreturnpairoftokensorloginoperationwithhintsRequest struct {
+
+}
+
+func loginsuserandreturnpairoftokensorloginoperationwithhints() error {
+    url := "https://develop.okd.finance/api/auth/sign-in"
+    
+    requestData := LoginsuserandreturnpairoftokensorloginoperationwithhintsRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := loginsuserandreturnpairoftokensorloginoperationwithhints(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    24: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type SigninbyfirebaserequestRequest struct {
+
+}
+
+func signinbyfirebaserequest() error {
+    url := "https://develop.okd.finance/api/auth/sign-in/firebase"
+    
+    requestData := SigninbyfirebaserequestRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := signinbyfirebaserequest(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    25: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type SigninbyGoogleOAuth2requestRequest struct {
+
+}
+
+func signinbygoogleoauth2request() error {
+    url := "https://develop.okd.finance/api/auth/sign-in/google"
+    
+    requestData := SigninbyGoogleOAuth2requestRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := signinbygoogleoauth2request(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    26: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type ResendemailphonecodesforsigninprocessRequest struct {
+
+}
+
+func resendemailphonecodesforsigninprocess() error {
+    url := "https://develop.okd.finance/api/auth/sign-in/resend"
+    
+    requestData := ResendemailphonecodesforsigninprocessRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := resendemailphonecodesforsigninprocess(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    27: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type LogoutremoveusersessionsandmakesthetokeninvalidRequest struct {
+
+}
+
+func logoutremoveusersessionsandmakesthetokeninvalid() error {
+    url := "https://develop.okd.finance/api/auth/sign-out"
+    
+    requestData := LogoutremoveusersessionsandmakesthetokeninvalidRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := logoutremoveusersessionsandmakesthetokeninvalid(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    28: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type RegistrationsaveuserindatabaseandsendverificationurltoemailRequest struct {
+
+}
+
+func registrationsaveuserindatabaseandsendverificationurltoemail() error {
+    url := "https://develop.okd.finance/api/auth/sign-up"
+    
+    requestData := RegistrationsaveuserindatabaseandsendverificationurltoemailRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := registrationsaveuserindatabaseandsendverificationurltoemail(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    29: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type SignupbyGoogleOAuth2requestRequest struct {
+
+}
+
+func signupbygoogleoauth2request() error {
+    url := "https://develop.okd.finance/api/auth/sign-up/google"
+    
+    requestData := SignupbyGoogleOAuth2requestRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := signupbygoogleoauth2request(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    30: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type SetProfilesetsprofileflagsofcurrentuserRequest struct {
+
+}
+
+func setprofilesetsprofileflagsofcurrentuser() error {
+    url := "https://develop.okd.finance/api/user/flags"
+    
+    requestData := SetProfilesetsprofileflagsofcurrentuserRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := setprofilesetsprofileflagsofcurrentuser(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`
+  },
+  typescript: {
+    1: `interface CheckaccountexistencebyfirebasetokenRequest {
+
+}
+
+async function checkaccountexistencebyfirebasetoken(
+  baseUrl: string,
+  accessToken: string,
+  data: CheckaccountexistencebyfirebasetokenRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/check/firebase\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await checkaccountexistencebyfirebasetoken(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    2: `interface SendconfirmationcodetoemailRequest {
+
+}
+
+async function sendconfirmationcodetoemail(
+  baseUrl: string,
+  accessToken: string,
+  data: SendconfirmationcodetoemailRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/confirm\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await sendconfirmationcodetoemail(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    3: `interface InitsoperationtocreateuserfcmRequest {
+
+}
+
+async function initsoperationtocreateuserfcm(
+  baseUrl: string,
+  accessToken: string,
+  data: InitsoperationtocreateuserfcmRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/fcm\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await initsoperationtocreateuserfcm(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    4: `interface InitsoperationtodeleteuserfcmbydeviceidandfcmRequest {
+
+}
+
+async function initsoperationtodeleteuserfcmbydeviceidandfcm(
+  baseUrl: string,
+  accessToken: string,
+  data: InitsoperationtodeleteuserfcmbydeviceidandfcmRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/fcm\`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await initsoperationtodeleteuserfcmbydeviceidandfcm(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    5: `interface GetGooglelinkforlgoinregisterRequest {
+
+}
+
+async function getgooglelinkforlgoinregister(
+  baseUrl: string,
+  accessToken: string,
+  data: GetGooglelinkforlgoinregisterRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/google\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getgooglelinkforlgoinregister(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    6: `interface RegenerateapairofauthenticatetokensifrefreshtokenisvalidRequest {
+
+}
+
+async function regenerateapairofauthenticatetokensifrefreshtokenisvalid(
+  baseUrl: string,
+  accessToken: string,
+  data: RegenerateapairofauthenticatetokensifrefreshtokenisvalidRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/jwt/refresh\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await regenerateapairofauthenticatetokensifrefreshtokenisvalid(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    7: `interface InitsoperationtochangecurrentuserlocaleRequest {
+
+}
+
+async function initsoperationtochangecurrentuserlocale(
+  baseUrl: string,
+  accessToken: string,
+  data: InitsoperationtochangecurrentuserlocaleRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/locale\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await initsoperationtochangecurrentuserlocale(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    8: `interface GetnotificationsforuserRequest {
+  group_id: string;\n  hide_read: string;\n  limit: string;\n  offset: string;
+}
+
+async function getnotificationsforuser(
+  baseUrl: string,
+  accessToken: string,
+  data: GetnotificationsforuserRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/notifications\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getnotificationsforuser(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        group_id: "example",\n        hide_read: "example",\n        limit: "example",\n        offset: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    9: `interface MarkallgroupofnotificationsasviewedBodyisoptionalRequest {
+
+}
+
+async function markallgroupofnotificationsasviewedbodyisoptional(
+  baseUrl: string,
+  accessToken: string,
+  data: MarkallgroupofnotificationsasviewedBodyisoptionalRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/notifications\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await markallgroupofnotificationsasviewedbodyisoptional(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    10: `interface DeleteallgroupofnotificationsBodyisoptionalRequest {
+
+}
+
+async function deleteallgroupofnotificationsbodyisoptional(
+  baseUrl: string,
+  accessToken: string,
+  data: DeleteallgroupofnotificationsBodyisoptionalRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/notifications\`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await deleteallgroupofnotificationsbodyisoptional(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    11: `interface MarknotificationasviewedRequest {
+  id: string;
+}
+
+async function marknotificationasviewed(
+  baseUrl: string,
+  accessToken: string,
+  data: MarknotificationasviewedRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/notifications/{id}\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await marknotificationasviewed(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        id: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    12: `interface InitsoperationtoturnOTPononetimepasswordforcurrentuserRequest {
+
+}
+
+async function initsoperationtoturnotpononetimepasswordforcurrentuser(
+  baseUrl: string,
+  accessToken: string,
+  data: InitsoperationtoturnOTPononetimepasswordforcurrentuserRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/otp\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await initsoperationtoturnotpononetimepasswordforcurrentuser(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    13: `interface InitsoperationtoturnOTPoffonetimepassword2FAforcurrentuserbyusingemailandOTPRequest {
+  email: string;
+}
+
+async function initsoperationtoturnotpoffonetimepassword2faforcurrentuserbyusingemailandotp(
+  baseUrl: string,
+  accessToken: string,
+  data: InitsoperationtoturnOTPoffonetimepassword2FAforcurrentuserbyusingemailandOTPRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/otp\`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await initsoperationtoturnotpoffonetimepassword2faforcurrentuserbyusingemailandotp(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        email: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    14: `interface InitsoperationtochangecurrentuserpasswordOperationisvalidonlyforregularandfirebaseaccountsItsnoneedtosetoldnewpasswordforfirebaseaccountRequest {
+
+}
+
+async function initsoperationtochangecurrentuserpasswordoperationisvalidonlyforregularandfirebaseaccountsitsnoneedtosetoldnewpasswordforfirebaseaccount(
+  baseUrl: string,
+  accessToken: string,
+  data: InitsoperationtochangecurrentuserpasswordOperationisvalidonlyforregularandfirebaseaccountsItsnoneedtosetoldnewpasswordforfirebaseaccountRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/password\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await initsoperationtochangecurrentuserpasswordoperationisvalidonlyforregularandfirebaseaccountsitsnoneedtosetoldnewpasswordforfirebaseaccount(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    15: `interface FinishesrestorationofcurrentuserpasswordRequest {
+
+}
+
+async function finishesrestorationofcurrentuserpassword(
+  baseUrl: string,
+  accessToken: string,
+  data: FinishesrestorationofcurrentuserpasswordRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/password/restore\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await finishesrestorationofcurrentuserpassword(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    16: `interface InitsrestorationofcurrentuserpasswordRequest {
+
+}
+
+async function initsrestorationofcurrentuserpassword(
+  baseUrl: string,
+  accessToken: string,
+  data: InitsrestorationofcurrentuserpasswordRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/password/restore\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await initsrestorationofcurrentuserpassword(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    17: `interface CheckrestorationcodeRequest {
+  code: string;
+}
+
+async function checkrestorationcode(
+  baseUrl: string,
+  accessToken: string,
+  data: CheckrestorationcodeRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/password/restore/{code}\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await checkrestorationcode(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        code: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    18: `interface GetProfilereturnsinformationaboutcurrentuserRequest {
+
+}
+
+async function getprofilereturnsinformationaboutcurrentuser(
+  baseUrl: string,
+  accessToken: string,
+  data: GetProfilereturnsinformationaboutcurrentuserRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/profile\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getprofilereturnsinformationaboutcurrentuser(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    19: `interface SetProfilesetssomefieldsinprofileofcurrentuserAllfieldsareoptionalRequest {
+
+}
+
+async function setprofilesetssomefieldsinprofileofcurrentuserallfieldsareoptional(
+  baseUrl: string,
+  accessToken: string,
+  data: SetProfilesetssomefieldsinprofileofcurrentuserAllfieldsareoptionalRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/profile\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await setprofilesetssomefieldsinprofileofcurrentuserallfieldsareoptional(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    20: `interface CheckpossibilitytoremoveaccountRequest {
+
+}
+
+async function checkpossibilitytoremoveaccount(
+  baseUrl: string,
+  accessToken: string,
+  data: CheckpossibilitytoremoveaccountRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/remove\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await checkpossibilitytoremoveaccount(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    21: `interface InitsoperationtoremoveaccountReasonmaximumlengthis200Request {
+
+}
+
+async function initsoperationtoremoveaccountreasonmaximumlengthis200(
+  baseUrl: string,
+  accessToken: string,
+  data: InitsoperationtoremoveaccountReasonmaximumlengthis200Request
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/remove\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await initsoperationtoremoveaccountreasonmaximumlengthis200(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    22: `interface ConfirmloginoperationRequest {
+
+}
+
+async function confirmloginoperation(
+  baseUrl: string,
+  accessToken: string,
+  data: ConfirmloginoperationRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/sign-in\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await confirmloginoperation(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    23: `interface LoginsuserandreturnpairoftokensorloginoperationwithhintsRequest {
+
+}
+
+async function loginsuserandreturnpairoftokensorloginoperationwithhints(
+  baseUrl: string,
+  accessToken: string,
+  data: LoginsuserandreturnpairoftokensorloginoperationwithhintsRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/sign-in\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await loginsuserandreturnpairoftokensorloginoperationwithhints(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    24: `interface SigninbyfirebaserequestRequest {
+
+}
+
+async function signinbyfirebaserequest(
+  baseUrl: string,
+  accessToken: string,
+  data: SigninbyfirebaserequestRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/sign-in/firebase\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await signinbyfirebaserequest(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    25: `interface SigninbyGoogleOAuth2requestRequest {
+
+}
+
+async function signinbygoogleoauth2request(
+  baseUrl: string,
+  accessToken: string,
+  data: SigninbyGoogleOAuth2requestRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/sign-in/google\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await signinbygoogleoauth2request(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    26: `interface ResendemailphonecodesforsigninprocessRequest {
+
+}
+
+async function resendemailphonecodesforsigninprocess(
+  baseUrl: string,
+  accessToken: string,
+  data: ResendemailphonecodesforsigninprocessRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/sign-in/resend\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await resendemailphonecodesforsigninprocess(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    27: `interface LogoutremoveusersessionsandmakesthetokeninvalidRequest {
+
+}
+
+async function logoutremoveusersessionsandmakesthetokeninvalid(
+  baseUrl: string,
+  accessToken: string,
+  data: LogoutremoveusersessionsandmakesthetokeninvalidRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/sign-out\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await logoutremoveusersessionsandmakesthetokeninvalid(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    28: `interface RegistrationsaveuserindatabaseandsendverificationurltoemailRequest {
+
+}
+
+async function registrationsaveuserindatabaseandsendverificationurltoemail(
+  baseUrl: string,
+  accessToken: string,
+  data: RegistrationsaveuserindatabaseandsendverificationurltoemailRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/sign-up\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await registrationsaveuserindatabaseandsendverificationurltoemail(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    29: `interface SignupbyGoogleOAuth2requestRequest {
+
+}
+
+async function signupbygoogleoauth2request(
+  baseUrl: string,
+  accessToken: string,
+  data: SignupbyGoogleOAuth2requestRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/auth/sign-up/google\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await signupbygoogleoauth2request(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    30: `interface SetProfilesetsprofileflagsofcurrentuserRequest {
+
+}
+
+async function setprofilesetsprofileflagsofcurrentuser(
+  baseUrl: string,
+  accessToken: string,
+  data: SetProfilesetsprofileflagsofcurrentuserRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/user/flags\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await setprofilesetsprofileflagsofcurrentuser(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`
+  },
+  php: {
+    1: `<?php
+
+function checkaccountexistencebyfirebasetoken($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/check/firebase';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = checkaccountexistencebyfirebasetoken(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    2: `<?php
+
+function sendconfirmationcodetoemail($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/confirm';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = sendconfirmationcodetoemail(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    3: `<?php
+
+function initsoperationtocreateuserfcm($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/fcm';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = initsoperationtocreateuserfcm(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    4: `<?php
+
+function initsoperationtodeleteuserfcmbydeviceidandfcm($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/fcm';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'DELETE',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = initsoperationtodeleteuserfcmbydeviceidandfcm(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    5: `<?php
+
+function getgooglelinkforlgoinregister($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/google';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = getgooglelinkforlgoinregister(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    6: `<?php
+
+function regenerateapairofauthenticatetokensifrefreshtokenisvalid($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/jwt/refresh';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = regenerateapairofauthenticatetokensifrefreshtokenisvalid(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    7: `<?php
+
+function initsoperationtochangecurrentuserlocale($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/locale';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = initsoperationtochangecurrentuserlocale(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    8: `<?php
+
+function getnotificationsforuser($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/notifications';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'group_id' => 'example',\n        'hide_read' => 'example',\n        'limit' => 'example',\n        'offset' => 'example',
+    ];
+
+    $result = getnotificationsforuser(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    9: `<?php
+
+function markallgroupofnotificationsasviewedbodyisoptional($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/notifications';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = markallgroupofnotificationsasviewedbodyisoptional(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    10: `<?php
+
+function deleteallgroupofnotificationsbodyisoptional($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/notifications';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'DELETE',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = deleteallgroupofnotificationsbodyisoptional(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    11: `<?php
+
+function marknotificationasviewed($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/notifications/{id}';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'id' => 'example',
+    ];
+
+    $result = marknotificationasviewed(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    12: `<?php
+
+function initsoperationtoturnotpononetimepasswordforcurrentuser($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/otp';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = initsoperationtoturnotpononetimepasswordforcurrentuser(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    13: `<?php
+
+function initsoperationtoturnotpoffonetimepassword2faforcurrentuserbyusingemailandotp($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/otp';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'DELETE',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'email' => 'example',
+    ];
+
+    $result = initsoperationtoturnotpoffonetimepassword2faforcurrentuserbyusingemailandotp(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    14: `<?php
+
+function initsoperationtochangecurrentuserpasswordoperationisvalidonlyforregularandfirebaseaccountsitsnoneedtosetoldnewpasswordforfirebaseaccount($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/password';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = initsoperationtochangecurrentuserpasswordoperationisvalidonlyforregularandfirebaseaccountsitsnoneedtosetoldnewpasswordforfirebaseaccount(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    15: `<?php
+
+function finishesrestorationofcurrentuserpassword($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/password/restore';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = finishesrestorationofcurrentuserpassword(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    16: `<?php
+
+function initsrestorationofcurrentuserpassword($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/password/restore';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = initsrestorationofcurrentuserpassword(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    17: `<?php
+
+function checkrestorationcode($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/password/restore/{code}';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'code' => 'example',
+    ];
+
+    $result = checkrestorationcode(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    18: `<?php
+
+function getprofilereturnsinformationaboutcurrentuser($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/profile';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = getprofilereturnsinformationaboutcurrentuser(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    19: `<?php
+
+function setprofilesetssomefieldsinprofileofcurrentuserallfieldsareoptional($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/profile';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = setprofilesetssomefieldsinprofileofcurrentuserallfieldsareoptional(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    20: `<?php
+
+function checkpossibilitytoremoveaccount($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/remove';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = checkpossibilitytoremoveaccount(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    21: `<?php
+
+function initsoperationtoremoveaccountreasonmaximumlengthis200($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/remove';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = initsoperationtoremoveaccountreasonmaximumlengthis200(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    22: `<?php
+
+function confirmloginoperation($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/sign-in';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = confirmloginoperation(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    23: `<?php
+
+function loginsuserandreturnpairoftokensorloginoperationwithhints($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/sign-in';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = loginsuserandreturnpairoftokensorloginoperationwithhints(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    24: `<?php
+
+function signinbyfirebaserequest($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/sign-in/firebase';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = signinbyfirebaserequest(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    25: `<?php
+
+function signinbygoogleoauth2request($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/sign-in/google';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = signinbygoogleoauth2request(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    26: `<?php
+
+function resendemailphonecodesforsigninprocess($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/sign-in/resend';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = resendemailphonecodesforsigninprocess(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    27: `<?php
+
+function logoutremoveusersessionsandmakesthetokeninvalid($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/sign-out';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = logoutremoveusersessionsandmakesthetokeninvalid(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    28: `<?php
+
+function registrationsaveuserindatabaseandsendverificationurltoemail($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/sign-up';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = registrationsaveuserindatabaseandsendverificationurltoemail(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    29: `<?php
+
+function signupbygoogleoauth2request($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/auth/sign-up/google';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = signupbygoogleoauth2request(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    30: `<?php
+
+function setprofilesetsprofileflagsofcurrentuser($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/user/flags';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = setprofilesetsprofileflagsofcurrentuser(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`
+  },
+  python: {
+    1: `import requests
+import json
+from typing import Dict, Any
+
+
+def checkaccountexistencebyfirebasetoken(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/check/firebase"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = checkaccountexistencebyfirebasetoken(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    2: `import requests
+import json
+from typing import Dict, Any
+
+
+def sendconfirmationcodetoemail(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/confirm"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = sendconfirmationcodetoemail(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    3: `import requests
+import json
+from typing import Dict, Any
+
+
+def initsoperationtocreateuserfcm(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/fcm"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = initsoperationtocreateuserfcm(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    4: `import requests
+import json
+from typing import Dict, Any
+
+
+def initsoperationtodeleteuserfcmbydeviceidandfcm(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/fcm"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'DELETE',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = initsoperationtodeleteuserfcmbydeviceidandfcm(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    5: `import requests
+import json
+from typing import Dict, Any
+
+
+def getgooglelinkforlgoinregister(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/google"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = getgooglelinkforlgoinregister(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    6: `import requests
+import json
+from typing import Dict, Any
+
+
+def regenerateapairofauthenticatetokensifrefreshtokenisvalid(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need refresh token in bearer token authorization"""
+    url = f"{base_url}/auth/jwt/refresh"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = regenerateapairofauthenticatetokensifrefreshtokenisvalid(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    7: `import requests
+import json
+from typing import Dict, Any
+
+
+def initsoperationtochangecurrentuserlocale(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/locale"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = initsoperationtochangecurrentuserlocale(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    8: `import requests
+import json
+from typing import Dict, Any
+
+
+def getnotificationsforuser(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/notifications"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'group_id': 'example',\n        'hide_read': 'example',\n        'limit': 'example',\n        'offset': 'example',
+    }
+    
+    try:
+        result = getnotificationsforuser(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    9: `import requests
+import json
+from typing import Dict, Any
+
+
+def markallgroupofnotificationsasviewedbodyisoptional(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/notifications"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = markallgroupofnotificationsasviewedbodyisoptional(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    10: `import requests
+import json
+from typing import Dict, Any
+
+
+def deleteallgroupofnotificationsbodyisoptional(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/notifications"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'DELETE',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = deleteallgroupofnotificationsbodyisoptional(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    11: `import requests
+import json
+from typing import Dict, Any
+
+
+def marknotificationasviewed(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/notifications/{id}"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'id': 'example',
+    }
+    
+    try:
+        result = marknotificationasviewed(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    12: `import requests
+import json
+from typing import Dict, Any
+
+
+def initsoperationtoturnotpononetimepasswordforcurrentuser(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/otp"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = initsoperationtoturnotpononetimepasswordforcurrentuser(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    13: `import requests
+import json
+from typing import Dict, Any
+
+
+def initsoperationtoturnotpoffonetimepassword2faforcurrentuserbyusingemailandotp(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/otp"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'DELETE',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'email': 'example',
+    }
+    
+    try:
+        result = initsoperationtoturnotpoffonetimepassword2faforcurrentuserbyusingemailandotp(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    14: `import requests
+import json
+from typing import Dict, Any
+
+
+def initsoperationtochangecurrentuserpasswordoperationisvalidonlyforregularandfirebaseaccountsitsnoneedtosetoldnewpasswordforfirebaseaccount(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/password"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = initsoperationtochangecurrentuserpasswordoperationisvalidonlyforregularandfirebaseaccountsitsnoneedtosetoldnewpasswordforfirebaseaccount(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    15: `import requests
+import json
+from typing import Dict, Any
+
+
+def finishesrestorationofcurrentuserpassword(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/password/restore"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = finishesrestorationofcurrentuserpassword(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    16: `import requests
+import json
+from typing import Dict, Any
+
+
+def initsrestorationofcurrentuserpassword(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/password/restore"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = initsrestorationofcurrentuserpassword(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    17: `import requests
+import json
+from typing import Dict, Any
+
+
+def checkrestorationcode(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/password/restore/{code}"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'code': 'example',
+    }
+    
+    try:
+        result = checkrestorationcode(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    18: `import requests
+import json
+from typing import Dict, Any
+
+
+def getprofilereturnsinformationaboutcurrentuser(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/profile"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = getprofilereturnsinformationaboutcurrentuser(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    19: `import requests
+import json
+from typing import Dict, Any
+
+
+def setprofilesetssomefieldsinprofileofcurrentuserallfieldsareoptional(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/profile"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = setprofilesetssomefieldsinprofileofcurrentuserallfieldsareoptional(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    20: `import requests
+import json
+from typing import Dict, Any
+
+
+def checkpossibilitytoremoveaccount(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/remove"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = checkpossibilitytoremoveaccount(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    21: `import requests
+import json
+from typing import Dict, Any
+
+
+def initsoperationtoremoveaccountreasonmaximumlengthis200(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/remove"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = initsoperationtoremoveaccountreasonmaximumlengthis200(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    22: `import requests
+import json
+from typing import Dict, Any
+
+
+def confirmloginoperation(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/sign-in"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = confirmloginoperation(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    23: `import requests
+import json
+from typing import Dict, Any
+
+
+def loginsuserandreturnpairoftokensorloginoperationwithhints(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/sign-in"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = loginsuserandreturnpairoftokensorloginoperationwithhints(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    24: `import requests
+import json
+from typing import Dict, Any
+
+
+def signinbyfirebaserequest(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/sign-in/firebase"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = signinbyfirebaserequest(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    25: `import requests
+import json
+from typing import Dict, Any
+
+
+def signinbygoogleoauth2request(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/sign-in/google"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = signinbygoogleoauth2request(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    26: `import requests
+import json
+from typing import Dict, Any
+
+
+def resendemailphonecodesforsigninprocess(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """Only one of flags should be set."""
+    url = f"{base_url}/auth/sign-in/resend"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = resendemailphonecodesforsigninprocess(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    27: `import requests
+import json
+from typing import Dict, Any
+
+
+def logoutremoveusersessionsandmakesthetokeninvalid(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/auth/sign-out"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = logoutremoveusersessionsandmakesthetokeninvalid(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    28: `import requests
+import json
+from typing import Dict, Any
+
+
+def registrationsaveuserindatabaseandsendverificationurltoemail(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/sign-up"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = registrationsaveuserindatabaseandsendverificationurltoemail(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    29: `import requests
+import json
+from typing import Dict, Any
+
+
+def signupbygoogleoauth2request(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/auth/sign-up/google"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = signupbygoogleoauth2request(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    30: `import requests
+import json
+from typing import Dict, Any
+
+
+def setprofilesetsprofileflagsofcurrentuser(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/user/flags"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = setprofilesetsprofileflagsofcurrentuser(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`
+  }
+}
 </script>
 
 <style scoped>

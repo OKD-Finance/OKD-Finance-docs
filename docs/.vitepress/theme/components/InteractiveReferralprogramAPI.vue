@@ -1859,7 +1859,2007 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   }
 }
 
-[object Object]
+const codeExamples = {
+  curl: {
+    1: `curl -X GET "https://develop.okd.finance/api/referral" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"sortBy":"example","limit":"example","offset":"example"}'`,
+    2: `curl -X POST "https://develop.okd.finance/api/referral" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    3: `curl -X GET "https://develop.okd.finance/api/referral/export" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"from":"example","to":"example"}'`,
+    4: `curl -X GET "https://develop.okd.finance/api/referral/fees" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"sortBy":"example","limit":"example","offset":"example"}'`,
+    5: `curl -X GET "https://develop.okd.finance/api/referral/link/{link}" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"link":"example"}'`,
+    6: `curl -X GET "https://develop.okd.finance/api/referral/percents" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    7: `curl -X GET "https://develop.okd.finance/api/referral/program" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`,
+    8: `curl -X GET "https://develop.okd.finance/api/referral/{id}" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"id":"example","limit":"example","offset":"example"}'`,
+    9: `curl -X PUT "https://develop.okd.finance/api/referral/{id}" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"id":"example"}'`
+  },
+  go: {
+    1: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetlistofreferrallinkRequest struct {
+    SortBy string \`json:"sortBy"\`\n    Limit string \`json:"limit"\`\n    Offset string \`json:"offset"\`
+}
+
+func getlistofreferrallink() error {
+    url := "https://develop.okd.finance/api/referral"
+    
+    requestData := GetlistofreferrallinkRequest{
+        SortBy: "example",\n        Limit: "example",\n        Offset: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getlistofreferrallink(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    2: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type AddreferrallinkRequest struct {
+
+}
+
+func addreferrallink() error {
+    url := "https://develop.okd.finance/api/referral"
+    
+    requestData := AddreferrallinkRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := addreferrallink(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    3: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type ExporthistoryoffeestoxlsxfileRequest struct {
+    From string \`json:"from"\`\n    To string \`json:"to"\`
+}
+
+func exporthistoryoffeestoxlsxfile() error {
+    url := "https://develop.okd.finance/api/referral/export"
+    
+    requestData := ExporthistoryoffeestoxlsxfileRequest{
+        From: "example",\n        To: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := exporthistoryoffeestoxlsxfile(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    4: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GethistoryoffeesRequest struct {
+    SortBy string \`json:"sortBy"\`\n    Limit string \`json:"limit"\`\n    Offset string \`json:"offset"\`
+}
+
+func gethistoryoffees() error {
+    url := "https://develop.okd.finance/api/referral/fees"
+    
+    requestData := GethistoryoffeesRequest{
+        SortBy: "example",\n        Limit: "example",\n        Offset: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := gethistoryoffees(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    5: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetpublicattributesofreferrallinkRequest struct {
+    Link string \`json:"link"\`
+}
+
+func getpublicattributesofreferrallink() error {
+    url := "https://develop.okd.finance/api/referral/link/{link}"
+    
+    requestData := GetpublicattributesofreferrallinkRequest{
+        Link: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getpublicattributesofreferrallink(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    6: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetcurrentpercentsofreferralprogramRequest struct {
+
+}
+
+func getcurrentpercentsofreferralprogram() error {
+    url := "https://develop.okd.finance/api/referral/percents"
+    
+    requestData := GetcurrentpercentsofreferralprogramRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getcurrentpercentsofreferralprogram(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    7: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetheaderofreferralprogramRequest struct {
+
+}
+
+func getheaderofreferralprogram() error {
+    url := "https://develop.okd.finance/api/referral/program"
+    
+    requestData := GetheaderofreferralprogramRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getheaderofreferralprogram(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    8: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetdetailsofreferrallinkRequest struct {
+    Id string \`json:"id"\`\n    Limit string \`json:"limit"\`\n    Offset string \`json:"offset"\`
+}
+
+func getdetailsofreferrallink() error {
+    url := "https://develop.okd.finance/api/referral/{id}"
+    
+    requestData := GetdetailsofreferrallinkRequest{
+        Id: "example",\n        Limit: "example",\n        Offset: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getdetailsofreferrallink(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    9: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type SetdefaultreferrallinkRequest struct {
+    Id string \`json:"id"\`
+}
+
+func setdefaultreferrallink() error {
+    url := "https://develop.okd.finance/api/referral/{id}"
+    
+    requestData := SetdefaultreferrallinkRequest{
+        Id: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("PUT", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := setdefaultreferrallink(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`
+  },
+  typescript: {
+    1: `interface GetlistofreferrallinkRequest {
+  sortBy: string;\n  limit: string;\n  offset: string;
+}
+
+async function getlistofreferrallink(
+  baseUrl: string,
+  accessToken: string,
+  data: GetlistofreferrallinkRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/referral\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getlistofreferrallink(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        sortBy: "example",\n        limit: "example",\n        offset: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    2: `interface AddreferrallinkRequest {
+
+}
+
+async function addreferrallink(
+  baseUrl: string,
+  accessToken: string,
+  data: AddreferrallinkRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/referral\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await addreferrallink(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    3: `interface ExporthistoryoffeestoxlsxfileRequest {
+  from: string;\n  to: string;
+}
+
+async function exporthistoryoffeestoxlsxfile(
+  baseUrl: string,
+  accessToken: string,
+  data: ExporthistoryoffeestoxlsxfileRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/referral/export\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await exporthistoryoffeestoxlsxfile(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        from: "example",\n        to: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    4: `interface GethistoryoffeesRequest {
+  sortBy: string;\n  limit: string;\n  offset: string;
+}
+
+async function gethistoryoffees(
+  baseUrl: string,
+  accessToken: string,
+  data: GethistoryoffeesRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/referral/fees\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await gethistoryoffees(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        sortBy: "example",\n        limit: "example",\n        offset: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    5: `interface GetpublicattributesofreferrallinkRequest {
+  link: string;
+}
+
+async function getpublicattributesofreferrallink(
+  baseUrl: string,
+  accessToken: string,
+  data: GetpublicattributesofreferrallinkRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/referral/link/{link}\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getpublicattributesofreferrallink(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        link: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    6: `interface GetcurrentpercentsofreferralprogramRequest {
+
+}
+
+async function getcurrentpercentsofreferralprogram(
+  baseUrl: string,
+  accessToken: string,
+  data: GetcurrentpercentsofreferralprogramRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/referral/percents\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getcurrentpercentsofreferralprogram(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    7: `interface GetheaderofreferralprogramRequest {
+
+}
+
+async function getheaderofreferralprogram(
+  baseUrl: string,
+  accessToken: string,
+  data: GetheaderofreferralprogramRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/referral/program\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getheaderofreferralprogram(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    8: `interface GetdetailsofreferrallinkRequest {
+  id: string;\n  limit: string;\n  offset: string;
+}
+
+async function getdetailsofreferrallink(
+  baseUrl: string,
+  accessToken: string,
+  data: GetdetailsofreferrallinkRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/referral/{id}\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getdetailsofreferrallink(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        id: "example",\n        limit: "example",\n        offset: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    9: `interface SetdefaultreferrallinkRequest {
+  id: string;
+}
+
+async function setdefaultreferrallink(
+  baseUrl: string,
+  accessToken: string,
+  data: SetdefaultreferrallinkRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/referral/{id}\`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await setdefaultreferrallink(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        id: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`
+  },
+  php: {
+    1: `<?php
+
+function getlistofreferrallink($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/referral';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'sortBy' => 'example',\n        'limit' => 'example',\n        'offset' => 'example',
+    ];
+
+    $result = getlistofreferrallink(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    2: `<?php
+
+function addreferrallink($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/referral';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = addreferrallink(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    3: `<?php
+
+function exporthistoryoffeestoxlsxfile($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/referral/export';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'from' => 'example',\n        'to' => 'example',
+    ];
+
+    $result = exporthistoryoffeestoxlsxfile(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    4: `<?php
+
+function gethistoryoffees($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/referral/fees';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'sortBy' => 'example',\n        'limit' => 'example',\n        'offset' => 'example',
+    ];
+
+    $result = gethistoryoffees(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    5: `<?php
+
+function getpublicattributesofreferrallink($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/referral/link/{link}';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'link' => 'example',
+    ];
+
+    $result = getpublicattributesofreferrallink(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    6: `<?php
+
+function getcurrentpercentsofreferralprogram($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/referral/percents';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = getcurrentpercentsofreferralprogram(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    7: `<?php
+
+function getheaderofreferralprogram($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/referral/program';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = getheaderofreferralprogram(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    8: `<?php
+
+function getdetailsofreferrallink($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/referral/{id}';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'id' => 'example',\n        'limit' => 'example',\n        'offset' => 'example',
+    ];
+
+    $result = getdetailsofreferrallink(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    9: `<?php
+
+function setdefaultreferrallink($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/referral/{id}';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'id' => 'example',
+    ];
+
+    $result = setdefaultreferrallink(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`
+  },
+  python: {
+    1: `import requests
+import json
+from typing import Dict, Any
+
+
+def getlistofreferrallink(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/referral"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'sortBy': 'example',\n        'limit': 'example',\n        'offset': 'example',
+    }
+    
+    try:
+        result = getlistofreferrallink(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    2: `import requests
+import json
+from typing import Dict, Any
+
+
+def addreferrallink(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/referral"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'POST',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = addreferrallink(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    3: `import requests
+import json
+from typing import Dict, Any
+
+
+def exporthistoryoffeestoxlsxfile(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/referral/export"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'from': 'example',\n        'to': 'example',
+    }
+    
+    try:
+        result = exporthistoryoffeestoxlsxfile(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    4: `import requests
+import json
+from typing import Dict, Any
+
+
+def gethistoryoffees(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/referral/fees"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'sortBy': 'example',\n        'limit': 'example',\n        'offset': 'example',
+    }
+    
+    try:
+        result = gethistoryoffees(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    5: `import requests
+import json
+from typing import Dict, Any
+
+
+def getpublicattributesofreferrallink(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/referral/link/{link}"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'link': 'example',
+    }
+    
+    try:
+        result = getpublicattributesofreferrallink(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    6: `import requests
+import json
+from typing import Dict, Any
+
+
+def getcurrentpercentsofreferralprogram(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/referral/percents"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = getcurrentpercentsofreferralprogram(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    7: `import requests
+import json
+from typing import Dict, Any
+
+
+def getheaderofreferralprogram(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/referral/program"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = getheaderofreferralprogram(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    8: `import requests
+import json
+from typing import Dict, Any
+
+
+def getdetailsofreferrallink(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/referral/{id}"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'id': 'example',\n        'limit': 'example',\n        'offset': 'example',
+    }
+    
+    try:
+        result = getdetailsofreferrallink(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    9: `import requests
+import json
+from typing import Dict, Any
+
+
+def setdefaultreferrallink(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """! Need access token in bearer token authorization"""
+    url = f"{base_url}/referral/{id}"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'PUT',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'id': 'example',
+    }
+    
+    try:
+        result = setdefaultreferrallink(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`
+  }
+}
 </script>
 
 <style scoped>

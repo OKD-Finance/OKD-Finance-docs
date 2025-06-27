@@ -973,7 +973,902 @@ const copyCodeToClipboard = (lang, endpointNum) => {
   }
 }
 
-[object Object]
+const codeExamples = {
+  curl: {
+    1: `curl -X GET "https://develop.okd.finance/api/datasource/coin-info" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"asset_id":"example","source_id":"example"}'`,
+    2: `curl -X GET "https://develop.okd.finance/api/datasource/prices/assets" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"datasource":"example","search":"example","sortBy":"example","fullness":"example","limit":"example","offset":"example"}'`,
+    3: `curl -X GET "https://develop.okd.finance/api/datasource/prices/history" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{"asset_id":"example","source_id":"example","interval":"example","from":"example","to":"example"}'`,
+    4: `curl -X GET "https://develop.okd.finance/api/datasource/prices/sources" \\
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -H "Fingerprint: YOUR_FINGERPRINT" \\
+  -d '{}'`
+  },
+  go: {
+    1: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GETdatasourcecoininfoRequest struct {
+    Asset_id string \`json:"asset_id"\`\n    Source_id string \`json:"source_id"\`
+}
+
+func getdatasourcecoininfo() error {
+    url := "https://develop.okd.finance/api/datasource/coin-info"
+    
+    requestData := GETdatasourcecoininfoRequest{
+        Asset_id: "example",\n        Source_id: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getdatasourcecoininfo(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    2: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetdatasourceassetspriceRequest struct {
+    Datasource string \`json:"datasource"\`\n    Search string \`json:"search"\`\n    SortBy string \`json:"sortBy"\`\n    Fullness string \`json:"fullness"\`\n    Limit string \`json:"limit"\`\n    Offset string \`json:"offset"\`
+}
+
+func getdatasourceassetsprice() error {
+    url := "https://develop.okd.finance/api/datasource/prices/assets"
+    
+    requestData := GetdatasourceassetspriceRequest{
+        Datasource: "example",\n        Search: "example",\n        SortBy: "example",\n        Fullness: "example",\n        Limit: "example",\n        Offset: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getdatasourceassetsprice(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    3: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GETdatasourcepriceshistoryRequest struct {
+    Asset_id string \`json:"asset_id"\`\n    Source_id string \`json:"source_id"\`\n    Interval string \`json:"interval"\`\n    From string \`json:"from"\`\n    To string \`json:"to"\`
+}
+
+func getdatasourcepriceshistory() error {
+    url := "https://develop.okd.finance/api/datasource/prices/history"
+    
+    requestData := GETdatasourcepriceshistoryRequest{
+        Asset_id: "example",\n        Source_id: "example",\n        Interval: "example",\n        From: "example",\n        To: "example",
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getdatasourcepriceshistory(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`,
+    4: `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+type GetdatasourcelistRequest struct {
+
+}
+
+func getdatasourcelist() error {
+    url := "https://develop.okd.finance/api/datasource/prices/sources"
+    
+    requestData := GetdatasourcelistRequest{
+
+    }
+    
+    jsonData, err := json.Marshal(requestData)
+    if err != nil {
+        return err
+    }
+    
+    req, err := http.NewRequest("GET", url, bytes.NewBuffer(jsonData))
+    if err != nil {
+        return err
+    }
+    
+    req.Header.Set("Authorization", "Bearer YOUR_ACCESS_TOKEN")
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Fingerprint", "YOUR_FINGERPRINT")
+    
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer resp.Body.Close()
+    
+    body, err := io.ReadAll(resp.Body)
+    if err != nil {
+        return err
+    }
+    
+    fmt.Printf("Response: %s\\n", string(body))
+    return nil
+}
+
+func main() {
+    if err := getdatasourcelist(); err != nil {
+        fmt.Printf("Error: %v\\n", err)
+    }
+}`
+  },
+  typescript: {
+    1: `interface GETdatasourcecoininfoRequest {
+  asset_id: string;\n  source_id: string;
+}
+
+async function getdatasourcecoininfo(
+  baseUrl: string,
+  accessToken: string,
+  data: GETdatasourcecoininfoRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/datasource/coin-info\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getdatasourcecoininfo(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        asset_id: "example",\n        source_id: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    2: `interface GetdatasourceassetspriceRequest {
+  datasource: string;\n  search: string;\n  sortBy: string;\n  fullness: string;\n  limit: string;\n  offset: string;
+}
+
+async function getdatasourceassetsprice(
+  baseUrl: string,
+  accessToken: string,
+  data: GetdatasourceassetspriceRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/datasource/prices/assets\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getdatasourceassetsprice(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        datasource: "example",\n        search: "example",\n        sortBy: "example",\n        fullness: "example",\n        limit: "example",\n        offset: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    3: `interface GETdatasourcepriceshistoryRequest {
+  asset_id: string;\n  source_id: string;\n  interval: string;\n  from: string;\n  to: string;
+}
+
+async function getdatasourcepriceshistory(
+  baseUrl: string,
+  accessToken: string,
+  data: GETdatasourcepriceshistoryRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/datasource/prices/history\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getdatasourcepriceshistory(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+        asset_id: "example",\n        source_id: "example",\n        interval: "example",\n        from: "example",\n        to: "example",
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`,
+    4: `interface GetdatasourcelistRequest {
+
+}
+
+async function getdatasourcelist(
+  baseUrl: string,
+  accessToken: string,
+  data: GetdatasourcelistRequest
+): Promise<any> {
+  const response = await fetch(\`\${baseUrl}/datasource/prices/sources\`, {
+    method: 'GET',
+    headers: {
+      'Authorization': \`Bearer \${accessToken}\`,
+      'Content-Type': 'application/json',
+      'Fingerprint': 'YOUR_FINGERPRINT'
+    },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    throw new Error(\`HTTP error! status: \${response.status}\`);
+  }
+
+  return await response.json();
+}
+
+// Usage example
+async function main() {
+  try {
+    const result = await getdatasourcelist(
+      'https://develop.okd.finance/api',
+      'YOUR_ACCESS_TOKEN',
+      {
+
+      }
+    );
+    console.log('Success:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+main();`
+  },
+  php: {
+    1: `<?php
+
+function getdatasourcecoininfo($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/datasource/coin-info';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'asset_id' => 'example',\n        'source_id' => 'example',
+    ];
+
+    $result = getdatasourcecoininfo(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    2: `<?php
+
+function getdatasourceassetsprice($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/datasource/prices/assets';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'datasource' => 'example',\n        'search' => 'example',\n        'sortBy' => 'example',\n        'fullness' => 'example',\n        'limit' => 'example',\n        'offset' => 'example',
+    ];
+
+    $result = getdatasourceassetsprice(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    3: `<?php
+
+function getdatasourcepriceshistory($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/datasource/prices/history';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+        'asset_id' => 'example',\n        'source_id' => 'example',\n        'interval' => 'example',\n        'from' => 'example',\n        'to' => 'example',
+    ];
+
+    $result = getdatasourcepriceshistory(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`,
+    4: `<?php
+
+function getdatasourcelist($baseUrl, $accessToken, $data) {
+    $url = $baseUrl . '/datasource/prices/sources';
+    
+          $headers = [
+          'Authorization: Bearer ' . $accessToken,
+          'Content-Type: application/json',
+          'Fingerprint: YOUR_FINGERPRINT'
+      ];
+
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_SSL_VERIFYPEER => true
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
+    curl_close($ch);
+
+    if ($response === false || !empty($error)) {
+        throw new Exception("cURL Error: " . $error);
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Invalid JSON response");
+    }
+
+    if ($httpCode !== 200) {
+        $message = $data['message'] ?? 'Unknown API error';
+        throw new Exception("API Error: " . $message);
+    }
+
+    return $data;
+}
+
+try {
+    $data = [
+
+    ];
+
+    $result = getdatasourcelist(
+        'https://develop.okd.finance/api',
+        'YOUR_ACCESS_TOKEN',
+        $data
+    );
+
+    echo "Success: " . json_encode($result) . "\\n";
+
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . "\\n";
+}
+
+?>`
+  },
+  python: {
+    1: `import requests
+import json
+from typing import Dict, Any
+
+
+def getdatasourcecoininfo(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """get coin info by asset id and source id"""
+    url = f"{base_url}/datasource/coin-info"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'asset_id': 'example',\n        'source_id': 'example',
+    }
+    
+    try:
+        result = getdatasourcecoininfo(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    2: `import requests
+import json
+from typing import Dict, Any
+
+
+def getdatasourceassetsprice(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/datasource/prices/assets"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'datasource': 'example',\n        'search': 'example',\n        'sortBy': 'example',\n        'fullness': 'example',\n        'limit': 'example',\n        'offset': 'example',
+    }
+    
+    try:
+        result = getdatasourceassetsprice(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    3: `import requests
+import json
+from typing import Dict, Any
+
+
+def getdatasourcepriceshistory(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """get datasource prices history by asset id, coin id, source id and interval endpoint handler"""
+    url = f"{base_url}/datasource/prices/history"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+        'asset_id': 'example',\n        'source_id': 'example',\n        'interval': 'example',\n        'from': 'example',\n        'to': 'example',
+    }
+    
+    try:
+        result = getdatasourcepriceshistory(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`,
+    4: `import requests
+import json
+from typing import Dict, Any
+
+
+def getdatasourcelist(
+    base_url: str,
+    access_token: str,
+    data: Dict[str, Any]
+) -> Dict[str, Any]:
+    """No description available"""
+    url = f"{base_url}/datasource/prices/sources"
+    
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json',
+        'Fingerprint': 'YOUR_FINGERPRINT'
+    }
+    
+    try:
+        response = requests.request(
+            'GET',
+            url,
+            headers=headers,
+            json=data,
+            timeout=30
+        )
+        
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Request failed: {e}")
+
+
+def main():
+    data = {
+
+    }
+    
+    try:
+        result = getdatasourcelist(
+            'https://develop.okd.finance/api',
+            'YOUR_ACCESS_TOKEN',
+            data
+        )
+        
+        print("Success:", json.dumps(result, indent=2))
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()`
+  }
+}
 </script>
 
 <style scoped>
