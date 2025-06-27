@@ -356,10 +356,10 @@ POST /bybit/position/close
 - [OKD Finance API.postman_collection.json](./postman/OKD-Finance-API.postman_collection.json)
 
 ### Примеры кода
-- [JavaScript/Node.js](/ru/examples/javascript)
-- [Python](/ru/examples/python)
-- [Go](/ru/examples/go)
-- [C#](/ru/examples/csharp)
+- [Базовое использование](/ru/examples/basic-usage)
+- [Интеграция с ByBit](/ru/examples/bybit-integration)
+- [Торговый процесс](/ru/examples/trading-flow)
+- [Webhooks](/ru/examples/webhooks)
 
 ## Поддержка
 
