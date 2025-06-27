@@ -110,7 +110,55 @@ export default defineConfig({
                         { text: 'Order Routing', link: '/en/bybit/order-routing' }
                     ]
                 }
-            ]
+            ],
+            '/ru/api/': [
+                {
+                    text: 'Справочник API',
+                    collapsed: false,
+                    items: [
+                        { text: 'Обзор', link: '/ru/api/overview' },
+                        { text: 'KYC API', link: '/ru/api/kyc' },
+                        { text: 'API Аутентификации', link: '/ru/api/authentication' },
+                        { text: 'WebSocket Подписки', link: '/ru/api/websocket-subscriptions' },
+                        { text: 'Конфигурация Биржи', link: '/ru/api/exchange-configuration' },
+                        { text: 'API Источника Данных', link: '/ru/api/datasource' },
+                        { text: 'API Ошибок', link: '/ru/api/errors' },
+                        { text: 'Управляемый API', link: '/ru/api/managed' },
+                        { text: 'OKD API', link: '/ru/api/okd' },
+                        { text: 'API Операций Пользователя', link: '/ru/api/user-operations' },
+                        { text: 'API Реферальной Программы', link: '/ru/api/referral-program' },
+                        { text: 'Spot API', link: '/ru/api/spot' },
+                        { text: 'ByBit REST Эндпоинты', link: '/ru/api/bybit-rest-endpoints' },
+                        { text: 'API Кошелька', link: '/ru/api/wallet' },
+                        { text: 'API Пользователя', link: '/ru/api/users' },
+                        { text: 'API Торговли', link: '/ru/api/trading' }
+                    ]
+                }
+            ],
+            '/zh/api/': [
+                {
+                    text: 'API 参考',
+                    collapsed: false,
+                    items: [
+                        { text: '概述', link: '/zh/api/overview' },
+                        { text: 'KYC API', link: '/zh/api/kyc' },
+                        { text: '身份验证 API', link: '/zh/api/authentication' },
+                        { text: 'WebSocket 订阅', link: '/zh/api/websocket-subscriptions' },
+                        { text: '交易所配置', link: '/zh/api/exchange-configuration' },
+                        { text: '数据源 API', link: '/zh/api/datasource' },
+                        { text: '错误 API', link: '/zh/api/errors' },
+                        { text: '托管 API', link: '/zh/api/managed' },
+                        { text: 'OKD API', link: '/zh/api/okd' },
+                        { text: '用户操作 API', link: '/zh/api/user-operations' },
+                        { text: '推荐程序 API', link: '/zh/api/referral-program' },
+                        { text: '现货 API', link: '/zh/api/spot' },
+                        { text: 'ByBit REST 端点', link: '/zh/api/bybit-rest-endpoints' },
+                        { text: '钱包 API', link: '/zh/api/wallet' },
+                        { text: '用户 API', link: '/zh/api/users' },
+                        { text: '交易 API', link: '/zh/api/trading' }
+                    ]
+                }
+            ],
         },
 
         socialLinks: [

@@ -20,7 +20,10 @@
     "docs:dev-with-update": "npm run swagger:update && npm run docs:dev",
     "docs:full-build": "npm run swagger:update && npm run docs:build",
     "validate:navigation": "node navigation-validator.cjs validate",
-    "fix:navigation": "node navigation-validator.cjs fix"
+    "fix:navigation": "node navigation-validator.cjs fix",
+    "translate:api": "node api-translator.cjs translate",
+    "translate:stats": "node api-translator.cjs stats",
+    "translate:config": "node api-translator.cjs config"
   },
   "keywords": [
     "crypto",
