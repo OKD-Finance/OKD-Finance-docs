@@ -194,33 +194,99 @@
     }
 }
 
-/* Языковое меню поверх всех модалок */
-.VPNavBar .VPNavBarExtra,
-.VPNavBar .VPNavBarMenuGroup,
-.VPNavBar .VPNavBarMenuLink,
-.VPNavBar .VPFlyout,
-.VPNavBar .VPMenu,
-.VPNavBar .VPMenuGroup,
-.VPNavBar .VPMenuLink,
-.VPNavBar .VPLocalNav,
-.VPNavBar .VPNavBarTitle,
-.VPNavBar .VPNavBarTranslations,
-.VPNavBarTranslations {
+/* Языковое меню поверх всех модалок - агрессивные правила */
+.VPNav,
+.VPNavBar,
+.VPNavBarHamburger,
+.VPNavBarAppearance,
+.VPNavBarSocialLinks,
+.VPNavBarExtra,
+.VPNavBarMenuGroup,
+.VPNavBarMenuLink,
+.VPNavBarTranslations,
+.VPFlyout,
+.VPMenu,
+.VPMenuGroup,
+.VPMenuLink,
+.VPLocalNav,
+.VPNavBarTitle {
     z-index: 9999 !important;
+}
+
+/* Все элементы с классами содержащими flyout или menu */
+[class*="flyout"],
+[class*="menu"],
+[class*="dropdown"],
+[class*="translations"] {
+    z-index: 10000 !important;
+}
+
+/* Языковая модалка - максимальный приоритет */
+.VPNavBarTranslations *,
+.VPFlyout *,
+.VPMenu * {
+    z-index: 10001 !important;
+}
+
+/* Универсальное правило для всех dropdown */
+div[style*="position: absolute"],
+div[style*="position: fixed"] {
+    z-index: 10002 !important;
+}
+
+/* Экстремальные правила для языкового меню */
+.VPNavBar * {
+    z-index: 9999 !important;
+}
+
+/* Все что связано с переводами */
+*[class*="translation"],
+*[class*="Translation"],
+*[class*="locale"],
+*[class*="Locale"],
+*[class*="lang"],
+*[class*="Lang"] {
+    z-index: 10000 !important;
     position: relative !important;
 }
 
-/* Языковая модалка */
-.VPNavBarTranslations .VPFlyout,
-.VPNavBarTranslations .VPMenu,
-.VPFlyout .VPMenu {
-    z-index: 10000 !important;
-    position: absolute !important;
+/* Абсолютно все dropdown элементы */
+*[role="menu"],
+*[role="menuitem"],
+*[role="button"][aria-expanded],
+.dropdown,
+.dropdown-menu,
+.menu-dropdown {
+    z-index: 10003 !important;
 }
 
-/* Dropdown меню языков */
-.VPFlyout .VPMenu .VPMenuGroup,
-.VPFlyout .VPMenu .VPMenuLink,
-.VPMenu .items {
-    z-index: 10001 !important;
+/* Специальные правила для aria-expanded элементов */
+*[aria-expanded="true"],
+*[aria-expanded="false"] {
+    z-index: 10005 !important;
+    position: relative !important;
 }
+
+/* Когда меню развернуто */
+*[aria-expanded="true"]+*,
+*[aria-expanded="true"]~*,
+*[aria-expanded="true"]>* {
+    z-index: 10006 !important;
+}
+
+/* Родительский элемент кнопки с aria-expanded */
+*:has(*[aria-expanded]) {
+    z-index: 10007 !important;
+    position: relative !important;
+}
+
+/* Последняя попытка - все элементы в правой части навигации */
+.VPNavBar>*:last-child,
+.VPNavBar>*:last-child *,
+.VPNavBarExtra,
+.VPNavBarExtra * {
+    z-index: 10004 !important;
+    pointer-events: auto !important;
+}
+
+/* JavaScript будет добавлен для принудительного исправления */
