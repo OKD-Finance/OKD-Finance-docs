@@ -3,114 +3,153 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
     title: 'API Documentation',
     description: 'Complete API documentation for OKD Finance platform',
+    base: '/okd-finance-docs_vitepress/',
 
     locales: {
         root: {
             label: 'English',
-            lang: 'en'
+            lang: 'en',
+            themeConfig: {
+                nav: [
+                    { text: 'Home', link: '/' },
+                    { text: 'Guide', link: '/guide/introduction' },
+                    { text: 'API Reference', link: '/api/overview' },
+                    { text: 'Examples', link: '/examples/basic-usage' }
+                ]
+            }
         },
         ru: {
             label: 'Русский',
-            lang: 'ru'
+            lang: 'ru',
+            themeConfig: {
+                nav: [
+                    { text: 'Главная', link: '/ru/' },
+                    { text: 'Руководство', link: '/ru/guide/introduction' },
+                    { text: 'Справочник API', link: '/ru/api/overview' },
+                    { text: 'Примеры', link: '/ru/examples/basic-usage' }
+                ]
+            }
         },
         zh: {
             label: '中文',
-            lang: 'zh'
+            lang: 'zh',
+            themeConfig: {
+                nav: [
+                    { text: '首页', link: '/zh/' },
+                    { text: '指南', link: '/zh/guide/introduction' },
+                    { text: 'API 参考', link: '/zh/api/overview' },
+                    { text: '示例', link: '/zh/examples/basic-usage' }
+                ]
+            }
         }
     },
 
     themeConfig: {
         logo: '/logo.svg',
 
-        nav: [
-            { text: 'Home', link: '/' },
-            { text: 'Guide', link: '/en/guide/introduction' },
-            { text: 'API Reference', link: '/en/api/overview' },
-            { text: 'Examples', link: '/en/examples/basic-usage' }
-        ],
-
         sidebar: {
-            '/en/guide/': [
+            '/guide/': [
                 {
                     text: 'Getting Started',
                     items: [
-                        { text: 'Introduction', link: '/en/guide/introduction' },
-                        { text: 'Quick Start', link: '/en/guide/quick-start' },
-                        { text: 'Authentication', link: '/en/guide/authentication' },
-                        { text: 'Demo API', link: '/en/guide/demo-api' }
+                        { text: 'Introduction', link: '/guide/introduction' },
+                        { text: 'Quick Start', link: '/guide/quick-start' },
+                        { text: 'Authentication', link: '/guide/authentication' },
+                        { text: 'Demo API', link: '/guide/demo-api' }
                     ]
                 },
                 {
                     text: 'Core Concepts',
                     items: [
-                        { text: 'Architecture', link: '/en/guide/architecture' },
-                        { text: 'Trading System', link: '/en/guide/trading' },
-                        { text: 'Order Management', link: '/en/guide/orders' },
-                        { text: 'Wallet System', link: '/en/guide/wallets' }
+                        { text: 'Architecture', link: '/guide/architecture' },
+                        { text: 'Trading System', link: '/guide/trading' },
+                        { text: 'Order Management', link: '/guide/orders' },
+                        { text: 'Wallet System', link: '/guide/wallets' }
                     ]
                 }
             ],
 
-            '/en/api/': [
+            '/api/': [
                 {
                     text: 'API Reference',
                     collapsed: false,
                     items: [
-                        { text: 'Overview', link: '/en/api/overview' },
-                        { text: 'KYC API', link: '/en/api/kyc' },
-                        { text: 'Authentication API', link: '/en/api/authentication' },
-                        { text: 'Websocket Subscriptions', link: '/en/api/websocket-subscriptions' },
-                        { text: 'Exchange Configuration', link: '/en/api/exchange-configuration' },
-                        { text: 'Datasource API', link: '/en/api/datasource' },
-                        { text: 'Errors API', link: '/en/api/errors' },
-                        { text: 'Managed API', link: '/en/api/managed' },
-                        { text: 'OKD API', link: '/en/api/okd' },
-                        { text: 'User Operations API', link: '/en/api/user-operations' },
-                        { text: 'Referral Program API', link: '/en/api/referral-program' },
-                        { text: 'Spot API', link: '/en/api/spot' },
-                        { text: 'ByBit REST Endpoints', link: '/en/api/bybit-rest-endpoints' },
-                        { text: 'Wallet API', link: '/en/api/wallet' },
-                        { text: 'User API', link: '/en/api/users' },
-                        { text: 'Trading API', link: '/en/api/trading' }
+                        { text: 'Overview', link: '/api/overview' },
+                        { text: 'KYC API', link: '/api/kyc' },
+                        { text: 'Authentication API', link: '/api/authentication' },
+                        { text: 'Websocket Subscriptions', link: '/api/websocket-subscriptions' },
+                        { text: 'Exchange Configuration', link: '/api/exchange-configuration' },
+                        { text: 'Datasource API', link: '/api/datasource' },
+                        { text: 'Errors API', link: '/api/errors' },
+                        { text: 'Managed API', link: '/api/managed' },
+                        { text: 'OKD API', link: '/api/okd' },
+                        { text: 'User Operations API', link: '/api/user-operations' },
+                        { text: 'Referral Program API', link: '/api/referral-program' },
+                        { text: 'Spot API', link: '/api/spot' },
+                        { text: 'ByBit REST Endpoints', link: '/api/bybit-rest-endpoints' },
+                        { text: 'Wallet API', link: '/api/wallet' },
+                        { text: 'User API', link: '/api/users' },
+                        { text: 'Trading API', link: '/api/trading' }
                     ]
                 }
             ],
 
-            '/en/examples/': [
+            '/examples/': [
                 {
                     text: 'Examples',
                     items: [
-                        { text: 'Basic Usage', link: '/en/examples/basic-usage' },
-                        { text: 'Trading Flow', link: '/en/examples/trading-flow' },
-                        { text: 'ByBit Integration', link: '/en/examples/bybit-integration' },
-                        { text: 'Webhooks', link: '/en/examples/webhooks' }
+                        { text: 'Basic Usage', link: '/examples/basic-usage' },
+                        { text: 'Trading Flow', link: '/examples/trading-flow' },
+                        { text: 'ByBit Integration', link: '/examples/bybit-integration' },
+                        { text: 'Webhooks', link: '/examples/webhooks' }
                     ]
                 }
             ],
 
-            '/en/trading/': [
+            '/trading/': [
                 {
                     text: 'Trading',
                     items: [
-                        { text: 'Overview', link: '/en/trading/overview' },
-                        { text: 'Market Data', link: '/en/trading/market-data' },
-                        { text: 'Orders', link: '/en/trading/orders' },
-                        { text: 'Portfolio', link: '/en/trading/portfolio' }
+                        { text: 'Overview', link: '/trading/overview' },
+                        { text: 'Market Data', link: '/trading/market-data' },
+                        { text: 'Orders', link: '/trading/orders' },
+                        { text: 'Portfolio', link: '/trading/portfolio' }
                     ]
                 }
             ],
 
-            '/en/bybit/': [
+            '/bybit/': [
                 {
                     text: 'ByBit Integration',
                     items: [
-                        { text: 'Overview', link: '/en/bybit/overview' },
-                        { text: 'Configuration', link: '/en/bybit/configuration' },
-                        { text: 'Market Data', link: '/en/bybit/market-data' },
-                        { text: 'Order Routing', link: '/en/bybit/order-routing' }
+                        { text: 'Overview', link: '/bybit/overview' },
+                        { text: 'Configuration', link: '/bybit/configuration' },
+                        { text: 'Market Data', link: '/bybit/market-data' },
+                        { text: 'Order Routing', link: '/bybit/order-routing' }
                     ]
                 }
             ],
+            '/ru/guide/': [
+                {
+                    text: 'Начало работы',
+                    items: [
+                        { text: 'Введение', link: '/ru/guide/introduction' },
+                        { text: 'Быстрый старт', link: '/ru/guide/quick-start' },
+                        { text: 'Аутентификация', link: '/ru/guide/authentication' },
+                        { text: 'Demo API', link: '/ru/guide/demo-api' }
+                    ]
+                },
+                {
+                    text: 'Основные концепции',
+                    items: [
+                        { text: 'Архитектура', link: '/ru/guide/architecture' },
+                        { text: 'Торговая система', link: '/ru/guide/trading' },
+                        { text: 'Управление заказами', link: '/ru/guide/orders' },
+                        { text: 'Система кошельков', link: '/ru/guide/wallets' }
+                    ]
+                }
+            ],
+
             '/ru/api/': [
                 {
                     text: 'Справочник API',
@@ -135,6 +174,64 @@ export default defineConfig({
                     ]
                 }
             ],
+
+            '/ru/examples/': [
+                {
+                    text: 'Примеры',
+                    items: [
+                        { text: 'Базовое использование', link: '/ru/examples/basic-usage' },
+                        { text: 'Торговый поток', link: '/ru/examples/trading-flow' },
+                        { text: 'Интеграция ByBit', link: '/ru/examples/bybit-integration' },
+                        { text: 'Вебхуки', link: '/ru/examples/webhooks' }
+                    ]
+                }
+            ],
+
+            '/ru/trading/': [
+                {
+                    text: 'Торговля',
+                    items: [
+                        { text: 'Обзор', link: '/ru/trading/overview' },
+                        { text: 'Рыночные данные', link: '/ru/trading/market-data' },
+                        { text: 'Заказы', link: '/ru/trading/orders' },
+                        { text: 'Портфель', link: '/ru/trading/portfolio' }
+                    ]
+                }
+            ],
+
+            '/ru/bybit/': [
+                {
+                    text: 'Интеграция ByBit',
+                    items: [
+                        { text: 'Обзор', link: '/ru/bybit/overview' },
+                        { text: 'Конфигурация', link: '/ru/bybit/configuration' },
+                        { text: 'Рыночные данные', link: '/ru/bybit/market-data' },
+                        { text: 'Маршрутизация заказов', link: '/ru/bybit/order-routing' }
+                    ]
+                }
+            ],
+
+            '/zh/guide/': [
+                {
+                    text: '入门指南',
+                    items: [
+                        { text: '介绍', link: '/zh/guide/introduction' },
+                        { text: '快速开始', link: '/zh/guide/quick-start' },
+                        { text: '身份验证', link: '/zh/guide/authentication' },
+                        { text: '演示 API', link: '/zh/guide/demo-api' }
+                    ]
+                },
+                {
+                    text: '核心概念',
+                    items: [
+                        { text: '架构', link: '/zh/guide/architecture' },
+                        { text: '交易系统', link: '/zh/guide/trading' },
+                        { text: '订单管理', link: '/zh/guide/orders' },
+                        { text: '钱包系统', link: '/zh/guide/wallets' }
+                    ]
+                }
+            ],
+
             '/zh/api/': [
                 {
                     text: 'API 参考',
@@ -156,6 +253,42 @@ export default defineConfig({
                         { text: '钱包 API', link: '/zh/api/wallet' },
                         { text: '用户 API', link: '/zh/api/users' },
                         { text: '交易 API', link: '/zh/api/trading' }
+                    ]
+                }
+            ],
+
+            '/zh/examples/': [
+                {
+                    text: '示例',
+                    items: [
+                        { text: '基本用法', link: '/zh/examples/basic-usage' },
+                        { text: '交易流程', link: '/zh/examples/trading-flow' },
+                        { text: 'ByBit 集成', link: '/zh/examples/bybit-integration' },
+                        { text: 'Webhooks', link: '/zh/examples/webhooks' }
+                    ]
+                }
+            ],
+
+            '/zh/trading/': [
+                {
+                    text: '交易',
+                    items: [
+                        { text: '概述', link: '/zh/trading/overview' },
+                        { text: '市场数据', link: '/zh/trading/market-data' },
+                        { text: '订单', link: '/zh/trading/orders' },
+                        { text: '投资组合', link: '/zh/trading/portfolio' }
+                    ]
+                }
+            ],
+
+            '/zh/bybit/': [
+                {
+                    text: 'ByBit 集成',
+                    items: [
+                        { text: '概述', link: '/zh/bybit/overview' },
+                        { text: '配置', link: '/zh/bybit/configuration' },
+                        { text: '市场数据', link: '/zh/bybit/market-data' },
+                        { text: '订单路由', link: '/zh/bybit/order-routing' }
                     ]
                 }
             ],
