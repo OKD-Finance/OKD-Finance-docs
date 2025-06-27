@@ -237,7 +237,7 @@ export default defineConfig({
                     text: 'API 参考',
                     collapsed: false,
                     items: [
-                        { text: '概述', link: '/zh/api/overview' },
+                        { text: '概述', link: '/api/overview' },
                         { text: 'KYC API', link: '/zh/api/kyc' },
                         { text: '身份验证 API', link: '/zh/api/authentication' },
                         { text: 'WebSocket 订阅', link: '/zh/api/websocket-subscriptions' },
