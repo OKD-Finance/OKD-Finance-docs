@@ -1,3 +1,6 @@
+/* eslint-env browser */
+/* eslint-disable no-console */
+/* global setInterval */
 // Временная система отладки навигации
 function debugNavigation() {
     if (typeof window === 'undefined') return;

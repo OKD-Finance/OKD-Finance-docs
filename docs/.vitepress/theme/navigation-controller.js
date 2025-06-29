@@ -1,3 +1,5 @@
+/* eslint-env browser */
+/* global Event, requestAnimationFrame, clearTimeout */
 // Система управления навигацией - дополнительная логика
 function initNavigationController() {
     // Проверить что мы в браузере
@@ -25,8 +27,8 @@ function initNavigationController() {
             if (saved) {
                 Object.assign(settings, JSON.parse(saved));
             }
-        } catch (error) {
-            // console.warn('Не удалось загрузить настройки навигации:', error);
+        } catch {
+            // console.warn('Не удалось загрузить настройки навигации:');
         }
 
         return settings;
@@ -36,8 +38,8 @@ function initNavigationController() {
     function saveSettings(settings) {
         try {
             localStorage.setItem('navigation-settings', JSON.stringify(settings));
-        } catch (error) {
-            // console.warn('Не удалось сохранить настройки навигации:', error);
+        } catch {
+            // console.warn('Не удалось сохранить настройки навигации:');
         }
     }
 

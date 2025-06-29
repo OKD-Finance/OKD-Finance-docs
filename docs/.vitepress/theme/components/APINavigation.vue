@@ -47,7 +47,7 @@ export default {
           const cache = await response.json()
           this.availableApis = this.formatApiList(cache.apis || {})
         }
-      } catch (error) {
+      } catch {
         // Если кеш недоступен, используем статический список
         this.availableApis = this.getStaticApiList()
       }

@@ -1,3 +1,6 @@
+/* eslint-env browser */
+/* eslint-disable no-console */
+/* global MutationObserver, setInterval */
 // Исправление языкового меню VitePress
 function fixLanguageMenu() {
     console.log('🔧 Запуск исправления языкового меню...');

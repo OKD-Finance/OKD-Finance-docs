@@ -53,13 +53,13 @@
             </h4>
             <ul v-if="section.expanded" class="floating-nav-links">
               <li v-for="link in section.links" :key="link.text">
-                <a 
-                  :href="link.link" 
-                  :class="{ 'active': isCurrentPage(link.link) }"
-                  @click="onLinkClick(link.link)"
-                >
-                  {{ link.text }}
-                </a>
+                                 <a 
+                   :href="link.link" 
+                   :class="{ 'active': isCurrentPage(link.link) }"
+                   @click="onLinkClick"
+                 >
+                   {{ link.text }}
+                 </a>
               </li>
             </ul>
           </div>
@@ -70,10 +70,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRouter, useRoute } from 'vitepress'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vitepress'
 
-const router = useRouter()
 const route = useRoute()
 
 // Состояние
@@ -165,7 +164,7 @@ const isCurrentPage = (link) => {
   return route.path.includes(link)
 }
 
-const onLinkClick = (link) => {
+const onLinkClick = () => {
   // Опционально скрыть навигацию после клика на мобильных устройствах
   if (window.innerWidth < 768) {
     isNavVisible.value = false
@@ -258,7 +257,7 @@ onMounted(() => {
       if (savedPosition) {
         try {
           floatingPosition.value = JSON.parse(savedPosition)
-        } catch (e) {
+        } catch {
           floatingPosition.value = { x: 20, y: 100 }
         }
       }

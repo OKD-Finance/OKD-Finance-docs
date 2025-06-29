@@ -1,3 +1,5 @@
+/* eslint-env browser */
+/* global MutationObserver, clearTimeout, setInterval */
 // Улучшения для поиска VitePress
 function enhanceSearch() {
     // Проверить что мы в браузере
@@ -73,10 +75,10 @@ function enhanceSearch() {
 
                 // Добавить обработчик ввода
                 let searchTimeout;
-                searchInput.addEventListener('input', (e) => {
+                searchInput.addEventListener('input', () => {
                     clearTimeout(searchTimeout);
                     searchTimeout = setTimeout(() => {
-                        // console.log('🔍 Поиск:', e.target.value);
+                        // console.log('🔍 Поиск:');
                     }, 300);
                 });
             }
