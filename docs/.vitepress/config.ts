@@ -304,7 +304,80 @@ export default defineConfig({
         },
 
         search: {
-            provider: 'local'
+            provider: 'local',
+            options: {
+                locales: {
+                    root: {
+                        translations: {
+                            button: {
+                                buttonText: 'Search',
+                                buttonAriaLabel: 'Search'
+                            },
+                            modal: {
+                                displayDetails: 'Display detailed list',
+                                resetButtonTitle: 'Reset search',
+                                backButtonTitle: 'Close search',
+                                noResultsText: 'No results for',
+                                footer: {
+                                    selectText: 'to select',
+                                    selectKeyAriaLabel: 'enter',
+                                    navigateText: 'to navigate',
+                                    navigateUpKeyAriaLabel: 'up arrow',
+                                    navigateDownKeyAriaLabel: 'down arrow',
+                                    closeText: 'to close',
+                                    closeKeyAriaLabel: 'escape'
+                                }
+                            }
+                        }
+                    },
+                    ru: {
+                        translations: {
+                            button: {
+                                buttonText: 'Поиск',
+                                buttonAriaLabel: 'Поиск'
+                            },
+                            modal: {
+                                displayDetails: 'Показать подробный список',
+                                resetButtonTitle: 'Сбросить поиск',
+                                backButtonTitle: 'Закрыть поиск',
+                                noResultsText: 'Нет результатов для',
+                                footer: {
+                                    selectText: 'для выбора',
+                                    selectKeyAriaLabel: 'enter',
+                                    navigateText: 'для навигации',
+                                    navigateUpKeyAriaLabel: 'стрелка вверх',
+                                    navigateDownKeyAriaLabel: 'стрелка вниз',
+                                    closeText: 'для закрытия',
+                                    closeKeyAriaLabel: 'escape'
+                                }
+                            }
+                        }
+                    },
+                    zh: {
+                        translations: {
+                            button: {
+                                buttonText: '搜索',
+                                buttonAriaLabel: '搜索'
+                            },
+                            modal: {
+                                displayDetails: '显示详细列表',
+                                resetButtonTitle: '重置搜索',
+                                backButtonTitle: '关闭搜索',
+                                noResultsText: '没有找到结果',
+                                footer: {
+                                    selectText: '选择',
+                                    selectKeyAriaLabel: 'enter',
+                                    navigateText: '导航',
+                                    navigateUpKeyAriaLabel: '上箭头',
+                                    navigateDownKeyAriaLabel: '下箭头',
+                                    closeText: '关闭',
+                                    closeKeyAriaLabel: 'escape'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
 

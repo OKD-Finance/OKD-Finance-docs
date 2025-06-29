@@ -1,12 +1,16 @@
 import DefaultTheme from 'vitepress/theme'
 import Layout from './Layout.vue'
-import './style.css'
+import './custom.css'
 import './api-interactive-scripts.js'
 import './language-menu-fix.js'
+import './search-enhancement.js'
+import './navigation-controller.js'
+import './debug-navigation.js'
 import ApiDoc from '../components/ApiDoc.vue'
 import ApiMethod from '../components/ApiMethod.vue'
 import APINavigation from './components/APINavigation.vue'
 import SimpleOutline from './components/SimpleOutline.vue'
+import NavigationController from './components/NavigationController.vue'
 
 export default {
     ...DefaultTheme,
@@ -16,5 +20,6 @@ export default {
         app.component('ApiMethod', ApiMethod)
         app.component('APINavigation', APINavigation)
         app.component('SimpleOutline', SimpleOutline)
+        app.component('NavigationController', NavigationController)
     }
 }
