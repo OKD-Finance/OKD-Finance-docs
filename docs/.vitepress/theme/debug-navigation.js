@@ -87,7 +87,7 @@ function debugNavigation() {
 }
 
 // Запустить отладку
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', debugNavigation);
     } else {

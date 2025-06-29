@@ -300,7 +300,7 @@ export default defineConfig({
 
         footer: {
             message: 'Released under the MIT License.',
-            copyright: 'Copyright © 2024 OKD Finance'
+            copyright: 'Copyright © 2025 OKD Finance'
         },
 
         search: {

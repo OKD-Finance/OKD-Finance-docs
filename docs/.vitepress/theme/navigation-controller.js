@@ -357,6 +357,6 @@ function initNavigationController() {
 }
 
 // Запустить только в браузере
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     initNavigationController();
 } 

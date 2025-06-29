@@ -122,6 +122,10 @@ const navigationSections = ref([
 
 // Методы
 const toggleNavigation = () => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return
+  }
+  
   isNavVisible.value = !isNavVisible.value
   
   // Синхронизировать с глобальной системой
@@ -138,6 +142,10 @@ const toggleNavigation = () => {
 }
 
 const toggleFloatingMode = () => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return
+  }
+  
   isFloatingMode.value = !isFloatingMode.value
   
   // Синхронизировать с глобальной системой
@@ -166,13 +174,14 @@ const isCurrentPage = (link) => {
 
 const onLinkClick = () => {
   // Опционально скрыть навигацию после клика на мобильных устройствах
-  if (window.innerWidth < 768) {
+  if (typeof window !== 'undefined' && window.innerWidth < 768) {
     isNavVisible.value = false
   }
 }
 
 // Drag & Drop для плавающей навигации
 const startDrag = (e) => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return
   if (!floatingNav.value) return
   
   isDragging.value = true
@@ -213,11 +222,17 @@ const stopDrag = () => {
   document.removeEventListener('mouseup', stopDrag)
   
   // Сохранить позицию
-  localStorage.setItem('nav-position', JSON.stringify(floatingPosition.value))
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem('nav-position', JSON.stringify(floatingPosition.value))
+  }
 }
 
 // Горячие клавиши
 const handleKeydown = (e) => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return
+  }
+  
   if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
     e.preventDefault()
     toggleNavigation()
@@ -231,6 +246,10 @@ const handleKeydown = (e) => {
 
 // Инициализация
 onMounted(() => {
+  // Убедиться что мы в браузере
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return
+  }
   // Дождаться загрузки глобальной системы
   const initWithGlobalSystem = () => {
     if (window.navigationController) {
@@ -243,22 +262,24 @@ onMounted(() => {
       window.navigationController.applySettings(settings)
     } else {
       // Fallback если глобальная система не готова
-      const savedVisible = localStorage.getItem('nav-visible')
-      if (savedVisible !== null) {
-        isNavVisible.value = savedVisible === 'true'
-      }
-      
-      const savedFloating = localStorage.getItem('nav-floating')
-      if (savedFloating !== null) {
-        isFloatingMode.value = savedFloating === 'true'
-      }
-      
-      const savedPosition = localStorage.getItem('nav-position')
-      if (savedPosition) {
-        try {
-          floatingPosition.value = JSON.parse(savedPosition)
-        } catch {
-          floatingPosition.value = { x: 20, y: 100 }
+      if (typeof localStorage !== 'undefined') {
+        const savedVisible = localStorage.getItem('nav-visible')
+        if (savedVisible !== null) {
+          isNavVisible.value = savedVisible === 'true'
+        }
+        
+        const savedFloating = localStorage.getItem('nav-floating')
+        if (savedFloating !== null) {
+          isFloatingMode.value = savedFloating === 'true'
+        }
+        
+        const savedPosition = localStorage.getItem('nav-position')
+        if (savedPosition) {
+          try {
+            floatingPosition.value = JSON.parse(savedPosition)
+          } catch {
+            floatingPosition.value = { x: 20, y: 100 }
+          }
         }
       }
       
@@ -289,15 +310,17 @@ onMounted(() => {
   document.addEventListener('keydown', handleKeydown)
   
   // Автоматически переключиться в плавающий режим на мобильных устройствах
-  if (window.innerWidth < 768 && !isFloatingMode.value) {
+  if (typeof window !== 'undefined' && window.innerWidth < 768 && !isFloatingMode.value) {
     toggleFloatingMode()
   }
 })
 
 onUnmounted(() => {
-  document.removeEventListener('keydown', handleKeydown)
-  document.removeEventListener('mousemove', handleDrag)
-  document.removeEventListener('mouseup', stopDrag)
+  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    document.removeEventListener('keydown', handleKeydown)
+    document.removeEventListener('mousemove', handleDrag)
+    document.removeEventListener('mouseup', stopDrag)
+  }
 })
 </script>
 

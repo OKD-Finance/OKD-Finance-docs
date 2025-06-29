@@ -93,39 +93,40 @@ function fixLanguageMenu() {
     console.log('✅ Исправление завершено');
 }
 
-// Запустить исправление при загрузке
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(fixLanguageMenu, 500);
-});
+// Запустить только в браузере
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    // Запустить исправление при загрузке
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(fixLanguageMenu, 500);
+    });
 
-// Запустить при готовности Vue
-if (typeof window !== 'undefined') {
+    // Запустить при готовности Vue
     window.addEventListener('load', () => {
         setTimeout(fixLanguageMenu, 1000);
     });
-}
 
-// Запустить исправление при изменении DOM
-const observer = new MutationObserver(() => {
-    fixLanguageMenu();
-});
+    // Запустить исправление при изменении DOM
+    const observer = new MutationObserver(() => {
+        fixLanguageMenu();
+    });
 
-// Начать наблюдение после загрузки
-setTimeout(() => {
-    if (document.body) {
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['aria-expanded', 'class', 'style']
-        });
-    }
-}, 1000);
+    // Начать наблюдение после загрузки
+    setTimeout(() => {
+        if (document.body) {
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+                attributeFilter: ['aria-expanded', 'class', 'style']
+            });
+        }
+    }, 1000);
 
-// Запустить исправление каждые 3 секунды
-setInterval(fixLanguageMenu, 3000);
+    // Запустить исправление каждые 3 секунды
+    setInterval(fixLanguageMenu, 3000);
 
-// Глобальная функция для ручного вызова
-window.fixLanguageMenu = fixLanguageMenu;
+    // Глобальная функция для ручного вызова
+    window.fixLanguageMenu = fixLanguageMenu;
 
-console.log('🚀 Language menu fix loaded - используйте fixLanguageMenu() в консоли'); 
+    console.log('🚀 Language menu fix loaded - используйте fixLanguageMenu() в консоли');
+} 

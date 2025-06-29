@@ -120,7 +120,7 @@ function enhanceSearch() {
 }
 
 // Запустить только в браузере
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     // Запустить при загрузке
     document.addEventListener('DOMContentLoaded', enhanceSearch);
     window.addEventListener('load', enhanceSearch);
