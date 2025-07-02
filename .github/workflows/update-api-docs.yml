@@ -31,8 +31,7 @@ jobs:
       
     - name: Generate API documentation
       run: |
-        npm run generate-api-docs
-        npm run update-api-docs
+        npm run swagger:update
         
     - name: Check for changes
       id: changes
@@ -51,5 +50,4 @@ jobs:
     - name: Build and deploy
       if: steps.changes.outputs.changes == 'true'
       run: |
-        npm run build
-        npm run deploy
+        npm run docs:full-build
