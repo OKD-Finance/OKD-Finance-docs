@@ -1,6 +1,7 @@
 import DefaultTheme from 'vitepress/theme'
 import Layout from './Layout.vue'
 import './custom.css'
+import './bybit-style.css'
 import './api-interactive-scripts.js'
 import './language-menu-fix.js'
 import './search-enhancement.js'

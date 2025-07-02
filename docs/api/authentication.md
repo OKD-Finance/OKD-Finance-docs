@@ -153,10 +153,20 @@ No description available
 
 <InteractiveAuthenticationAPIEndpoint29 />
 
-## SetProfile sets profile flags of current user.
+## Add symbol to favourites.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint30 />
+
+## Delete symbol from favourites.
+! Need access token in bearer token authorization
+
+<InteractiveAuthenticationAPIEndpoint31 />
+
+## SetProfile sets profile flags of current user.
+! Need access token in bearer token authorization
+
+<InteractiveAuthenticationAPIEndpoint32 />
 
 <script setup>
 import InteractiveAuthenticationAPIEndpoint1 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint1.vue'
@@ -189,6 +199,8 @@ import InteractiveAuthenticationAPIEndpoint27 from '../.vitepress/theme/componen
 import InteractiveAuthenticationAPIEndpoint28 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint28.vue'
 import InteractiveAuthenticationAPIEndpoint29 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint29.vue'
 import InteractiveAuthenticationAPIEndpoint30 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint30.vue'
+import InteractiveAuthenticationAPIEndpoint31 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint31.vue'
+import InteractiveAuthenticationAPIEndpoint32 from '../.vitepress/theme/components/InteractiveAuthenticationAPIEndpoint32.vue'
 import GlobalAuth from '../.vitepress/theme/components/GlobalAuth.vue'
 import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
 </script>
@@ -223,5 +235,7 @@ import SimpleOutline from '../.vitepress/theme/components/SimpleOutline.vue'
   { text: 'Logout remove user sessions and makes the token invalid.', anchor: '#logout-remove-user-sessions-and-makes-the-token-invalid' },
   { text: 'Registration save user in database and send verification url to email.', anchor: '#registration-save-user-in-database-and-send-verification-url-to-email' },
   { text: 'Sign up by Google OAuth2 request.', anchor: '#sign-up-by-google-oauth2-request' },
+  { text: 'Add symbol to favourites.', anchor: '#add-symbol-to-favourites' },
+  { text: 'Delete symbol from favourites.', anchor: '#delete-symbol-from-favourites' },
   { text: 'SetProfile sets profile flags of current user.', anchor: '#setprofile-sets-profile-flags-of-current-user' }
 ]" />

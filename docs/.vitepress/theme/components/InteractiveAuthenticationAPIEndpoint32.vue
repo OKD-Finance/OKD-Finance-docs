@@ -3,12 +3,12 @@
     <div class="endpoint-layout">
       <div class="endpoint-docs">
         <div class="method-header">
-          <span class="method-badge post">POST</span>
-          <span class="endpoint-path">/auth/jwt/refresh</span>
+          <span class="method-badge put">PUT</span>
+          <span class="endpoint-path">/user/flags</span>
         </div>
 
         <div class="endpoint-info">
-          <p class="endpoint-description">! Need refresh token in bearer token authorization</p>
+          <p class="endpoint-description">! Need access token in bearer token authorization</p>
         </div>
 
         <div class="api-section" v-if="hasParameters">
@@ -28,7 +28,7 @@
               </button>
             </div>
                         <div v-show="activeCodeTab === 'cURL'" class="code-block">
-              <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/jwt/refresh&quot; \
+              <pre>curl -X PUT &quot;https://develop.okd.finance/api/user/flags&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Fingerprint: YOUR_FINGERPRINT&quot;</pre>
@@ -44,9 +44,9 @@ import (
 )
 
 func main() {
-    url := &quot;https://develop.okd.finance/api/auth/jwt/refresh&quot;
+    url := &quot;https://develop.okd.finance/api/user/flags&quot;
     
-    req, _ := http.NewRequest(&quot;POST&quot;, url, nil)
+    req, _ := http.NewRequest(&quot;PUT&quot;, url, nil)
     
     req.Header.Set(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;)
     req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
@@ -75,9 +75,9 @@ const apiClient = axios.create({
   }
 });
 
-async function authjwtrefreshRequest() {
+async function userflagsRequest() {
   try {
-    const response = await apiClient.post(&#39;/auth/jwt/refresh&#39;);
+    const response = await apiClient.put(&#39;/user/flags&#39;);
     
     console.log(&#39;Response:&#39;, response.data);
     return response.data;
@@ -88,12 +88,12 @@ async function authjwtrefreshRequest() {
 }
 
 // Usage
-authjwtrefreshRequest();</pre>
+userflagsRequest();</pre>
             </div>
             <div v-show="activeCodeTab === 'PHP'" class="code-block">
               <pre>&lt;?php
 
-$url = &#39;https://develop.okd.finance/api/auth/jwt/refresh&#39;;
+$url = &#39;https://develop.okd.finance/api/user/flags&#39;;
 $headers = [
     &#39;Authorization: Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type: application/json&#39;,
@@ -102,7 +102,7 @@ $headers = [
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, &#39;POST&#39;);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, &#39;PUT&#39;);
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -124,7 +124,7 @@ if ($error) {
               <pre>import requests
 import json
 
-url = &#39;https://develop.okd.finance/api/auth/jwt/refresh&#39;
+url = &#39;https://develop.okd.finance/api/user/flags&#39;
 headers = {
     &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type&#39;: &#39;application/json&#39;,
@@ -132,7 +132,7 @@ headers = {
 }
 
 try:
-    response = requests.post(url, headers=headers)
+    response = requests.put(url, headers=headers)
     response.raise_for_status()
     
     print(f&quot;Status Code: {response.status_code}&quot;)
@@ -153,36 +153,17 @@ except requests.exceptions.RequestException as e:
             <div class="response-example">
               <div class="response-header">
                 <span class="response-status success">200</span>
-                <span class="response-description">a pair of new access and refresh tokens</span>
+                <span class="response-description">profile is updated successful</span>
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;acc_token&quot;: &quot;my.access.token&quot;,
-  &quot;refresh_token&quot;: &quot;my.refresh.token&quot;
-}</pre>
-              </div>
-            </div>
-            <div class="response-example">
-              <div class="response-header">
-                <span class="response-status error">400</span>
-                <span class="response-description">some logical error in request</span>
-              </div>
-              <div class="code-block">
-                <pre>{
-  &quot;code&quot;: 400001,
-  &quot;message&quot;: &quot;email or password not valid&quot;
-}</pre>
-              </div>
-            </div>
-            <div class="response-example">
-              <div class="response-header">
-                <span class="response-status error">401</span>
-                <span class="response-description">unauthorized error</span>
-              </div>
-              <div class="code-block">
-                <pre>{
-  &quot;code&quot;: 401000,
-  &quot;message&quot;: &quot;access token is expired&quot;
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;Operation completed successfully&quot;,
+  &quot;data&quot;: {
+    &quot;operationId&quot;: &quot;op_1234567890&quot;,
+    &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;,
+    &quot;status&quot;: &quot;completed&quot;
+  }
 }</pre>
               </div>
             </div>
@@ -282,7 +263,7 @@ const testEndpoint = async () => {
       
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/auth/jwt/refresh`
+    const fullUrl = `${authValues.apiBaseUrl}/user/flags`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
@@ -291,7 +272,7 @@ const testEndpoint = async () => {
     const bodyString = JSON.stringify(requestBody)
 
     const response = await fetch(fullUrl, {
-      method: 'POST',
+      method: 'PUT',
       headers: headers,
       body: bodyString
     })
@@ -301,7 +282,7 @@ const testEndpoint = async () => {
       status: `${response.status} ${response.statusText}`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `POST ${fullUrl}`,
+      requestUrl: `PUT ${fullUrl}`,
       headers: JSON.stringify(headers, null, 2),
       body: bodyString
     }

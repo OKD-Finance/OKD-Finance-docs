@@ -3,18 +3,29 @@
     <div class="endpoint-layout">
       <div class="endpoint-docs">
         <div class="method-header">
-          <span class="method-badge post">POST</span>
-          <span class="endpoint-path">/auth/jwt/refresh</span>
+          <span class="method-badge delete">DELETE</span>
+          <span class="endpoint-path">/preferences/symbols/{pref_key}/{symbol_id}</span>
         </div>
 
         <div class="endpoint-info">
-          <p class="endpoint-description">! Need refresh token in bearer token authorization</p>
+          <p class="endpoint-description">! Need access token in bearer token authorization</p>
         </div>
 
         <div class="api-section" v-if="hasParameters">
           <h4 class="section-title">⚙️ Parameters</h4>
           <div class="param-list">
-            
+            <div class="param-item required">
+              <code class="param-name">pref_key</code>
+              <span class="param-type">string</span>
+              <span class="param-desc">Preference sections. Can be *spot_symbols*, *futures_symbols*.
+</span>
+            </div>
+            <div class="param-item required">
+              <code class="param-name">symbol_id</code>
+              <span class="param-type">string</span>
+              <span class="param-desc">Symbol ID
+</span>
+            </div>
           </div>
         </div>
 
@@ -28,10 +39,14 @@
               </button>
             </div>
                         <div v-show="activeCodeTab === 'cURL'" class="code-block">
-              <pre>curl -X POST &quot;https://develop.okd.finance/api/auth/jwt/refresh&quot; \
+              <pre>curl -X DELETE &quot;https://develop.okd.finance/api/preferences/symbols/{pref_key}/{symbol_id}&quot; \
   -H &quot;Authorization: Bearer YOUR_ACCESS_TOKEN&quot; \
   -H &quot;Content-Type: application/json&quot; \
-  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot;</pre>
+  -H &quot;Fingerprint: YOUR_FINGERPRINT&quot; \
+  -d &#39;{
+    &quot;pref_key&quot;: &quot;example_pref_key&quot;,
+    &quot;symbol_id&quot;: &quot;example_symbol_id&quot;
+  }&#39;</pre>
             </div>
             <div v-show="activeCodeTab === 'Go'" class="code-block">
               <pre>package main
@@ -44,9 +59,15 @@ import (
 )
 
 func main() {
-    url := &quot;https://develop.okd.finance/api/auth/jwt/refresh&quot;
+    url := &quot;https://develop.okd.finance/api/preferences/symbols/{pref_key}/{symbol_id}&quot;
     
-    req, _ := http.NewRequest(&quot;POST&quot;, url, nil)
+    payload := map[string]interface{}{
+        &quot;pref_key&quot;: &quot;example_pref_key&quot;,
+        &quot;symbol_id&quot;: &quot;example_symbol_id&quot;,
+    }
+    
+    jsonData, _ := json.Marshal(payload)
+    req, _ := http.NewRequest(&quot;DELETE&quot;, url, bytes.NewBuffer(jsonData))
     
     req.Header.Set(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;)
     req.Header.Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
@@ -75,9 +96,14 @@ const apiClient = axios.create({
   }
 });
 
-async function authjwtrefreshRequest() {
+async function preferencessymbolsprefkeysymbolidRequest() {
   try {
-    const response = await apiClient.post(&#39;/auth/jwt/refresh&#39;);
+    const data = {
+      pref_key: &#39;example_pref_key&#39;,
+      symbol_id: &#39;example_symbol_id&#39;,
+    };
+    
+    const response = await apiClient.delete(&#39;/preferences/symbols/{pref_key}/{symbol_id}&#39;, data);
     
     console.log(&#39;Response:&#39;, response.data);
     return response.data;
@@ -88,21 +114,27 @@ async function authjwtrefreshRequest() {
 }
 
 // Usage
-authjwtrefreshRequest();</pre>
+preferencessymbolsprefkeysymbolidRequest();</pre>
             </div>
             <div v-show="activeCodeTab === 'PHP'" class="code-block">
               <pre>&lt;?php
 
-$url = &#39;https://develop.okd.finance/api/auth/jwt/refresh&#39;;
+$url = &#39;https://develop.okd.finance/api/preferences/symbols/{pref_key}/{symbol_id}&#39;;
 $headers = [
     &#39;Authorization: Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type: application/json&#39;,
     &#39;Fingerprint: YOUR_FINGERPRINT&#39;
 ];
 
+$data = [
+    &#39;pref_key&#39; =&gt; &#39;example_pref_key&#39;,
+    &#39;symbol_id&#39; =&gt; &#39;example_symbol_id&#39;,
+];
+
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, &#39;POST&#39;);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, &#39;DELETE&#39;);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -124,15 +156,20 @@ if ($error) {
               <pre>import requests
 import json
 
-url = &#39;https://develop.okd.finance/api/auth/jwt/refresh&#39;
+url = &#39;https://develop.okd.finance/api/preferences/symbols/{pref_key}/{symbol_id}&#39;
 headers = {
     &#39;Authorization&#39;: &#39;Bearer YOUR_ACCESS_TOKEN&#39;,
     &#39;Content-Type&#39;: &#39;application/json&#39;,
     &#39;Fingerprint&#39;: &#39;YOUR_FINGERPRINT&#39;
 }
 
+data = {
+    &#39;pref_key&#39;: &#39;example_pref_key&#39;,
+    &#39;symbol_id&#39;: &#39;example_symbol_id&#39;,
+}
+
 try:
-    response = requests.post(url, headers=headers)
+    response = requests.delete(url, headers=headers, json=data)
     response.raise_for_status()
     
     print(f&quot;Status Code: {response.status_code}&quot;)
@@ -153,12 +190,13 @@ except requests.exceptions.RequestException as e:
             <div class="response-example">
               <div class="response-header">
                 <span class="response-status success">200</span>
-                <span class="response-description">a pair of new access and refresh tokens</span>
+                <span class="response-description">symbol is deleted</span>
               </div>
               <div class="code-block">
                 <pre>{
-  &quot;acc_token&quot;: &quot;my.access.token&quot;,
-  &quot;refresh_token&quot;: &quot;my.refresh.token&quot;
+  &quot;success&quot;: true,
+  &quot;message&quot;: &quot;symbol is deleted&quot;,
+  &quot;timestamp&quot;: &quot;2024-01-01T12:00:00Z&quot;
 }</pre>
               </div>
             </div>
@@ -171,18 +209,6 @@ except requests.exceptions.RequestException as e:
                 <pre>{
   &quot;code&quot;: 400001,
   &quot;message&quot;: &quot;email or password not valid&quot;
-}</pre>
-              </div>
-            </div>
-            <div class="response-example">
-              <div class="response-header">
-                <span class="response-status error">401</span>
-                <span class="response-description">unauthorized error</span>
-              </div>
-              <div class="code-block">
-                <pre>{
-  &quot;code&quot;: 401000,
-  &quot;message&quot;: &quot;access token is expired&quot;
 }</pre>
               </div>
             </div>
@@ -205,7 +231,14 @@ except requests.exceptions.RequestException as e:
       <div class="endpoint-testing">
         <h4 class="testing-title">🚀 Live Testing</h4>
         <div class="test-section">
-          
+          <div class="form-group">
+                <label>Pref_key</label>
+                <input v-model="testData.pref_key" type="text" placeholder="example_pref_key" class="test-input" />
+              </div>
+          <div class="form-group">
+                <label>Symbol_id</label>
+                <input v-model="testData.symbol_id" type="text" placeholder="example_symbol_id" class="test-input" />
+              </div>
           <button @click="testEndpoint" class="test-btn"
             :disabled="!isReadyToSendRequest() || !getRawValues().apiBaseUrl">
             {{ !getRawValues().apiToken ? '🔒 Enter API Token First' : !getRawValues().apiFingerprint ? '🔐 Enter Fingerprint First' : !getRawValues().apiBaseUrl ? '🌐 Enter API URL First' : '🚀 Test Request' }}
@@ -254,10 +287,11 @@ const {
 const codeLangs = ['cURL', 'Go', 'TypeScript', 'PHP', 'Python']
 const activeCodeTab = ref('cURL')
 
-const hasParameters = false
+const hasParameters = true
 
 const testData = reactive({
-  
+  pref_key: 'example_pref_key',
+  symbol_id: 'example_symbol_id'
 })
 
 const result = ref(null)
@@ -279,10 +313,11 @@ const testEndpoint = async () => {
     }
 
     const requestBody = {
-      
+      pref_key: testData.pref_key,
+      symbol_id: testData.symbol_id
     }
 
-    const fullUrl = `${authValues.apiBaseUrl}/auth/jwt/refresh`
+    const fullUrl = `${authValues.apiBaseUrl}/preferences/symbols/{pref_key}/{symbol_id}`
     const headers = {
       'Authorization': `Bearer ${authValues.apiToken}`,
       'Content-Type': 'application/json',
@@ -291,7 +326,7 @@ const testEndpoint = async () => {
     const bodyString = JSON.stringify(requestBody)
 
     const response = await fetch(fullUrl, {
-      method: 'POST',
+      method: 'DELETE',
       headers: headers,
       body: bodyString
     })
@@ -301,7 +336,7 @@ const testEndpoint = async () => {
       status: `${response.status} ${response.statusText}`,
       data: data,
       timestamp: new Date().toLocaleTimeString(),
-      requestUrl: `POST ${fullUrl}`,
+      requestUrl: `DELETE ${fullUrl}`,
       headers: JSON.stringify(headers, null, 2),
       body: bodyString
     }

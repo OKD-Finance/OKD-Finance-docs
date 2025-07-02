@@ -1,0 +1,554 @@
+/* Bybit-style API Explorer Design System */
+
+/* Import JetBrains Mono font */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+:root {
+    --bybit-primary: #f7931a;
+    --bybit-primary-dark: #e8851a;
+    --bybit-secondary: #1a1a1a;
+    --bybit-accent: #00d4ff;
+    --bybit-success: #00c851;
+    --bybit-error: #ff4444;
+    --bybit-warning: #ffbb33;
+    --bybit-bg: #ffffff;
+    --bybit-bg-secondary: #f8f9fa;
+    --bybit-bg-tertiary: #f1f3f4;
+    --bybit-text-primary: #212529;
+    --bybit-text-secondary: #6c757d;
+    --bybit-text-muted: #adb5bd;
+    --bybit-border: #e9ecef;
+    --bybit-border-light: #f8f9fa;
+    --bybit-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --bybit-shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.15);
+    --bybit-radius: 8px;
+    --bybit-radius-lg: 12px;
+}
+
+.dark {
+    --bybit-bg: #1a1a1a;
+    --bybit-bg-secondary: #2d2d2d;
+    --bybit-bg-tertiary: #3a3a3a;
+    --bybit-text-primary: #ffffff;
+    --bybit-text-secondary: #b0b0b0;
+    --bybit-text-muted: #808080;
+    --bybit-border: #404040;
+    --bybit-border-light: #2d2d2d;
+    --bybit-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --bybit-shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== MAIN ENDPOINT LAYOUTS ===== */
+.vp-doc .single-endpoint,
+.single-endpoint {
+    margin: 2rem 0 !important;
+    background: var(--bybit-bg) !important;
+    border: 1px solid var(--bybit-border) !important;
+    border-radius: var(--bybit-radius-lg) !important;
+    box-shadow: var(--bybit-shadow) !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+.vp-doc .single-endpoint:hover,
+.single-endpoint:hover {
+    box-shadow: var(--bybit-shadow-lg) !important;
+    transform: translateY(-2px) !important;
+}
+
+.vp-doc .endpoint-layout,
+.endpoint-layout {
+    display: grid !important;
+    grid-template-columns: 1fr 400px !important;
+    gap: 0 !important;
+    min-height: 100% !important;
+}
+
+.vp-doc .endpoint-docs,
+.endpoint-docs {
+    padding: 2rem !important;
+    background: var(--bybit-bg) !important;
+}
+
+.vp-doc .endpoint-tester,
+.endpoint-tester {
+    width: 400px !important;
+    background: var(--bybit-bg-secondary) !important;
+    border-left: 1px solid var(--bybit-border) !important;
+    padding: 2rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* ===== METHOD HEADER ===== */
+.vp-doc .method-header,
+.method-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    margin-bottom: 1.5rem !important;
+    padding-bottom: 1rem !important;
+    border-bottom: 2px solid var(--bybit-border) !important;
+}
+
+.vp-doc .method-badge,
+.method-badge {
+    padding: 0.5rem 1rem !important;
+    border-radius: 6px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    border: 2px solid !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    min-width: 60px !important;
+    text-align: center !important;
+}
+
+.vp-doc .method-badge.get,
+.method-badge.get {
+    background: #e3f2fd !important;
+    color: #1976d2 !important;
+    border-color: #1976d2 !important;
+}
+
+.vp-doc .method-badge.post,
+.method-badge.post {
+    background: #e8f5e8 !important;
+    color: #2e7d32 !important;
+    border-color: #2e7d32 !important;
+}
+
+.vp-doc .method-badge.put,
+.method-badge.put {
+    background: #fff3e0 !important;
+    color: #f57c00 !important;
+    border-color: #f57c00 !important;
+}
+
+.vp-doc .method-badge.patch,
+.method-badge.patch {
+    background: #f3e5f5 !important;
+    color: #7b1fa2 !important;
+    border-color: #7b1fa2 !important;
+}
+
+.vp-doc .method-badge.delete,
+.method-badge.delete {
+    background: #ffebee !important;
+    color: #c62828 !important;
+    border-color: #c62828 !important;
+}
+
+.vp-doc .endpoint-path,
+.endpoint-path {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: var(--bybit-text-primary) !important;
+    background: var(--bybit-bg-tertiary) !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: var(--bybit-radius) !important;
+}
+
+/* ===== ENDPOINT INFO ===== */
+.vp-doc .endpoint-info,
+.endpoint-info {
+    margin-bottom: 2rem !important;
+}
+
+.vp-doc .endpoint-description,
+.endpoint-description {
+    color: var(--bybit-text-secondary) !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+}
+
+/* ===== API SECTIONS ===== */
+.vp-doc .api-section,
+.api-section {
+    margin-bottom: 2rem !important;
+}
+
+.vp-doc .section-title,
+.section-title {
+    color: var(--bybit-primary) !important;
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+/* ===== PARAMETERS ===== */
+.vp-doc .param-list,
+.param-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+}
+
+.vp-doc .param-item,
+.param-item {
+    padding: 1rem !important;
+    background: var(--bybit-bg-secondary) !important;
+    border: 1px solid var(--bybit-border) !important;
+    border-radius: var(--bybit-radius) !important;
+    border-left: 4px solid var(--bybit-primary) !important;
+}
+
+.vp-doc .param-item.required,
+.param-item.required {
+    border-left-color: var(--bybit-error) !important;
+}
+
+.vp-doc .param-name,
+.param-name {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 600 !important;
+    color: var(--bybit-primary) !important;
+    background: var(--bybit-bg-tertiary) !important;
+    padding: 0.25rem 0.5rem !important;
+    border-radius: 4px !important;
+    margin-right: 0.5rem !important;
+}
+
+.vp-doc .param-type,
+.param-type {
+    font-family: 'JetBrains Mono', monospace !important;
+    color: var(--bybit-text-secondary) !important;
+    font-size: 0.875rem !important;
+    margin-right: 0.5rem !important;
+}
+
+.vp-doc .param-desc,
+.param-desc {
+    color: var(--bybit-text-primary) !important;
+    font-size: 0.9rem !important;
+    display: block !important;
+    margin-top: 0.5rem !important;
+}
+
+/* ===== CODE EXAMPLES ===== */
+.vp-doc .code-examples,
+.code-examples {
+    background: var(--bybit-bg-tertiary) !important;
+    border: 1px solid var(--bybit-border) !important;
+    border-radius: var(--bybit-radius) !important;
+    overflow: hidden !important;
+}
+
+.vp-doc .code-tabs,
+.code-tabs {
+    display: flex !important;
+    background: var(--bybit-bg-secondary) !important;
+    border-bottom: 1px solid var(--bybit-border) !important;
+    overflow-x: auto !important;
+}
+
+.vp-doc .code-tab,
+.code-tab {
+    padding: 0.75rem 1.5rem !important;
+    background: transparent !important;
+    border: none !important;
+    color: var(--bybit-text-secondary) !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    white-space: nowrap !important;
+    border-bottom: 3px solid transparent !important;
+}
+
+.vp-doc .code-tab:hover,
+.code-tab:hover {
+    background: var(--bybit-bg-tertiary) !important;
+    color: var(--bybit-text-primary) !important;
+}
+
+.vp-doc .code-tab.active,
+.code-tab.active {
+    color: var(--bybit-primary) !important;
+    border-bottom-color: var(--bybit-primary) !important;
+    background: var(--bybit-bg) !important;
+}
+
+.vp-doc .code-block,
+.code-block {
+    position: relative !important;
+}
+
+.vp-doc .code-block pre,
+.code-block pre {
+    margin: 0 !important;
+    padding: 2rem !important;
+    font-family: 'JetBrains Mono', Monaco, 'Cascadia Code', monospace !important;
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+    color: var(--bybit-text-primary) !important;
+    overflow-x: auto !important;
+    background: var(--bybit-bg) !important;
+}
+
+/* ===== RESPONSE EXAMPLES ===== */
+.vp-doc .response-examples,
+.response-examples {
+    background: var(--bybit-bg-tertiary) !important;
+    border: 1px solid var(--bybit-border) !important;
+    border-radius: var(--bybit-radius) !important;
+    overflow: hidden !important;
+}
+
+.vp-doc .response-tabs,
+.response-tabs {
+    display: flex !important;
+    background: var(--bybit-bg-secondary) !important;
+    border-bottom: 1px solid var(--bybit-border) !important;
+}
+
+.vp-doc .response-tab,
+.response-tab {
+    padding: 0.75rem 1.5rem !important;
+    background: transparent !important;
+    border: none !important;
+    color: var(--bybit-text-secondary) !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    border-bottom: 3px solid transparent !important;
+}
+
+.vp-doc .response-tab:hover,
+.response-tab:hover {
+    background: var(--bybit-bg-tertiary) !important;
+    color: var(--bybit-text-primary) !important;
+}
+
+.vp-doc .response-tab.active,
+.response-tab.active {
+    color: var(--bybit-success) !important;
+    border-bottom-color: var(--bybit-success) !important;
+    background: var(--bybit-bg) !important;
+}
+
+.vp-doc .response-content,
+.response-content {
+    padding: 2rem !important;
+    background: var(--bybit-bg) !important;
+}
+
+.vp-doc .response-content pre,
+.response-content pre {
+    margin: 0 !important;
+    font-family: 'JetBrains Mono', Monaco, 'Cascadia Code', monospace !important;
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+    color: var(--bybit-text-primary) !important;
+    overflow-x: auto !important;
+}
+
+/* ===== LIVE TESTER ===== */
+.vp-doc .tester-header,
+.tester-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    margin-bottom: 1.5rem !important;
+    color: var(--bybit-primary) !important;
+    font-weight: 600 !important;
+}
+
+.vp-doc .tester-form,
+.tester-form {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    flex: 1 !important;
+}
+
+.vp-doc .form-group,
+.form-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+}
+
+.vp-doc .form-label,
+.form-label {
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: var(--bybit-text-primary) !important;
+}
+
+.vp-doc .form-input,
+.form-input {
+    padding: 0.75rem 1rem !important;
+    border: 2px solid var(--bybit-border) !important;
+    border-radius: var(--bybit-radius) !important;
+    background: var(--bybit-bg) !important;
+    color: var(--bybit-text-primary) !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.vp-doc .form-input:focus,
+.form-input:focus {
+    outline: none !important;
+    border-color: var(--bybit-primary) !important;
+    box-shadow: 0 0 0 3px rgba(247, 147, 26, 0.1) !important;
+}
+
+.vp-doc .form-textarea,
+.form-textarea {
+    min-height: 120px !important;
+    resize: vertical !important;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+
+.vp-doc .test-button,
+.test-button {
+    padding: 0.875rem 1.5rem !important;
+    background: linear-gradient(135deg, var(--bybit-primary), var(--bybit-primary-dark)) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: var(--bybit-radius) !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    font-size: 0.875rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    margin-top: auto !important;
+}
+
+.vp-doc .test-button:hover,
+.test-button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: var(--bybit-shadow-lg) !important;
+}
+
+.vp-doc .test-button:disabled,
+.test-button:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+/* ===== LOADING & RESULTS ===== */
+.vp-doc .loading-spinner,
+.loading-spinner {
+    display: inline-block !important;
+    width: 20px !important;
+    height: 20px !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 50% !important;
+    border-top-color: white !important;
+    animation: spin 1s ease-in-out infinite !important;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.vp-doc .test-result,
+.test-result {
+    margin-top: 1rem !important;
+    padding: 1rem !important;
+    border-radius: var(--bybit-radius) !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.875rem !important;
+    max-height: 300px !important;
+    overflow-y: auto !important;
+}
+
+.vp-doc .test-result.success,
+.test-result.success {
+    background: rgba(0, 200, 81, 0.1) !important;
+    border: 1px solid var(--bybit-success) !important;
+    color: var(--bybit-success) !important;
+}
+
+.vp-doc .test-result.error,
+.test-result.error {
+    background: rgba(255, 68, 68, 0.1) !important;
+    border: 1px solid var(--bybit-error) !important;
+    color: var(--bybit-error) !important;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.bybit-transition {
+    transition: all 0.2s ease !important;
+}
+
+.bybit-text-mono {
+    font-family: 'JetBrains Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace !important;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+
+    .vp-doc .endpoint-layout,
+    .endpoint-layout {
+        grid-template-columns: 1fr !important;
+    }
+
+    .vp-doc .endpoint-tester,
+    .endpoint-tester {
+        width: 100% !important;
+        border-left: none !important;
+        border-top: 1px solid var(--bybit-border) !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .vp-doc .endpoint-docs,
+    .vp-doc .endpoint-tester,
+    .endpoint-docs,
+    .endpoint-tester {
+        padding: 1.5rem !important;
+    }
+
+    .vp-doc .method-header,
+    .method-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+    }
+
+    .vp-doc .code-tabs,
+    .code-tabs {
+        flex-wrap: wrap !important;
+    }
+
+    .vp-doc .code-tab,
+    .code-tab {
+        flex: 1 !important;
+        min-width: 80px !important;
+    }
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bybit-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bybit-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bybit-primary-dark);
+}
