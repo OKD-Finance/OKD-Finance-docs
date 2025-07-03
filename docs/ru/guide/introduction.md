@@ -92,10 +92,7 @@ API для внешних интеграций:
 - Базовый URL: `https://develop.okd.finance/extapi`
 - Swagger: `https://develop.okd.finance/swagger/extgateway/`
 
-### Genesis API
-Базовые системные операции:
-- Базовый URL: `https://develop.okd.finance/genesis`
-- Swagger: `https://develop.okd.finance/swagger/genesis/`
+
 
 ## Требования к интеграции
 
