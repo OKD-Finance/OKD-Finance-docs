@@ -1805,9 +1805,9 @@ if __name__ == "__main__":
   color: var(--bybit-text-primary);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-}
-
+    gap: 0.5rem;
+  }
+  
 .collapse-toggle {
   background: var(--bybit-bg-secondary);
   border: 1px solid var(--bybit-border);
@@ -1951,13 +1951,13 @@ if __name__ == "__main__":
   .endpoint-layout {
     grid-template-columns: 1fr;
   }
-  
+
   .endpoint-testing {
     width: 100%;
     border-left: none;
     border-top: 1px solid var(--bybit-border);
   }
-  
+
   .api-config-row {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -1969,7 +1969,7 @@ if __name__ == "__main__":
   .endpoint-testing {
     padding: 1.5rem;
   }
-  
+
   .method-header {
     flex-direction: column;
     align-items: flex-start;
@@ -1988,13 +1988,13 @@ if __name__ == "__main__":
   .auth-container {
     padding: 1rem;
   }
-  
+
   .status-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
+
   .result-header {
     flex-direction: column;
     align-items: flex-start;
@@ -2005,7 +2005,7 @@ if __name__ == "__main__":
 /* ===== UTILITY CLASSES ===== */
 .bybit-transition {
   transition: all 0.2s ease;
-}
+  }
 
 .bybit-text-mono {
   font-family: 'JetBrains Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
@@ -2015,7 +2015,7 @@ if __name__ == "__main__":
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-}
+  }
 
 ::-webkit-scrollbar-track {
   background: var(--bybit-bg-secondary);
@@ -2025,7 +2025,7 @@ if __name__ == "__main__":
 ::-webkit-scrollbar-thumb {
   background: var(--bybit-primary);
   border-radius: 4px;
-}
+  }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--bybit-primary-dark);

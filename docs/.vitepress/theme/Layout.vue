@@ -4,6 +4,7 @@
     <template #layout-top>
       <NavigationController />
     </template>
+    <!-- Удаляем кнопку переключения навигации из сайдбара -->
   </Layout>
 </template>
 

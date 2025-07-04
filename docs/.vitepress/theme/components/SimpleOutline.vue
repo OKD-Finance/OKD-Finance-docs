@@ -14,7 +14,7 @@
       @dblclick="resetPosition"
       :title="'Drag to move • Double-click to reset • ' + (isCollapsed ? 'Expand outline' : 'Collapse outline')"
     >
-      <h4>📋 On this page</h4>
+    <h4>📋 On this page</h4>
       <button @click="toggleOutline" class="outline-toggle-btn" :title="isCollapsed ? 'Expand outline' : 'Collapse outline'">
         {{ isCollapsed ? '+' : '−' }}
       </button>
