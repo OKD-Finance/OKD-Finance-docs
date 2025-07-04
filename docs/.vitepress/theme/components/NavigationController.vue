@@ -1,57 +1,6 @@
 <template>
   <div class="navigation-controller">
-    <!-- Компактная плавающая навигация -->
-    <div 
-      v-if="isFloatingMode" 
-      class="floating-nav"
-      :class="{ 'floating-nav--hidden': !isNavVisible }"
-      ref="floatingNav"
-    >
-      <div class="floating-nav-header">
-        <div class="floating-nav-handle" @mousedown="startDrag">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0-6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9 2-2 2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9 2-2 2z"/>
-          </svg>
-        </div>
-        <button class="floating-nav-pin" @click="toggleFloatingMode" title="Закрепить навигацию">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M14,4V8L15,7V16H13V10H11V16H9V7L10,8V4H14M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-          </svg>
-        </button>
-        <button class="floating-nav-close" @click="toggleNavigation" title="Скрыть навигацию">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
-          </svg>
-        </button>
-      </div>
-      
-      <div class="floating-nav-content">
-        <div class="floating-nav-sections">
-          <div v-for="section in navigationSections" :key="section.title" class="floating-nav-section">
-            <h4 @click="toggleSection(section.title)">
-              {{ section.title }}
-              <svg 
-                :class="{ 'rotated': section.expanded }"
-                width="12" height="12" viewBox="0 0 24 24" fill="currentColor"
-              >
-                <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
-              </svg>
-            </h4>
-            <ul v-if="section.expanded" class="floating-nav-links">
-              <li v-for="link in section.links" :key="link.text">
-                                 <a 
-                   :href="link.link" 
-                   :class="{ 'active': isCurrentPage(link.link) }"
-                   @click="onLinkClick"
-                 >
-                   {{ link.text }}
-                 </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Мобильная кнопка меню будет отображаться здесь, если она используется -->
   </div>
 </template>
 
@@ -206,218 +155,156 @@ const stopDrag = () => {
   isDragging.value = false
   document.removeEventListener('mousemove', handleDrag)
   document.removeEventListener('mouseup', stopDrag)
-  document.body.style.userSelect = ''
   
   // Сохранить позицию
-  if (typeof localStorage !== 'undefined') {
-    localStorage.setItem('nav-position', JSON.stringify(floatingPosition.value))
+  if (window.navigationController && floatingNav.value) {
+    const settings = window.navigationController.loadSettings()
+    settings.floatingPosition = {
+      x: floatingNav.value.getBoundingClientRect().left,
+      y: floatingNav.value.getBoundingClientRect().top
+    }
+    window.navigationController.saveSettings(settings)
   }
 }
 
-// Горячие клавиши
-const handleKeydown = (e) => {
-  if (typeof window === 'undefined' || typeof document === 'undefined') {
-    return
-  }
-  
-  if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
-    e.preventDefault()
-    toggleNavigation()
-  }
-  
-  if ((e.ctrlKey || e.metaKey) && e.key === 'm') {
-    e.preventDefault()
-    toggleFloatingMode()
-  }
-}
-
-// Инициализация
 onMounted(() => {
-  // Убедиться что мы в браузере
-  if (typeof window === 'undefined' || typeof document === 'undefined') {
-    return
-  }
-  
-  // Восстановление состояния и позиции из localStorage
-  if (typeof localStorage !== 'undefined') {
-    const savedNavVisible = localStorage.getItem('nav-visible')
-    if (savedNavVisible !== null) {
-      isNavVisible.value = savedNavVisible === 'true'
-    }
+  if (typeof window !== 'undefined') {
+    // Инициализировать настройки
+    if (!window.navigationController) {
+      window.navigationController = {
+        settings: {},
+        loadSettings: () => {
+          try {
+            return JSON.parse(localStorage.getItem('navigationControllerSettings')) || { navVisible: true, floatingMode: false, floatingPosition: { x: 20, y: 100 } }
+          } catch (e) {
+            console.error('Failed to load navigation settings from localStorage:', e)
+            return { navVisible: true, floatingMode: false, floatingPosition: { x: 20, y: 100 } }
+          }
+        },
+        saveSettings: (settings) => {
+          try {
+            localStorage.setItem('navigationControllerSettings', JSON.stringify(settings))
+          } catch (e) {
+            console.error('Failed to save navigation settings to localStorage:', e)
+          }
+        },
+        applySettings: (settings) => {
+          isNavVisible.value = settings.navVisible
+          isFloatingMode.value = settings.floatingMode
+          floatingPosition.value = settings.floatingPosition
+          
+          document.body.classList.toggle('nav-hidden', !settings.navVisible)
+          document.documentElement.classList.toggle('nav-hidden', !settings.navVisible)
+          document.body.classList.toggle('nav-floating-mode', settings.floatingMode)
+          document.documentElement.classList.toggle('nav-floating-mode', settings.floatingMode)
 
-    const savedFloatingMode = localStorage.getItem('nav-floating-mode')
-    if (savedFloatingMode !== null) {
-      isFloatingMode.value = savedFloatingMode === 'true'
-    }
-
-    const savedPosition = localStorage.getItem('nav-position')
-    if (savedPosition) {
-      try {
-        floatingPosition.value = JSON.parse(savedPosition)
-      } catch (e) {
-        console.error('Failed to parse saved nav position:', e)
+          if (floatingNav.value) {
+            floatingNav.value.style.left = settings.floatingPosition.x + 'px'
+            floatingNav.value.style.top = settings.floatingPosition.y + 'px'
+          }
+        },
+        toggleNavigation: toggleNavigation, // Экспортируем функцию
+        toggleFloatingMode: toggleFloatingMode, // Экспортируем функцию
+        isNavVisible: isNavVisible, // Экспортируем состояние
+        isFloatingMode: isFloatingMode, // Экспортируем состояние
+        floatingPosition: floatingPosition // Экспортируем состояние
       }
     }
-  }
+    window.navigationController.applySettings(window.navigationController.loadSettings())
 
-  // Применяем начальное состояние к DOM
-  document.body.classList.toggle('nav-hidden', !isNavVisible.value)
-  document.documentElement.classList.toggle('nav-hidden', !isNavVisible.value)
-  document.body.classList.toggle('nav-floating-mode', isFloatingMode.value)
-  document.documentElement.classList.toggle('nav-floating-mode', isFloatingMode.value)
-
-  // Глобально раскрываем методы и состояние для использования вне компонента
-  if (typeof window !== 'undefined') {
-    if (!window.navigationController) {
-      window.navigationController = {}
-    }
-    window.navigationController.toggleNavigation = toggleNavigation
-    window.navigationController.toggleFloatingMode = toggleFloatingMode
-    Object.defineProperty(window.navigationController, 'isNavVisible', {
-      get: () => isNavVisible.value,
-      enumerable: true,
-      configurable: true
+    // Обновлять позицию при изменении размера окна
+    window.addEventListener('resize', () => {
+      if (isFloatingMode.value && floatingNav.value) {
+        const maxX = window.innerWidth - 300
+        const maxY = window.innerHeight - 400
+        floatingPosition.value.x = Math.max(0, Math.min(maxX, floatingPosition.value.x))
+        floatingPosition.value.y = Math.max(0, Math.min(maxY, floatingPosition.value.y))
+        floatingNav.value.style.left = floatingPosition.value.x + 'px'
+        floatingNav.value.style.top = floatingPosition.value.y + 'px'
+      }
     })
-    Object.defineProperty(window.navigationController, 'isFloatingMode', {
-      get: () => isFloatingMode.value,
-      enumerable: true,
-      configurable: true
-    })
-  }
-
-  window.addEventListener('keydown', handleKeydown)
-  
-  // Автоматически переключиться в плавающий режим на мобильных устройствах
-  if (typeof window !== 'undefined' && window.innerWidth < 768 && !isFloatingMode.value) {
-    toggleFloatingMode()
   }
 })
 
-onUnmounted(() => {
-  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-    document.removeEventListener('keydown', handleKeydown)
-    document.removeEventListener('mousemove', handleDrag)
-    document.removeEventListener('mouseup', stopDrag)
-  }
-})
 </script>
 
 <style scoped>
+/* Стили для NavigationController */
 .navigation-controller {
-  position: relative;
+  /* Это основной контейнер для контроллера. 
+     Он может быть скрыт или показан в зависимости от режима навигации. */
 }
 
-.nav-toggle-btn {
-  position: fixed;
-  top: 80px;
-  right: 20px;
-  z-index: 1001;
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
-  padding: 8px;
-  color: var(--vp-c-text-1);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.nav-toggle-btn:hover {
-  background: var(--vp-c-bg-elv);
-  border-color: var(--vp-c-brand-1);
-}
-
+/* Компактная плавающая навигация */
 .floating-nav {
   position: fixed;
+  top: 100px;
+  left: 20px;
   width: 280px;
-  max-height: 400px;
-  background: var(--vp-c-bg);
+  max-height: 80vh;
+  background-color: var(--vp-c-bg);
   border: 1px solid var(--vp-c-border);
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  backdrop-filter: blur(12px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  z-index: 10000; /* Убедитесь, что она всегда поверх других элементов */
 }
 
 .floating-nav--hidden {
+  transform: translateX(-100%);
   opacity: 0;
-  transform: translateY(-10px);
   pointer-events: none;
 }
 
 .floating-nav-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 8px;
+  align-items: center;
+  padding: 10px 15px;
   border-bottom: 1px solid var(--vp-c-border);
-  background: var(--vp-c-bg-elv);
-  border-radius: 8px 8px 0 0;
+  cursor: grab;
 }
 
 .floating-nav-handle {
-  cursor: move;
-  padding: 4px;
+  cursor: grab;
+  padding: 5px;
+  display: flex;
+  align-items: center;
   color: var(--vp-c-text-2);
-  border-radius: 4px;
-  transition: background 0.2s ease;
 }
 
-.floating-nav-handle:hover {
-  background: var(--vp-c-bg);
-}
-
-.floating-nav-pin,
-.floating-nav-close {
+.floating-nav-pin, .floating-nav-close {
   background: none;
   border: none;
   color: var(--vp-c-text-2);
   cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
+  padding: 5px;
+  display: flex;
+  align-items: center;
 }
 
-.floating-nav-pin:hover,
-.floating-nav-close:hover {
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
+.floating-nav-pin:hover, .floating-nav-close:hover {
+  color: var(--vp-c-brand-1);
 }
 
 .floating-nav-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 12px;
-}
-
-.floating-nav-sections {
-  display: flex;
-  flex-direction: column;
-}
-
-.floating-nav-section {
-  margin-bottom: 12px;
+  padding: 15px;
 }
 
 .floating-nav-section h4 {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--vp-c-text-1);
-  margin: 0 0 8px 0;
+  margin: 0;
+  padding: 10px 0;
   cursor: pointer;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 4px;
-  border-radius: 4px;
-  transition: background 0.2s ease;
+  align-items: center;
+  color: var(--vp-c-text-1);
+  transition: color 0.2s ease;
 }
 
 .floating-nav-section h4:hover {
-  background: var(--vp-c-bg-elv);
+  color: var(--vp-c-brand-1);
 }
 
 .floating-nav-section h4 svg {
@@ -432,56 +319,51 @@ onUnmounted(() => {
   list-style: none;
   padding: 0;
   margin: 0;
+  border-left: 1px solid var(--vp-c-divider);
+  margin-left: 6px;
 }
 
-.floating-nav-links li {
-  margin-bottom: 4px;
-}
-
-.floating-nav-links a {
+.floating-nav-links li a {
   display: block;
+  padding: 8px 10px;
+  margin: 4px 0;
   color: var(--vp-c-text-2);
   text-decoration: none;
-  font-size: 0.85rem;
-  padding: 6px 8px;
   border-radius: 4px;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.floating-nav-links a:hover,
-.floating-nav-links a.active {
-  background: var(--vp-c-brand-soft);
+.floating-nav-links li a:hover {
+  background-color: var(--vp-c-bg-soft);
   color: var(--vp-c-brand-1);
 }
 
-/* Скрыть стандартную навигацию VitePress в плавающем режиме */
-:global(.nav-floating-mode .VPSidebar) {
-  display: none !important;
+.floating-nav-links li a.active {
+  background-color: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  font-weight: 500;
 }
 
-:global(.nav-floating-mode .VPContent.has-sidebar) {
-  padding-left: 0 !important;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
+/* Стили для мобильной версии */
+@media (max-width: 767px) {
   .floating-nav {
-    width: 260px;
-    max-height: 350px;
+    position: fixed; /* Keep fixed for now */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: var(--vp-c-bg);
+    padding: 20px;
+    transform: translateX(0%); /* Reset transform for mobile */
+    opacity: 1; /* Ensure visible for mobile */
   }
-  
-  .nav-toggle-btn {
-    top: 70px;
-    right: 15px;
+
+  .floating-nav--hidden {
+    transform: translateX(-100%);
+    opacity: 0;
   }
 }
 
-@media (max-width: 480px) {
-  .floating-nav {
-    width: calc(100vw - 40px);
-    left: 20px !important;
-    right: 20px !important;
-    max-height: 300px;
-  }
-}
 </style> 
