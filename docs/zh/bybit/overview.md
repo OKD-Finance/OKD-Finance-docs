@@ -413,54 +413,44 @@ class BybitRiskManager {
             side: side === 'buy' ? 'sell' : 'buy',
             type: 'limit',
             price: takeProfitPrice.toFixed(2),
-            exchange: 'bybit',
-            category: 'linear',
-            reduceOnly: true
-        });
-    }
-}
+```mermaid
+ 
+subgraph "客户端应用 Client Applications"
+     A["OKD Finance 客户端 OKD Finance Client"]
+ end
+ 
+subgraph "网关 Gateway"
+     B["OKD 网关 API OKD Gateway API"]
+ end
+ 
+subgraph "订单路由层 Order Routing Layer"
+     C["订单路由 Order Router"]
+     D["内部撮合引擎 Internal Matching Engine"]
+     E["Bybit 集成层 Bybit Integration Layer"]
+     F["Bybit API"]
+ end
+ 
+subgraph "流动性池 Liquidity Pools"
+     G(OKD 流动性池 OKD Liquidity Pool)
+     H(Bybit 流动性池 Bybit Liquidity Pool)
+ end
+ 
+subgraph "市场数据流 Market Data Flow"
+     I["市场数据聚合器 Market Data Aggregator"]
+     J["OKD 市场数据 OKD Market Data"]
+     K["Bybit 市场数据 Bybit Market Data"]
+ end
+ 
+A --> B
+B --> C
+C --> D
+C --> E
+E --> F
+D --> G
+F --> H
+I --> J
+I --> K
 ```
-
-## 高级功能
-
-### 批量订单操作
-
-```javascript
-async function batchOrderOperations() {
-    const orders = [
-        {
-            symbol: 'BNBETH',
-            side: 'buy',
-            type: 'limit',
-            quantity: '0.001',
-            price: '42000.00'
-        },
-        {
-            symbol: 'ETHUSDT',
-            side: 'buy',
-            type: 'limit',
-            quantity: '0.01',
-            price: '2400.00'
-        }
-    ];
-    
-    try {
-        const results = await client.bybit.trading.batchPlaceOrders({
-            orders,
-            category: 'spot'
-        });
-        
-        console.log('批量下单结果:', results);
-        return results;
-    } catch (error) {
-        console.error('批量下单失败:', error);
-    }
-}
-```
-
-### 条件订单
-
-```javascript
 async function placeConditionalOrder() {
     const conditionalOrder = {
         symbol: 'BNBETH',
@@ -639,3 +629,45 @@ class BybitMonitor {
 - 支持：support@okd.finance
 - GitHub：[https://github.com/OKD-Finance/Backend](https://github.com/OKD-Finance/Backend)
 - Bybit 官方文档：[https://bybit-exchange.github.io/docs/](https://bybit-exchange.github.io/docs/)
+
+## 架构集成架构
+
+```mermaid
+graph TD
+
+subgraph "客户端应用 Client Applications"
+    A["OKD Finance 客户端 OKD Finance Client"]
+end
+
+subgraph "网关 Gateway"
+    B["OKD 网关 API OKD Gateway API"]
+end
+
+subgraph "订单路由层 Order Routing Layer"
+    C["订单路由 Order Router"]
+    D["内部撮合引擎 Internal Matching Engine"]
+    E["Bybit 集成层 Bybit Integration Layer"]
+    F["Bybit API"]
+end
+
+subgraph "流动性池 Liquidity Pools"
+    G(OKD 流动性池 OKD Liquidity Pool)
+    H(Bybit 流动性池 Bybit Liquidity Pool)
+end
+
+subgraph "市场数据流 Market Data Flow"
+    I["市场数据聚合器 Market Data Aggregator"]
+    J["OKD 市场数据 OKD Market Data"]
+    K["Bybit 市场数据 Bybit Market Data"]
+end
+
+A --> B
+B --> C
+C --> D
+C --> E
+E --> F
+D --> G
+F --> H
+I --> J
+I --> K
+```

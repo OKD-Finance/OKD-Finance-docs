@@ -17,33 +17,47 @@ OKD Finance 交易 API 提供全面的加密货币交易功能，支持多个主
 ### 交易类型
 - **现货交易**: 即时买卖加密货币
 - **保证金交易**: 使用杠杆进行交易
-- **期货交易**: 合约到期交割
-- **永续合约**: 无到期日的合约交易
-- **期权交易**: 买卖期权合约
-
-### 订单类型
-- **市价单**: 以当前市场价格立即执行
-- **限价单**: 以指定价格或更好价格执行
-- **止损单**: 价格达到指定水平时触发
-- **止损限价单**: 结合止损和限价功能
-- **冰山订单**: 隐藏大额订单规模
-- **时间加权平均价格 (TWAP)**: 分散执行大额订单
-
-## 快速开始
-
-### 1. 初始化客户端
-
-```javascript
-const { OKDClient } = require('okd-finance-sdk');
-
-const client = new OKDClient({
-    apiKey: process.env.OKD_API_KEY,
-    apiSecret: process.env.OKD_API_SECRET,
-    sandbox: false // 生产环境设置为 false
-});
+```mermaid
+ 
+graph TD
+ 
+subgraph "Client Applications"
+     WEB[Web Trading Terminal]
+     MOBILE[Mobile App]
+     API_CLIENT[API Client]
+ end
+ 
+subgraph "OKD Finance Trading Layer"
+     TRADING_API[Trading API]
+     ORDER_MGMT[Order Management]
+     RISK_MGMT[Risk Management]
+     PORTFOLIO[Portfolio Service]
+ end
+ 
+subgraph "Market Data"
+     PRICE_FEED[Price Feed]
+     ORDERBOOK[Order Book]
+     TRADES[Trade History]
+ end
+ 
+subgraph "External Exchange"
+     BYBIT[Bybit Exchange]
+     BYBIT_WS[Bybit WebSocket]
+ end
+ 
+WEB --> TRADING_API
+MOBILE --> TRADING_API
+API_CLIENT --> TRADING_API
+ 
+TRADING_API --> ORDER_MGMT
+TRADING_API --> RISK_MGMT
+TRADING_API --> PORTFOLIO
+ 
+ORDER_MGMT --> BYBIT
+PRICE_FEED --> BYBIT_WS
+ORDERBOOK --> BYBIT_WS
+TRADES --> BYBIT_WS
 ```
-
-### 2. 获取市场数据
 
 ```javascript
 async function getMarketOverview() {
