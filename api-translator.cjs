@@ -34,7 +34,6 @@ class APITranslator {
         'Example': 'Пример',
         'Examples': 'Примеры',
         'Response Examples': 'Примеры ответов',
-        'Code Examples': 'Примеры кода',
         'Description': 'Описание',
         'Required': 'Обязательный',
         'Optional': 'Необязательный',
@@ -244,7 +243,6 @@ class APITranslator {
         'with JWT tokens': 'с JWT токенами',
         'Interactive Testing': 'Интерактивное тестирование',
         'on every endpoint': 'на каждом эндпоинте',
-        'Code Examples': 'Примеры кода',
         'in multiple languages': 'на нескольких языках',
         'Real Response Examples': 'Примеры реальных ответов',
         'from live API': 'из реального API',
@@ -263,7 +261,6 @@ class APITranslator {
         'Example': '示例',
         'Examples': '示例',
         'Response Examples': '响应示例',
-        'Code Examples': '代码示例',
         'Description': '描述',
         'Required': '必需',
         'Optional': '可选',
@@ -473,7 +470,6 @@ class APITranslator {
         'with JWT tokens': '使用 JWT 令牌',
         'Interactive Testing': '交互式测试',
         'on every endpoint': '在每个端点上',
-        'Code Examples': '代码示例',
         'in multiple languages': '多种语言',
         'Real Response Examples': '真实响应示例',
         'from live API': '来自实时 API',
@@ -566,7 +562,7 @@ class APITranslator {
     return translatedContent;
   }
 
-  async callTranslationAPI(content, targetLang) {
+  async callTranslationAPI(content) {
     // В данный момент используем только mock сервис, внешние API отключены.
     // Этот метод не будет вызываться, если translationService установлен в 'mock'.
     return content;
