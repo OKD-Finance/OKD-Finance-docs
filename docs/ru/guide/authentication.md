@@ -4,27 +4,23 @@
 
 ## Схема аутентификации
 
-```text
-@startuml
-!theme aws-orange
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Gateway
+    participant Firebase
+    participant Services
 
-participant "Client" as Client
-participant "Gateway" as Gateway  
-participant "Firebase" as Firebase
-participant "Services" as Services
-
-Client -> Firebase: Login (email/password)
-Firebase --> Client: Firebase Token
-Client -> Gateway: Request + Firebase Token
-Gateway -> Firebase: Verify Token
-Firebase --> Gateway: User Info
-Gateway -> Gateway: Generate JWT
-Gateway --> Client: JWT Token
-Client -> Services: API Calls + JWT
-Services -> Gateway: Verify JWT
-Gateway --> Services: User Context
-
-@enduml
+    Client->>Firebase: Login (email/password)
+    Firebase-->>Client: Firebase Token
+    Client->>Gateway: Request + Firebase Token
+    Gateway->>Firebase: Verify Token
+    Firebase-->>Gateway: User Info
+    Gateway->>Gateway: Generate JWT
+    Gateway-->>Client: JWT Token
+    Client->>Services: API Calls + JWT
+    Services->>Gateway: Verify JWT
+    Gateway-->>Services: User Context
 ```
 
 ## Firebase Authentication

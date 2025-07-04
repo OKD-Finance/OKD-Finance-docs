@@ -40,50 +40,46 @@ OKD Finance is a modern cryptocurrency exchange platform that provides:
 
 ## System Architecture
 
-```text
-@startuml
-!theme aws-orange
-
-package "Client Layer" {
-    [Web Application] as WEB
-    [Mobile App] as MOBILE
-    [API Clients] as API
-}
-
-package "Gateway" {
-    [API Gateway] as GATEWAY
-    [Authentication] as AUTH
-}
-
-package "Core Services" {
-    [User Service] as USER
-    [Wallet Service] as WALLET
-    [Trading Service] as TRADING
-    [KYC Service] as KYC
-}
-
-package "External" {
-    [Bybit Exchange] as BYBIT
-    [Firebase Auth] as FIREBASE
-}
-
+```mermaid
+ 
+graph TD
+ 
+subgraph "Client Layer"
+     WEB[Web Application]
+     MOBILE[Mobile App]
+     API[API Clients]
+ end
+ 
+subgraph "Gateway"
+     GATEWAY[API Gateway]
+     AUTH[Authentication]
+ end
+ 
+subgraph "Core Services"
+     USER[User Service]
+     WALLET[Wallet Service]
+     TRADING[Trading Service]
+     KYC[KYC Service]
+ end
+ 
+subgraph "External"
+     BYBIT[Bybit Exchange]
+     FIREBASE[Firebase Auth]
+ end
+ 
 WEB --> GATEWAY
 MOBILE --> GATEWAY
 API --> GATEWAY
-
+ 
 GATEWAY --> AUTH
 GATEWAY --> USER
 GATEWAY --> WALLET
 GATEWAY --> TRADING
 GATEWAY --> KYC
-
+ 
 TRADING --> BYBIT
 AUTH --> FIREBASE
-
-@enduml
 ```
-
-## Getting Started
 
 1. **[Quick Start Guide](/en/guide/quick-start)** - Set up your account in minutes
 2. **[API Overview](/en/api/overview)** - Integrate with our APIs

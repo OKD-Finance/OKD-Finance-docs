@@ -48,24 +48,20 @@ curl -X POST "https://develop.okd.finance/api/bybit/connect" \
 
 ## Trading Flow
 
-```text
-@startuml
-!theme aws-orange
+```mermaid
+sequenceDiagram
+    participant Client
+    participant OKD_API
+    participant Bybit
 
-participant "Client" as Client
-participant "OKD API" as OKD_API
-participant "Bybit" as Bybit
+    Client->>OKD_API: Place Order
+    OKD_API->>OKD_API: Validate & Process
+    OKD_API->>Bybit: Route Order
+    Bybit-->>OKD_API: Order Confirmation
+    OKD_API-->>Client: Order Status
 
-Client -> OKD_API: Place Order
-OKD_API -> OKD_API: Validate & Process
-OKD_API -> Bybit: Route Order
-Bybit --> OKD_API: Order Confirmation
-OKD_API --> Client: Order Status
-
-Bybit -> OKD_API: Order Updates
-OKD_API -> Client: Real-time Updates
-
-@enduml
+    Bybit->>OKD_API: Order Updates
+    OKD_API->>Client: Real-time Updates
 ```
 
 ## Supported Features

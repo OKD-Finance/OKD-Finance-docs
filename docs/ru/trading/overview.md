@@ -13,33 +13,32 @@
 
 ### Архитектура торговой системы
 
-```text
-@startuml
-!theme aws-orange
+```mermaid
+graph TD
 
-package "Client Applications" {
-    [Web Trading Terminal] as WEB
-    [Mobile App] as MOBILE
-    [API Client] as API_CLIENT
-}
+subgraph "Client Applications"
+    WEB[Web Trading Terminal]
+    MOBILE[Mobile App]
+    API_CLIENT[API Client]
+end
 
-package "OKD Finance Trading Layer" {
-    [Trading API] as TRADING_API
-    [Order Management] as ORDER_MGMT
-    [Risk Management] as RISK_MGMT
-    [Portfolio Service] as PORTFOLIO
-}
+subgraph "OKD Finance Trading Layer"
+    TRADING_API[Trading API]
+    ORDER_MGMT[Order Management]
+    RISK_MGMT[Risk Management]
+    PORTFOLIO[Portfolio Service]
+end
 
-package "Market Data" {
-    [Price Feed] as PRICE_FEED
-    [Order Book] as ORDERBOOK
-    [Trade History] as TRADES
-}
+subgraph "Market Data"
+    PRICE_FEED[Price Feed]
+    ORDERBOOK[Order Book]
+    TRADES[Trade History]
+end
 
-package "External Exchange" {
-    [Bybit Exchange] as BYBIT
-    [Bybit WebSocket] as BYBIT_WS
-}
+subgraph "External Exchange"
+    BYBIT[Bybit Exchange]
+    BYBIT_WS[Bybit WebSocket]
+end
 
 WEB --> TRADING_API
 MOBILE --> TRADING_API
@@ -53,8 +52,6 @@ ORDER_MGMT --> BYBIT
 PRICE_FEED --> BYBIT_WS
 ORDERBOOK --> BYBIT_WS
 TRADES --> BYBIT_WS
-
-@enduml
 ```
 
 ## Торговые пары

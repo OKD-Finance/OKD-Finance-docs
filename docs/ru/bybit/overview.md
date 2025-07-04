@@ -15,37 +15,48 @@ OKD Finance предоставляет полную интеграцию с Bybi
 
 ### Архитектура интеграции
 
-```text
-@startuml
-!theme aws-orange
+```mermaid
+graph TD
+    subgraph "Frontend Layer"
+        A["OKD Finance Client"]
+    end
 
-component "OKD Finance Client" as A #e1f5fe
-component "OKD Gateway API" as B #f3e5f5
-component "Order Router" as C #fff3e0
-component "Internal Matching Engine" as D
-component "Bybit Integration Layer" as E #e8f5e8
-component "Bybit API" as F #e8f5e8
+    subgraph "API Gateway"
+        B["OKD Gateway API"]
+    end
 
-database "OKD Liquidity Pool" as G
-database "Bybit Liquidity Pool" as H
+    subgraph "Core Services"
+        C["Order Router"]
+        D["Internal Matching Engine"]
+        E["Bybit Integration Layer"]
+    end
 
-component "Market Data Aggregator" as I
-component "OKD Market Data" as J
-component "Bybit Market Data" as K
+    subgraph "External Integrations"
+        F["Bybit API"]
+    end
 
-A --> B
-B --> C
-C --> D
-C --> E
-E --> F
+    subgraph "Data Layer"
+        G(OKD Liquidity Pool)
+        H(Bybit Liquidity Pool)
+    end
 
-D --> G
-F --> H
+    subgraph "Market Data"
+        I["Market Data Aggregator"]
+        J["OKD Market Data"]
+        K["Bybit Market Data"]
+    end
 
-I --> J
-I --> K
+    A --> B
+    B --> C
+    C --> D
+    C --> E
+    E --> F
 
-@enduml
+    D --> G
+    F --> H
+
+    I --> J
+    I --> K
 ```
 
 ## Поддерживаемые функции
