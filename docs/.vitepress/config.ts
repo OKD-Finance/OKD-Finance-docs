@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from "vitepress-plugin-mermaid";
 
-export default defineConfig({
+export default withMermaid(defineConfig({
     title: 'API Documentation',
     description: 'Complete API documentation for OKD Finance platform',
     base: '/OKD-Finance-docs/',
@@ -395,4 +396,4 @@ export default defineConfig({
         },
         lineNumbers: true
     }
-}) 
+})) 
