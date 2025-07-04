@@ -2,61 +2,61 @@
 layout: page
 ---
 
-# Authentication API
+# API Аутентификации
 
 <GlobalAuth />
 
-## Check account existence by firebase token.
+## Проверить существование аккаунта по токену Firebase.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint1 />
 
-## Send confirmation code to email.
+## Отправить код подтверждения на email.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint2 />
 
-## Inits operation to create user fcm.
+## Инициирует операцию по созданию fcm пользователя.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint3 />
 
-## Inits operation to delete user fcm by device id and fcm.
+## Инициирует операцию по удалению fcm пользователя по ID устройства и fcm.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint4 />
 
-## Get Google link for lgoin/register.
+## Получить ссылку Google для входа/регистрации.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint5 />
 
-## Regenerate a pair of authenticate tokens if refresh token is valid
+## Перегенерировать пару токенов аутентификации, если токен обновления действителен
 ! Need refresh token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint6 />
 
-## Inits operation to change current user locale.
+## Инициирует операцию по изменению текущей локали пользователя.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint7 />
 
-## Get notifications for user
+## Получить уведомления для пользователя
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint8 />
 
-## Mark all/group of notifications as viewed. Body is optional.
+## Пометить все/группу уведомлений как просмотренные. Тело запроса необязательно.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint9 />
 
-## Delete all/group of notifications. Body is optional.
+## Удалить все/группу уведомлений. Тело запроса необязательно.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint10 />
 
-## Mark notification as viewed.
+## Пометить уведомление как просмотренное.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint11 />
@@ -78,82 +78,82 @@ It's no need to set old/new password for firebase account.
 
 <InteractiveAuthenticationAPIEndpoint14 />
 
-## Finishes restoration of current user password.
+## Завершает восстановление текущего пароля пользователя.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint15 />
 
-## Inits restoration of current user password.
+## Инициирует восстановление текущего пароля пользователя.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint16 />
 
-## Check restoration code.
+## Проверить код восстановления.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint17 />
 
-## GetProfile returns information about current user.
+## GetProfile возвращает информацию о текущем пользователе.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint18 />
 
-## SetProfile sets some fields in profile of current user. All fields are optional.
+## SetProfile устанавливает некоторые поля в профиле текущего пользователя. Все поля необязательны.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint19 />
 
-## Check possibility to remove account.
+## Проверить возможность удаления аккаунта.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint20 />
 
-## Inits operation to remove account. Reason maximum length is 200.
+## Инициирует операцию по удалению аккаунта. Максимальная длина причины - 200.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint21 />
 
-## Confirm login operation.
+## Подтвердить операцию входа.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint22 />
 
-## Logins user and return pair of tokens or login operation with hints.
+## Выполняет вход пользователя и возвращает пару токенов или операцию входа с подсказками.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint23 />
 
-## Sign in by firebase request.
+## Войти с помощью запроса Firebase.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint24 />
 
-## Sign in by Google OAuth2 request.
+## Войти с помощью запроса Google OAuth2.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint25 />
 
-## Resend email/phone codes for sign-in process.
+## Повторно отправить коды email/телефона для процесса входа.
 Only one of flags should be set.
 
 <InteractiveAuthenticationAPIEndpoint26 />
 
-## Logout remove user sessions and makes the token invalid.
+## Выйти из системы, удалить сессии пользователя и сделать токен недействительным.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint27 />
 
-## Registration save user in database and send verification url to email.
+## Регистрация сохраняет пользователя в базе данных и отправляет URL подтверждения на email.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint28 />
 
-## Sign up by Google OAuth2 request.
+## Зарегистрироваться с помощью запроса Google OAuth2.
 No description available
 
 <InteractiveAuthenticationAPIEndpoint29 />
 
-## SetProfile sets profile flags of current user.
+## SetProfile устанавливает флаги профиля текущего пользователя.
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint30 />

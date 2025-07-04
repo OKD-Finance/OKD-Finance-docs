@@ -2,61 +2,61 @@
 layout: page
 ---
 
-# Authentication API
+# 身份验证 API
 
 <GlobalAuth />
 
-## Check account existence by firebase token.
+## 通过 Firebase 令牌检查账户是否存在。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint1 />
 
-## Send confirmation code to email.
+## 发送确认码到邮箱。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint2 />
 
-## Inits operation to create user fcm.
+## 启动创建用户 FCM 的操作。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint3 />
 
-## Inits operation to delete user fcm by device id and fcm.
+## 启动通过设备 ID 和 FCM 删除用户 FCM 的操作。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint4 />
 
-## Get Google link for lgoin/register.
+## 获取 Google 登录/注册链接。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint5 />
 
-## Regenerate a pair of authenticate tokens if refresh token is valid
+## 如果刷新令牌有效，重新生成一对认证令牌
 ! Need refresh token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint6 />
 
-## Inits operation to change current user locale.
+## 启动更改当前用户语言环境的操作。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint7 />
 
-## Get notifications for user
+## 获取用户通知
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint8 />
 
-## Mark all/group of notifications as viewed. Body is optional.
+## 将所有/组通知标记为已读。请求体可选。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint9 />
 
-## Delete all/group of notifications. Body is optional.
+## 删除所有/组通知。请求体可选。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint10 />
 
-## Mark notification as viewed.
+## 将通知标记为已读。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint11 />
@@ -78,82 +78,82 @@ It's no need to set old/new password for firebase account.
 
 <InteractiveAuthenticationAPIEndpoint14 />
 
-## Finishes restoration of current user password.
+## 完成当前用户密码恢复。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint15 />
 
-## Inits restoration of current user password.
+## 启动当前用户密码恢复。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint16 />
 
-## Check restoration code.
+## 检查恢复代码。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint17 />
 
-## GetProfile returns information about current user.
+## GetProfile 返回当前用户信息。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint18 />
 
-## SetProfile sets some fields in profile of current user. All fields are optional.
+## SetProfile 设置当前用户配置文件中的某些字段。所有字段都是可选的。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint19 />
 
-## Check possibility to remove account.
+## 检查删除账户的可能性。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint20 />
 
-## Inits operation to remove account. Reason maximum length is 200.
+## 启动删除账户的操作。原因最大长度为 200。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint21 />
 
-## Confirm login operation.
+## 确认登录操作。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint22 />
 
-## Logins user and return pair of tokens or login operation with hints.
+## 用户登录并返回一对令牌或带有提示的登录操作。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint23 />
 
-## Sign in by firebase request.
+## 通过 Firebase 请求登录。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint24 />
 
-## Sign in by Google OAuth2 request.
+## 通过 Google OAuth2 请求登录。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint25 />
 
-## Resend email/phone codes for sign-in process.
+## 重新发送登录过程的电子邮件/电话验证码。
 Only one of flags should be set.
 
 <InteractiveAuthenticationAPIEndpoint26 />
 
-## Logout remove user sessions and makes the token invalid.
+## 注销，移除用户会话并使令牌无效。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint27 />
 
-## Registration save user in database and send verification url to email.
+## 注册将用户保存到数据库并发送验证 URL 到电子邮件。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint28 />
 
-## Sign up by Google OAuth2 request.
+## 通过 Google OAuth2 请求注册。
 No description available
 
 <InteractiveAuthenticationAPIEndpoint29 />
 
-## SetProfile sets profile flags of current user.
+## SetProfile 设置当前用户的配置文件标志。
 ! Need access token in bearer token authorization
 
 <InteractiveAuthenticationAPIEndpoint30 />

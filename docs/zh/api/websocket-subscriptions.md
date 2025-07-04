@@ -6,7 +6,7 @@ layout: page
 
 <GlobalAuth />
 
-## Authorize websocket connection.
+## 授权 WebSocket 连接。
 Request is **{"path": "authorization", "payload": {"accessToken": "", "fingerprint": ""}}**.
 
 <InteractiveWebsocketsubscriptionsAPIEndpoint1 />
@@ -24,24 +24,24 @@ Private:
 
 <InteractiveWebsocketsubscriptionsAPIEndpoint2 />
 
-## Subscribe to symbols events.
+## 订阅交易对事件。
 Request is **{"path": "/symbols"}**. No need additional payload.
 
 <InteractiveWebsocketsubscriptionsAPIEndpoint3 />
 
-## Unsubscribe from websocket events.
+## 取消订阅 WebSocket 事件。
 Request is **{"path": "/unsubscribe", "payload": {"path": "/spot/order_events"}}**.
 Payload "path" is path of some subscription.
 
 <InteractiveWebsocketsubscriptionsAPIEndpoint4 />
 
-## Subscribe to notifications.
+## 订阅通知。
 Request is **{"path": "/user/notifications"}**. No need additional payload.
 ! Need authorization
 
 <InteractiveWebsocketsubscriptionsAPIEndpoint5 />
 
-## Subscribe to total balance events.
+## 订阅总余额事件。
 Request is **{"path": "/user/profile"}**. No need additional payload.
 ! Need authorization
 

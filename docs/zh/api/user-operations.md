@@ -2,21 +2,21 @@
 layout: page
 ---
 
-# User Operations API
+# 用户操作 API
 
 <GlobalAuth />
 
-## Cancels operation by uuid.
+## 按 UUID 取消操作。
 ! Need access token in bearer token authorization
 
 <InteractiveUserOperationsAPIEndpoint1 />
 
-## Confirms operation by uuid and code.
+## 按 UUID 和代码确认操作。
 ! Need access token in bearer token authorization
 
 <InteractiveUserOperationsAPIEndpoint2 />
 
-## Resends code to email for specified operation.
+## 为指定操作重新发送代码到电子邮件。
 ! Need access token in bearer token authorization
 
 <InteractiveUserOperationsAPIEndpoint3 />

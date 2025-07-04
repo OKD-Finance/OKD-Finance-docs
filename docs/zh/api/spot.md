@@ -2,11 +2,11 @@
 layout: page
 ---
 
-# Spot API
+# 现货 API
 
 <GlobalAuth />
 
-## Create spot order
+## 创建现货订单
 Returns spot order id and order link id. Result is described here.
 https://bybit-exchange.github.io/docs/v5/order/create-order
 
@@ -14,7 +14,7 @@ https://bybit-exchange.github.io/docs/v5/order/create-order
 
 <InteractiveSpotAPIEndpoint1 />
 
-## Cancel spot order
+## 取消现货订单
 Returns spot order id and order link id. Result is described here.
 https://bybit-exchange.github.io/docs/v5/order/cancel-order
 
@@ -22,21 +22,21 @@ https://bybit-exchange.github.io/docs/v5/order/cancel-order
 
 <InteractiveSpotAPIEndpoint2 />
 
-## List spot orders history
+## 列出现货订单历史
 https://bybit-exchange.github.io/docs/v5/order/order-list
 
 ! Need access token in bearer token authorization
 
 <InteractiveSpotAPIEndpoint3 />
 
-## List spot open orders
+## 列出现货未结订单
 https://bybit-exchange.github.io/docs/v5/order/open-order
 
 ! Need access token in bearer token authorization
 
 <InteractiveSpotAPIEndpoint4 />
 
-## List spot trades history
+## 列出现货交易历史
 https://bybit-exchange.github.io/docs/v5/order/execution
 
 ! Need access token in bearer token authorization

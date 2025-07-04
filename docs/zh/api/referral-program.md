@@ -2,51 +2,51 @@
 layout: page
 ---
 
-# Referral program API
+# 推荐计划 API
 
 <GlobalAuth />
 
-## Get list of referral link.
+## 获取推荐链接列表。
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint1 />
 
-## Add referral link.
+## 添加推荐链接。
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint2 />
 
-## Export history of fees to xlsx file
+## 将费用历史导出到 xlsx 文件
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint3 />
 
-## Get history of fees
+## 获取费用历史
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint4 />
 
-## Get public attributes of referral link.
+## 获取推荐链接的公共属性。
 No description available
 
 <InteractiveReferralprogramAPIEndpoint5 />
 
-## Get current percents of referral program.
+## 获取推荐计划的当前百分比。
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint6 />
 
-## Get header of referral program.
+## 获取推荐计划的标题。
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint7 />
 
-## Get details of referral link.
+## 获取推荐链接的详细信息。
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint8 />
 
-## Set default referral link.
+## 设置默认推荐链接。
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint9 />

@@ -10,13 +10,11 @@ function enhanceSearch() {
     // console.log('🔍 Загрузка улучшений поиска...');
 
     // Исправить z-index поисковой модалки
-    const searchElements = document.querySelectorAll(
-        '.VPLocalSearchBox, [class*="search"], [class*="Search"]'
-    );
-
-    searchElements.forEach(el => {
-        el.style.zIndex = '99999';
-    });
+    // const searchElements = document.querySelectorAll(
+    //     '.VPLocalSearchBox, [class*="search"], [class*="Search"]');
+    // searchElements.forEach(el => {
+    //     el.style.zIndex = '99999';
+    // });
 
     // Добавить горячие клавиши
     document.addEventListener('keydown', (e) => {
@@ -46,16 +44,17 @@ function enhanceSearch() {
         const searchBox = document.querySelector('.VPLocalSearchBox');
         if (searchBox) {
             // Убедиться что поиск поверх всех элементов
-            searchBox.style.zIndex = '99999';
+            // searchBox.style.zIndex = '99999';
 
             const backdrop = searchBox.querySelector('.backdrop');
             if (backdrop) {
-                backdrop.style.zIndex = '99998';
+                // backdrop.style.zIndex = '99998';
+                backdrop.style.display = 'none'; // Ensure backdrop is hidden
             }
 
             const shell = searchBox.querySelector('.shell');
             if (shell) {
-                shell.style.zIndex = '99999';
+                // shell.style.zIndex = '99999';
             }
 
             // Добавить индикатор загрузки

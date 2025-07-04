@@ -2,21 +2,21 @@
 layout: page
 ---
 
-# Wallet API
+# 钱包 API
 
 <GlobalAuth />
 
-## Get balances
+## 获取余额
 ! Need access token in bearer token authorization
 
 <InteractiveWalletAPIEndpoint1 />
 
-## Get total balance in USD
+## 获取美元总余额
 ! Need access token in bearer token authorization
 
 <InteractiveWalletAPIEndpoint2 />
 
-## Get user transactions history.
+## 获取用户交易历史。
 ! Need access token in bearer token authorization
 
 <InteractiveWalletAPIEndpoint3 />
@@ -37,7 +37,7 @@ https://bybit-exchange.github.io/docs/v5/asset/deposit/sub-deposit-addr
 
 <InteractiveWalletAPIEndpoint6 />
 
-## Reject withdrawal confirmed by user.
+## 拒绝用户确认的提现。
 ! Need Bearer token and OTP authorization
 
 <InteractiveWalletAPIEndpoint7 />

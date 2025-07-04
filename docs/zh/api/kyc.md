@@ -11,7 +11,7 @@ Receives callback messages during KYC procedure
 
 <InteractiveKYCAPIEndpoint1 />
 
-## Queries and returns temporary access token needed for KYC procedure.
+## 查询并返回 KYC 过程所需的临时访问令牌。
 ! Need access token in bearer token authorization
 
 <InteractiveKYCAPIEndpoint2 />

@@ -2,11 +2,11 @@
 layout: page
 ---
 
-# Bybit proxy API
+# API прокси Bybit
 
 <GlobalAuth />
 
-## Create internal transfer
+## Создать внутренний перевод
 Creates an internal transfer between different account types (spot, unified, etc.)
 Returns transfer ID and status. Result is described here.
 https://bybit-exchange.github.io/docs/v5/asset/transfer-inter-transfer

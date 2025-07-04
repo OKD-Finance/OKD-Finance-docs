@@ -2,11 +2,11 @@
 layout: page
 ---
 
-# Spot API
+# API Спот
 
 <GlobalAuth />
 
-## Create spot order
+## Создать спотовый ордер
 Returns spot order id and order link id. Result is described here.
 https://bybit-exchange.github.io/docs/v5/order/create-order
 
@@ -14,7 +14,7 @@ https://bybit-exchange.github.io/docs/v5/order/create-order
 
 <InteractiveSpotAPIEndpoint1 />
 
-## Cancel spot order
+## Отменить спотовый ордер
 Returns spot order id and order link id. Result is described here.
 https://bybit-exchange.github.io/docs/v5/order/cancel-order
 
@@ -22,21 +22,21 @@ https://bybit-exchange.github.io/docs/v5/order/cancel-order
 
 <InteractiveSpotAPIEndpoint2 />
 
-## List spot orders history
+## Список истории спотовых ордеров
 https://bybit-exchange.github.io/docs/v5/order/order-list
 
 ! Need access token in bearer token authorization
 
 <InteractiveSpotAPIEndpoint3 />
 
-## List spot open orders
+## Список открытых спотовых ордеров
 https://bybit-exchange.github.io/docs/v5/order/open-order
 
 ! Need access token in bearer token authorization
 
 <InteractiveSpotAPIEndpoint4 />
 
-## List spot trades history
+## Список истории спотовых сделок
 https://bybit-exchange.github.io/docs/v5/order/execution
 
 ! Need access token in bearer token authorization

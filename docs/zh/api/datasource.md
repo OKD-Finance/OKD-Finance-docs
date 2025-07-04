@@ -2,7 +2,7 @@
 layout: page
 ---
 
-# Datasource API
+# 数据源 API
 
 <GlobalAuth />
 
@@ -11,7 +11,7 @@ get coin info by asset id and source id
 
 <InteractiveDatasourceAPIEndpoint1 />
 
-## Get datasource assets price.
+## 获取数据源资产价格。
 No description available
 
 <InteractiveDatasourceAPIEndpoint2 />
@@ -21,7 +21,7 @@ get datasource prices history by asset id, coin id, source id and interval endpo
 
 <InteractiveDatasourceAPIEndpoint3 />
 
-## Get datasource list.
+## 获取数据源列表。
 No description available
 
 <InteractiveDatasourceAPIEndpoint4 />

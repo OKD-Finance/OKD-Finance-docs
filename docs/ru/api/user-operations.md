@@ -2,21 +2,21 @@
 layout: page
 ---
 
-# User Operations API
+# API Операций Пользователя
 
 <GlobalAuth />
 
-## Cancels operation by uuid.
+## Отменяет операцию по uuid.
 ! Need access token in bearer token authorization
 
 <InteractiveUserOperationsAPIEndpoint1 />
 
-## Confirms operation by uuid and code.
+## Подтверждает операцию по uuid и коду.
 ! Need access token in bearer token authorization
 
 <InteractiveUserOperationsAPIEndpoint2 />
 
-## Resends code to email for specified operation.
+## Повторно отправляет код на email для указанной операции.
 ! Need access token in bearer token authorization
 
 <InteractiveUserOperationsAPIEndpoint3 />

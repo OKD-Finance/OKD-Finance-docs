@@ -2,7 +2,7 @@
 layout: page
 ---
 
-# ByBit REST endpoints API
+# API REST эндпоинтов ByBit
 
 <GlobalAuth />
 
