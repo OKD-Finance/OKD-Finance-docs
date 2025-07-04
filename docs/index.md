@@ -45,7 +45,6 @@ OKD Finance provides multiple API services:
 - **Gateway API** - Main trading and account management
 - **Admin API** - Administrative functions
 - **External Gateway** - Third-party integrations
-- **Genesis API** - Core system operations
 
 ### Features
 
