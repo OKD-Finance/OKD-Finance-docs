@@ -1,11 +1,8 @@
 /* eslint-env browser */
-/* eslint-disable no-console */
 /* global setInterval */
 // Временная система отладки навигации
 function debugNavigation() {
     if (typeof window === 'undefined') return;
-
-    console.log('🔧 Debug: Инициализация отладки навигации...');
 
     // Простая функция переключения навигации
     function toggleSidebar() {
@@ -13,7 +10,6 @@ function debugNavigation() {
         const content = document.querySelector('.VPContent');
 
         if (!sidebar || !content) {
-            console.log('❌ Debug: Sidebar или Content не найдены');
             return;
         }
 
@@ -26,12 +22,10 @@ function debugNavigation() {
             sidebar.style.opacity = '';
             sidebar.classList.remove('hidden');
             content.style.paddingLeft = '';
-            console.log('✅ Debug: Навигация показана');
         } else {
             // Скрыть
             sidebar.style.display = 'none';
             content.style.paddingLeft = '0';
-            console.log('✅ Debug: Навигация скрыта');
         }
     }
 
@@ -39,7 +33,6 @@ function debugNavigation() {
     document.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
             e.preventDefault();
-            console.log('🔧 Debug: Нажат Ctrl+H');
             toggleSidebar();
         }
     });
@@ -62,7 +55,6 @@ function debugNavigation() {
     `;
 
     debugButton.addEventListener('click', () => {
-        console.log('🔧 Debug: Клик по кнопке отладки');
         toggleSidebar();
     });
 
@@ -74,16 +66,9 @@ function debugNavigation() {
         const content = document.querySelector('.VPContent');
 
         if (sidebar && content) {
-            console.log('🔧 Debug State:', {
-                sidebarDisplay: sidebar.style.display,
-                sidebarClasses: Array.from(sidebar.classList),
-                contentPadding: content.style.paddingLeft,
-                bodyClasses: Array.from(document.body.classList).filter(c => c.includes('nav'))
-            });
+            // No console logs here anymore
         }
     }, 5000);
-
-    console.log('✅ Debug: Отладка навигации готова');
 }
 
 // Запустить отладку
