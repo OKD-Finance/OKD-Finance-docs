@@ -81,8 +81,6 @@ TRADING --> BYBIT
 AUTH --> FIREBASE
 ```
 
-## Getting Started
-
 1. **[Quick Start Guide](/en/guide/quick-start)** - Set up your account in minutes
 2. **[API Overview](/en/api/overview)** - Integrate with our APIs
 3. **[Trading Guide](/en/trading/overview)** - Start trading cryptocurrencies
