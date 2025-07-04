@@ -2,16 +2,16 @@
 layout: page
 ---
 
-# Managed API
+# Управляемый API
 
 <GlobalAuth />
 
-## Login user for managed ID.
+## Войти в систему для управляемого ID.
 No description available
 
 <InteractiveManagedAPIEndpoint1 />
 
-## Creates user for managed ID.
+## Создает пользователя для управляемого ID.
 No description available
 
 <InteractiveManagedAPIEndpoint2 />

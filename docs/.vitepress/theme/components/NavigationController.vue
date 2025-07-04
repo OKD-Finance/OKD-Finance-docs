@@ -1,19 +1,5 @@
 <template>
   <div class="navigation-controller">
-    <!-- Кнопка для скрытия/показа навигации -->
-    <button 
-      class="nav-toggle-btn"
-      @click="toggleNavigation"
-      :title="isNavVisible ? 'Скрыть навигацию (Ctrl+H)' : 'Показать навигацию (Ctrl+H)'"
-    >
-      <svg v-if="isNavVisible" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19 13H5v-2h14v2z"/>
-      </svg>
-      <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-      </svg>
-    </button>
-
     <!-- Компактная плавающая навигация -->
     <div 
       v-if="isFloatingMode" 
@@ -220,6 +206,7 @@ const stopDrag = () => {
   isDragging.value = false
   document.removeEventListener('mousemove', handleDrag)
   document.removeEventListener('mouseup', stopDrag)
+  document.body.style.userSelect = ''
   
   // Сохранить позицию
   if (typeof localStorage !== 'undefined') {
@@ -250,64 +237,55 @@ onMounted(() => {
   if (typeof window === 'undefined' || typeof document === 'undefined') {
     return
   }
-  // Дождаться загрузки глобальной системы
-  const initWithGlobalSystem = () => {
-    if (window.navigationController) {
-      const settings = window.navigationController.loadSettings()
-      isNavVisible.value = settings.navVisible
-      isFloatingMode.value = settings.floatingMode
-      floatingPosition.value = settings.position
-      
-      // Применить настройки
-      window.navigationController.applySettings(settings)
-    } else {
-      // Fallback если глобальная система не готова
-      if (typeof localStorage !== 'undefined') {
-        const savedVisible = localStorage.getItem('nav-visible')
-        if (savedVisible !== null) {
-          isNavVisible.value = savedVisible === 'true'
-        }
-        
-        const savedFloating = localStorage.getItem('nav-floating')
-        if (savedFloating !== null) {
-          isFloatingMode.value = savedFloating === 'true'
-        }
-        
-        const savedPosition = localStorage.getItem('nav-position')
-        if (savedPosition) {
-          try {
-            floatingPosition.value = JSON.parse(savedPosition)
-          } catch {
-            floatingPosition.value = { x: 20, y: 100 }
-          }
-        }
+  
+  // Восстановление состояния и позиции из localStorage
+  if (typeof localStorage !== 'undefined') {
+    const savedNavVisible = localStorage.getItem('nav-visible')
+    if (savedNavVisible !== null) {
+      isNavVisible.value = savedNavVisible === 'true'
+    }
+
+    const savedFloatingMode = localStorage.getItem('nav-floating-mode')
+    if (savedFloatingMode !== null) {
+      isFloatingMode.value = savedFloatingMode === 'true'
+    }
+
+    const savedPosition = localStorage.getItem('nav-position')
+    if (savedPosition) {
+      try {
+        floatingPosition.value = JSON.parse(savedPosition)
+      } catch (e) {
+        console.error('Failed to parse saved nav position:', e)
       }
-      
-      // Применить состояния напрямую
-      document.body.classList.toggle('nav-hidden', !isNavVisible.value)
-      document.body.classList.toggle('nav-floating-mode', isFloatingMode.value)
-      document.documentElement.classList.toggle('nav-hidden', !isNavVisible.value)
-      document.documentElement.classList.toggle('nav-floating-mode', isFloatingMode.value)
     }
   }
-  
-  // Попробовать инициализировать сразу, или подождать
-  if (window.navigationController) {
-    initWithGlobalSystem()
-  } else {
-    setTimeout(initWithGlobalSystem, 100)
-  }
-  
-  // Установить начальную позицию плавающей навигации
-  setTimeout(() => {
-    if (floatingNav.value && isFloatingMode.value) {
-      floatingNav.value.style.left = floatingPosition.value.x + 'px'
-      floatingNav.value.style.top = floatingPosition.value.y + 'px'
+
+  // Применяем начальное состояние к DOM
+  document.body.classList.toggle('nav-hidden', !isNavVisible.value)
+  document.documentElement.classList.toggle('nav-hidden', !isNavVisible.value)
+  document.body.classList.toggle('nav-floating-mode', isFloatingMode.value)
+  document.documentElement.classList.toggle('nav-floating-mode', isFloatingMode.value)
+
+  // Глобально раскрываем методы и состояние для использования вне компонента
+  if (typeof window !== 'undefined') {
+    if (!window.navigationController) {
+      window.navigationController = {}
     }
-  }, 200)
-  
-  // Добавить обработчики событий
-  document.addEventListener('keydown', handleKeydown)
+    window.navigationController.toggleNavigation = toggleNavigation
+    window.navigationController.toggleFloatingMode = toggleFloatingMode
+    Object.defineProperty(window.navigationController, 'isNavVisible', {
+      get: () => isNavVisible.value,
+      enumerable: true,
+      configurable: true
+    })
+    Object.defineProperty(window.navigationController, 'isFloatingMode', {
+      get: () => isFloatingMode.value,
+      enumerable: true,
+      configurable: true
+    })
+  }
+
+  window.addEventListener('keydown', handleKeydown)
   
   // Автоматически переключиться в плавающий режим на мобильных устройствах
   if (typeof window !== 'undefined' && window.innerWidth < 768 && !isFloatingMode.value) {

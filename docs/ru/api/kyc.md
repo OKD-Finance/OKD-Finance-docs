@@ -11,7 +11,7 @@ Receives callback messages during KYC procedure
 
 <InteractiveKYCAPIEndpoint1 />
 
-## Queries and returns temporary access token needed for KYC procedure.
+## Запрашивает и возвращает временный токен доступа, необходимый для процедуры KYC.
 ! Need access token in bearer token authorization
 
 <InteractiveKYCAPIEndpoint2 />

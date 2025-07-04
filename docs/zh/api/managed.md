@@ -2,16 +2,16 @@
 layout: page
 ---
 
-# Managed API
+# 托管 API
 
 <GlobalAuth />
 
-## Login user for managed ID.
+## 使用托管 ID 登录用户。
 No description available
 
 <InteractiveManagedAPIEndpoint1 />
 
-## Creates user for managed ID.
+## 为托管 ID 创建用户。
 No description available
 
 <InteractiveManagedAPIEndpoint2 />

@@ -2,7 +2,7 @@
 layout: page
 ---
 
-# Exchange configuration API
+# 交易所配置 API
 
 <GlobalAuth />
 
@@ -34,7 +34,7 @@ https://bybit-exchange.github.io/docs/v5/market/instrument
 
 <InteractiveExchangeconfigurationAPIEndpoint5 />
 
-## Get withdrawal configuration for KYC levels.
+## 获取 KYC 级别的提现配置。
 No description available
 
 <InteractiveExchangeconfigurationAPIEndpoint6 />

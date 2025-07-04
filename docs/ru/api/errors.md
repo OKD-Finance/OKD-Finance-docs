@@ -2,11 +2,11 @@
 layout: page
 ---
 
-# Errors API
+# API Ошибок
 
 <GlobalAuth />
 
-## Errors list.
+## Список ошибок.
 No description available
 
 <InteractiveErrorsAPIEndpoint1 />

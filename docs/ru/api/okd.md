@@ -6,22 +6,22 @@ layout: page
 
 <GlobalAuth />
 
-## Send feedback.
+## Отправить отзыв.
 No description available
 
 <InteractiveOKDAPIEndpoint1 />
 
-## Send private feedback.
+## Отправить приватный отзыв.
 ! Need access token in bearer token authorization
 
 <InteractiveOKDAPIEndpoint2 />
 
-## Send question.
+## Задать вопрос.
 No description available
 
 <InteractiveOKDAPIEndpoint3 />
 
-## List top assets.
+## Список топовых активов.
 No description available
 
 <InteractiveOKDAPIEndpoint4 />

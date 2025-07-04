@@ -37,29 +37,6 @@ function debugNavigation() {
         }
     });
 
-    // Создать кнопку отладки
-    const debugButton = document.createElement('button');
-    debugButton.innerHTML = '🔧 Debug Nav';
-    debugButton.style.cssText = `
-        position: fixed;
-        top: 120px;
-        right: 20px;
-        z-index: 10000;
-        background: #ff6b6b;
-        color: white;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 12px;
-    `;
-
-    debugButton.addEventListener('click', () => {
-        toggleSidebar();
-    });
-
-    document.body.appendChild(debugButton);
-
     // Информация о состоянии
     setInterval(() => {
         const sidebar = document.querySelector('.VPSidebar');

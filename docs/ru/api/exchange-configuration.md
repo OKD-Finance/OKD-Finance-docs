@@ -2,7 +2,7 @@
 layout: page
 ---
 
-# Exchange configuration API
+# API Конфигурации Биржи
 
 <GlobalAuth />
 
@@ -34,7 +34,7 @@ https://bybit-exchange.github.io/docs/v5/market/instrument
 
 <InteractiveExchangeconfigurationAPIEndpoint5 />
 
-## Get withdrawal configuration for KYC levels.
+## Получить конфигурацию вывода средств для уровней KYC.
 No description available
 
 <InteractiveExchangeconfigurationAPIEndpoint6 />

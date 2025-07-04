@@ -2,11 +2,11 @@
 layout: page
 ---
 
-# Bybit proxy API
+# Bybit 代理 API
 
 <GlobalAuth />
 
-## Create internal transfer
+## 创建内部转账
 Creates an internal transfer between different account types (spot, unified, etc.)
 Returns transfer ID and status. Result is described here.
 https://bybit-exchange.github.io/docs/v5/asset/transfer-inter-transfer

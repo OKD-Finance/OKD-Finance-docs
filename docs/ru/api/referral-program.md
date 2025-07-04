@@ -2,51 +2,51 @@
 layout: page
 ---
 
-# Referral program API
+# API Реферальной программы
 
 <GlobalAuth />
 
-## Get list of referral link.
+## Получить список реферальных ссылок.
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint1 />
 
-## Add referral link.
+## Добавить реферальную ссылку.
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint2 />
 
-## Export history of fees to xlsx file
+## Экспортировать историю комиссий в файл xlsx
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint3 />
 
-## Get history of fees
+## Получить историю комиссий
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint4 />
 
-## Get public attributes of referral link.
+## Получить публичные атрибуты реферальной ссылки.
 No description available
 
 <InteractiveReferralprogramAPIEndpoint5 />
 
-## Get current percents of referral program.
+## Получить текущие проценты реферальной программы.
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint6 />
 
-## Get header of referral program.
+## Получить заголовок реферальной программы.
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint7 />
 
-## Get details of referral link.
+## Получить детали реферальной ссылки.
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint8 />
 
-## Set default referral link.
+## Установить реферальную ссылку по умолчанию.
 ! Need access token in bearer token authorization
 
 <InteractiveReferralprogramAPIEndpoint9 />

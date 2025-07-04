@@ -6,22 +6,22 @@ layout: page
 
 <GlobalAuth />
 
-## Send feedback.
+## 发送反馈。
 No description available
 
 <InteractiveOKDAPIEndpoint1 />
 
-## Send private feedback.
+## 发送私人反馈。
 ! Need access token in bearer token authorization
 
 <InteractiveOKDAPIEndpoint2 />
 
-## Send question.
+## 发送问题。
 No description available
 
 <InteractiveOKDAPIEndpoint3 />
 
-## List top assets.
+## 列出热门资产。
 No description available
 
 <InteractiveOKDAPIEndpoint4 />

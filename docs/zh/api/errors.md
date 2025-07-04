@@ -2,11 +2,11 @@
 layout: page
 ---
 
-# Errors API
+# 错误 API
 
 <GlobalAuth />
 
-## Errors list.
+## 错误列表。
 No description available
 
 <InteractiveErrorsAPIEndpoint1 />

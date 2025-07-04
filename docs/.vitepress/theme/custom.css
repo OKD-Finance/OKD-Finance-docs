@@ -49,11 +49,16 @@
 .VPHome .VPHero .action .VPButton.brand {
     background: var(--okd-gradient) !important;
     border: none !important;
+    color: var(--okd-dark) !important;
     font-weight: 600 !important;
     padding: 12px 24px !important;
     border-radius: 8px !important;
     transition: all 0.3s ease !important;
     box-shadow: 0 4px 14px rgba(30, 64, 175, 0.25) !important;
+}
+
+.dark .VPHome .VPHero .action .VPButton.brand {
+    color: white !important;
 }
 
 .VPHome .VPHero .action .VPButton.brand:hover {
@@ -62,6 +67,8 @@
 }
 
 .VPHome .VPHero .action .VPButton.alt {
+    display: none !important;
+    /* Скрыть кнопку "Посмотреть на GitHub" */
     border: 2px solid var(--okd-secondary) !important;
     color: var(--okd-secondary) !important;
     font-weight: 600 !important;
@@ -194,6 +201,13 @@
     }
 }
 
+/* Скрыть кнопку мобильной навигации на настольных компьютерах */
+@media (min-width: 960px) {
+    .VPNavBarHamburger {
+        display: none !important;
+    }
+}
+
 /* Языковое меню поверх всех модалок - агрессивные правила */
 .VPNav,
 .VPNavBar,
@@ -234,52 +248,6 @@ div[style*="position: fixed"] {
     z-index: 10002 !important;
 }
 
-/* Экстремальные правила для языкового меню */
-.VPNavBar * {
-    z-index: 9999 !important;
-}
-
-/* Все что связано с переводами */
-*[class*="translation"],
-*[class*="Translation"],
-*[class*="locale"],
-*[class*="Locale"],
-*[class*="lang"],
-*[class*="Lang"] {
-    z-index: 10000 !important;
-    position: relative !important;
-}
-
-/* Абсолютно все dropdown элементы */
-*[role="menu"],
-*[role="menuitem"],
-*[role="button"][aria-expanded],
-.dropdown,
-.dropdown-menu,
-.menu-dropdown {
-    z-index: 10003 !important;
-}
-
-/* Специальные правила для aria-expanded элементов */
-*[aria-expanded="true"],
-*[aria-expanded="false"] {
-    z-index: 10005 !important;
-    position: relative !important;
-}
-
-/* Когда меню развернуто */
-*[aria-expanded="true"]+*,
-*[aria-expanded="true"]~*,
-*[aria-expanded="true"]>* {
-    z-index: 10006 !important;
-}
-
-/* Родительский элемент кнопки с aria-expanded */
-*:has(*[aria-expanded]) {
-    z-index: 10007 !important;
-    position: relative !important;
-}
-
 /* Последняя попытка - все элементы в правой части навигации */
 .VPNavBar>*:last-child,
 .VPNavBar>*:last-child *,
@@ -293,16 +261,23 @@ div[style*="position: fixed"] {
 
 /* ===== ПОИСК ===== */
 /* Поисковая модалка поверх всех элементов */
-.VPLocalSearchBox,
-.VPLocalSearchBox .backdrop,
-.VPLocalSearchBox .shell {
-    z-index: 99999 !important;
+.VPLocalSearchBox {
+    z-index: 100000000 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    background-color: rgba(0, 0, 0, 0.75) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    isolation: isolate;
+    transform: none !important;
 }
 
-/* Стили для поисковой модалки */
 .VPLocalSearchBox .backdrop {
-    background: rgba(0, 0, 0, 0.6) !important;
-    backdrop-filter: blur(4px) !important;
+    display: none !important;
 }
 
 .VPLocalSearchBox .shell {
@@ -310,6 +285,13 @@ div[style*="position: fixed"] {
     border-radius: 12px !important;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25) !important;
     border: 1px solid #e5e7eb !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 700px !important;
+    margin: 0 !important;
+    transform: none !important;
 }
 
 .dark .VPLocalSearchBox .shell {
@@ -389,6 +371,8 @@ div[style*="position: fixed"] {
 /* Кнопка поиска в навигации */
 .VPNavBarSearch {
     z-index: 9999 !important;
+    position: relative !important;
+    background-color: var(--vp-nav-bg-color);
 }
 
 .VPNavBarSearch .DocSearch-Button {
@@ -492,7 +476,6 @@ html.nav-hidden .VPSidebar {
     transform: translateX(-100%) !important;
     transition: transform 0.3s ease !important;
     opacity: 0 !important;
-    pointer-events: none !important;
 }
 
 .nav-hidden .VPContent.has-sidebar,
@@ -501,70 +484,63 @@ body.nav-hidden .VPContent.has-sidebar,
 body.nav-hidden .VPContent,
 html.nav-hidden .VPContent.has-sidebar,
 html.nav-hidden .VPContent {
-    padding-left: 0 !important;
     margin-left: 0 !important;
-    transition: padding-left 0.3s ease, margin-left 0.3s ease !important;
 }
 
 /* Компактный режим */
 .nav-compact-mode .VPSidebar,
 body.nav-compact-mode .VPSidebar,
 html.nav-compact-mode .VPSidebar {
-    width: 200px !important;
-    min-width: 200px !important;
-    max-width: 200px !important;
+    width: var(--vp-sidebar-width-mini) !important;
 }
 
 .nav-compact-mode .VPContent.has-sidebar,
+.nav-compact-mode .VPContent,
 body.nav-compact-mode .VPContent.has-sidebar,
-html.nav-compact-mode .VPContent.has-sidebar {
-    padding-left: 200px !important;
+body.nav-compact-mode .VPContent,
+html.nav-compact-mode .VPContent.has-sidebar,
+html.nav-compact-mode .VPContent {
+    padding-left: var(--vp-sidebar-width-mini) !important;
 }
 
-/* Дополнительные правила для мобильных */
 @media (max-width: 960px) {
 
+    .nav-floating-mode .VPContent,
     .nav-hidden .VPSidebar,
-    body.nav-hidden .VPSidebar,
-    html.nav-hidden .VPSidebar {
-        display: none !important;
+    .nav-hidden .VPContent.has-sidebar {
+        padding-left: 0 !important;
+        margin-left: 0 !important;
     }
 }
 
-/* Убедиться что при скрытии контент занимает всю ширину */
 .nav-hidden .VPDoc,
-.nav-floating-mode .VPDoc,
-body.nav-hidden .VPDoc,
-body.nav-floating-mode .VPDoc {
-    max-width: none !important;
+body:not(.nav-settings-loaded) .VPDoc {
     padding-left: 24px !important;
-    padding-right: 24px !important;
 }
 
 .nav-auto-hidden .nav-toggle-btn {
-    opacity: 0.3;
-    transform: translateX(10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
 .nav-auto-hidden .floating-nav {
-    opacity: 0.7;
-    transform: translateX(10px);
+    transform: translateX(100%);
 }
 
-/* Анимации */
 .nav-toggle-btn,
 .floating-nav {
     transition: all 0.3s ease;
 }
 
-/* Улучшенная адаптивность */
 @media (max-width: 1200px) {
     .VPSidebar {
-        width: 250px !important;
+        width: var(--vp-sidebar-width-mobile) !important;
+        transform: translateX(-100%);
     }
 
     .VPContent.has-sidebar {
-        padding-left: 250px !important;
+        padding-left: 24px !important;
     }
 }
 
@@ -573,111 +549,152 @@ body.nav-floating-mode .VPDoc {
         padding-left: 0 !important;
     }
 
-    /* Автоматически включить плавающий режим на планшетах */
     body:not(.nav-settings-loaded) {
-        --nav-auto-floating: true;
+        .VPSidebar {
+            opacity: 0 !important;
+        }
     }
 }
 
 @media (max-width: 768px) {
     .nav-toggle-btn {
-        top: 70px;
-        right: 15px;
-        padding: 6px;
+        right: 20px;
+        bottom: 20px;
     }
 
     .floating-nav {
-        width: 260px;
-        max-height: 350px;
+        right: 20px;
+        bottom: 20px;
     }
 }
 
 @media (max-width: 480px) {
     .floating-nav {
-        width: calc(100vw - 40px);
-        left: 20px !important;
-        right: 20px !important;
-        max-height: 300px;
+        right: 15px;
+        bottom: 15px;
     }
 
     .nav-toggle-btn {
-        top: 60px;
-        right: 10px;
-        padding: 4px;
+        right: 15px;
+        bottom: 15px;
+        transform: scale(0.9);
     }
 }
 
-/* Темная тема для контекстного меню */
 .dark .nav-context-menu {
-    background: rgba(17, 24, 39, 0.95);
-    border-color: #374151;
+    background: var(--vp-c-bg-elv);
+    border-color: var(--vp-c-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
 }
 
 .dark .nav-context-item:hover {
-    background: #374151;
+    background: var(--vp-c-gray-light-2);
 }
 
 .dark .nav-context-item .shortcut {
-    background: #374151;
-    color: #d1d5db;
+    background: var(--vp-c-gray-light-3);
+    color: var(--vp-c-text-1);
 }
 
 .dark .nav-context-separator {
-    background: #374151;
+    background: var(--vp-c-border);
 }
 
-/* Улучшения для уведомлений */
 .nav-notification {
-    backdrop-filter: blur(12px);
-    font-family: inherit;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 16px;
+    height: 16px;
+    background-color: var(--vp-c-brand-1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: white;
+    animation: nav-pulse 1.5s infinite;
 }
 
-/* Пульсация для активной навигации */
 @keyframes nav-pulse {
-
-    0%,
-    100% {
-        opacity: 1;
+    0% {
+        transform: scale(0.8);
+        opacity: 0.7;
     }
 
     50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.8);
         opacity: 0.7;
     }
 }
 
 .nav-toggle-btn.active {
-    animation: nav-pulse 2s infinite;
+    background-color: var(--vp-c-brand-1);
+    color: white;
 }
 
-/* Индикатор перетаскивания */
 .floating-nav.dragging {
-    cursor: move;
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25);
-    transform: rotate(2deg);
+    transition: none;
 }
 
 .floating-nav.dragging * {
-    pointer-events: none;
+    user-select: none;
 }
 
-/* Сохранить место для кнопки навигации */
 .VPContent {
-    padding-right: 60px;
+    transition: padding-left 0.3s ease;
 }
 
 @media (max-width: 768px) {
     .VPContent {
-        padding-right: 50px;
+        padding-left: 24px !important;
     }
 }
 
-/* Улучшения производительности */
 .floating-nav {
-    will-change: transform, opacity;
-    contain: layout style paint;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 100;
 }
 
 .nav-toggle-btn {
-    will-change: transform, opacity;
-    contain: layout style paint;
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--vp-c-bg);
+    color: var(--vp-c-text-1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+}
+
+/* Скрывать основной контент при активном поиске */
+html.docsearch-active .VPContent,
+html.docsearch-active main,
+/* Hide the main content area */
+html.docsearch-active .VPSidebar {
+    display: none !important;
+}
+
+html.docsearch-active,
+html.docsearch-active body {
+    overflow: hidden !important;
+    /* Prevent scrolling when search is active */
+}
+
+/* JavaScript будет добавлен для принудительного исправления */
+
+/* ===== ПОИСК ===== */
+/* Поисковая модалка поверх всех элементов */
+a.VPSocialLink[href="https://github.com/okd-finance"] {
+    display: none !important;
 }
