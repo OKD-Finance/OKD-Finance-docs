@@ -4,31 +4,30 @@ OKD Finance is built on modern microservices architecture with external exchange
 
 ## Architecture Overview
 
-```text
-@startuml
-!theme aws-orange
+```mermaid
+graph TD
 
-package "Frontend" {
-    [Web Dashboard] as WEB
-    [Mobile App] as MOBILE
-}
+subgraph "Frontend"
+    WEB[Web Dashboard]
+    MOBILE[Mobile App]
+end
 
-package "API Layer" {
-    [API Gateway] as GATEWAY
-    [Authentication] as AUTH
-}
+subgraph "API Layer"
+    GATEWAY[API Gateway]
+    AUTH[Authentication]
+end
 
-package "Core Services" {
-    [User Service] as USER
-    [Wallet Service] as WALLET
-    [Trading Service] as TRADING
-    [KYC Service] as KYC
-}
+subgraph "Core Services"
+    USER[User Service]
+    WALLET[Wallet Service]
+    TRADING[Trading Service]
+    KYC[KYC Service]
+end
 
-package "External" {
-    [Bybit Exchange] as BYBIT
-    [Firebase Auth] as FIREBASE
-}
+subgraph "External"
+    BYBIT[Bybit Exchange]
+    FIREBASE[Firebase Auth]
+end
 
 WEB --> GATEWAY
 MOBILE --> GATEWAY
@@ -39,8 +38,6 @@ GATEWAY --> TRADING
 GATEWAY --> KYC
 TRADING --> BYBIT
 AUTH --> FIREBASE
-
-@enduml
 ```
 
 ## Key Components

@@ -13,17 +13,16 @@ OKD Finance - это современная криптовалютная бир�
 
 ## Архитектура платформы
 
-```text
-@startuml
-!theme aws-orange
+```mermaid
+graph TD
 
-component "Клиентское приложение" as A #e1f5fe
-component "Gateway API" as B #f3e5f5
-component "Торговый движок" as C #fff3e0
+component "Клиентское приложение" as A
+component "Gateway API" as B
+component "Торговый движок" as C
 component "Система кошельков" as D
 component "KYC/Compliance" as E
-component "Bybit Integration" as F #e8f5e8
-component "Внутренний матчинг" as G  
+component "Bybit Integration" as F
+component "Внутренний матчинг" as G
 component "Блокчейн-сети" as H
 component "AML системы" as I
 
@@ -35,8 +34,6 @@ C --> F
 C --> G
 D --> H
 E --> I
-
-@enduml
 ```
 
 ## Основные возможности
