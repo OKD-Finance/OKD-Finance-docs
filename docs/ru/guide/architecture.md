@@ -4,40 +4,39 @@ OKD Finance построен на современной микросервис�
 
 ## Компоненты системы
 
-```text
-@startuml
-!theme aws-orange
+```mermaid
+graph TD
 
-package "Frontend Layer" {
-    [Web Dashboard] as WEB
-    [Mobile App] as MOBILE  
-    [API Documentation] as API_DOCS
-}
+subgraph "Frontend Layer"
+    WEB[Web Dashboard]
+    MOBILE[Mobile App]
+    API_DOCS[API Documentation]
+end
 
-package "API Gateway" {
-    [Gateway Service] as GATEWAY
-    [Authentication] as AUTH
-    [Rate Limiting] as RATE_LIMIT
-}
+subgraph "API Gateway"
+    GATEWAY[Gateway Service]
+    AUTH[Authentication]
+    RATE_LIMIT[Rate Limiting]
+end
 
-package "Core Services" {
-    [User Service] as USER
-    [Wallet Service] as WALLET
-    [KYC Service] as KYC
-    [Trading Service] as TRADING
-}
+subgraph "Core Services"
+    USER[User Service]
+    WALLET[Wallet Service]
+    KYC[KYC Service]
+    TRADING[Trading Service]
+end
 
-package "External Integrations" {
-    [Bybit Exchange] as BYBIT
-    [Firebase Auth] as FIREBASE
-    [Webhook Service] as WEBHOOKS
-}
+subgraph "External Integrations"
+    BYBIT[Bybit Exchange]
+    FIREBASE[Firebase Auth]
+    WEBHOOKS[Webhook Service]
+end
 
-package "Data Layer" {
-    database "PostgreSQL" as POSTGRES
-    database "Redis Cache" as REDIS
-    database "File Storage" as STORAGE
-}
+subgraph "Data Layer"
+    POSTGRES{PostgreSQL}
+    REDIS{Redis Cache}
+    STORAGE{File Storage}
+end
 
 WEB --> GATEWAY
 MOBILE --> GATEWAY
@@ -53,8 +52,6 @@ USER --> POSTGRES
 WALLET --> POSTGRES
 KYC --> POSTGRES
 TRADING --> REDIS
-
-@enduml
 ```
 
 ## Архитектурные принципы
